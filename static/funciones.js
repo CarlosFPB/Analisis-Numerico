@@ -78,7 +78,7 @@ function mostrarloader() {
     document.getElementById('loader').style.display = 'flex';
 }
 
-function realizarPeticionPOST(endPoint) {
+function realizarPeticionPOST(endPoint, datos) {
     console.log(`peticion realizada a en: ${endPoint}`);
     fetch(endPoint, {
         method: 'POST',

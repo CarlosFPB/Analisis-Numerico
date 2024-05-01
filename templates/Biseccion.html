@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Método Bisección</title>
     <!-- para el Loader -->
-    <link rel="stylesheet" href="../static/Loader/loaders.css">
+    <link rel="stylesheet" href="/static/Loader/loaders.css">
 
     <!-- Estilo de la pagina en General -->
-    <link rel="stylesheet" href="../static/template styles.css">
+    <link rel="stylesheet" href="/static/template styles.css">
 
     <!-- Dependencias del Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css" />
 
     <!-- Script Base JS -->
-    <script src="../static/funciones.js" async></script>
+    <script src="/static/funciones.js" async></script>
 </head>
 
 <body>
@@ -127,12 +127,12 @@
                 datos[variable] = document.getElementById(variable).value;
             });
             console.log(datos);
-            realizarPeticionPOST(endPoint)
+            realizarPeticionPOST(endPoint, datos)
         }
 
     </script>
     
-    <script src="../static/Loader/background.js" async></script>
+    <script src="/static/Loader/background.js" async></script>
 </body>
 
 </html>
