@@ -1,0 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    --var-primary: #474747;
+    --var-secondary: #333;
+    --primary-font: 'Roboto', sans-serif;
+    --secondary-font: "Work Sans", sans-serif;
+    --third-font: "Source Sans 3", sans-serif;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    /* Add your background pattern here */
+    background-color: #ebebeb;
+    background-image: radial-gradient(rgba(146, 146, 146, 0.3) 2px, transparent 0);
+    background-size: 30px 30px;
+    background-position: -5px -5px
+}
+
+.text_hero {
+    text-align: center;
+    margin-top: 20px;
+    font-family: var(--primary-font);
+    font-weight: 900;
+    font-size: 4em;
+    color: var(--var-primary);
+}
+
+h2 {
+    font-family: var(--secondary-font);
+    font-weight: 600;
+    font-size: 2em;
+    color: var(--var-primary);
+
+}
+
+p {
+    font-family: var(--third-font);
+    font-weight: 500;
+    font-size: 1.2em;
+    color: var(--var-secondary);
+}
+
+.bg-gradient1 {
+    background: linear-gradient(135deg, #2a5ffe 0%, #3ac7dc 100%);
+    color: white;
+    padding: 0.2rem 1rem;
+    border-radius: 2rem;
+}
+
+
+.panel_metodos {
+    height: 50vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+    align-items: unset;
+}
+
+.grafico {
+    grid-row: span 2;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    gap: 1rem;
+}
+
+.información {
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+    gap: 1rem;
+
+}
+
+.información div {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+body,
+canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: -99;
+}
+.textGradient1 {
+    font-family: var(--primary-font);
+    font-weight: 900;
+    background: linear-gradient(135deg, #ff651d 0%, #dad61e 100%);
+    background-clip: text;
+    color: transparent;
+}
+
+.textGradient2 {
+    font-family: var(--primary-font);
+    font-weight: 900;
+    background: linear-gradient(135deg, #28e431 0%, #006e65 100%);
+    background-clip: text;
+    color: transparent;
+}
+
+.textGradient3 {
+    font-family: var(--primary-font);
+    font-weight: 900;
+    background: linear-gradient(135deg, #a442ff 0%, #234dbe 100%);
+    background-clip: text;
+    color: transparent;
+}
+.textGradient4 {
+    font-family: var(--primary-font);
+    font-weight: 900;
+    background: linear-gradient(135deg, #ff1b1b 0%, #4f017c 100%);
+    background-clip: text;
+    color: transparent;
+}
+.metodo {
+    position: relative;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: var(--bgcolor);
+    backdrop-filter: blur(7px);
+    text-decoration: none;
+    transition: all 0.5s;
+    overflow: hidden;
+    align-content: center;
+}
+.metodo:hover {
+    transform: scale(1.1);
+    z-index: 9999;
+
+}
+
+.mep {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-self: center;
+    transition: all 0.5s;
+    background-clip: text;
+    cursor: pointer;
+}
+
+.mep:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #ff1d1d 0%, #951eda 100%);
+    background-clip: text;
+    color: transparent !important;
+}
+.mep:hover h2{
+    color: transparent !important;
+}
+
+
+.icon {
+    font-weight: 900;
+    font-size: 2.5em;
+
+}
+
+
+
+
+.flip-card {
+    perspective: 1000px;
+    font-family: sans-serif;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg) scale(1.1);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: calc(100% - 2.5rem);
+    height: calc(100% - 2.5rem);
+    backface-visibility: hidden;
+    backdrop-filter: blur(7px);
+    border: 3px solid rgba(255, 255, 255, 0.149);
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.flip-card-front:hover,
+.flip-card-back:hover {
+    border: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+.flip-card-back {
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    transition: all 0.5s;
+}
+
+.modal-content {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 1rem;
+    margin: calc(100vh - 80vh) auto;
+    padding: 2rem;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    transition: all 0.5s;
+}
+
+/* Estilos para el botón de cierre de la ventana modal */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 34px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: rgb(255, 0, 0);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.links{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 2rem;
+}
+
+.link{
+    display: flex;
+    justify-content: start;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--var-primary);
+    transition: all 0.5s;
+}
+.link:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #ff831d 0%, #8f00e2 100%);
+    background-clip: text;
+    color: transparent !important;
+}
+.link:hover h2{
+    color: transparent !important;
+}
