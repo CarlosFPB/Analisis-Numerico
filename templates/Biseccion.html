@@ -111,22 +111,11 @@
     <!-- Sugerencias de Ejercicios 
     este sera una ventana que estara flotando a la derecha de la pagina
     -->
-    <div class="padre" style="position: relative; display: none;">
-        <div class="Sugerencia" style="position: fixed;
-            right: 0px;
-            top: calc(50% - 50px);
-            width: 20%;
-            background-color: #f1f1f1;
-            border-left: 1px solid #16167f;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            box-shadow: 0 0 10px 0 #16167f;
-            ">
-            <h1>Ejercios Sugeridos</h1>
+    <div class="padre" style="position: relative;">
+        <div class="sugerencias">
+            <span>
+                <h3>Ejercicios Sugeridos</h3>
+            </span>
             <div id="ejercicios">
 
             </div>
@@ -182,7 +171,13 @@
             div.innerHTML = `Ejericio ${i}`;
             div.setAttribute("onclick", `cargarEjercicio(${i})`);
             document.getElementById("ejercicios").appendChild(div);
+        }
 
+        function cargarEjercicio(i) {
+            let ejercicio = ejercicios[i];
+            variables.forEach((variable, index) => {
+                document.getElementById(variable).value = ejercicio[index];
+            });
         }
     </script>
 

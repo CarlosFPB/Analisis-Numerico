@@ -353,6 +353,7 @@ input {
     color: rgb(255, 255, 255);
     font-weight: 700;
 }
+
 .button-purple {
     background: linear-gradient(135deg, #ae2bff 0%, #4f017c 100%);
     color: rgb(255, 255, 255);
@@ -418,6 +419,23 @@ input {
         'opsz' 32
 }
 
+.sugerencias {
+    position: fixed;
+    right: 0px;
+    top: calc(50% - 50px);
+    width: 20%;
+    background-color: #f1f1f1;
+    border-left: 1px solid #16167f;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    box-shadow: 0 0 10px 0 #16167f;
+
+}
+
 
 @media print {
     * {
@@ -430,6 +448,7 @@ input {
     canvas {
         display: none;
     }
+
     .toastify {
         display: none !important;
     }
