@@ -59,26 +59,19 @@
                     </span>
                     <span>Calcular</span>
                 </div>
-                <div id="guardar" class="buttonBig button-blue" onclick="guardarPDF('stepbystep')"
-                    style="display: none;">
+                <div id="guardar" class="buttonBig button-blue" onclick="guardarPDF('stepbystep')">
                     <span class="material-symbols-outlined">
                         save
                     </span>
                 </div>
-                <div id="borrar" class="buttonBig button-red" onclick="borrarPasos()" style="display: none;">
+                <div id="borrar" class="buttonBig button-red" onclick="borrarPasos()">
                     <span class="material-symbols-outlined">
                         delete
                     </span>
                 </div>
             </div>
             <div class="ui">
-                <div class=" buttonSmall button-yellow">
-                    <span class="material-symbols-outlined">
-                        emoji_objects
-                    </span>
-                    <span>Sugerencia</span>
-                </div>
-                <div class="buttonSmall button-blue">
+                <div class="buttonSmall button-yellow">
                     <span class="material-symbols-outlined">
                         assignment
                     </span>
@@ -86,15 +79,15 @@
                 </div>
                 <div class="buttonSmall button-orange">
                     <span class="material-symbols-outlined">
-                        live_help
-                    </span>
-                    <span>¿Cómo Funciona?</span>
-                </div>
-                <div class="buttonSmall button-red">
-                    <span class="material-symbols-outlined">
                         account_tree
                     </span>
                     <span>Diagrama de Flujo</span>
+                </div>
+                <div class="buttonSmall button-purple">
+                    <span class="material-symbols-outlined">
+                        api
+                    </span>
+                    <span>API</span>
                 </div>
             </div>
         </div>
@@ -115,6 +108,49 @@
         <a href="../../../index.html">Regresar</a>
     </div>
 
+    <!-- Sugerencias de Ejercicios 
+    este sera una ventana que estara flotando a la derecha de la pagina
+    -->
+    <div class="padre" style="position: relative; display: none;">
+        <div class="Sugerencia" style="position: fixed;
+            right: 0px;
+            top: calc(50% - 50px);
+            width: 20%;
+            background-color: #f1f1f1;
+            border-left: 1px solid #16167f;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: 0 0 10px 0 #16167f;
+            ">
+            <h1>Ejercios Sugeridos</h1>
+            <div id="ejercicios">
+
+            </div>
+            <div class="viñeta" style="
+            display: none;
+            position: absolute;
+            left: -80px;
+            top: 50%;
+            height: 50px;
+                    
+                    
+            ">
+
+                <span class="material-symbols-outlined" style="
+                font-size: 300px;">
+                    keyboard_double_arrow_left
+                </span>
+            </div>
+
+
+        </div>
+
+    </div>
+
     <script>
         /*Aqui debe ir la direccion del EndPoint de el Metodo*/
         let endPoint = "/metodos/directos/cerrados/Biseccion"
@@ -131,7 +167,25 @@
         }
 
     </script>
-    
+    <script>
+        let ejercicios = [
+            ["funcion", "xi", "xu", "tolerancia"],
+            ["-x + exp(-x)", 0.1, 1.5, 0.05],
+            ["x^2 - 4", -2, 2, 0.01],
+            ["sin(x)", 0, 3, 0.1],
+            ["log(x)", 1, 10, 0.001]
+        ]
+
+        for (let i = 1; i < ejercicios.length; i++) {
+            let ejercicio = ejercicios[i];
+            let div = document.createElement("div");
+            div.innerHTML = `Ejericio ${i}`;
+            div.setAttribute("onclick", `cargarEjercicio(${i})`);
+            document.getElementById("ejercicios").appendChild(div);
+
+        }
+    </script>
+
     <script src="/static/Loader/background.js" async></script>
 </body>
 

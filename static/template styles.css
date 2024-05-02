@@ -353,6 +353,11 @@ input {
     color: rgb(255, 255, 255);
     font-weight: 700;
 }
+.button-purple {
+    background: linear-gradient(135deg, #ae2bff 0%, #4f017c 100%);
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+}
 
 .buttonSmall {
     font-family: var(--primary-font);
