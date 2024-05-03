@@ -70,7 +70,10 @@ function guardarPDF(divId) {
 
 function borrarPasos() {
     toastify('Borrando pasos...', 4);
-    document.getElementById('stepbystep').innerHTML = `<center><p style="opacity: 0.2; font-weight: 700; color: #16167f;">Aqui se mostrará el procedimiento</p></center>`;
+    $stepbystep = document.getElementById('stepbystep');
+
+    $stepbystep.innerHTML = `<center><p style="opacity: 0.2; font-weight: 700; color: #16167f;">Aqui se mostrará el procedimiento</p></center>`;
+    $stepbystep.style.width = "unset";
     document.getElementById('result').style.display = 'none';
 }
 
@@ -91,13 +94,223 @@ function realizarPeticionPOST(endPoint, datos) {
         .then(data => {
             // Maneja la respuesta del servidor
             console.log(data);
+            mostrarPasos(data)
         })
         .catch(error => {
             console.error('Error al realizar la solicitud::', error);
             console.log(datos);
+            console.log(mockJson);
+            mostrarPasos(mockJson)
+
         });
 }
 
 function prueba() {
     console.log('Hola');
 }
+
+function mostrarPasos(arrayPasos){
+    let texto = "";
+
+    arrayPasos.forEach(linea => {
+        switch (linea.type) {
+            case "parrafo":
+                texto += añadirlinea(linea.content);
+                break;
+            case "titulo1":
+                texto += agregarTitulo1(linea.content);
+                break;
+            case "clavevalor":
+                texto += añadirClaveValor(linea.content[0], linea.content[1]);
+                break;
+            case "salto":
+                texto += añadirSalto();
+                break;
+            case "tabla":
+                texto += creaTabla(linea.content);
+                break;
+            case "tab":
+                texto += añadirTab();
+                break;
+            default:
+                texto += añadirlinea(linea.content);
+                break;
+        }
+        
+    });
+
+    $stepbystep = document.getElementById('stepbystep');
+    $stepbystep.innerHTML = texto;
+    $stepbystep.style.width = "min-content";
+}
+
+let creaTabla = function (arreglo){
+    let tabla = '<div class="tablecontainer"><table>'
+    arreglo.forEach(row => {
+        tabla += "<tr>"
+        row.forEach(value => {
+            tabla += "<td>" + value + "</td>"
+        })
+        tabla += "</tr>"
+    })
+    tabla += "</table></div>"
+    return tabla
+}
+
+let añadirClaveValor = function (clave, valor) {
+    return `<p class="clavevalor"><span>${clave}</span><span>${valor}</span></p>`;
+}
+
+
+let añadirlinea = function (linea) {
+    return `<p>${linea}</p>`;
+}
+let agregarTitulo1 = function (titulo) {
+    return `<p class="titulo1">${titulo}</p>`;
+}
+
+let añadirSalto = function () {
+    return `<br>`;
+}
+
+let añadirTab = function () {
+    return `\t`;
+}
+
+
+let mockJson = [
+    {
+        "content": "Metodo de Biseccion",
+        "type": "titulo1"
+    },
+    {
+        "content": ["f(x):", "x^3 - 7x^2 + 14x - 6"],
+        "type": "clavevalor"
+    },
+    {
+        "content": "Este metodo nos sirve para encontrar la raiz de una ecuacion, para ello se necesita una funcion f(x) continua en un intervalo [a,b] que contenga a la raiz.",
+        "type": "parrafo"
+    },
+    {
+        "content": [
+            [
+                "Iteracion",
+                "X1",
+                "Xu",
+                "Xr",
+                "f(Xr)",
+                "Condicion",
+                "Error"
+            ],
+            [
+                "1",
+                "0.1",
+                "0.8",
+                "0.8",
+                "-0.282233171099891",
+                "<0",
+                "100"
+            ],
+            [
+                "2",
+                "0.45",
+                "0.8",
+                "0.45",
+                "0.151010157102128",
+                ">0",
+                "77.77777777777779"
+            ],
+            [
+                "3",
+                "0.45",
+                "0.625",
+                "0.625",
+                "-0.0168374822961602",
+                "<0",
+                "27.999999999999996"
+            ],
+            [
+                "4",
+                "0.5375",
+                "0.625",
+                "0.5375",
+                "0.00876353787302869",
+                ">0",
+                "16.279069767441865"
+            ],
+            [
+                "5",
+                "0.5375",
+                "0.58125",
+                "0.58125",
+                "-0.00102993808767554",
+                "<0",
+                "7.526881720430119"
+            ],
+            [
+                "6",
+                "0.559375",
+                "0.58125",
+                "0.559375",
+                "0.000569412832638296",
+                ">0",
+                "3.910614525139681"
+            ],
+            [
+                "7",
+                "0.559375",
+                "0.5703125",
+                "0.5703125",
+                "-6.05141018501493e-5",
+                "<0",
+                "1.9178082191780899"
+            ],
+            [
+                "8",
+                "0.56484375",
+                "0.5703125",
+                "0.56484375",
+                "4.39517676379043e-5",
+                ">0",
+                "0.9681881051175697"
+            ],
+            [
+                "9",
+                "0.56484375",
+                "0.567578125",
+                "0.567578125",
+                "-2.45657024490014e-6",
+                "<0",
+                "0.481761871989"
+            ],
+            [
+                "10",
+                "0.5662109375",
+                "0.567578125",
+                "0.5662109375",
+                "5.26857160350921e-6",
+                ">0",
+                "0.24146257330115406"
+            ],
+            [
+                "11",
+                "0.56689453125",
+                "0.567578125",
+                "0.56689453125",
+                "5.69730752705318e-7",
+                ">0",
+                "0.12058570198105867"
+            ],
+            [
+                "12",
+                "0.56689453125",
+                "0.567236328125",
+                "0.567236328125",
+                "-5.68417934047504e-8",
+                "<0",
+                "0.060256520616342034"
+            ]
+        ],
+        "type": "tabla"
+    }
+]
