@@ -4,7 +4,6 @@ from .....extras.funciones import errores, biseccion, respuesta_json
 
 class medoto_biseccion():
 
-
     @staticmethod
     def calcular_biseccion(json_data):
         x = sp.symbols('x')
