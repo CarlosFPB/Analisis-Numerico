@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Paytone+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Paytone+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Paytone+One&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mate:ital@0;1&display=swap');
 
 * {
     margin: 0;
@@ -176,6 +177,7 @@ p {
     border: .2rem solid rgba(0, 255, 0, 0.103);
     border-radius: 1rem;
     overflow: hidden;
+    max-width: calc(100vw - 2.5rem);
 }
 
 .titulo1 {
@@ -210,6 +212,7 @@ p {
     padding: 0.5rem;
     border-radius: 1rem;
     overflow-x: scroll;
+    max-width: min-content;
 }
 
 table tr:first-child td {
@@ -274,6 +277,30 @@ input {
     background: transparent;
     border-bottom: 0.1rem solid rgba(0, 0, 0, 0.103);
     border-right: 0.1rem solid rgba(0, 0, 0, 0.103);
+}
+
+
+
+.clavevalor {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+    flex-direction: row;
+
+    :first-child {
+        font-weight: bolder;
+        font-style: italic;
+        font-size: 1.2.5rem;
+        color: rgba(0, 0, 0, 0.7);
+    }
+
+    :last-child {
+        font-family: "Mate", serif;
+        font-weight: 800;
+        font-style: italic;
+        font-size: 1.5rem;
+        color: rgb(65, 64, 64);
+    }
 }
 
 /* Custom scrollbar style */
@@ -353,6 +380,7 @@ input {
     color: rgb(255, 255, 255);
     font-weight: 700;
 }
+
 .button-purple {
     background: linear-gradient(135deg, #ae2bff 0%, #4f017c 100%);
     color: rgb(255, 255, 255);
@@ -418,6 +446,23 @@ input {
         'opsz' 32
 }
 
+.sugerencias {
+    position: fixed;
+    right: 0px;
+    top: calc(50% - 50px);
+    width: 20%;
+    background-color: #f1f1f1;
+    border-left: 1px solid #16167f;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    box-shadow: 0 0 10px 0 #16167f;
+
+}
+
 
 @media print {
     * {
@@ -430,6 +475,7 @@ input {
     canvas {
         display: none;
     }
+
     .toastify {
         display: none !important;
     }
