@@ -1,8 +1,9 @@
 import sympy as sp
 from flask import jsonify
-from .....extras.funciones import errores, biseccion
+from .....extras.funciones import errores, biseccion, respuesta_json
 
 class medoto_biseccion():
+
 
     @staticmethod
     def calcular_biseccion(json_data):
@@ -16,17 +17,19 @@ class medoto_biseccion():
         xu = float(json_data["xu"])
         xr = 0
 
+        #instancio las respuest json
+        instancia_respuesta = respuesta_json()
+
         condicion = ""
         iteracion =0
         xr = 0
         valor_anterior = xr
         error_acumulado = 100
 
-        respuesta = []
-        respuesta.append({'type':'titulo1', 'content':'Metodo de Biseccion'})
-        respuesta.append({'type':'parrafo', 'content':'Este metodo nos sirve para encontrar la raiz de una ecuacion, para ello se necesita una funcion f(x) continua en un intervalo [a,b] que contenga a la raiz.'})
-        tabla = []
-        tabla.append(['Iteracion','X1','Xu','Xr','f(Xr)','Condicion','Error'])
+        instancia_respuesta.agregar_titulo1("Metodo de Biseccion")
+        instancia_respuesta.agregar_parrafo("Este metodo nos sirve para encontrar la raiz de una ecuacion, para ello se necesita una funcion f(x) continua en un intervalo [a,b] que contenga a la raiz.")
+        instancia_respuesta.crear_tabla()
+        instancia_respuesta.agregar_fila(['Iteracion','X1','Xu','Xr','f(Xr)','Condicion','Error'])
         while True:
             #primera aproximacion
             iteracion +=1
@@ -48,13 +51,13 @@ class medoto_biseccion():
                 #print(error_acumulado)
                 if error_acumulado < error_aceptable:
                     break
-            
-            tabla.append([str(iteracion),str(x1),str(xu),str(xr),str(evaluacion),condicion,str(error_acumulado)])
+            instancia_respuesta.agregar_fila([iteracion,x1,xu,xr,evaluacion,condicion,error_acumulado])
             valor_anterior = xr
 
-        respuesta.append({'type':'tabla','content':tabla})
+        instancia_respuesta.agregar_tabla()
         #print("La raiz de la ecuacion es: ",xr)
         #print("En la iteracion #", iteracion)
         #print(f"Con un error de: {error_acumulado}%")
-        return jsonify(respuesta)
+        res = instancia_respuesta.obtener_y_limpiar_respuesta()
+        return jsonify(res)
 
