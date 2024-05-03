@@ -1,6 +1,6 @@
 import sympy as sp
 from flask import jsonify
-from .....extras.funciones import errores, biseccion, respuesta_json
+from .....extras.Funciones import errores, biseccion, respuesta_json
 
 class medoto_biseccion():
 
