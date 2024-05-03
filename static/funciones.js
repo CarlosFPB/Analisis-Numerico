@@ -41,6 +41,9 @@ let toastify = function (mensaje, type = 1) {
         case 4:
             color = "linear-gradient(to right, #ff416c, #ff4b2b)"
             break;
+        case 5:
+            color = "linear-gradient(to right, #aaaaaa, #555555)";
+            break;
     }
 
 
@@ -81,8 +84,32 @@ function mostrarloader() {
     document.getElementById('loader').style.display = 'flex';
 }
 
+function mostrarDialog(id) {
+    document.getElementById(id).style.display = 'flex';
+    setTimeout(() => {
+        document.getElementById(id).style.opacity = 1;
+    }, 1);
+    document.addEventListener('click', function (event) {
+        var dialog = document.getElementById(id);
+        var content = document.querySelector('.contenido');
+        if (event.target === dialog) {
+            content.classList.add('close');
+            cerrarDialog(id);
+        }
+    });
+}
+
+function cerrarDialog(id) {
+    document.getElementById(id).style.opacity = 0;
+    setTimeout(() => {
+        document.getElementById(id).style.display = 'none';
+    }, 500);
+    document.removeEventListener('click', function (event) { });
+}
+
 function realizarPeticionPOST(endPoint, datos) {
     console.log(`peticion realizada a en: ${endPoint}`);
+    toastify('Realizando petición...', 1);
     fetch(endPoint, {
         method: 'POST',
         headers: {
@@ -93,10 +120,15 @@ function realizarPeticionPOST(endPoint, datos) {
         .then(response => response.json())
         .then(data => {
             // Maneja la respuesta del servidor
+            toastify('Mostrando pasos...', 2);
             console.log(data);
             mostrarPasos(data)
         })
         .catch(error => {
+
+            // Maneja el error
+            toastify('Error al realizar la solicitud', 4);
+            toastify(error, 5);
             console.error('Error al realizar la solicitud::', error);
             console.log(datos);
             console.log(mockJson);
@@ -109,7 +141,49 @@ function prueba() {
     console.log('Hola');
 }
 
-function mostrarPasos(arrayPasos){
+
+function cargarEjercicio(i) {
+
+    try {
+        let ejercicio = ejercicios[i];
+        variables.forEach((variable, index) => {
+            document.getElementById(variable).value = ejercicio[index];
+        });
+        toastify(`Ejercicio #${i}`, 1);
+    } catch (error) {
+        toastify('Error al cargar el ejercicio', 4);
+    }
+}
+
+
+function mostrarPasos(arrayPasos) {
+    let creaTabla = function (arreglo) {
+        let tabla = '<div class="tablecontainer"><table>'
+        arreglo.forEach(row => {
+            tabla += "<tr>"
+            row.forEach(value => {
+                tabla += "<td>" + value + "</td>"
+            })
+            tabla += "</tr>"
+        })
+        tabla += "</table></div>"
+        return tabla
+    }
+    let añadirClaveValor = function (clave, valor) {
+        return `<p class="clavevalor"><span>${clave}</span><span>${valor}</span></p>`;
+    }
+    let añadirlinea = function (linea) {
+        return `<p>${linea}</p>`;
+    }
+    let agregarTitulo1 = function (titulo) {
+        return `<p class="titulo1">${titulo}</p>`;
+    }
+    let añadirSalto = function () {
+        return `<br>`;
+    }
+    let añadirTab = function () {
+        return `\t`;
+    }
     let texto = "";
 
     arrayPasos.forEach(linea => {
@@ -136,46 +210,16 @@ function mostrarPasos(arrayPasos){
                 texto += añadirlinea(linea.content);
                 break;
         }
-        
+
     });
+
+
 
     $stepbystep = document.getElementById('stepbystep');
     $stepbystep.innerHTML = texto;
     $stepbystep.style.width = "min-content";
 }
 
-let creaTabla = function (arreglo){
-    let tabla = '<div class="tablecontainer"><table>'
-    arreglo.forEach(row => {
-        tabla += "<tr>"
-        row.forEach(value => {
-            tabla += "<td>" + value + "</td>"
-        })
-        tabla += "</tr>"
-    })
-    tabla += "</table></div>"
-    return tabla
-}
-
-let añadirClaveValor = function (clave, valor) {
-    return `<p class="clavevalor"><span>${clave}</span><span>${valor}</span></p>`;
-}
-
-
-let añadirlinea = function (linea) {
-    return `<p>${linea}</p>`;
-}
-let agregarTitulo1 = function (titulo) {
-    return `<p class="titulo1">${titulo}</p>`;
-}
-
-let añadirSalto = function () {
-    return `<br>`;
-}
-
-let añadirTab = function () {
-    return `\t`;
-}
 
 
 let mockJson = [

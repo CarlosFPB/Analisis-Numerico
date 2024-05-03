@@ -71,7 +71,7 @@
                 </div>
             </div>
             <div class="ui">
-                <div class="buttonSmall button-yellow">
+                <div class="buttonSmall button-yellow" onclick="mostrarDialog('explicamelo')">
                     <span class="material-symbols-outlined">
                         assignment
                     </span>
@@ -116,75 +116,54 @@
     <!-- Sugerencias de Ejercicios 
     este sera una ventana que estara flotando a la derecha de la pagina
     -->
-    <div class="padre" style="position: relative; 
-    display: none;">
-        <div class="sugerencias">
-            <span>
-                <h3>Ejercicios Sugeridos</h3>
+    <div class="sugerencias">
+        <span><span class="textGradient1">
+                Ejercicios Sugeridos
             </span>
-            <div id="ejercicios">
-
-            </div>
-            <div class="viñeta" style="
-            display: none;
-            position: absolute;
-            left: -80px;
-            top: 50%;
-            height: 50px;
-                    
-                    
-            ">
-
-                <span class="material-symbols-outlined" style="
-                font-size: 300px;">
-                    keyboard_double_arrow_left
-                </span>
-            </div>
-
+        </span>
+        <div id="ejercicios">
 
         </div>
-
+        <div class="viñeta" style="
+            position: absolute;
+            top: calc(50% - 2.5rem);
+            left: calc( -2rem);  
+            "
+            onclick="cambiarEstadoSugerencias()"
+            >
+            <span class="material-symbols-outlined" style="
+                font-size: 5rem;">
+                keyboard_double_arrow_left
+            </span>
+        </div>
     </div>
 
+    
+
+    <dialog id="explicamelo">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('explicamelo')">&times;</span>
+                <h2>Explicación del Método Bisección</h2>
+                <p>El método de la bisección es un algoritmo utilizado para encontrar la raíz de una función en un intervalo dado. El algoritmo se basa en el teorema del valor intermedio, que establece que si una función es continua en un intervalo [a, b] y toma valores de signo opuesto en los extremos del intervalo, entonces existe al menos un punto c en el intervalo donde la función se anula.</p>
+                <p>El método de la bisección divide repetidamente el intervalo a la mitad y verifica en qué subintervalo se encuentra la raíz. El proceso continúa hasta que se alcance una tolerancia predefinida o se encuentre una aproximación suficientemente cercana a la raíz.</p>
+                <p>Para utilizar el método de la bisección, debes ingresar la función, los valores iniciales del intervalo [Xi, Xu] y la tolerancia deseada. Luego, al hacer clic en el botón "Calcular", se realizará la iteración del algoritmo y se mostrarán los resultados.</p>
+            </div>
+        </div>
+    </dialog>
     <script>
-        /*Aqui debe ir la direccion del EndPoint de el Metodo*/
-        let endPoint = "/metodos/directos/cerrados/Biseccion"
-        /*Aqui iran los id de todos los datos que se enviaran al EndPoint*/
-        let variables = ["funcion", "xi", "xu", "tolerancia"];
-
-        function calcular() {
-            let datos = {}
-            variables.forEach(variable => {
-                datos[variable] = document.getElementById(variable).value;
-            });
-            console.log(datos);
-            realizarPeticionPOST(endPoint, datos)
-        }
-
-    </script>
-    <script>
-        let ejercicios = [
-            ["funcion", "xi", "xu", "tolerancia"],
-            ["-x + exp(-x)", 0.1, 1.5, 0.05],
-            ["x^2 - 4", -2, 2, 0.01],
-            ["sin(x)", 0, 3, 0.1],
-            ["log(x)", 1, 10, 0.001]
-        ]
-
-        for (let i = 1; i < ejercicios.length; i++) {
-            let ejercicio = ejercicios[i];
-            let div = document.createElement("div");
-            div.innerHTML = `Ejericio ${i}`;
-            div.setAttribute("onclick", `cargarEjercicio(${i})`);
-            document.getElementById("ejercicios").appendChild(div);
-        }
-
-        function cargarEjercicio(i) {
-            let ejercicio = ejercicios[i];
-            variables.forEach((variable, index) => {
-                document.getElementById(variable).value = ejercicio[index];
-            });
-        }
+        // Close the dialog if clicked outside the content div
+        document.addEventListener('click', function(event) {
+            var dialog = document.getElementById('explicamelo');
+            var content = document.querySelector('.contenido');
+            if (event.target === dialog) {
+                content.classList.add('close');
+                setTimeout(function() {
+                    dialog.close();
+                    content.classList.remove('close');
+                }, 300);
+            }
+        });
     </script>
 
     <script src="/static/Loader/background.js" async></script>
