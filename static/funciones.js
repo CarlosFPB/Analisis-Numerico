@@ -26,6 +26,16 @@ document.body.innerHTML += `
     </dialog>
     `
 
+function mostrarEjercicio() {
+    for (let i = 1; i < ejercicios.length; i++) {
+        let ejercicio = ejercicios[i];
+        let div = document.createElement("div");
+        div.innerHTML = `Ejericio ${i}`;
+        div.setAttribute("onclick", `cargarEjercicio(${i})`);
+        document.getElementById("ejercicios").appendChild(div);
+    }
+}
+
 let toastify = function (mensaje, type = 1) {
     color = ""
     switch (type) {
@@ -96,6 +106,12 @@ function mostrarDialog(id) {
             content.classList.add('close');
             cerrarDialog(id);
         }
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                cerrarDialog(id);
+            }
+        }
+        );
     });
 }
 
@@ -105,6 +121,23 @@ function cerrarDialog(id) {
         document.getElementById(id).style.display = 'none';
     }, 500);
     document.removeEventListener('click', function (event) { });
+    document.removeEventListener('keydown', function (event) { });
+}
+
+function cambiarEstadoSugerencias() {
+    let estado = document.querySelector(".sugerencias").style.right;
+    let ancho = document.querySelector(".sugerencias").offsetWidth;
+    if (estado == "0px" || estado == "") {
+        document.querySelector(".sugerencias").style.right = `calc(-${ancho}px + 10px)`;
+    } else {
+        document.querySelector(".sugerencias").style.right = "0px";
+    }
+    let viñeta = document.querySelector(".viñeta");
+    if (viñeta.style.transform === "") {
+        viñeta.style.transform = "rotate(180deg)";
+    } else {
+        viñeta.style.transform = "";
+    }
 }
 
 function realizarPeticionPOST(endPoint, datos) {
