@@ -15,8 +15,8 @@ class metodo_ferrari:
 
         respuesta.agregar_titulo1("Metodo de Ferrari")
         respuesta.agregar_parrafo("Este metodo Obtendra las raices de una funcion de grado 4")
-        respuesta.agregar_fila("Funcion: "+str(f_x_crudo))
-        respuesta.agregar_fila("Funcion simplificada: "+str(f_x))
+        respuesta.agregar_parrafo("Funcion: "+str(f_x_crudo))
+        respuesta.agregar_parrafo("Funcion simplificada: "+str(f_x))
 
         #obtiene los coeficientes de la funcion de forma descendente
         polinomio = f_x.as_poly(x)
@@ -29,10 +29,10 @@ class metodo_ferrari:
 
         #coeficientes del polinomio
         respuesta.agregar_titulo1("Coeficientes: ")
-        respuesta.agregar_fila("a = "+str(a))
-        respuesta.agregar_fila("b = "+str(b))
-        respuesta.agregar_fila("c = "+str(c))
-        respuesta.agregar_fila("d = "+str(d))
+        respuesta.agregar_parrafo("a = "+str(a))
+        respuesta.agregar_parrafo("b = "+str(b))
+        respuesta.agregar_parrafo("c = "+str(c))
+        respuesta.agregar_parrafo("d = "+str(d))
 
         #calcular p y q y r
         P = (8*b - 3*a**2)/8
@@ -40,9 +40,9 @@ class metodo_ferrari:
         R = (-3*a**4 + 256*d - 64*a*c + 16*a**2*b)/256
 
         respuesta.agregar_titulo1("Calculamos P, Q y R")
-        respuesta.agregar_fila("P = "+str(P))
-        respuesta.agregar_fila("Q = "+str(Q))
-        respuesta.agregar_fila("R = "+str(R))
+        respuesta.agregar_parrafo("P = "+str(P))
+        respuesta.agregar_parrafo("Q = "+str(Q))
+        respuesta.agregar_parrafo("R = "+str(R))
 
 
         #contruimos la cubica
@@ -50,7 +50,7 @@ class metodo_ferrari:
         cubica = sp.simplify(y**3 - (P/2)*y**2 - R*y + (4*P*R - Q**2)/8)
 
         respuesta.agregar_titulo1("Construimos la cubica para tartaglia")
-        respuesta.agregar_fila("Cubica: "+str(cubica))
+        respuesta.agregar_parrafo("Cubica: "+str(cubica))
 
         #encontramos a b c de tartaglia
         #encontrar los coeficientes inlcuido los coeficientes 0
@@ -63,9 +63,9 @@ class metodo_ferrari:
 
         #coeficientes de tartaglia
         respuesta.agregar_titulo1("Coeficientes de la cubica de tartaglia")
-        respuesta.agregar_fila("aT = "+str(aT))
-        respuesta.agregar_fila("bT = "+str(bT))
-        respuesta.agregar_fila("cT = "+str(cT))
+        respuesta.agregar_parrafo("aT = "+str(aT))
+        respuesta.agregar_parrafo("bT = "+str(bT))
+        respuesta.agregar_parrafo("cT = "+str(cT))
 
         #calculamos p y q de tartaglia y delta
         pT = (3*bT-aT**2)/3
@@ -73,8 +73,8 @@ class metodo_ferrari:
         deltaT = (qT/2)**2 + (pT/3)**3
 
         respuesta.agregar_titulo1("Calculamos p, q y delta de tartaglia")
-        respuesta.agregar_fila("pT = "+str(pT))
-        respuesta.agregar_fila("qT = "+str(qT))
+        respuesta.agregar_parrafo("pT = "+str(pT))
+        respuesta.agregar_parrafo("qT = "+str(qT))
 
         #obtener 1 raiz real
         if deltaT == 0:
@@ -106,18 +106,18 @@ class metodo_ferrari:
         a = a
 
         respuesta.agregar_titulo1("Reescribimos las variables")
-        respuesta.agregar_fila("U = "+str(U))
-        respuesta.agregar_fila("P = "+str(P))
-        respuesta.agregar_fila("Q = "+str(Q))
-        respuesta.agregar_fila("a = "+str(a))
+        respuesta.agregar_parrafo("U = "+str(U))
+        respuesta.agregar_parrafo("P = "+str(P))
+        respuesta.agregar_parrafo("Q = "+str(Q))
+        respuesta.agregar_parrafo("a = "+str(a))
 
         #encontramos V
         VF = sp.sqrt(2 * U - P)
         W = -(Q/(2*VF))
 
         respuesta.agregar_titulo1("Encontramos V y W")
-        respuesta.agregar_fila("V = "+str(VF))
-        respuesta.agregar_fila("W = "+str(W))
+        respuesta.agregar_parrafo("V = "+str(VF))
+        respuesta.agregar_parrafo("W = "+str(W))
 
         #encontramos las raices
         x1 = (VF + sp.sqrt(VF**2 -4*(U - W)))/2 - (a/4)
