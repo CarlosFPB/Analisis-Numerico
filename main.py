@@ -46,7 +46,7 @@ def calcular_tartaglia():
 
 @app.route('/metodos/directos/gradomenos2/cuartica', methods=['GET'])
 def renderizar_cuartica():
-    return render_template('Cuartica.html')
+    return render_template('Cuadratica.html')
 
 @app.route('/metodos/directos/gradomenos2/cuartica', methods=['POST'])
 def calcular_cuartica():
