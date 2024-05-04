@@ -26,7 +26,7 @@ jobs:
 
     # Ejecuta tu archivo main.py
     - name: Ejecutar main.py
-      run: python main.py
+      run: python main.py &
 
     # Copia los archivos estáticos necesarios al directorio de despliegue
     - name: Copiar archivos estáticos
