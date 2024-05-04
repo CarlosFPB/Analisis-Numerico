@@ -35,6 +35,7 @@ function mostrarEjercicio() {
         document.getElementById("ejercicios").appendChild(div);
     }
 }
+mostrarEjercicio();
 
 let toastify = function (mensaje, type = 1) {
     color = ""
@@ -139,6 +140,10 @@ function cambiarEstadoSugerencias() {
         viñeta.style.transform = "";
     }
 }
+
+setTimeout(() => {
+    cambiarEstadoSugerencias()
+}, 4000);
 
 function realizarPeticionPOST(endPoint, datos) {
     console.log(`peticion realizada a en: ${endPoint}`);
