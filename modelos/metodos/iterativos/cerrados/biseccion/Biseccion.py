@@ -1,7 +1,6 @@
 import sympy as sp
 from flask import jsonify
-from modelos.extras.funciones import errores, biseccion, respuesta_json
-
+from modelos.Extras.funciones import errores, biseccion, respuesta_json
 class medoto_biseccion():
 
     @staticmethod
