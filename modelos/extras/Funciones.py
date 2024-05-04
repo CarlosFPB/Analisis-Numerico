@@ -133,7 +133,8 @@ class respuesta_json():
         self.respuesta.append({'type': 'tabla', 'content': self.tabla})
 
     def agregar_clave_valor(self,clave ,contenido):
-        self.respuesta.append({'type': str(clave), 'content': str(contenido)})
+        cont = [str(clave), str(contenido)]
+        self.respuesta.append({'type': "clavevalor", 'content': cont})
 
     def obtener_respuesta(self):
         return self.respuesta
@@ -149,6 +150,7 @@ class respuesta_json():
     def agregar_fila(self, fila):
         convertidas = []
         for i in fila:
+            print("i",i)
             convertidas.append(str(i))
         fila = convertidas
 

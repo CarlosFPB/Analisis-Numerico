@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+import os
 
 # Importaciones de métodos
 from modelos.metodos.iterativos.cerrados.biseccion.Biseccion import medoto_biseccion
@@ -42,4 +43,4 @@ def calcular_tartaglia():
     return respuesta
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, port=os.getenv("PORT", default=5000))
