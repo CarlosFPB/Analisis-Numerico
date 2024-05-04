@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS  # Agregar importación
 
-#importaciones de metodos
+# Importaciones de métodos
 from modelos.metodos.iterativos.cerrados.biseccion.Biseccion import medoto_biseccion
 
 app = Flask(__name__, static_url_path='/static')
+CORS(app)  # Habilitar CORS en la aplicación
 
 @app.route('/')
 def index():
@@ -19,5 +21,5 @@ def calcular_biseccion():
     respuesta = medoto_biseccion.calcular_biseccion(json_data)
     return respuesta
 
-if __name__ == '__main__':
+if __name__ == '_main_':
     app.run()

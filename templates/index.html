@@ -16,31 +16,27 @@
 </body>
 
 <script>
-    //Aqui debe ir la direccion del EndPoint de el Metodo
-    let endPoint = "/metodos/directos/cerrados/Biseccion"
-    //Aqui iran los id de todos los datos que se enviaran al EndPoint
+    // Aquí ajusta la URL base del servidor Flask y la ruta específica al método
+    let endPoint = "http://localhost:5000/metodos/directos/cerrados/Biseccion";
+
     let variables = ["funcion", "xi", "xu", "tolerancia"];
-    //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
+
     function calcular() {
-        let datos = {}
+        let datos = {};
         variables.forEach(variable => {
             datos[variable] = document.getElementById(variable).value;
         });
         console.log(datos);
-        realizarPeticionPOST(endPoint, datos)
+        realizarPeticionPOST(endPoint, datos); // Asegúrate de que esta función esté definida y pueda realizar peticiones POST
     }
-    //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
+
     let ejercicios = [
         ["funcion", "xi", "xu", "tolerancia"],
         ["-x + exp(-x)", 0.1, 1.5, 0.05],
         ["x^2 - 4", -2, 2, 0.01],
         ["sin(x)", 0, 3, 0.1],
         ["log(x)", 1, 10, 0.001]
-    ]
-    //metodos de inicio para que se vea bien la interfaz
-    mostrarEjercicio()
-    setTimeout(() => {
-        cambiarEstadoSugerencias()
-    }, 4000);
+    ];
+
 </script>
 </html>
