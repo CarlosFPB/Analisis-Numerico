@@ -35,7 +35,9 @@ function mostrarEjercicio() {
         document.getElementById("ejercicios").appendChild(div);
     }
 }
-mostrarEjercicio();
+setTimeout(() => {
+    mostrarEjercicio();
+}, 100);
 
 let toastify = function (mensaje, type = 1) {
     color = ""
