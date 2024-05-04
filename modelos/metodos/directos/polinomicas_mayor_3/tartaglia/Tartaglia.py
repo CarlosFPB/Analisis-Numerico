@@ -15,6 +15,8 @@ class metodo_tartaglia:
         #obtener los valores del json
         f_x_crudo = sp.simplify(json_data["funcion"])
         f_x = f_x_crudo/f_x_crudo.as_poly(x).coeffs()[0]
+        respuesta.agregar_titulo1("Método de Tartaglia")
+        respuesta.agregar_parrafo("Se busca encontrar las raíces de la ecuación polinómica de grado 3: ")
 
         #encontrar los coeficientes inlcuido los coeficientes 0
         polinomio = f_x.as_poly(x)
@@ -24,12 +26,24 @@ class metodo_tartaglia:
         b = coeficientes[2]
         c = coeficientes[3]
 
+        respuesta.agregar_titulo1("coeficientes de la funcion")
+        respuesta.agregar_parrafo("a = " + str(a))
+        respuesta.agregar_parrafo("b = " + str(b))
+        respuesta.agregar_parrafo("c = " + str(c))
+
         #calculamos p y q
         p = (3*b-a**2)/3
         q = (2*a**3 - 9*a*b + 27*c)/27
 
+        respuesta.agregar_titulo1("Calculo de p y q")
+        respuesta.agregar_parrafo("p = " + str(p))
+        respuesta.agregar_parrafo("q = " + str(q))
+
         #discriminante
         delta = (q/2)**2 + (p/3)**3
+        
+        respuesta.agregar_titulo1("Calculo del discriminante")
+        respuesta.agregar_parrafo("delta = " + str(delta))
 
         #obtener las raices
         if delta == 0:
@@ -59,10 +73,10 @@ class metodo_tartaglia:
             k = 2
             x3 = (2*sp.sqrt(-p/3))*sp.cos((angulo+2*k*sp.pi)/3) - (a/3)
 
-
-        respuesta.agregar_titulo1("Método de Tartaglia")
-        respuesta.agregar_titulo1("Resultados")
-        respuesta.agregar_fila(["Raíz 1", x1])
+        respuesta.agregar_titulo1("Calculo de las raices")
+        respuesta.agregar_clave_valor("x1", x1)
+        respuesta.agregar_clave_valor("x2", x2)
+        respuesta.agregar_clave_valor("x3", x3)
         # imprimir las raices con leyenda
         print("Las raíces son:")
         print("x1 =", x1)
