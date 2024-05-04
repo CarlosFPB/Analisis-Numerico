@@ -144,7 +144,12 @@ class respuesta_json():
         return []
     
     def agregar_fila(self, fila):
-        self.tabla.append(str(fila))
+        convertidas = []
+        for i in fila:
+            convertidas.append(str(i))
+        fila = convertidas
+
+        self.tabla.append(fila)
         return self.tabla
     
     def obtener_tabla(self):
