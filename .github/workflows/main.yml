@@ -22,6 +22,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install Flask
+        pip install sympy
 
     # Ejecuta tu archivo main.py
     - name: Ejecutar main.py
