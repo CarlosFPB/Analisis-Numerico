@@ -22,12 +22,9 @@
     let variables = ["funcion", "xi", "xu", "tolerancia"];
 
     function calcular() {
-        let datos = {};
-        variables.forEach(variable => {
-            datos[variable] = document.getElementById(variable).value;
-        });
+        datos = {"prueba": 'prueba'};
         console.log(datos);
-        realizarPeticionPOST(endPoint, datos); // Asegúrate de que esta función esté definida y pueda realizar peticiones POST
+        realizarPeticionPOST(endPoint); // Asegúrate de que esta función esté definida y pueda realizar peticiones POST
     }
 
     let ejercicios = [

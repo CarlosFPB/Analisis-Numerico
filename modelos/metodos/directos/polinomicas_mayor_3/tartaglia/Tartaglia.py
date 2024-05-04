@@ -8,6 +8,8 @@ class metodo_tartaglia:
         x1 = 0
         x2 = 0
         x3 = 0
+        #istanciar la respuesta
+        respuesta = respuesta_json()
 
         x = sp.symbols('x')
         #obtener los valores del json
@@ -58,10 +60,13 @@ class metodo_tartaglia:
             x3 = (2*sp.sqrt(-p/3))*sp.cos((angulo+2*k*sp.pi)/3) - (a/3)
 
 
-
+        respuesta.agregar_titulo1("Método de Tartaglia")
+        respuesta.agregar_titulo1("Resultados")
+        respuesta.agregar_fila(["Raíz 1", x1])
         # imprimir las raices con leyenda
         print("Las raíces son:")
         print("x1 =", x1)
         print("x2 =", x2)
         print("x3 =", x3)
+        return respuesta.obtener_y_limpiar_respuesta()
 
