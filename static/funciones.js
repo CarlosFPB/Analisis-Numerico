@@ -164,12 +164,13 @@ function realizarPeticionPOST(endPoint, datos) {
             toastify(error, 5);
             console.error('Error al realizar la solicitud::', error);
             console.log(datos);
-            console.log(mockJson);
-            mostrarPasos(mockJson)
 
         });
 }
 
+function prueba() {
+    console.log('Hola');
+}
 function prueba() {
     console.log('Hola');
 }

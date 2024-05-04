@@ -1,6 +1,6 @@
 import  sympy as sp
 import numpy as np
-from .....extras.Funciones import errores, secante, respuesta_json
+from .....Extras.funciones import errores, secante, respuesta_json
 
 
 class metodo_secante():

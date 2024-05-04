@@ -1,5 +1,5 @@
 import sympy as sp
-from .....extras.Funciones import errores, falsaPosicion, respuesta_json
+from .....Extras.funciones import errores, falsaPosicion, respuesta_json
 
 
 class falsa_posicion():

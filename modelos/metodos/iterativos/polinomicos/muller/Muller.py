@@ -1,6 +1,6 @@
 import  sympy as sp
 import numpy as np
-from .....extras.Funciones import errores, respuesta_json
+from .....Extras.funciones import errores, respuesta_json
 
 class metodo_muller():
 
