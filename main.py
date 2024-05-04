@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 
 #importaciones de metodos
-from modelos.Metodos.Directos.Cerrados.Biseccion.biseccion import medoto_biseccion
+from modelos.metodos.iterativos.cerrados.biseccion.Biseccion import medoto_biseccion
 
 app = Flask(__name__, static_url_path='/static')
 
