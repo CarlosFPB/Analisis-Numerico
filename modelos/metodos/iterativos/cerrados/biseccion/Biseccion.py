@@ -31,6 +31,7 @@ class medoto_biseccion():
         while True:
             #primera aproximacion
             iteracion +=1
+            instancia_respuesta.agregar_titulo1("Iteracion #"+str(iteracion))
             xr = biseccion.primera_aproximacion(x1,xu)
             evaluacion = biseccion.multiplicacion_evaluadas(f_x,x1,xr)
             if evaluacion > 0:
@@ -49,6 +50,7 @@ class medoto_biseccion():
                 #print(error_acumulado)
                 if error_acumulado < error_aceptable:
                     break
+            instancia_respuesta.agregar_parrafo("se obtuvo la raiz : "+str(xr))
             instancia_respuesta.agregar_fila([iteracion,x1,xu,xr,evaluacion,condicion,error_acumulado])
             valor_anterior = xr
 
