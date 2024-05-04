@@ -165,14 +165,11 @@ function realizarPeticionPOST(endPoint, datos) {
             mostrarPasos(data)
         })
         .catch(error => {
-
             // Maneja el error
             toastify('Error al realizar la solicitud', 4);
             toastify(error, 5);
             console.error('Error al realizar la solicitud::', error);
             console.log(datos);
-            console.log(mockJson);
-            mostrarPasos(mockJson)
 
         });
 }
