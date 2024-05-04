@@ -1,13 +1,13 @@
-name: Ejecutar main.py
+name: Publicar en GitHub Pages
 
 on:
   push:
     branches:
-      - master  
+      - master  # o el nombre de tu rama principal
 
 jobs:
-  ejecutar_main:
-    runs-on: ubuntu-latest  # Puedes cambiar el sistema operativo si lo necesitas
+  deploy:
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout del código
@@ -16,13 +16,24 @@ jobs:
     - name: Configurar Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.12.2'  # Asegúrate de especificar la versión de Python que necesitas
+        python-version: '3.12.2'
 
     - name: Instalar dependencias
       run: |
         python -m pip install --upgrade pip
-        pip install Flask  # Instala Flask
-        # Instala cualquier otra dependencia si es necesario
+        pip install Flask
 
+    # Ejecuta tu archivo main.py
     - name: Ejecutar main.py
-      run: python main.py &
+      run: python main.py
+
+    # Copia los archivos estáticos necesarios al directorio de despliegue
+    - name: Copiar archivos estáticos
+      run: cp -r templates/* $GITHUB_WORKSPACE
+
+    # Utiliza la acción para desplegar en GitHub Pages
+    - name: Desplegar en GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: $GITHUB_WORKSPACE
