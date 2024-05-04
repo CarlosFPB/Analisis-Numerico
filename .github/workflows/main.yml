@@ -1,0 +1,17 @@
+name: Ejecutar main.py
+
+on:
+  push:
+    branches:
+      - main  # Cambia 'main' por el nombre de tu rama principal si es diferente
+
+jobs:
+  ejecutar_main:
+    runs-on: ubuntu-latest  # Puedes cambiar el sistema operativo si lo necesitas
+
+    steps:
+    - name: Checkout del código
+      uses: actions/checkout@v2
+
+    - name: Ejecutar main.py
+      run: python main.py
