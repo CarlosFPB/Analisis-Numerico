@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Método Bisección</title>
+    <title>Método Tartaglia</title>
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
 
@@ -31,30 +31,20 @@
 <body>
     <div>
     </div>
-    <span class="text_hero">Método <span class="textGradient1">Bisección</span></span>
-    <p>Este metodo se utiliza para encontrar la raiz de una funcion en un intervalo [Xi,Xu]</p>
+    <span class="text_hero">Método <span class="textGradient1">Tartaglia</span></span>
+    <p>El método de Tartaglia es un algoritmo utilizado para encontrar las raíces de una ecuación de tercer grado</p>
+
 
     <div class="content">
         <div id="main" class="main">
             <div class="descripocion">
-                <p>Ingrese los datos para calcular la raiz de la funcion</p>
+                <p>Ingrese la funcion para la cual desea encontrar la raíz</p>
             </div>
             <div class="formulario">
                 <div class="valor">
                     <label for="funcion">Funcion:</label>
-                    <input type="text" name="funcion" id="funcion" required value="-x + exp(-x)" style="width: auto;">
-                </div>
-                <div class="valor">
-                    <label for="xi">Xi:</label>
-                    <input type="number" name="xi" id="xi" required value="0.1" maxlength="5">
-                </div>
-                <div class="valor">
-                    <label for="xu">Xu:</label>
-                    <input type="number" name="xu" id="xu" required value="1.5">
-                </div>
-                <div class="valor">
-                    <label for="tolerancia">Tolerancia:</label>
-                    <input type="number" name="tolerancia" id="tolerancia" required value="0.05">
+                    <input type="text" name="funcion" id="funcion" required value="x**3 + x**2 + 2"
+                        style="width: 20rem;">
                 </div>
             </div>
             <div class="ui">
@@ -145,17 +135,15 @@
                     </span>
                 </span>
 
-                <h2>Explicación del Método Bisección</h2>
-                <p>El método de la bisección es un algoritmo utilizado para encontrar la raíz de una función en un
-                    intervalo dado. El algoritmo se basa en el teorema del valor intermedio, que establece que si una
-                    función es continua en un intervalo [a, b] y toma valores de signo opuesto en los extremos del
-                    intervalo, entonces existe al menos un punto c en el intervalo donde la función se anula.</p>
-                <p>El método de la bisección divide repetidamente el intervalo a la mitad y verifica en qué subintervalo
-                    se encuentra la raíz. El proceso continúa hasta que se alcance una tolerancia predefinida o se
-                    encuentre una aproximación suficientemente cercana a la raíz.</p>
-                <p>Para utilizar el método de la bisección, debes ingresar la función, los valores iniciales del
-                    intervalo [Xi, Xu] y la tolerancia deseada. Luego, al hacer clic en el botón "Calcular", se
-                    realizará la iteración del algoritmo y se mostrarán los resultados.</p>
+                <h2>Explicacion del Método de Tartaglia</h2>
+                <br>
+                <p>El método de Tartaglia es un algoritmo utilizado para encontrar las raíces de una ecuación de tercer
+                    grado</p>
+                <p>Este método se basa en la reducción de la ecuación de tercer grado a una ecuación de segundo grado,
+                    para posteriormente aplicar la fórmula general de la ecuación cuadrática.</p>
+                <p>El método de Tartaglia es una generalización del método de Cardano para resolver ecuaciones de tercer
+                    grado.</p>
+
             </div>
         </div>
     </dialog>
@@ -168,7 +156,7 @@
                         close
                     </span>
                 </span>
-                <h2>Diagrama de Flujo del Método Bisección</h2>
+                <h2>Diagrama de Flujo del Método Tartaglia</h2>
                 <center>
                     <p>Aqui debe ir una imagen bien perrona del codigo</p>
                 </center>
@@ -184,24 +172,21 @@
                         close
                     </span>
                 </span>
-                <h2>API del Método Bisección</h2>
-                <p>Para utilizar el método de la bisección a través de la API, debes realizar una petición POST al
-                    siguiente endpoint:</p>
-                <p><code>https://nummeth.herokuapp.com/metodos/directos/cerrados/Biseccion</code></p>
-                <p>Los parámetros que debes incluir en la petición son los siguientes:</p>
-                <ul>
-                    <li><code>funcion</code>: La función para la cual deseas encontrar la raíz.</li>
-                    <li><code>xi</code>: El valor inicial del intervalo [Xi, Xu].</li>
-                    <li><code>xu</code>: El valor final del intervalo [Xi, Xu].</li>
-                    <li><code>tolerancia</code>: La tolerancia deseada para la aproximación de la raíz.</li>
-                </ul>
-                <p>Al realizar la petición, recibirás como respuesta un objeto JSON con los siguientes campos:</p>
-                <ul>
-                    <li><code>raiz</code>: El valor aproximado de la raíz de la función.</li>
-                    <li><code>iteraciones</code>: El número de iteraciones realizadas para encontrar la raíz.</li>
-                    <li><code>error</code>: El error relativo porcentual de la aproximación.</li>
-                </ul>
-                <p>¡Inténtalo y encuentra la raíz de tus funciones de forma sencilla!</p>
+                <h2>API del Método de Tartaglia</h2>
+                <br>
+                <p>Para utilizar el método de Tartaglia, se debe realizar una petición POST al siguiente endpoint:</p>
+                <p>/metodos/directos/cerrados/Tartaglia</p>
+                <br>
+                <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
+                <br>
+                <pre>
+
+                    {
+                        "funcion": "x**3 + x**2 + 2"
+                    }
+
+
+                </pre>
             </div>
         </div>
     </dialog>
@@ -210,9 +195,9 @@
 
     <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo
-        let endPoint = "/metodos/iterativos/cerrados/Biseccion"
+        let endPoint = "/metodos/directos/gradomas3/Tartaglia"
         //Aqui iran los id de todos los datos que se enviaran al EndPoint
-        let variables = ["funcion", "xi", "xu", "tolerancia"];
+        let variables = ["funcion"];
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
         function calcular() {
             let datos = {}
@@ -224,11 +209,11 @@
         }
         //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
         let ejercicios = [
-            ["funcion", "xi", "xu", "tolerancia"],
-            ["-x + exp(-x)", 0.1, 1.5, 0.05],
-            ["x^2 - 4", -2, 2, 0.01],
-            ["sin(x)", 0, 3, 0.1],
-            ["log(x)", 1, 10, 0.001]
+            ["funcion"],
+            ["x**3 + x**2 + 2"],
+            ["x**3 - 13*x - 12"],
+            ["x**3 - 6*x**2 + 11*x - 6"],
+            ["x**3 + 3*x**2 - 4*x - 12"]
         ]
         //metodos de inicio para que se vea bien la interfaz
         mostrarEjercicio()

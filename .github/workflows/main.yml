@@ -1,9 +1,9 @@
-name: Publicar en GitHub Pages
+name: Run Github Pages
 
 on:
   push:
     branches:
-      - master  # o el nombre de tu rama principal
+      - master # o el nombre de tu rama principal
 
 jobs:
   deploy:
@@ -24,17 +24,21 @@ jobs:
         pip install Flask
         pip install sympy
 
-    # Ejecuta tu archivo main.py
+    # Ejecuta tu archivo main.py en segundo plano
     - name: Ejecutar main.py
-      run: python main.py
-
-    # Copia los archivos estáticos necesarios al directorio de despliegue
+      run: python main.py &
+      
+    # Espera unos segundos para que el servidor Flask inicie
+    - name: Esperar inicio del servidor
+      run: sleep 10
+      
+      # Copiar los archivos estáticos necesarios al directorio de despliegue
     - name: Copiar archivos estáticos
-      run: cp -r templates/* $GITHUB_WORKSPACE
+      run: cp -r templates/* ${{ github.workspace }}
 
     # Utiliza la acción para desplegar en GitHub Pages
     - name: Desplegar en GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: $GITHUB_WORKSPACE
+        github_token: ${{ secrets.TOKEN_ }}
+        publish_dir:  ${{ github.workspace }}
