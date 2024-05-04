@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Método Cuadrática</title>
+    <!-- para el Loader -->
+    <link rel="stylesheet" href="/static/Loader/loaders.css">
+
+    <!-- Estilo de la pagina en General -->
+    <link rel="stylesheet" href="/static/template styles.css">
+
+    <!-- Dependencias del Toast -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css" />
+
+    <!-- Script Base JS -->
+    <script src="/static/funciones.js" async></script>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicono/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+
+<body>
+    <div>
+    </div>
+    <span class="text_hero">Método de la <span class="textGradient1">Cuadrática</span></span>
+    <p>El método de la Cuadrática es un algoritmo utilizado para encontrar las raíces de una ecuación de segundo grado</p>
+
+
+    <div class="content">
+        <div id="main" class="main">
+            <div class="descripocion">
+                <p>Ingrese la funcion para la cual desea encontrar la raíz</p>
+            </div>
+            <div class="formulario">
+                <div class="valor">
+                    <label for="funcion">Funcion:</label>
+                    <input type="text" name="funcion" id="funcion" required value="x**2 + 2*x - 3"
+                        style="width: 20rem;">
+                </div>
+            </div>
+            <div class="ui">
+                <div id="calcular" class="buttonBig button-green" onclick="calcular()">
+                    <span class="material-symbols-outlined">
+                        calculate
+                    </span>
+                    <span>Calcular</span>
+                </div>
+                <div id="guardar" class="buttonBig button-blue" onclick="guardarPDF('stepbystep')">
+                    <span class="material-symbols-outlined">
+                        save
+                    </span>
+                </div>
+                <div id="borrar" class="buttonBig button-red" onclick="borrarPasos()">
+                    <span class="material-symbols-outlined">
+                        delete
+                    </span>
+                </div>
+            </div>
+            <div class="ui">
+                <div class="buttonSmall button-yellow" onclick="mostrarDialog('explicamelo')">
+                    <span class="material-symbols-outlined">
+                        assignment
+                    </span>
+                    <span>Explícamelo</span>
+                </div>
+                <div class="buttonSmall button-orange" onclick="mostrarDialog('diagrama')">
+                    <span class="material-symbols-outlined">
+                        account_tree
+                    </span>
+                    <span>Diagrama de Flujo</span>
+                </div>
+                <div class="buttonSmall button-purple" onclick="mostrarDialog('api')">
+                    <span class="material-symbols-outlined">
+                        api
+                    </span>
+                    <span>API</span>
+                </div>
+            </div>
+        </div>
+        <div id="stepbystep" class="stepbystep">
+            <center>
+                <p style="
+                    opacity: 0.2;
+                    font-weight: 700;
+                    color: #16167f;
+                    width: 100%;
+                    ">Aqui se mostrará el procedimiento</p>
+            </center>
+        </div>
+        <div id="result" class="result" style="display: none;">
+            <h2><span class="textGradient5">Resultados</span></h2>
+            <div class="contentresult">
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="footer">
+        <a class="regresar" href="/">Regresar</a>
+    </div>
+
+    <!-- Sugerencias de Ejercicios 
+    este sera una ventana que estara flotando a la derecha de la pagina
+    -->
+    <div class="sugerencias" style="right: calc(-253px);">
+        <span><span class="textGradient1">
+                Ejercicios Sugeridos
+            </span>
+        </span>
+        <div id="ejercicios">
+
+        </div>
+        <div class="viñeta" onclick="cambiarEstadoSugerencias()">
+            <span class="material-symbols-outlined textGradient4">
+                keyboard_double_arrow_left
+            </span>
+        </div>
+    </div>
+
+    <dialog id="explicamelo">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('explicamelo')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+
+                <h2>Explicacion del Método Cuadrática</h2>
+                <br>
+                <p>El método de la Cuadrática es un algoritmo utilizado para encontrar las raíces de una ecuación de segundo grado</p>
+                <br>
+                <p>Para encontrar las raíces de una ecuación de segundo grado, se utiliza la fórmula general</p>
+                <br>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="diagrama">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('diagrama')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+                <h2>Diagrama de Flujo del Método Cuadrática</h2>
+                <center>
+                    <p>Aqui debe ir una imagen bien perrona del codigo</p>
+                </center>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="api">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('api')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+                <h2>API del Método de la Cuadrática</h2>
+                <br>
+                <p>Para utilizar el método de la Cuadrática, se debe realizar una petición POST al siguiente endpoint:</p>
+                <p>https://metodos.herokuapp.com/metodos/directos/gradomas2/Cuadratica</p>
+                <br>
+                <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
+                <br>
+                <pre>
+
+                    {
+                        "funcion": "x**2 + 2*x - 3"
+                    }
+
+
+                </pre>
+            </div>
+        </div>
+    </dialog>
+
+
+
+    <script>
+        //Aqui debe ir la direccion del EndPoint de el Metodo
+        let endPoint = "/metodos/directos/gradomas3/Tartaglia"
+        //Aqui iran los id de todos los datos que se enviaran al EndPoint
+        let variables = ["funcion"];
+        //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
+        function calcular() {
+            let datos = {}
+            variables.forEach(variable => {
+                datos[variable] = document.getElementById(variable).value;
+            });
+            console.log(datos);
+            realizarPeticionPOST(endPoint, datos)
+        }
+        //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
+        let ejercicios = [
+            ["funcion"],
+            ["x**2 + 2*x - 3"],
+            ["6*x**2 + 7*x - 3"],
+            ["-15*x**2 + 20*x - 10"],
+            ["-3*x**2 + 5*x - 2"]
+        ]
+    </script>
+
+    <script src="/static/Loader/background.js" async></script>
+</body>
+
+</html>
