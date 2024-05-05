@@ -4,19 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menú de Métodos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://www.mundodeportivo.com/alfabeta/hero/2023/10/estas-son-todas-las-muertes-de-personajes-de-la-franquicia-creada-por-kishimoto.jpg?width=1200'); /* URL de la imagen de fondo */
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            color: #fff; /* Color de texto */
+            opacity: 0.9; /* Opacidad del fondo */
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            color: #fff; /* Color de texto */
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 auto;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a.button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            background-color: rgba(0, 123, 255, 0.7); /* Fondo del botón con transparencia */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s; /* Agregamos transición de color de fondo y texto */
+        }
+
+        a.button:active {
+            box-shadow: none; /* Quitamos el sombreado al hacer clic */
+            background-color: rgba(0, 123, 255, 0.9); /* Color de fondo más oscuro al hacer clic */
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
 </head>
 <body>
     <h1>Menú de Métodos</h1>
     <ul>
-        <li><a href="/metodos/iterativos/cerrados/Biseccion">Bisección</a></li>
-        <li><a href="/metodos/directos/gradomas3/Ferrari">Ferrari</a></li>
-        <li><a href="/metodos/directos/gradomas3/Tartaglia">Tartaglia</a></li>
-        <li><a href="/metodos/directos/gradomenos2/cuartica">Cuadrática</a></li>
-        <li><a href="/metodos/directos/gradomenos2/lineal">Lineal</a></li>
-        <li><a href="/metodos/directos/abiertos/punto-Fijo">Punto Fijo</a></li>
-        <li><a href="/metodos/directos/abiertos/newton">Newton</a></li>
-        <li><a href="/metodos/directos/abiertos/Newton-Modificado">Newton Modificado</a></li>
-        <li><a href="/metodos/directos/abiertos/Secante">Secante</a></li>
+        <li><a href="/metodos/iterativos/cerrados/Biseccion" class="button">Bisección</a></li>
+        <li><a href="/metodos/directos/gradomas3/Ferrari" class="button">Ferrari</a></li>
+        <li><a href="/metodos/directos/gradomas3/Tartaglia" class="button">Tartaglia</a></li>
+        <li><a href="/metodos/directos/gradomenos2/cuartica" class="button">Cuadrática</a></li>
+        <li><a href="/metodos/directos/gradomenos2/lineal" class="button">Lineal</a></li>
+        <li><a href="/metodos/directos/abiertos/punto-Fijo" class="button">Punto Fijo</a></li>
+        <li><a href="/metodos/directos/abiertos/newton" class="button">Newton</a></li>
+        <li><a href="/metodos/directos/abiertos/Newton-Modificado" class="button">Newton Modificado</a></li>
+        <li><a href="/metodos/directos/abiertos/Secante" class="button">Secante</a></li>
     </ul>
 </body>
 </html>
