@@ -1,6 +1,6 @@
 import numpy as np
 import sympy as sp
-from .....Extras.funciones import errores, respuesta_json
+from .....extras.Funciones import errores, respuesta_json
 
 
 class metodo_bairstow():

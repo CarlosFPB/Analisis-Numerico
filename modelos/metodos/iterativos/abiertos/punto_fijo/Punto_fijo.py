@@ -1,13 +1,9 @@
-from flask import jsonify
+from flask import jsonify, render_template
 import  sympy as sp
 import numpy as np
-import matplotlib.pyplot as plt
-from .....Extras.funciones import errores, respuesta_json
+from .....extras.Funciones import errores, respuesta_json
 
-
-
-
-class punto_fijo():
+class metodo_punto_fijo():
 
 
     @staticmethod
@@ -15,7 +11,7 @@ class punto_fijo():
         x = sp.symbols("x")
         
         #obtener los valores del json
-        f_x = sp.simplify(json_data["funcion"])
+        ##f_x = sp.simplify(json_data["funcion"])
         g_x = sp.simplify(json_data["funcion_g_x"])
         g_prima = sp.diff(g_x)
 

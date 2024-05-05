@@ -1,9 +1,10 @@
 from flask import jsonify
 import  sympy as sp
 import numpy as np
-from .....Extras.funciones import errores, newton, respuesta_json
+from .....extras.Funciones import errores, newton, respuesta_json
 
 class metodo_newton():
+
     @staticmethod
     def calcular_newton(json_data):
         x = sp.symbols("x")
@@ -55,7 +56,7 @@ class metodo_newton():
         #print("La raiz aproximada es: ", x_actual)
         instancia_respuesta.agregar_tabla()
         res = instancia_respuesta.obtener_y_limpiar_respuesta()
-        return jsonify(res)
+        return res
 
 
 

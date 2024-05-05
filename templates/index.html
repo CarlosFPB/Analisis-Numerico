@@ -1,39 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>My Web Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú de Métodos</title>
 </head>
 <body>
-    <h1>Welcome to My Web Page</h1>
-    <p>This is a sample HTML page.</p>
-    <p>prueba de integracion</p>
-    <div id="calcular" class="buttonBig button-green" onclick="calcular()">
-        <span class="material-symbols-outlined">
-            calculate
-        </span>
-        <span>Calcular</span>
-    </div>
+    <h1>Menú de Métodos</h1>
+    <ul>
+        <li><a href="/metodos/iterativos/cerrados/Biseccion">Bisección</a></li>
+        <li><a href="/metodos/directos/gradomas3/Ferrari">Ferrari</a></li>
+        <li><a href="/metodos/directos/gradomas3/Tartaglia">Tartaglia</a></li>
+        <li><a href="/metodos/directos/gradomenos2/cuartica">Cuadrática</a></li>
+        <li><a href="/metodos/directos/gradomenos2/lineal">Lineal</a></li>
+        <li><a href="/metodos/directos/abiertos/punto-Fijo">Punto Fijo</a></li>
+        <li><a href="/metodos/directos/abiertos/newton">Newton</a></li>
+        <li><a href="/metodos/directos/abiertos/Newton-Modificado">Newton Modificado</a></li>
+        <li><a href="/metodos/directos/abiertos/Secante">Secante</a></li>
+    </ul>
 </body>
-
-<script>
-    // Aquí ajusta la URL base del servidor Flask y la ruta específica al método
-    let endPoint = "http://localhost:5000/metodos/directos/cerrados/Biseccion";
-
-    let variables = ["funcion", "xi", "xu", "tolerancia"];
-
-    function calcular() {
-        datos = {"prueba": 'prueba'};
-        console.log(datos);
-        realizarPeticionPOST(endPoint); // Asegúrate de que esta función esté definida y pueda realizar peticiones POST
-    }
-
-    let ejercicios = [
-        ["funcion", "xi", "xu", "tolerancia"],
-        ["-x + exp(-x)", 0.1, 1.5, 0.05],
-        ["x^2 - 4", -2, 2, 0.01],
-        ["sin(x)", 0, 3, 0.1],
-        ["log(x)", 1, 10, 0.001]
-    ];
-
-</script>
 </html>
