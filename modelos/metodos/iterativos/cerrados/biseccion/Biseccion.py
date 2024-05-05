@@ -11,7 +11,7 @@ class medoto_biseccion():
         try:
             f_x = sp.sympify(json_data["funcion"])
         except:
-            return jsonify({"error":"Error en la funcion"})
+            return {"error":"Error en la funcion"}
             
         error_aceptable = float(json_data["tolerancia"])
         x1 = float(json_data["xi"])
@@ -23,7 +23,7 @@ class medoto_biseccion():
         evaluar_xu = f_x.subs(x,xu)
         if (evaluar_x1 * evaluar_xu) > 0:#no ahy un cambio de signo
             print("No hay un cambio de signo en los valores iniciales")
-            return jsonify({"error":"No hay un cambio de signo en los valores iniciales"})
+            return {"error":"No hay un cambio de signo en los valores iniciales"}
         
         #instancio las respuest json
         instancia_respuesta = respuesta_json()
@@ -84,5 +84,5 @@ class medoto_biseccion():
         #print("En la iteracion #", iteracion)
         #print(f"Con un error de: {error_acumulado}%")
         res = instancia_respuesta.obtener_y_limpiar_respuesta()
-        return jsonify(res)
+        return res
 

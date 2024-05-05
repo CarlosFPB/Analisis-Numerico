@@ -15,7 +15,7 @@ class falsa_posicion():
         try:
             f_x = sp.sympify(json_data["funcion"])
         except:
-            return jsonify({"error":"Error en la funcion"})
+            return {"error":"Error en la funcion"}
         
         error_aceptable = float(json_data["tolerancia"])
         x1 = float(json_data["xi"])
@@ -28,7 +28,7 @@ class falsa_posicion():
         evaluar_xu = f_x.subs(x,xu)
         if (evaluar_x1 * evaluar_xu) > 0:#no ahy un cambio de signo
             print("No hay un cambio de signo en los valores iniciales")
-            return jsonify({"error":"No hay un cambio de signo en los valores iniciales"})
+            return {"error":"No hay un cambio de signo en los valores iniciales"}
 
         instancia_respuesta.agregar_titulo1("Metodo de Falsa Posicion")
         instancia_respuesta.agregar_parrafo("Este metodo nos sirve para encontrar la raiz de una ecuacion, para ello se necesita una funcion f(x) continua en un intervalo [a,b] que contenga a la raiz.")
@@ -76,4 +76,4 @@ class falsa_posicion():
         instancia_respuesta.agregar_clave_valor("Error: ",error_acumulado)
         instancia_respuesta.agregar_tabla()
         res = instancia_respuesta.obtener_y_limpiar_respuesta()
-        return jsonify(res)
+        return res

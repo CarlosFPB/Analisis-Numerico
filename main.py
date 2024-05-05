@@ -7,6 +7,10 @@ from modelos.metodos.directos.polinomicas_mayor_3.ferrari.Ferrari import metodo_
 from  modelos.metodos.directos.polinomicas_mayor_3.tartaglia.Tartaglia import metodo_tartaglia
 from modelos.metodos.directos.polinomicas_menor_2.cuadratica.Cuadratica import metodo_cuadratico
 from modelos.metodos.directos.polinomicas_menor_2.lineal.Lineal import metodo_lineal
+from modelos.metodos.iterativos.abiertos.punto_fijo.Punto_fijo import metodo_punto_fijo
+from modelos.metodos.iterativos.abiertos.newton.Newton import metodo_newton
+from modelos.metodos.iterativos.abiertos.newton_modificado.Newton_modificado import metodo_newton_modificado
+from modelos.metodos.iterativos.abiertos.secante.Secante import metodo_secante
 
 def crear_app():
     app = Flask(__name__, static_url_path='/static')
@@ -65,7 +69,47 @@ def crear_app():
         respuesta = metodo_lineal.calcular_lineal(json_data)
         return respuesta
 
+    @app.route('/metodos/directos/abiertos/punto-Fijo', methods=['GET'])
+    def Punto_fijo():
+        return render_template('Punto_fijo.html')
+
+    @app.route('/metodos/directos/abiertos/punto-Fijo', methods=['POST'])
+    def calcular_punto_fijo():
+        json_data = request.json
+        respuesta = metodo_punto_fijo.calcular_punto_fijo(json_data)
+        return respuesta    
+
+    @app.route('/metodos/directos/abiertos/newton', methods=['GET'])
+    def Newton():
+        return render_template('Newton.html')
+
+    @app.route('/metodos/directos/abiertos/newton', methods=['POST'])
+    def calcular_newton():
+        json_data = request.json
+        respuesta = metodo_newton.calcular_newton(json_data)
+        return respuesta
+
+    @app.route('/metodos/directos/abiertos/Newton-Modificado', methods=['GET'])
+    def Newton_Modificado():
+        return render_template('Newton_modificado.html')
+
+    @app.route('/metodos/directos/abiertos/Newton-Modificado', methods=['POST'])
+    def calcular_newton_modificado():
+        json_data = request.json
+        respuesta = metodo_newton_modificado.calcular_newton_modificado(json_data)
+        return respuesta
+
+    @app.route('/metodos/directos/abiertos/Secante', methods=['GET'])
+    def Secante():
+        return render_template('Secante.html')
+
+    @app.route('/metodos/directos/abiertos/Secante', methods=['POST'])
+    def calcular_secante():
+        json_data = request.json
+        respuesta = metodo_secante.calcular_secante(json_data)
+        return respuesta
     return app
+
 if __name__ == '__main__':
     app = crear_app()
     app.run(debug=True, port=os.getenv("PORT", default=5000))
