@@ -177,6 +177,9 @@ function realizarPeticionPOST(endPoint, datos) {
 function prueba() {
     console.log('Hola');
 }
+function prueba() {
+    console.log('Hola');
+}
 
 
 function cargarEjercicio(i) {
