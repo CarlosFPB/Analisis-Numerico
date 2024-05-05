@@ -23,6 +23,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install Flask
         pip install sympy
+        pip install numpy
 
     # Ejecuta tu archivo main.py en segundo plano
     - name: Ejecutar main.py
