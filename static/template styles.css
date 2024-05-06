@@ -178,6 +178,7 @@ p {
     border-radius: 1rem;
     overflow: hidden;
     max-width: calc(100vw - 2.5rem);
+    width: var(--varminsize);
 }
 
 .titulo1 {
@@ -532,6 +533,7 @@ input {
                 'opsz' 24
         }
     }
+
     .viñeta:hover {
         opacity: 1;
         transform: scale(1.1);
@@ -596,6 +598,28 @@ dialog {
     backdrop-filter: none !important;
 }
 
+
+@media screen{
+    .stepbystep{
+        max-width: 70vw;
+        min-width: 50vw;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    
+    .stepbystep{
+        max-width: calc(100vw - 2rem);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    
+}
+
+@media screen and (max-width: 480px) {
+    
+}
 
 @media print {
     * {

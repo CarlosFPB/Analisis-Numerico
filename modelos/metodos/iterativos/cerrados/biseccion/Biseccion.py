@@ -34,18 +34,20 @@ class medoto_biseccion():
         valor_anterior = xr
         error_acumulado = 100
 
-        instancia_respuesta.agregar_titulo1("Metodo de Biseccion")
-        instancia_respuesta.agregar_parrafo("Este metodo nos sirve para encontrar la raiz de una ecuacion, para ello se necesita una funcion f(x) continua en un intervalo [a,b] que contenga a la raiz.")
         instancia_respuesta.crear_tabla()
+
         instancia_respuesta.agregar_titulo1("Valores Iniciales")
-        instancia_respuesta.agregar_parrafo(f"Funcion: {f_x}")
-        instancia_respuesta.agregar_parrafo(f"Xi: {x1}")
-        instancia_respuesta.agregar_parrafo(f"Xu: {xu}")
-        instancia_respuesta.agregar_parrafo(f"Tolerancia: {error_aceptable}")
+        instancia_respuesta.agregar_clave_valor("Funcion:",f_x)
+        instancia_respuesta.agregar_clave_valor("Xi:",x1)
+        instancia_respuesta.agregar_clave_valor("Xu:",xu)
+        instancia_respuesta.agregar_clave_valor("Tolerancia:",error_aceptable)
+
+
         instancia_respuesta.agregar_fila(['Iteracion','X1','Xu','Xr','f(Xr)','Condicion','Error'])
         instancia_respuesta.agregar_titulo1("El calculo de la raiz se hace por la siguiente formula: ")
-        instancia_respuesta.agregar_clave_valor("Formula:","Xr = (X1 + Xu) / 2")
+        instancia_respuesta.agregar_parrafo("Formula: Xr = (X1 + Xu) / 2")
         instancia_respuesta.agregar_parrafo(f"Iteracion 1: Xr = ( {x1} + {xu} ) / 2 = {biseccion.primera_aproximacion(x1,xu)}")
+        instancia_respuesta.agregar_parrafo(f"Evaluar f(Xr) = {f_x.subs(x,biseccion.primera_aproximacion(x1,xu))}")
         while True:
             #primera aproximacion
             print(f"iteracion {iteracion}")

@@ -171,6 +171,7 @@ function realizarPeticionPOST(endPoint, datos) {
             console.error('Error al realizar la solicitud::', error);
             console.log(datos);
 
+
         });
 }
 
@@ -198,7 +199,7 @@ function cargarEjercicio(i) {
 
 function mostrarPasos(arrayPasos) {
     let creaTabla = function (arreglo) {
-        let tabla = '<div class="tablecontainer"><table>'
+        let tabla = '<center><div class="tablecontainer"><table>'
         arreglo.forEach(row => {
             tabla += "<tr>"
             row.forEach(value => {
@@ -206,7 +207,7 @@ function mostrarPasos(arrayPasos) {
             })
             tabla += "</tr>"
         })
-        tabla += "</table></div>"
+        tabla += "</table></div></center>"
         return tabla
     }
     let añadirClaveValor = function (clave, valor) {
@@ -253,11 +254,15 @@ function mostrarPasos(arrayPasos) {
 
     });
 
+    toastify('Pasos cargados', 2);
+    
 
 
     $stepbystep = document.getElementById('stepbystep');
     $stepbystep.innerHTML = texto;
-    $stepbystep.style.width = "min-content";
+
+
+
 }
 
 
