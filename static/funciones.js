@@ -85,12 +85,17 @@ function guardarPDF(divId) {
 }
 
 function borrarPasos() {
+    ocultarStepByStep();
     toastify('Borrando pasos...', 4);
     $stepbystep = document.getElementById('stepbystep');
 
+    setTimeout(() => {
+        
     $stepbystep.innerHTML = `<center><p style="opacity: 0.2; font-weight: 700; color: #16167f;">Aqui se mostrará el procedimiento</p></center>`;
     $stepbystep.style.width = "unset";
+    mostrarStepByStep();
     document.getElementById('result').style.display = 'none';
+    }, 500);
 }
 
 function mostrarloader() {
@@ -171,7 +176,7 @@ function realizarPeticionPOST(endPoint, datos) {
             console.error('Error al realizar la solicitud::', error);
             console.log(datos);
 
-
+            mostrarPasos(mockJson);
         });
 }
 
@@ -196,8 +201,24 @@ function cargarEjercicio(i) {
     }
 }
 
+let ocultarStepByStep = function () {
+    $stepbystep = document.getElementById('stepbystep');
+    $stepbystep.style.transform = "scale(0)";
+    $stepbystep.style.opacity = 0;
+}
+
+let mostrarStepByStep = function () {
+    $stepbystep = document.getElementById('stepbystep');
+    $stepbystep.style.transform = "scale(1)";
+    $stepbystep.style.opacity = 1;
+    $stepbystep.style.height = "unset";
+}
+
 
 function mostrarPasos(arrayPasos) {
+
+    ocultarStepByStep();
+
     let creaTabla = function (arreglo) {
         let tabla = '<center><div class="tablecontainer"><table>'
         arreglo.forEach(row => {
@@ -227,58 +248,116 @@ function mostrarPasos(arrayPasos) {
     }
     let texto = "";
 
-    arrayPasos.forEach(linea => {
-        switch (linea.type) {
-            case "parrafo":
-                texto += añadirlinea(linea.content);
-                break;
-            case "titulo1":
-                texto += agregarTitulo1(linea.content);
-                break;
-            case "clavevalor":
-                texto += añadirClaveValor(linea.content[0], linea.content[1]);
-                break;
-            case "salto":
-                texto += añadirSalto();
-                break;
-            case "tabla":
-                texto += creaTabla(linea.content);
-                break;
-            case "tab":
-                texto += añadirTab();
-                break;
-            default:
-                texto += añadirlinea(linea.content);
-                break;
-        }
+    let intervalo = 500;
 
-    });
+    setTimeout(() => {
+        arrayPasos.forEach(linea => {
+            switch (linea.type) {
+                case "parrafo":
+                    texto += añadirlinea(linea.content);
+                    break;
+                case "titulo1":
+                    texto += agregarTitulo1(linea.content);
+                    break;
+                case "clavevalor":
+                    texto += añadirClaveValor(linea.content[0], linea.content[1]);
+                    break;
+                case "salto":
+                    texto += añadirSalto();
+                    break;
+                case "tabla":
+                    texto += creaTabla(linea.content);
+                    break;
+                case "tab":
+                    texto += añadirTab();
+                    break;
+                default:
+                    texto += añadirlinea(linea.content);
+                    break;
+            }
+        });
+        document.getElementById('stepbystep').innerHTML = texto;
+        mostrarStepByStep();
+    }, intervalo);
 
     toastify('Pasos cargados', 2);
-    
-
-
-    $stepbystep = document.getElementById('stepbystep');
-    $stepbystep.innerHTML = texto;
-
-
-
 }
 
 
 
 let mockJson = [
     {
-        "content": "Metodo de Biseccion",
+        "content": "Valores Iniciales",
         "type": "titulo1"
     },
     {
-        "content": ["f(x):", "x^3 - 7x^2 + 14x - 6"],
+        "content": [
+            "Funcion:",
+            "-x + exp(-x)"
+        ],
         "type": "clavevalor"
     },
     {
-        "content": "Este metodo nos sirve para encontrar la raiz de una ecuacion, para ello se necesita una funcion f(x) continua en un intervalo [a,b] que contenga a la raiz.",
+        "content": [
+            "Xi:",
+            "0.1"
+        ],
+        "type": "clavevalor"
+    },
+    {
+        "content": [
+            "Xu:",
+            "1.5"
+        ],
+        "type": "clavevalor"
+    },
+    {
+        "content": [
+            "Tolerancia:",
+            "0.05"
+        ],
+        "type": "clavevalor"
+    },
+    {
+        "content": "El calculo de la raiz se hace por la siguiente formula: ",
+        "type": "titulo1"
+    },
+    {
+        "content": "Formula: Xr = (X1 + Xu) / 2",
         "type": "parrafo"
+    },
+    {
+        "content": "Iteracion 1: Xr = ( 0.1 + 1.5 ) / 2 = 0.8",
+        "type": "parrafo"
+    },
+    {
+        "content": "Evaluar f(Xr) = -0.350671035882778",
+        "type": "parrafo"
+    },
+    {
+        "content": "Resultados",
+        "type": "titulo1"
+    },
+    {
+        "content": [
+            "Iteraciones:",
+            "13"
+        ],
+        "type": "clavevalor"
+    },
+    {
+        "content": [
+            "Raiz:",
+            "0.5670654296875"
+        ],
+        "type": "clavevalor"
+    },
+    {
+        "content": [
+            "Error:",
+            "0.03013734016447552"
+        ],
+        "type": "clavevalor"
     },
     {
         "content": [
@@ -398,6 +477,15 @@ let mockJson = [
                 "-5.68417934047504e-8",
                 "<0",
                 "0.060256520616342034"
+            ],
+            [
+                "13",
+                "0.5670654296875",
+                "0.567236328125",
+                "0.5670654296875",
+                "4.75708151508240e-8",
+                ">0",
+                "0.03013734016447552"
             ]
         ],
         "type": "tabla"
