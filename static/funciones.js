@@ -26,19 +26,6 @@ document.body.innerHTML += `
     </dialog>
     `
 
-function mostrarEjercicio() {
-    for (let i = 1; i < ejercicios.length; i++) {
-        let ejercicio = ejercicios[i];
-        let div = document.createElement("div");
-        div.innerHTML = `Ejericio ${i}`;
-        div.setAttribute("onclick", `cargarEjercicio(${i})`);
-        document.getElementById("ejercicios").appendChild(div);
-    }
-}
-setTimeout(() => {
-    mostrarEjercicio();
-}, 100);
-
 let toastify = function (mensaje, type = 1) {
     color = ""
     switch (type) {
@@ -90,11 +77,11 @@ function borrarPasos() {
     $stepbystep = document.getElementById('stepbystep');
 
     setTimeout(() => {
-        
-    $stepbystep.innerHTML = `<center><p style="opacity: 0.2; font-weight: 700; color: #16167f;">Aqui se mostrará el procedimiento</p></center>`;
-    $stepbystep.style.width = "unset";
-    mostrarStepByStep();
-    document.getElementById('result').style.display = 'none';
+
+        $stepbystep.innerHTML = `<center><p style="opacity: 0.2; font-weight: 700; color: #16167f;">Aqui se mostrará el procedimiento</p></center>`;
+        $stepbystep.style.width = "unset";
+        mostrarStepByStep();
+        document.getElementById('result').style.display = 'none';
     }, 500);
 }
 
@@ -132,6 +119,23 @@ function cerrarDialog(id) {
     document.removeEventListener('keydown', function (event) { });
 }
 
+let ocultarStepByStep = function () {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+    $stepbystep = document.getElementById('stepbystep');
+    $stepbystep.style.transform = "scale(0)";
+    $stepbystep.style.opacity = 0;
+}
+
+let mostrarStepByStep = function () {
+    $stepbystep = document.getElementById('stepbystep');
+    $stepbystep.style.transform = "scale(1)";
+    $stepbystep.style.opacity = 1;
+    $stepbystep.style.height = "unset";
+}
+
 function cambiarEstadoSugerencias() {
     let estado = document.querySelector(".sugerencias").style.right;
     let ancho = document.querySelector(".sugerencias").offsetWidth;
@@ -148,45 +152,23 @@ function cambiarEstadoSugerencias() {
     }
 }
 
+function mostrarEjercicio() {
+    for (let i = 1; i < ejercicios.length; i++) {
+        let ejercicio = ejercicios[i];
+        let div = document.createElement("div");
+        div.innerHTML = `Ejericio ${i}`;
+        div.setAttribute("onclick", `cargarEjercicio(${i})`);
+        document.getElementById("ejercicios").appendChild(div);
+    }
+}
+
+setTimeout(() => {
+    mostrarEjercicio();
+}, 200);
+
 setTimeout(() => {
     cambiarEstadoSugerencias()
 }, 4000);
-
-function realizarPeticionPOST(endPoint, datos) {
-    console.log(`peticion realizada a en: ${endPoint}`);
-    toastify('Realizando petición...', 1);
-    fetch(endPoint, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(datos),
-    })
-        .then(response => response.json())
-        .then(data => {
-            // Maneja la respuesta del servidor
-            toastify('Mostrando pasos...', 2);
-            console.log(data);
-            mostrarPasos(data)
-        })
-        .catch(error => {
-            // Maneja el error
-            toastify('Error al realizar la solicitud', 4);
-            toastify(error, 5);
-            console.error('Error al realizar la solicitud::', error);
-            console.log(datos);
-
-            mostrarPasos(mockJson);
-        });
-}
-
-function prueba() {
-    console.log('Hola');
-}
-function prueba() {
-    console.log('Hola');
-}
-
 
 function cargarEjercicio(i) {
 
@@ -201,19 +183,55 @@ function cargarEjercicio(i) {
     }
 }
 
-let ocultarStepByStep = function () {
-    $stepbystep = document.getElementById('stepbystep');
-    $stepbystep.style.transform = "scale(0)";
-    $stepbystep.style.opacity = 0;
+//#region Manejo de peticiones
+function realizarPeticionPOST(endPoint, datos) {
+    console.log(`peticion realizada a en: ${endPoint}`);
+    toastify('Realizando petición...', 1);
+    fetch(endPoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datos),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log("-----------------------");
+            console.log(data);
+            console.log("-----------------------");
+            if (data.hasOwnProperty("error")) {
+                mostrarError(data.error);
+            } else {
+                toastify('Mostrando pasos...', 2);
+                mostrarPasos(data)
+            }
+        })
+        .catch(error => {
+            // Maneja el error
+            toastify('Error al realizar la solicitud', 4);
+            toastify(error, 5);
+            console.error('Error al realizar la solicitud::', error);
+            console.log(datos);
+
+            mostrarPasos(mockJson);
+        });
 }
 
-let mostrarStepByStep = function () {
-    $stepbystep = document.getElementById('stepbystep');
-    $stepbystep.style.transform = "scale(1)";
-    $stepbystep.style.opacity = 1;
-    $stepbystep.style.height = "unset";
-}
+function mostrarError(error) {
+    ocultarStepByStep();
 
+    setTimeout(() => {
+        
+    toastify('Error al realizar la solicitud', 4);
+    toastify(error, 5);
+    console.error('Error al realizar la solicitud::', error);
+
+    $stepbystep = document.getElementById('stepbystep');
+    $stepbystep.innerHTML = `<center><p style="opacity: 0.7; font-weight: 700; color: red;">${error}</p></center>`;
+    mostrarStepByStep();
+    }, 500);
+
+}
 
 function mostrarPasos(arrayPasos) {
 
