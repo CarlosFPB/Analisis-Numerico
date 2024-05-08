@@ -194,11 +194,14 @@ function realizarPeticionPOST(endPoint, datos) {
         },
         body: JSON.stringify(datos),
     })
-        .then(response => response.json())
+        .then(response => {
+            let status = response.status;
+            console.log(`Status: ${status}`);
+            toastify(`Status: ${status}`, 5);
+            return response.json();
+        })
         .then(data => {
-            console.log("-----------------------");
             console.log(data);
-            console.log("-----------------------");
             if (data.hasOwnProperty("error")) {
                 mostrarError(data.error);
             } else {
@@ -216,6 +219,7 @@ function realizarPeticionPOST(endPoint, datos) {
             mostrarPasos(mockJson);
         });
 }
+
 
 function mostrarError(error) {
     ocultarStepByStep();
