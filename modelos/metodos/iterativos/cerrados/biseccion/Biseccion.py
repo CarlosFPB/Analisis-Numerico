@@ -11,7 +11,7 @@ class medoto_biseccion():
         try:
             f_x = sp.sympify(json_data["funcion"])
         except:
-            return {"error":"Error en la funcion"}
+            return {"error":"Error en la funcion"}, 500
             
         error_aceptable = float(json_data["tolerancia"])
         x1 = float(json_data["xi"])
