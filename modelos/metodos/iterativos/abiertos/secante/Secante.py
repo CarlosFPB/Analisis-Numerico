@@ -1,7 +1,7 @@
 from flask import jsonify
 import  sympy as sp
 import numpy as np
-from .....Extras.funciones import errores, secante, respuesta_json
+from .....extras.Funciones import errores, secante, respuesta_json
 
 
 class metodo_secante():
@@ -49,7 +49,7 @@ class metodo_secante():
         #print("La raiz aproximada es: ", x_actual)
         instancia_respuesta.agregar_tabla()
         res = instancia_respuesta.obtener_y_limpiar_respuesta()
-        return jsonify(res)
+        return res
 
 
 

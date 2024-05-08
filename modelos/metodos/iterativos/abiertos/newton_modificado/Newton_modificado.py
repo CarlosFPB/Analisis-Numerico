@@ -1,7 +1,7 @@
 from flask import jsonify
 import  sympy as sp
 import numpy as np
-from .....Extras.funciones import errores, newton_modificado, respuesta_json
+from .....extras.Funciones import errores, newton_modificado, respuesta_json
 
 class metodo_newton_modificado():
     @staticmethod

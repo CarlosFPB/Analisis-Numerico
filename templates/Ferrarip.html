@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Método Bisección</title>
+    <title>Método Ferrari</title>
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
 
@@ -31,7 +31,7 @@
 <body>
     <div>
     </div>
-    <span class="text_hero">Método <span class="textGradient1">Newton</span></span>
+    <span class="text_hero">Método <span class="textGradient1">Ferrari</span></span>
     <p>Este metodo se utiliza para encontrar la raiz de una funcion en un intervalo [Xi,Xu]</p>
 
     <div class="content">
@@ -47,6 +47,10 @@
                 <div class="valor">
                     <label for="xi">Xi:</label>
                     <input type="number" name="xi" id="xi" required value="0.1" maxlength="5">
+                </div>
+                <div class="valor">
+                    <label for="xu">Xu:</label>
+                    <input type="number" name="xu" id="xu" required value="1.5">
                 </div>
                 <div class="valor">
                     <label for="tolerancia">Tolerancia:</label>
@@ -206,9 +210,9 @@
 
     <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo
-        let endPoint = "/metodos/directos/abiertos/newton"
+        let endPoint = "/metodos/iterativos/cerrados/Biseccion"
         //Aqui iran los id de todos los datos que se enviaran al EndPoint
-        let variables = ["funcion", "xi", "tolerancia"];
+        let variables = ["funcion", "xi", "xu", "tolerancia"];
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
         function calcular() {
             let datos = {}
@@ -226,11 +230,6 @@
             ["sin(x)", 0, 3, 0.1],
             ["log(x)", 1, 10, 0.001]
         ]
-        //metodos de inicio para que se vea bien la interfaz
-        mostrarEjercicio()
-        setTimeout(() => {
-            cambiarEstadoSugerencias()
-        }, 4000);
     </script>
 
     <script src="/static/Loader/background.js" async></script>

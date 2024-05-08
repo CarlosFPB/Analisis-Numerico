@@ -157,6 +157,10 @@ p {
     gap: 1rem;
 }
 
+body {
+    overflow-y: scroll; /* Siempre muestra la barra de desplazamiento vertical */
+}
+
 .footer {
     width: 100%;
     height: 100%;
@@ -178,6 +182,9 @@ p {
     border-radius: 1rem;
     overflow: hidden;
     max-width: calc(100vw - 2.5rem);
+    width: var(--varminsize);
+
+    transition: all 0.5s;
 }
 
 .titulo1 {
@@ -286,20 +293,24 @@ input {
     gap: 0.3rem;
     align-items: center;
     flex-direction: row;
+    flex-wrap: wrap;
 
     :first-child {
-        font-weight: bolder;
         font-style: italic;
-        font-size: 1.2.5rem;
         color: rgba(0, 0, 0, 0.7);
     }
 
     :last-child {
         font-family: "Mate", serif;
-        font-weight: 800;
+        font-weight: normal;
         font-style: italic;
         font-size: 1.5rem;
-        color: rgb(65, 64, 64);
+        background: linear-gradient(135deg, #000000 50%, #f64747 100%);
+        background-clip: text;
+        color: transparent;
+
+        border-radius: 0.5rem;
+        border: 0.1rem solid rgba(0, 127, 174, 0.114);
     }
 }
 
@@ -532,6 +543,7 @@ input {
                 'opsz' 24
         }
     }
+
     .viñeta:hover {
         opacity: 1;
         transform: scale(1.1);
@@ -593,9 +605,30 @@ dialog {
 }
 
 * {
-    backdrop-filter: none !important;
 }
 
+
+@media screen{
+    .stepbystep{
+        max-width: 70vw;
+        min-width: 50vw;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    
+    .stepbystep{
+        max-width: calc(100vw - 2rem);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    
+}
+
+@media screen and (max-width: 480px) {
+    
+}
 
 @media print {
     * {
