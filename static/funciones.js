@@ -150,23 +150,34 @@ function realizarPeticionPOST(endPoint, datos) {
         },
         body: JSON.stringify(datos),
     })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la solicitud');
+            }
+            return response.json();
+        })
         .then(data => {
-            // Maneja la respuesta del servidor
-            toastify('Mostrando pasos...', 2);
-            console.log(data);
-            mostrarPasos(data)
+            if (data.error) {
+                // Muestra el mensaje de error junto con la función
+                document.getElementById('errorDiv').innerText = `Ha ocurrido un error con la funcion ingresada: ${data.error}: ${data.funcion}`;
+                toastify('Error al realizar la solicitud', 4);
+                toastify(`${data.error}: ${data.funcion}`, 5);
+                console.error('Error al realizar la solicitud:', `${data.error}: ${data.funcion}`);
+            } else {
+                toastify('Mostrando pasos...', 2);
+                console.log(data);
+                mostrarPasos(data);
+            }
         })
         .catch(error => {
-
-            // Maneja el error
             toastify('Error al realizar la solicitud', 4);
             toastify(error, 5);
-            console.error('Error al realizar la solicitud::', error);
+            console.error('Error al realizar la solicitud:', error);
             console.log(datos);
-
         });
 }
+
+
 
 function prueba() {
     console.log('Hola');
