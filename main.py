@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 import os
 
 # Importaciones de métodos
@@ -11,6 +11,8 @@ from modelos.metodos.iterativos.abiertos.punto_fijo.Punto_fijo import metodo_pun
 from modelos.metodos.iterativos.abiertos.newton.Newton import metodo_newton
 from modelos.metodos.iterativos.abiertos.newton_modificado.Newton_modificado import metodo_newton_modificado
 from modelos.metodos.iterativos.abiertos.secante.Secante import metodo_secante
+from modelos.metodos.iterativos.polinomicos.horner.Horner import metodo_horner
+from modelos.metodos.iterativos.polinomicos.muller.Muller import metodo_muller
 
 def crear_app():
     app = Flask(__name__, static_url_path='/static')
@@ -18,6 +20,11 @@ def crear_app():
     @app.route('/')
     def index():
         return render_template('index.html')
+    
+    @app.errorhandler(404)
+    def page_not_found(e):
+    # Redirige automáticamente a la URL de la imagen del gato
+        return redirect("https://http.cat/404", code=302)
 
     @app.route('/metodos/iterativos/cerrados/Biseccion', methods=['GET'])
     def renderizar_biseccion():
@@ -108,6 +115,29 @@ def crear_app():
         json_data = request.json
         respuesta = metodo_secante.calcular_secante(json_data)
         return respuesta
+
+    @app.route('/metodos/iterativos/polinomicos/horner', methods=['POST'])
+    def calcular_horner():
+        json_data = request.json
+        respuesta = metodo_horner.calcular_Horner(json_data)
+        return respuesta
+    
+    @app.route('/metodos/iterativos/polinomicos/horner', methods=['GET'])
+    def Horner():
+        return render_template('Horner.html')
+    
+    @app.route('/metodos/iterativos/polinomicos/muller', methods=['POST'])
+    def calcular_muller():
+        json_data = request.json
+        respuesta = metodo_muller.calcular_Muller(json_data)
+        return respuesta
+    
+    @app.route('/metodos/iterativos/polinomicos/muller', methods=['GET'])
+    def Muller():
+        return render_template('Muller.html')
+
+
+        
     return app
 
 if __name__ == '__main__':

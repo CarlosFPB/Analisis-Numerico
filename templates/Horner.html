@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Método de Horner</title>
+    <!-- para el Loader -->
+    <link rel="stylesheet" href="/static/Loader/loaders.css">
+
+    <!-- Estilo de la pagina en General -->
+    <link rel="stylesheet" href="/static/template styles.css">
+
+    <!-- Dependencias del Toast -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css" />
+
+    <!-- Script Base JS -->
+    <script src="/static/funciones.js" async></script>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicono/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+
+<body>
+    <div>
+    </div>
+    <span class="text_hero">Método <span class="textGradient1">Horner</span></span>
+    <p>Este metodo se utiliza para encontrar la raiz de una funcion con un punto x0</p>
+
+    <div class="content">
+        <div id="main" class="main">
+            <div class="descripocion">
+                <p>Ingrese los datos para calcular la raiz de la funcion</p>
+            </div>
+            <div class="formulario">
+                <div class="valor">
+                    <label for="funcion">Funcion:</label>
+                    <input type="text" name="funcion" id="funcion" required value="1+3*x+5*x**2+6*x**3" style="width: auto;">
+                </div>
+                <div class="valor">
+                    <label for="x0">X0:</label>
+                    <input type="number" name="x0" id="x0" required value="-0.45" maxlength="5">
+                </div>
+                <div class="valor">
+                    <label for="tolerancia">Tolerancia:</label>
+                    <input type="number" name="tolerancia" id="tolerancia" required value="0.05">
+                </div>
+            </div>
+            <div class="ui">
+                <div id="calcular" class="buttonBig button-green" onclick="calcular()">
+                    <span class="material-symbols-outlined">
+                        calculate
+                    </span>
+                    <span>Calcular</span>
+                </div>
+                <div id="guardar" class="buttonBig button-blue" onclick="guardarPDF('stepbystep')">
+                    <span class="material-symbols-outlined">
+                        save
+                    </span>
+                </div>
+                <div id="borrar" class="buttonBig button-red" onclick="borrarPasos()">
+                    <span class="material-symbols-outlined">
+                        delete
+                    </span>
+                </div>
+            </div>
+            <div class="ui">
+                <div class="buttonSmall button-yellow" onclick="mostrarDialog('explicamelo')">
+                    <span class="material-symbols-outlined">
+                        assignment
+                    </span>
+                    <span>Explícamelo</span>
+                </div>
+                <div class="buttonSmall button-orange" onclick="mostrarDialog('diagrama')">
+                    <span class="material-symbols-outlined">
+                        account_tree
+                    </span>
+                    <span>Diagrama de Flujo</span>
+                </div>
+                <div class="buttonSmall button-purple" onclick="mostrarDialog('api')">
+                    <span class="material-symbols-outlined">
+                        api
+                    </span>
+                    <span>API</span>
+                </div>
+            </div>
+        </div>
+        <div id="stepbystep" class="stepbystep">
+            <center>
+                <p style="
+                    opacity: 0.2;
+                    font-weight: 700;
+                    color: #16167f;
+                    width: 100%;
+                    ">Aqui se mostrará el procedimiento</p>
+            </center>
+        </div>
+        <div id="result" class="result" style="display: none;">
+            <h2><span class="textGradient5">Resultados</span></h2>
+            <div class="contentresult">
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="footer">
+        <a class="regresar" href="/">Regresar</a>
+    </div>
+
+    <!-- Sugerencias de Ejercicios 
+    este sera una ventana que estara flotando a la derecha de la pagina
+    -->
+    <div class="sugerencias" style="right: calc(-253px);">
+        <span><span class="textGradient1">
+                Ejercicios Sugeridos
+            </span>
+        </span>
+        <div id="ejercicios">
+
+        </div>
+        <div class="viñeta" onclick="cambiarEstadoSugerencias()">
+            <span class="material-symbols-outlined textGradient4">
+                keyboard_double_arrow_left
+            </span>
+        </div>
+    </div>
+
+    <dialog id="explicamelo">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('explicamelo')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+
+                <h2>Explicación del Método de Horner</h2>
+                <p>El método de Horner es un algoritmo que se utiliza para evaluar polinomios de forma eficiente. Este
+                    método se basa en la regla de Horner, la cual consiste en factorizar un polinomio</p>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="diagrama">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('diagrama')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+                <h2>Diagrama de Flujo del Método de Horner</h2>
+                <center>
+                    <p>Aqui debe ir una imagen bien perrona del codigo</p>
+                </center>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="api">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('api')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+                <h2>API del Método de Horner</h2>
+                <p>Para utilizar el método de Horner a través de la API, debes realizar una petición POST al
+                    siguiente endpoint:</p>
+                <p><code>https://nummeth.herokuapp.com/metodos/directos/cerrados/Biseccion</code></p>
+                <p>Los parámetros que debes incluir en la petición son los siguientes:</p>
+                <ul>
+                    <li><code>funcion</code>: La función para la cual deseas encontrar la raíz.</li>
+                    <li><code>xi</code>: El valor inicial del intervalo [Xi, Xu].</li>
+                    <li><code>xu</code>: El valor final del intervalo [Xi, Xu].</li>
+                    <li><code>tolerancia</code>: La tolerancia deseada para la aproximación de la raíz.</li>
+                </ul>
+                <p>Al realizar la petición, recibirás como respuesta un objeto JSON con los siguientes campos:</p>
+                <ul>
+                    <li><code>raiz</code>: El valor aproximado de la raíz de la función.</li>
+                    <li><code>iteraciones</code>: El número de iteraciones realizadas para encontrar la raíz.</li>
+                    <li><code>error</code>: El error relativo porcentual de la aproximación.</li>
+                </ul>
+                <p>¡Inténtalo y encuentra la raíz de tus funciones de forma sencilla!</p>
+            </div>
+        </div>
+    </dialog>
+
+
+
+    <script>
+        //Aqui debe ir la direccion del EndPoint de el Metodo
+        let endPoint = "/metodos/iterativos/polinomicos/horner"
+        //Aqui iran los id de todos los datos que se enviaran al EndPoint
+        let variables = ["funcion", "x0", "tolerancia"];
+        //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
+        function calcular() {
+            let datos = {}
+            variables.forEach(variable => {
+                datos[variable] = document.getElementById(variable).value;
+            });
+            console.log(datos);
+            realizarPeticionPOST(endPoint, datos)
+        }
+        //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
+        let ejercicios = [
+            ["funcion", "xi", "tolerancia"],
+            ["-x + exp(-x)", 0.1, 1.5, 0.05],
+            ["x^2 - 4", -2, 2, 0.01],
+            ["sin(x)", 0, 3, 0.1],
+            ["log(x)", 1, 10, 0.001]
+        ]
+    </script>
+
+    <script src="/static/Loader/background.js" async></script>
+</body>
+
+</html>

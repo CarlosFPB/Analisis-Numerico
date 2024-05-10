@@ -136,6 +136,22 @@ class respuesta_json():
         cont = [str(clave), str(contenido)]
         self.respuesta.append({'type': "clavevalor", 'content': cont})
 
+    def agregar_divicion_sinterica(self, contenido):
+        #contenido es una matriz con 3 filas
+        resp = []
+        for i in contenido:
+            convertidas = []
+            for j in i:
+                convertidas.append(str(j))
+            resp.append(convertidas)
+        self.respuesta.append({'type': 'divicionsinterica', 'content': resp})
+        
+
+    def responder_error(self, contenido):
+        self.respuesta = []
+        self.respuesta.append({'type': 'error', 'content': str(contenido)})
+        return self.respuesta
+
     def obtener_respuesta(self):
         return self.respuesta
     
