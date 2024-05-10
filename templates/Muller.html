@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Método Bisección</title>
+    <title>Método Muller</title>
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
 
@@ -31,8 +31,8 @@
 <body>
     <div>
     </div>
-    <span class="text_hero">Método <span class="textGradient1">Newton-Modificado</span></span>
-    <p>Este metodo se utiliza para encontrar la raiz de una funcion en un intervalo [Xi,Xu]</p>
+    <span class="text_hero">Método <span class="textGradient1">Muller</span></span>
+    <p>Este metodo se utiliza para encontrar la raiz de una funcion</p>
 
     <div class="content">
         <div id="main" class="main">
@@ -42,11 +42,19 @@
             <div class="formulario">
                 <div class="valor">
                     <label for="funcion">Funcion:</label>
-                    <input type="text" name="funcion" id="funcion" required value="-x + exp(-x)" style="width: auto;">
+                    <input type="text" name="funcion" id="funcion" required value="x^3-13*x-12" style="width: auto;">
                 </div>
                 <div class="valor">
-                    <label for="xi">Xi:</label>
-                    <input type="number" name="xi" id="xi" required value="0.1" maxlength="5">
+                    <label for="x0">X0:</label>
+                    <input type="number" name="x0" id="x0" required value="4.5" maxlength="5">
+                </div>
+                <div class="valor">
+                    <label for="x1">X1:</label>
+                    <input type="number" name="x1" id="x1" required value="5.5">
+                </div>
+                <div class="valor">
+                    <label for="x2">X2:</label>
+                    <input type="number" name="x2" id="x2" required value="5">
                 </div>
                 <div class="valor">
                     <label for="tolerancia">Tolerancia:</label>
@@ -164,7 +172,7 @@
                         close
                     </span>
                 </span>
-                <h2>Diagrama de Flujo del Método Bisección</h2>
+                <h2>Diagrama de Flujo del Método de Muller</h2>
                 <center>
                     <p>Aqui debe ir una imagen bien perrona del codigo</p>
                 </center>
@@ -180,7 +188,7 @@
                         close
                     </span>
                 </span>
-                <h2>API del Método Bisección</h2>
+                <h2>API del Método de Muller</h2>
                 <p>Para utilizar el método de la bisección a través de la API, debes realizar una petición POST al
                     siguiente endpoint:</p>
                 <p><code>https://nummeth.herokuapp.com/metodos/directos/cerrados/Biseccion</code></p>
@@ -206,9 +214,9 @@
 
     <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo
-        let endPoint = "/metodos/directos/abiertos/Newton-Modificado"
+        let endPoint = "/metodos/iterativos/polinomicos/muller"
         //Aqui iran los id de todos los datos que se enviaran al EndPoint
-        let variables = ["funcion", "xi", "tolerancia"];
+        let variables = ["funcion", "x0", "x1","x2", "tolerancia"];
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
         function calcular() {
             let datos = {}
@@ -226,11 +234,6 @@
             ["sin(x)", 0, 3, 0.1],
             ["log(x)", 1, 10, 0.001]
         ]
-        //metodos de inicio para que se vea bien la interfaz
-        mostrarEjercicio()
-        setTimeout(() => {
-            cambiarEstadoSugerencias()
-        }, 4000);
     </script>
 
     <script src="/static/Loader/background.js" async></script>
