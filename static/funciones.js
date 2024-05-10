@@ -203,11 +203,8 @@ function realizarPeticionPOST(endPoint, datos) {
         .then(data => {
             console.log(data);
             if (data.hasOwnProperty("error")) {
-                console.log("JSON contiene error")
-                mostrarError(data);
-                return;
+                mostrarError(data.error);
             } else {
-                console.log("JSON no tiene errores")
                 toastify('Mostrando pasos...', 2);
                 mostrarPasos(data)
             }
@@ -224,17 +221,17 @@ function realizarPeticionPOST(endPoint, datos) {
 }
 
 
-function mostrarError(data) {
+function mostrarError(error) {
     ocultarStepByStep();
 
     setTimeout(() => {
         
     toastify('Error al realizar la solicitud', 4);
-    toastify(data.contend, 5);
-    //console.error('Error al realizar la solicitud::', data.contend);
+    toastify(error, 5);
+    console.error('Error al realizar la solicitud::', error);
 
     $stepbystep = document.getElementById('stepbystep');
-    $stepbystep.innerHTML = `<center><p style="opacity: 0.7; font-weight: 700; color: red;">${data.contend}</p></center>`;
+    $stepbystep.innerHTML = `<center><p style="opacity: 0.7; font-weight: 700; color: red;">${error}</p></center>`;
     mostrarStepByStep();
     }, 500);
 
