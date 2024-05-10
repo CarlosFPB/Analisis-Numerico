@@ -149,8 +149,8 @@ class respuesta_json():
 
     def responder_error(self, contenido):
         self.respuesta = []
-        self.respuesta.append({'type': 'error', 'content': str(contenido)})
-        return self.respuesta
+        resp = {'error' :  str(contenido)}
+        return resp
 
     def obtener_respuesta(self):
         return self.respuesta
