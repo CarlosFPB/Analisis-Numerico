@@ -88,6 +88,10 @@ class medoto_biseccion():
             #print(f"Con un error de: {error_acumulado}%")
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()
             return jsonify(resp), 200
+        except TypeError as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
+        
         except Exception as e:
             resp = instancia_respuesta.responder_error("Error interno del codigo\n"+str(e)), 500
             return jsonify(resp), 500

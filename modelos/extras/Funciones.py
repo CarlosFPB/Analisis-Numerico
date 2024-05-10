@@ -166,7 +166,6 @@ class respuesta_json():
     def agregar_fila(self, fila):
         convertidas = []
         for i in fila:
-            print("i",i)
             convertidas.append(str(i))
         fila = convertidas
 
