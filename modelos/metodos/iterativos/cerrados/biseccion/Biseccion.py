@@ -39,7 +39,7 @@ class medoto_biseccion():
             evaluar_x1 = f_x.subs(x,x1)
             evaluar_xu = f_x.subs(x,xu)
             if (evaluar_x1 * evaluar_xu) > 0:#no ahy un cambio de signo
-                resp = instancia_respuesta.responder_error("No hay un cambio de signo en los valores iniciales")
+                resp = instancia_respuesta.responder_error("No se encontró cambio de signo en los valores iniciales por ende no hay raíz en el intervalo dado")
                 return jsonify(resp), 400
             
         
