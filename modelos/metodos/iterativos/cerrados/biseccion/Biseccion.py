@@ -13,10 +13,23 @@ class medoto_biseccion():
             #obtengo los valores del json
             try:
                 f_x = sp.sympify(json_data["funcion"])
-            except:
+                resultado = f_x.subs(x, 2)
+                if resultado > 0:
+                    pass
+            except sp.SympifyError:
                 resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
                 return jsonify(resp), 400
-                
+            except TypeError as e:
+                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                return jsonify(resp), 400
+            
+            #Comprobar si tiene raices
+            soluciones = sp.solve(sp.Eq(f_x, 0), x)
+            if not any(sol.is_real for sol in soluciones):
+             resp = instancia_respuesta.responder_error("La función no tiene raíces")
+             return jsonify(resp), 400
+
+
             error_aceptable = float(json_data["tolerancia"])
             x1 = float(json_data["xi"])
             xu = float(json_data["xu"])
@@ -88,11 +101,9 @@ class medoto_biseccion():
             #print(f"Con un error de: {error_acumulado}%")
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()
             return jsonify(resp), 200
-        except TypeError as e:
-            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-            return jsonify(resp), 400
         
         except Exception as e:
-            resp = instancia_respuesta.responder_error("Error interno del codigo\n"+str(e)), 500
+            resp = instancia_respuesta.responder_error("Error interno del codigo\n"+str(e))
             return jsonify(resp), 500
+        
 
