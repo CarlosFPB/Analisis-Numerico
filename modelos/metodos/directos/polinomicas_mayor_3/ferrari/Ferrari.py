@@ -17,6 +17,9 @@ class metodo_ferrari:
                 
                 #obtener los valores del json
                 f_x_crudo = sp.simplify(json_data["funcion"])
+                resultado = f_x_crudo.subs(x, 2)
+                if resultado > 0:
+                    pass
 
                 #Veificar si es polinomio
                 if not Ferrari.es_funcion_polinomio(f_x_crudo):
@@ -29,9 +32,7 @@ class metodo_ferrari:
                     return jsonify(resp), 400
                 
                 f_x = f_x_crudo/f_x_crudo.as_poly(x).coeffs()[0]#para convertir en 0 el coeficiente de x^4
-                resultado = f_x_crudo.subs(x, 2)
-                if resultado > 0:
-                    pass
+                
 
             except sp.SympifyError:
                 resp = respuesta.responder_error("Error en la función ingresada")
