@@ -136,6 +136,13 @@ def Muller():
     return render_template('Muller.html')
 
 
+#Esto es una prueba de el metodo de interpoplacion
+
+@app.route('/metodos/interpolacion', methods=['GET'])
+def Interpolacion():
+    return render_template('Lagrange.html')
+
+
         
  
 
