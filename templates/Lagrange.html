@@ -90,7 +90,6 @@
 
                 function obtenerArray() {
                     arrayOfPuntos = [];
-
                     idpuntos.forEach(id => {
                         let puntos = Array.from(document.getElementById(id).children[1].children);
                         puntos.pop();
@@ -104,11 +103,11 @@
 
                 function cambiarTipo(checkbox) {
                     if (checkbox.checked) {
-                        document.getElementById("puntosX").style.display = "none";
-                        document.getElementById("puntosY").style.display = "none";
-                    } else {
-                        document.getElementById("puntosX").style.display = "flex";
                         document.getElementById("puntosY").style.display = "flex";
+                        document.getElementById("funcion").style.display = "none";
+                    } else {
+                        document.getElementById("funcion").style.display = "unset";
+                        document.getElementById("puntosY").style.display = "none";
                     }
                 }
 
@@ -325,11 +324,42 @@
         let variables = ["funcion"];
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
         function calcular() {
+
+
             let datos = {}
-            datos.puntos = arrayOfPuntos;
-            variables.forEach(variable => {
-                datos[variable] = document.getElementById(variable).value;
-            });
+
+            let arrayOfPuntos = [];
+            let tipo
+            let funcion = document.getElementById("funcion").value;
+            if (document.getElementById("tipo").checked) {
+                tipo = 2
+                datos.tipo = tipo
+            }
+            else {
+                tipo = 1
+                datos.tipo = tipo
+                datos.funcion = funcion
+            }
+            let resta = tipo == 1 ? 1 : 0;
+
+            for (let i = 0; i < (idpuntos.length - (resta)); i++) {
+                let puntos = Array.from(document.getElementById(idpuntos[i]).children[1].children);
+                puntos.pop();
+                puntos = puntos.map(punto => punto.value);
+                arrayOfPuntos.push(puntos);
+            }
+
+
+
+            if (document.getElementById("tipo").checked) {
+                datos.tipo = 2;
+            } else {
+                datos.tipo = 1;
+            }
+
+
+            datos.matrizPuntos = arrayOfPuntos;
+
             console.log(datos);
             realizarPeticionPOST(endPoint, datos)
         }
