@@ -114,7 +114,25 @@ class newton_modificado():
         respuesta = x0 - (f_x_evaluada * f_prima_evaluada)/(f_prima_evaluada**2 - f_x_evaluada * f_prima_prima_evaluada)
         return float(respuesta)
     
-
+class Ferrari():
+     @staticmethod
+     def es_funcion_cuarto_grado(funcion):
+        # Divide la función en términos separados
+        terminos = re.split(r'\+|\-', funcion)
+        # Verifica cada término para ver si tiene un exponente de 4
+        for termino in terminos:
+            if '**4' in termino:
+                return True
+        return False
+     
+     @staticmethod
+     def es_funcion_polinomio(funcion):
+        x = sp.symbols('x')
+        poly_funcion = funcion.as_poly(x)
+        
+        if poly_funcion is None:
+            return False
+        return True
 
 class respuesta_json():
     respuesta = []
