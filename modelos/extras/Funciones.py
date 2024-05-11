@@ -119,9 +119,10 @@ class Ferrari():
      def es_funcion_cuarto_grado(funcion):
         # Divide la función en términos separados
         terminos = re.split(r'\+|\-', funcion)
-        # Verifica cada término para ver si tiene un exponente de 4
         for termino in terminos:
-            if '**4' in termino:
+        # Obtener el exponente del término
+            match = re.search(r'\*\*(\d+)', termino)
+            if match and int(match.group(1)) == 4:
                 return True
         return False
      
