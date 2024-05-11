@@ -1,25 +1,47 @@
 import sympy as sp
 import math
-from modelos.extras.Funciones import errores, respuesta_json
 from flask import jsonify
-
-class metodo_ferrari:
-        
+from modelos.extras.Funciones import errores, respuesta_json, Ferrari
+class metodo_ferrari:    
+    
+     
+    @staticmethod
     def calcular_ferrari(json_data):
-        try:
+        
+        try:    
+            
             x = sp.symbols('x')
-            #instanciar la respuesta
-            respuesta = respuesta_json()
-
-            #obtener los valores del json
-            f_x_crudo = json_data["funcion"]
+            respuesta = respuesta_json()     
+            
             try:
-                f_x_crudo = sp.sympify(f_x_crudo)
-            except:
-                resp = respuesta.responder_error("Error en la funcion ingresada")
+                
+                #obtener los valores del json
+                f_x_crudo = sp.simplify(json_data["funcion"])
+
+                #Veificar si es polinomio
+                if not Ferrari.es_funcion_polinomio(f_x_crudo):
+                    resp = respuesta.responder_error("La función ingresada no es un polinomio")
+                    return jsonify(resp), 400
+                
+                #Verificar si tiene exponente 4, se pasa la funcion en string solo necesita verificar el exponente
+                if not Ferrari.es_funcion_cuarto_grado(json_data["funcion"]):
+                    resp = respuesta.responder_error("La función ingresada no es de cuarto grado")
+                    return jsonify(resp), 400
+                
+                f_x = f_x_crudo/f_x_crudo.as_poly(x).coeffs()[0]#para convertir en 0 el coeficiente de x^4
+                resultado = f_x_crudo.subs(x, 2)
+                if resultado > 0:
+                    pass
+
+            except sp.SympifyError:
+                resp = respuesta.responder_error("Error en la función ingresada")
+                return jsonify(resp), 400
+            except TypeError as e:
+                resp = respuesta.responder_error("Error en la función ingresada")
                 return jsonify(resp), 400
 
-            f_x = f_x_crudo/f_x_crudo.as_poly(x).coeffs()[0]#para convertir en 0 el coeficiente de x^4
+            #instanciar la respuesta
+           
 
             respuesta.agregar_titulo1("Metodo de Ferrari")
             respuesta.agregar_parrafo("Este metodo Obtendra las raices de una funcion de grado 4")
@@ -29,10 +51,6 @@ class metodo_ferrari:
             #obtiene los coeficientes de la funcion de forma descendente
             polinomio = f_x.as_poly(x)
             grado = polinomio.degree()
-            #evaluo el grado antes de avanzar
-            if grado != 4:
-                resp = respuesta.responder_error("El polinomio debe ser de grado 4 y este es de grado "+str(grado))
-                return jsonify(resp), 400
             coefficientes = [polinomio.coeff_monomial(x**i) for i in range(grado, -1, -1)]
             a = coefficientes[1]
             b = coefficientes[2]
@@ -142,8 +160,9 @@ class metodo_ferrari:
             respuesta.agregar_clave_valor("x2", x2)
             respuesta.agregar_clave_valor("x3", x3)
             respuesta.agregar_clave_valor("x4", x4)
-            resp = respuesta.obtener_y_limpiar_respuesta()
-            return jsonify(resp), 200
+            res = respuesta.obtener_y_limpiar_respuesta()
+            return jsonify(res)
+        
         except Exception as e:
-            resp = respuesta.responder_error("Error en el codigo interno\n"+str(e))
+            resp = respuesta.responder_error("Error interno del codigo\n"+str(e)), 500
             return jsonify(resp), 500
