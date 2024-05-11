@@ -13,6 +13,7 @@ from modelos.metodos.iterativos.abiertos.newton_modificado.Newton_modificado imp
 from modelos.metodos.iterativos.abiertos.secante.Secante import metodo_secante
 from modelos.metodos.iterativos.polinomicos.horner.Horner import metodo_horner
 from modelos.metodos.iterativos.polinomicos.muller.Muller import metodo_muller
+from modelos.metodos.interpolacion.lagrange.Lagrange import metodo_lagrange
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -138,12 +139,17 @@ def Muller():
 
 #Esto es una prueba de el metodo de interpoplacion
 
-@app.route('/metodos/interpolacion', methods=['GET'])
+@app.route('/metodos/interpolacion/lagrange', methods=['GET'])
 def Interpolacion():
     return render_template('Lagrange.html')
 
+@app.route('/metodos/interpolacion/lagrange', methods=['POST'])
+def calcular_lagrange():
+    json_data = request.json
+    respuesta = metodo_lagrange.calcular_lagrange(json_data)
+    return respuesta
 
-        
+
  
 
 if __name__ == '__main__':
