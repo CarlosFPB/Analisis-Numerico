@@ -10,23 +10,17 @@ class metodo_lagrange:
         try:
             x = sp.symbols("x")
             f_x = ""
-
-
             instancia_respuesta = respuesta_json()
-
             try:
                 tipo = json_data["tipo"]
             except:
                 resp = instancia_respuesta.responder_error("Error en el argumento 'tipo'")
-        
-
             if tipo == 1:
                 try:
                     f_x = sp.sympify(json_data["funcion"])
                 except:
                     resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
                     return jsonify(resp), 400
-                
             try:
                 matrizPuntos = json_data["matrizPuntos"]
             except:
@@ -104,7 +98,14 @@ class metodo_lagrange:
                     if len(puntos_x) < 2:
                             mensajeerror = "Debe haber al menos 2 puntos en X"
                             activarerror = True
-                                
+                    else:
+                        puntos_y = [f_x.subs(x, i) for i in puntos_x]
+                # Verificar que no hayan valores repetidos en los puntos X
+                if len(puntos_x) != len(set(puntos_x)):
+                    mensajeerror = "No pueden haber valores repetidos en los puntos en X"
+                    activarerror = True
+            
+
             if activarerror:
                 resp = instancia_respuesta.responder_error(mensajeerror)
                 return jsonify(resp), 400
@@ -115,12 +116,17 @@ class metodo_lagrange:
                 if tipo == 1:
                     instancia_respuesta.agregar_clave_valor("Funcion:", f_x)
                     instancia_respuesta.agregar_clave_valor("Puntos X:", str(puntos_x).replace("'", ""))
+                    instancia_respuesta.agregar_clave_valor("Puntos Y:", str(puntos_y).replace("'", ""))
                 else:
                     instancia_respuesta.agregar_parrafo("La funcion original se desconoce")
                     instancia_respuesta.agregar_clave_valor("Puntos X:", str(puntos_x).replace("'", ""))
                     instancia_respuesta.agregar_clave_valor("Puntos Y:", str(puntos_y).replace("'", ""))
 
                 
+                #inicio del metodo
+                instancia_respuesta.agregar_titulo1("Polinomio de interpolacion de Lagrange:")
+                #Calculo de los valores de l
+                instancia_respuesta.agregar_parrafo("primero se calculan los valores de l para cada punto")
                 l=[]
                 for i in range(len(puntos_x)):
                     l_i = 1
@@ -128,91 +134,41 @@ class metodo_lagrange:
                         if j != i:
                             l_i *= (x - puntos_x[j]) / (puntos_x[i] - puntos_x[j])
                     l.append(l_i)
-                
-                instancia_respuesta.agregar_titulo1("Polinomio de interpolacion de Lagrange:")
-                instancia_respuesta.agregar_parrafo("primero se calculan los valores de l para cada punto")
                 instancia_respuesta.agregar_parrafo("Los valores de l son:")
                 for i in range(len(puntos_x)):
                     instancia_respuesta.agregar_parrafo("l" + str(i) + " = " + str(sp.simplify(l[i])))
 
+                #Calculo del polinomio de interpolacion de Lagrange
                 p_x = sum([puntos_y[i] * l[i] for i in range(len(puntos_x))])
 
-
-
+                #Se muestra la sumatoria de los valores de 'l' multiplicados por los puntos y
                 instancia_respuesta.agregar_parrafo("se hace la sumatoria de los valores de 'l' multiplicados por los puntos y")
                 texto = "p(x) = "
                 for i in range(len(puntos_x)):
                     signo = ""
                     if i != 0 and puntos_y[i] > 0:
                         signo = " + "
-                    texto += signo + str(puntos_y[i]) + " * " + str(l[i])
+                    texto += signo + str(puntos_y[i]) + " * [" + str(l[i]) + "]"
 
-
+                #Se muestra el polinomio de interpolacion de Lagrange no simplificado
                 instancia_respuesta.agregar_parrafo(texto)
 
-
-
-
+                #Se muestra el polinomio de interpolacion de Lagrange simplificado
+                instancia_respuesta.agregar_titulo1("Resultado")
+                instancia_respuesta.agregar_parrafo("al final se simplifica el polinomio obtenido")
 
                 p_x_simplified = sp.simplify(p_x)
-                instancia_respuesta.agregar_parrafo("al final se simplifica el polinomio obtenido")
-                print("p(x) =", p_x_simplified)
                 instancia_respuesta.agregar_clave_valor("p(x):", str(p_x_simplified))
 
-
-
+                p_x_decimal = sp.simplify(p_x.evalf())
+                instancia_respuesta.agregar_clave_valor("p(x) decimal:", str(p_x_decimal))
 
                 resp = instancia_respuesta.obtener_y_limpiar_respuesta()
                 return jsonify(resp), 200
-
-
         except:
             resp = instancia_respuesta.responder_error("Error en el codigo interno del metodo de lagrange")
             return jsonify(resp), 400
-
-
 """
-
-x = sp.symbols("x")
-
-
 puntos_x = [0, 1, 2, 3]
 puntos_y = [-1, 6, 31, 18]
-
-print("Interpolaaion de Lagrange")
-print("La funcion original se desconoce")
-print("Pero contamos con los siguientes puntos:")
-print("puntos x:", puntos_x)
-print("puntos y:", puntos_y)
-print("\n")
-
-l=[]
-
-for i in range(len(puntos_x)):
-    l_i = 1
-    for j in range(len(puntos_x)):
-        if j != i:
-            l_i *= (x - puntos_x[j]) / (puntos_x[i] - puntos_x[j])
-    l.append(l_i)
-
-print("Polinomio de interpolacion de Lagrange:")
-p_x = sum([puntos_y[i] * l[i] for i in range(len(puntos_x))])
-p_x_simplified = sp.simplify(p_x)
-print("p(x) =", p_x_simplified)
-
-print("\n")
-print("p(-1) =", p_x_simplified.subs(x, -1))
-print("\n")
-print("\n")
-
-print("valores de l")
-for i in range(len(puntos_x)):
-    print("l", i, "=", sp.simplify(l[i]))
-
-
-
 """
-
-
-
-
