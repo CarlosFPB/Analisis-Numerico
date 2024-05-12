@@ -13,17 +13,29 @@ class falsa_posicion():
                 #instancio las respuest json
                 instancia_respuesta = respuesta_json()
 
-                #obtengo los valores del json
+                #Verificar la funcion obtenida
                 try:
+                    #Ecuaion de la funcion
                     f_x = sp.sympify(json_data["funcion"])
-                except:
+                    resultado = f_x.subs(x, 2)
+                    if resultado > 0:
+                        pass
+                except sp.SympifyError:
                     resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
                     return jsonify(resp), 400
-                    
+                except TypeError as e:
+                    resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                    return jsonify(resp), 400
                 
-                error_aceptable = float(json_data["tolerancia"])
-                x1 = float(json_data["xi"])
-                xu = float(json_data["xu"])
+                #Verificar los valores iniciales
+                try:
+                    error_aceptable = float(json_data["tolerancia"])
+                    x1 = float(json_data["xi"])
+                    xu = float(json_data["xu"])
+                except ValueError as e:
+                    resp = instancia_respuesta.responder_error("Error en los valores iniciales\n"+str(e))
+                    return jsonify(resp), 400
+                
                 xr = 0
                 condicion = ""
 
@@ -32,7 +44,7 @@ class falsa_posicion():
                 evaluar_xu = f_x.subs(x,xu)
                 if (evaluar_x1 * evaluar_xu) > 0:#no ahy un cambio de signo
                 #print("No hay un cambio de signo en los valores iniciales")
-                    resp = instancia_respuesta.responder_error("No hay un cambio de signo en los valores iniciales")
+                    resp = instancia_respuesta.responder_error("No se encontró cambio de signo en los valores iniciales por ende no hay raíz en el intervalo dado")
                     return jsonify(resp), 400
 
                 instancia_respuesta.agregar_titulo1("Metodo de Falsa Posicion")
@@ -83,14 +95,6 @@ class falsa_posicion():
                 instancia_respuesta.agregar_tabla()
                 res = instancia_respuesta.obtener_y_limpiar_respuesta()
                 return jsonify(res), 200
-    
-            except TypeError as e:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                return jsonify(resp), 400
-        
-            #except ValueError as e:
-                #resp = instancia_respuesta.responder_error("Error interno del codigo")
-                #return jsonify(resp), 400
 
             except Exception as e:
                 resp = instancia_respuesta.responder_error("Error interno del codigo\n"+str(e))

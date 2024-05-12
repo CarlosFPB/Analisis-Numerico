@@ -30,9 +30,15 @@ class medoto_biseccion():
              return jsonify(resp), 400
 
 
-            error_aceptable = float(json_data["tolerancia"])
-            x1 = float(json_data["xi"])
-            xu = float(json_data["xu"])
+            #Verificar los valores iniciales
+            try:
+                error_aceptable = float(json_data["tolerancia"])
+                x1 = float(json_data["xi"])
+                xu = float(json_data["xu"])
+            except ValueError as e:
+                resp = instancia_respuesta.responder_error("Error en los valores iniciales\n"+str(e))
+                return jsonify(resp), 400
+            
             xr = 0
 
             #execpciones comunes

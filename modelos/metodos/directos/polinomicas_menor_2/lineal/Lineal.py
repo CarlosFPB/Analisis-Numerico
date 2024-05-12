@@ -9,9 +9,22 @@ class metodo_lineal():
             x = sp.symbols('x')
             instancia_respuesta = respuesta_json()
             try:
+                #Ecuaion de la funcion
                 f_x = sp.sympify(json_data["funcion"])
-            except:
+                resultado = f_x.subs(x, 2)
+                if resultado > 0:
+                    pass
+            except sp.SympifyError:
                 resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                return jsonify(resp), 400
+            except TypeError as e:
+                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                return jsonify(resp), 400
+            
+            #Comprobar si tiene raices
+            soluciones = sp.solve(sp.Eq(f_x, 0), x)
+            if not any(sol.is_real for sol in soluciones):
+                resp = instancia_respuesta.responder_error("La función no tiene raíces Realaes")
                 return jsonify(resp), 400
         
             grado = f_x.as_poly().degree()

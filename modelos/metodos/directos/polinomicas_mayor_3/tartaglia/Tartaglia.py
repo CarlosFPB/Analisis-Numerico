@@ -14,13 +14,20 @@ class metodo_tartaglia:
             #istanciar la respuesta
             respuesta = respuesta_json()
 
-            #obtener los valores del json y evaluar funcion valida
-            f_x_crudo = json_data["funcion"]
+            #Verificar la funcion obtenida
             try:
-                f_x_crudo = sp.sympify(f_x_crudo)
-            except:
+                #Ecuaion de la funcion
+                f_x_crudo = sp.sympify(json_data["funcion"])
+                resultado = f_x_crudo.subs(x, 2)
+                if resultado > 0:
+                    pass
+            except sp.SympifyError:
                 resp = respuesta.responder_error("Error en la funcion ingresada")
                 return jsonify(resp), 400
+            except TypeError as e:
+                resp = respuesta.responder_error("Error en la funcion ingresada")
+                return jsonify(resp), 400
+            
             f_x = f_x_crudo/f_x_crudo.as_poly(x).coeffs()[0]
             respuesta.agregar_titulo1("Método de Tartaglia")
             respuesta.agregar_parrafo("Se busca encontrar las raíces de la ecuación polinómica de grado 3: ")

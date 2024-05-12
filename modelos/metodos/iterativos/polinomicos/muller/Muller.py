@@ -1,6 +1,7 @@
 import  sympy as sp
 import numpy as np
 from .....extras.Funciones import errores, respuesta_json
+from flask import jsonify
 
 class metodo_muller():
 
@@ -13,20 +14,34 @@ class metodo_muller():
             instancia_respuesta = respuesta_json()
             
             # obtengo los valores del json
-            f_x_crudo = json_data["funcion"]
-            x0_crudo = json_data["x0"]
-            x1_crudo = json_data["x1"]
-            x2_crudo = json_data["x2"]
-            tolerancia_crudo = json_data["tolerancia"]
+            #Verificar la funcion obtenida
             try:
-                f_x = sp.sympify(f_x_crudo)
-            except:
-                return instancia_respuesta.responder_error("La función ingresada es inválida, ingrese una funcion valida"), 400
-            x0 = float(x0_crudo)
-            x1 = float(x1_crudo)
-            x2 = float(x2_crudo)
-            error_aceptado = float(tolerancia_crudo)
-
+                #Ecuaion de la funcion
+                f_x = sp.sympify(json_data["funcion"])
+                resultado = f_x.subs(x, 2)
+                if resultado > 0:
+                    pass
+            except sp.SympifyError:
+                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                return jsonify(resp), 400
+            except TypeError as e:
+                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                return jsonify(resp), 400
+            
+            #verifico los datos ingresados
+            try:
+                x0_crudo = json_data["x0"]
+                x1_crudo = json_data["x1"]
+                x2_crudo = json_data["x2"]
+                tolerancia_crudo = json_data["tolerancia"]
+                x0 = float(x0_crudo)
+                x1 = float(x1_crudo)
+                x2 = float(x2_crudo)
+                error_aceptado = float(tolerancia_crudo)
+            except ValueError as e:
+                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+                return jsonify(resp), 400
+      
             #hacemos la primera iteracion para el frontend
             #calcular evaluadas
             f_x0 = f_x.subs(x, x0)
@@ -128,6 +143,6 @@ class metodo_muller():
             instancia_respuesta.agregar_parrafo(f"El error acomulado es: {error_acomulado}")
             instancia_respuesta.agregar_parrafo(f"Iteraciones: {iteracion}")
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()
-            return resp, 200
+            return jsonify(resp), 200
         except Exception as e:
             return instancia_respuesta.responder_error(f"Error durante el procedimiento\nError: {e}"), 500
