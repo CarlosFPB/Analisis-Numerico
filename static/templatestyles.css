@@ -158,7 +158,8 @@ p {
 }
 
 body {
-    overflow-y: scroll; /* Siempre muestra la barra de desplazamiento vertical */
+    overflow-y: scroll;
+    /* Siempre muestra la barra de desplazamiento vertical */
 }
 
 .footer {
@@ -463,6 +464,51 @@ input {
         'opsz' 32
 }
 
+.tablasInput {
+    align-self: center;
+    .puntos {
+        display: flex;
+
+        .puntosContainer {
+            input {
+                width: 3rem;
+                border-radius: 0;
+            }
+            /* evitar menu de aumento y disminución de número en input */
+            input[type=number]::-webkit-inner-spin-button,
+            input[type=number]::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        }
+    }
+
+    
+    .puntos div:first-child {
+        background: rgba(0, 106, 255, 0.152);
+        min-width: 2em;
+        border-right: 1px solid rgba(0, 0, 0, 0.25);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: mate;
+        font-style: italic;
+        font-weight: 600;
+    }
+
+    .puntos:not(:first-child) {
+        border-top: 1px solid rgba(0, 0, 0, 0.25);
+    }
+    .puntos:first-child div:first-child {
+        border-radius: .5rem 0 0 ;
+    }
+    .puntos:last-child div:first-child {
+        border-radius: 0 0 0 0.5rem;
+    }
+
+}
+
+
 .sugerencias {
     position: fixed;
     right: 0px;
@@ -604,31 +650,26 @@ dialog {
     }
 }
 
-* {
-}
+* {}
 
 
-@media screen{
-    .stepbystep{
+@media screen {
+    .stepbystep {
         max-width: 70vw;
         min-width: 50vw;
     }
 }
 
 @media screen and (max-width: 1024px) {
-    
-    .stepbystep{
+
+    .stepbystep {
         max-width: calc(100vw - 2rem);
     }
 }
 
-@media screen and (max-width: 768px) {
-    
-}
+@media screen and (max-width: 768px) {}
 
-@media screen and (max-width: 480px) {
-    
-}
+@media screen and (max-width: 480px) {}
 
 @media print {
     * {

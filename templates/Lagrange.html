@@ -53,14 +53,10 @@
                     <label for="tipo">Tipo:</label>
                     <input type="checkbox" name="tipo" id="tipo" onchange="cambiarTipo(this)">
                 </div>
-                <div class="valor">
-                    <label for="test">test:</label>
-                    <input type="button" value="test" onclick="obtenerArray()">
-                </div>
             </div>
             <div class="tablasInput">
                 <div id="puntosX" class="puntos" style="display: flex;">
-                    <div>X.d</div>
+                    <div>X</div>
                     <div class="puntosContainer" style="display: flex;
                     flex-wrap: wrap;">
                         <div id="borrar" class="buttonBig button-grey" onclick="pruebadethis()">
@@ -74,11 +70,12 @@
                     <div>f(x)</div>
                     <div class="puntosContainer" style="display: flex;
                     flex-wrap: wrap;">
-                        <div id="borrar" class="buttonBig button-grey" onclick="pruebadethis()">
-                            <span class="material-symbols-outlined">
-                                add
-                            </span>
-                        </div>
+                        
+                    </div>
+                    <div id="borrar" class="buttonBig button-grey" onclick="pruebadethis()">
+                        <span class="material-symbols-outlined">
+                            add
+                        </span>
                     </div>
                 </div>
             </div>
@@ -324,44 +321,25 @@
         let variables = ["funcion"];
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
         function calcular() {
-
-
-            let datos = {}
-
+            let datos = {};
             let arrayOfPuntos = [];
-            let tipo
-            let funcion = document.getElementById("funcion").value;
-            if (document.getElementById("tipo").checked) {
-                tipo = 2
-                datos.tipo = tipo
+            let tipo = document.getElementById("tipo").checked ? 2 : 1;
+            datos.tipo = tipo;
+            if (tipo === 1) {
+                datos.funcion = document.getElementById("funcion").value;
             }
-            else {
-                tipo = 1
-                datos.tipo = tipo
-                datos.funcion = funcion
-            }
-            let resta = tipo == 1 ? 1 : 0;
+            let resta = tipo === 1 ? 1 : 0;
 
-            for (let i = 0; i < (idpuntos.length - (resta)); i++) {
+            for (let i = 0; i < (idpuntos.length - resta); i++) {
                 let puntos = Array.from(document.getElementById(idpuntos[i]).children[1].children);
                 puntos.pop();
                 puntos = puntos.map(punto => punto.value);
                 arrayOfPuntos.push(puntos);
             }
 
-
-
-            if (document.getElementById("tipo").checked) {
-                datos.tipo = 2;
-            } else {
-                datos.tipo = 1;
-            }
-
-
             datos.matrizPuntos = arrayOfPuntos;
-
             console.log(datos);
-            realizarPeticionPOST(endPoint, datos)
+            realizarPeticionPOST(endPoint, datos);
         }
         //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
         let ejercicios = [

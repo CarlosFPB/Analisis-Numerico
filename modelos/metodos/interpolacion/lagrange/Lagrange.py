@@ -145,7 +145,7 @@ class metodo_lagrange:
                 instancia_respuesta.agregar_parrafo("se hace la sumatoria de los valores de 'l' multiplicados por los puntos y")
                 texto = "p(x) = "
                 for i in range(len(puntos_x)):
-                    signo = ""
+                    signo = " "
                     if i != 0 and puntos_y[i] > 0:
                         signo = " + "
                     texto += signo + str(puntos_y[i]) + " * [" + str(l[i]) + "]"
