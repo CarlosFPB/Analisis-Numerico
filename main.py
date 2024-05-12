@@ -28,7 +28,7 @@ def page_not_found(e):
 @app.errorhandler(504)
 def page_not_found(e):
     #informar que el servidor no responde
-    resp = {'error' :  "El servidor no responde"}
+    resp = {'error' :  'El servidor no responde'}
     return jsonify(resp), 504
 
 @app.route('/metodos/iterativos/cerrados/Biseccion', methods=['GET'])
