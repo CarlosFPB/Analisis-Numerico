@@ -21,10 +21,10 @@ class medoto_biseccion():
                 return jsonify(resp), 400
             except TypeError as e:
                 resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                return jsonify(resp), 
+                return jsonify(resp), 400
         
             #verificar que sea grado mayor a 0
-            if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino no importa
+            if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino lo es no importa el grado
                 if verificaciones.obtener_grado(f_x) < 1:
                     resp = instancia_respuesta.responder_error("La función debe ser de grado 1 o mayor")
                     return jsonify(resp), 400
@@ -35,7 +35,7 @@ class medoto_biseccion():
                 x1 = float(json_data["xi"])
                 xu = float(json_data["xu"])
             except ValueError as e:
-                resp = instancia_respuesta.responder_error("Error en los valores iniciales\n"+str(e))
+                resp = instancia_respuesta.responder_error(f"Error en los valores iniciales\n {str(e)}")
                 return jsonify(resp), 400
             
             xr = 0
@@ -100,7 +100,7 @@ class medoto_biseccion():
             return jsonify(resp), 200
         
         except Exception as e:
-            resp = instancia_respuesta.responder_error("Error interno del codigo\n"+str(e))
+            resp = instancia_respuesta.responder_error(f"Error interno del codigo\n {str(e)}")
             return jsonify(resp), 500
         
 

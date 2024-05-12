@@ -47,8 +47,8 @@ class metodo_cuadratico():
                 x2 = sp.N(x2)
                 instancia_respuesta.agregar_clave_valor("Raiz 1:",f"x = {x1}")
                 instancia_respuesta.agregar_clave_valor("Raiz 2:",f"x = {x2}")
-                respuesta = instancia_respuesta.obtener_y_limpiar_respuesta()
-                return jsonify(respuesta), 200
+                resp = instancia_respuesta.obtener_y_limpiar_respuesta()
+                return jsonify(resp), 200
             else:
                 #manejar excepciones
                 resp = instancia_respuesta.responder_error("La funcion no es de grado 2, es de grado "+str(grado))

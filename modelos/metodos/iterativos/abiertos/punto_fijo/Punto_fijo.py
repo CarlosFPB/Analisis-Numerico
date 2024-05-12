@@ -1,7 +1,7 @@
 from flask import jsonify
 import  sympy as sp
 import numpy as np
-from .....extras.Funciones import errores, respuesta_json
+from .....extras.Funciones import errores, respuesta_json, verificaciones
 
 class metodo_punto_fijo():
 
@@ -29,6 +29,16 @@ class metodo_punto_fijo():
                 resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
                 return jsonify(resp), 400
             
+            #verificar que sea grado mayor a 0
+            if verificaciones.obtener_grado(g_x) != None:#es porq es polinomica sino no importa el grado
+                if verificaciones.obtener_grado(g_x) < 1:
+                    resp = instancia_respuesta.responder_error("La función debe ser de grado 1 o mayor")
+                    return jsonify(resp), 400
+            #verificar que tenga raices reales
+            if verificaciones.posee_raices_reales(g_x) == False:
+                resp = instancia_respuesta.responder_error("La función no tiene raices reales por tanto no se puede aplicar el metodo de punto fijo")
+                return jsonify(resp), 400
+            
             g_prima = sp.diff(g_x)
 
             try:
@@ -52,18 +62,17 @@ class metodo_punto_fijo():
                 g_x_evaluada = float(g_x.subs(x, x_actual))
                 x_anterior = x_actual
                 x_actual = g_x_evaluada
+                x_actual = sp.N(x_actual)
                 error_acomulado = errores.error_aproximado_porcentual(x_anterior,x_actual)
-                
+                error_acomulado = sp.N(error_acomulado)
                 instancia_respuesta.agregar_fila([iteracion, x_actual, g_x_evaluada, error_acomulado])
-
                 if(error_acomulado < error_aceptado):
                     break
                 elif abs(g_prima_evaluada) > 1:
                     print("El metodo no converge")
-                    instancia_respuesta = instancia_respuesta.responder_error("El metodo no converge con los valores dados\nIntente con otros valores")
-                    return jsonify(instancia_respuesta), 400
+                    resp = instancia_respuesta.responder_error("El metodo no converge con los valores dados\nIntente con otros valores")
+                    return jsonify(resp), 400
                 
-            #print("La raiz aproximada es: ", x_actual)
             instancia_respuesta.agregar_tabla()
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()
             return jsonify(resp), 200

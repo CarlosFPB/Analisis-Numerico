@@ -1,7 +1,7 @@
 from flask import jsonify
 import  sympy as sp
 import numpy as np
-from .....extras.Funciones import errores, secante, respuesta_json
+from .....extras.Funciones import errores, secante, respuesta_json, verificaciones
 
 
 class metodo_secante():
@@ -25,6 +25,13 @@ class metodo_secante():
             except TypeError as e:
                 resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
                 return jsonify(resp), 400
+            
+            #verificar que sea grado mayor a 0
+            if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino no importa el grado
+                if verificaciones.obtener_grado(f_x) < 1:
+                    resp = instancia_respuesta.responder_error("La función debe ser de grado 1 o mayor")
+                    return jsonify(resp), 400
+
             try:
                 x_anterior = float(json_data["xi"])
                 x_actual = float(json_data["xu"])
@@ -47,7 +54,9 @@ class metodo_secante():
                 f_x_evaluada_anterior = f_x.subs(x, x_anterior)
                 f_x_evaluada_actual = f_x.subs(x, x_actual)
                 x_calculada = secante.aproximacion(f_x_evaluada_anterior,f_x_evaluada_actual,x_anterior,x_actual)
+                x_calculada = sp.N(x_calculada)
                 error_acomulado = errores.error_aproximado_porcentual(x_actual,x_calculada)
+                error_acomulado = sp.N(error_acomulado)
                 instancia_respuesta.agregar_fila([iteracion, x_anterior, x_actual, f_x_evaluada_anterior, f_x_evaluada_actual, x_calculada, error_acomulado])
                 x_anterior = x_actual
                 x_actual = x_calculada

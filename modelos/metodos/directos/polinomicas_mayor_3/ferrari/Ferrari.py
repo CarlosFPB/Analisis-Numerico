@@ -160,8 +160,8 @@ class metodo_ferrari:
             respuesta.agregar_clave_valor("x2", x2)
             respuesta.agregar_clave_valor("x3", x3)
             respuesta.agregar_clave_valor("x4", x4)
-            res = respuesta.obtener_y_limpiar_respuesta()
-            return jsonify(res)
+            resp = respuesta.obtener_y_limpiar_respuesta()
+            return jsonify(resp), 200
         
         except Exception as e:
             resp = respuesta.responder_error("Error interno del codigo\n"+str(e)), 500

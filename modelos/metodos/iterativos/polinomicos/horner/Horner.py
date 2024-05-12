@@ -31,8 +31,9 @@ class metodo_horner():
             
             #validar que sea grado mayor a 3 y polinomica
             if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica
-                if verificaciones.obtener_grado(f_x) >=3:
-                    pass
+                if verificaciones.obtener_grado(f_x) <3:
+                    resp = instancia_respuesta.responder_error("La función debe ser polinomica de grado 3 o mayor")
+                    return jsonify(resp), 400
             else:#no es polinomica por ende ni tiene grado mayor a 3
                 resp = instancia_respuesta.responder_error("La función debe ser polinomica de grado 3 o mayor")
                 return jsonify(resp), 400

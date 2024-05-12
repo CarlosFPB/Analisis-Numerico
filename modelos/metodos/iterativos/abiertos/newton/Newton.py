@@ -1,7 +1,7 @@
 from flask import jsonify
 import  sympy as sp
 import numpy as np
-from .....extras.Funciones import errores, newton, respuesta_json
+from .....extras.Funciones import errores, newton, respuesta_json, verificaciones
 
 class metodo_newton():
 
@@ -25,6 +25,12 @@ class metodo_newton():
             except TypeError as e:
                 resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
                 return jsonify(resp), 400
+            
+            #verificar que sea grado mayor a 0
+            if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino no importa el grado
+                if verificaciones.obtener_grado(f_x) < 1:
+                    resp = instancia_respuesta.responder_error("La función debe ser de grado 1 o mayor")
+                    return jsonify(resp), 400
                 
             f_prima = sp.diff(f_x)
             f_prima_prima = sp.diff(f_prima)
@@ -50,24 +56,26 @@ class metodo_newton():
                 f_x_evaluada = f_x.subs(x, x_actual)
                 x_anterior = x_actual
                 x_actual = newton.aproximacion(f_x_evaluada, f_prima_evaluada, x_anterior)
+                x_actual = sp.N(x_actual)
                 error_acomulado = errores.error_aproximado_porcentual(x_anterior,x_actual)
-                
+                error_acomulado = sp.N(error_acomulado)
                 instancia_respuesta.agregar_fila([iteracion, x_anterior, f_x_evaluada, f_prima_evaluada, x_actual, error_acomulado])
-
                 if(error_acomulado < error_aceptado):
                     break
-
                 #evaluar el criterio de convergencia
                 f_prima_evaluada = f_prima.subs(x, x_actual)
                 f_prima_prima_evaluada = f_prima_prima.subs(x, x_actual)
                 f_x_evaluada = f_x.subs(x, x_actual)
+                if f_prima_evaluada == 0:#evaluando que no haya divicion sobre 0
+                    print("La derivada evaluada en la raiz es 0")
+                    instancia_respuesta.agregar_parrafo(f"La derivada evaluada en la raiz es 0, en la iteracion #{iteracion}, por lo tanto no se puede continuar con el metodo")
+                    break
                 criterio = abs((f_prima_evaluada*f_prima_prima_evaluada)/(f_prima_evaluada**2))
                 if criterio > 1:
                     print("El criterio de convergencia no se cumple")
                     resp = instancia_respuesta.responder_error("El criterio de convergencia no se cumple")
                     return jsonify(resp), 400
                 
-            #print("La raiz aproximada es: ", x_actual)
             instancia_respuesta.agregar_tabla()
             resp= instancia_respuesta.obtener_y_limpiar_respuesta()
             return jsonify(resp), 200

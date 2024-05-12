@@ -27,7 +27,7 @@ class falsa_posicion():
                     return jsonify(resp), 400
                 
                 #verificar que sea grado mayor a 0
-                if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino no importa
+                if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino no importa el grado
                     if verificaciones.obtener_grado(f_x) < 1:
                         resp = instancia_respuesta.responder_error("La función debe ser de grado 1 o mayor")
                         return jsonify(resp), 400
@@ -97,8 +97,8 @@ class falsa_posicion():
                 instancia_respuesta.agregar_clave_valor("Raiz: ",xr)
                 instancia_respuesta.agregar_clave_valor("Error: ",error_acumulado)
                 instancia_respuesta.agregar_tabla()
-                res = instancia_respuesta.obtener_y_limpiar_respuesta()
-                return jsonify(res), 200
+                resp = instancia_respuesta.obtener_y_limpiar_respuesta()
+                return jsonify(resp), 200
 
             except Exception as e:
                 resp = instancia_respuesta.responder_error("Error interno del codigo\n"+str(e))
