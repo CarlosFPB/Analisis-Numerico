@@ -25,6 +25,12 @@ def page_not_found(e):
     # Redirige automáticamente a la URL de la imagen del gato
     return redirect("https://http.cat/404", code=302)
 
+@app.errorhandler(504)
+def page_not_found(e):
+    #informar que el servidor no responde
+    resp = {'error' :  "El servidor no responde"}
+    return jsonify(resp), 504
+
 @app.route('/metodos/iterativos/cerrados/Biseccion', methods=['GET'])
 def renderizar_biseccion():
     return render_template('Biseccion.html')

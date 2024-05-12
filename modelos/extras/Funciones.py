@@ -143,6 +143,13 @@ class verificaciones():
         coeficientes = [poly_funcion.coeff_monomial(x**i) for i in range(grado, -1, -1)]#aunq haya 0
         return coeficientes
     
+    def obtener_coeficientes_de_y(funcion):
+        y = sp.symbols('y')
+        poly_funcion = funcion.as_poly(y)
+        grado = poly_funcion.degree()
+        coeficientes = [poly_funcion.coeff_monomial(y**i) for i in range(grado, -1, -1)]
+        return coeficientes
+    
     @staticmethod
     def posee_raices_reales(funcion):
         x = sp.symbols('x')

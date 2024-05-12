@@ -17,7 +17,7 @@ class metodo_ferrari:
                 
                 #obtener los valores del json
                 f_x_crudo = sp.simplify(json_data["funcion"])
-
+                f_x_crudo = sp.expand(f_x_crudo)#para que se vea bien
                 #Veificar si es polinomio
                 if not verificaciones.es_polinomio(f_x_crudo):
                     resp = respuesta.responder_error("La función ingresada no es un polinomio")
@@ -78,9 +78,8 @@ class metodo_ferrari:
 
             #encontramos a b c de tartaglia
             #encontrar los coeficientes inlcuido los coeficientes 0
-            polinomio = cubica.as_poly(y)
-            grado = verificaciones.obtener_grado(cubica)
-            coeficientesTartaglia = verificaciones.obtener_coeficientes(cubica)
+            coeficientesTartaglia = verificaciones.obtener_coeficientes_de_y(cubica)
+            print(coeficientesTartaglia)
             aT = coeficientesTartaglia[1]
             bT = coeficientesTartaglia[2]
             cT = coeficientesTartaglia[3]
@@ -124,7 +123,8 @@ class metodo_ferrari:
             respuesta.agregar_parrafo("La raiz real de tartaglia es: "+str(xreal))
 
             #reescribimos
-            U = xreal.evalf()
+            xreal = sp.N(xreal)
+            U = xreal
             P = P
             Q = Q
             a = a

@@ -18,6 +18,7 @@ class metodo_tartaglia:
             try:
                 #Ecuaion de la funcion
                 f_x_crudo = sp.sympify(json_data["funcion"])
+                f_x_crudo = sp.expand(f_x_crudo)#para que se vea bien la funcion
                 #Verificar si es polinomio
                 if not verificaciones.es_polinomio(f_x_crudo):
                     resp = respuesta.responder_error("La función ingresada no es un polinomio")

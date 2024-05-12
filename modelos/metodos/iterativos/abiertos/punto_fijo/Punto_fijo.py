@@ -31,8 +31,8 @@ class metodo_punto_fijo():
             
             #verificar que sea grado mayor a 0
             if verificaciones.obtener_grado(g_x) != None:#es porq es polinomica sino no importa el grado
-                if verificaciones.obtener_grado(g_x) < 1:
-                    resp = instancia_respuesta.responder_error("La función debe ser de grado 1 o mayor")
+                if verificaciones.obtener_grado(g_x) < 2:
+                    resp = instancia_respuesta.responder_error("La función debe ser de grado 2 o mayor")
                     return jsonify(resp), 400
             #verificar que tenga raices reales
             if verificaciones.posee_raices_reales(g_x) == False:
@@ -54,7 +54,7 @@ class metodo_punto_fijo():
             instancia_respuesta.agregar_titulo1("Punto Fijo")
             instancia_respuesta.agregar_parrafo("A continuacion se muestra la tabla de iteraciones del metodo de punto fijo, para encontrar la raiz de la funcion ingresada.")
             instancia_respuesta.crear_tabla()
-            instancia_respuesta.agregar_fila(['Iteracion', 'X', 'g(x)', 'Error'])
+            instancia_respuesta.agregar_fila(['Iteracion', 'X', 'g(x)', 'g\'(x)', 'Error'])
 
             while True:
                 iteracion += 1
@@ -65,7 +65,7 @@ class metodo_punto_fijo():
                 x_actual = sp.N(x_actual)
                 error_acomulado = errores.error_aproximado_porcentual(x_anterior,x_actual)
                 error_acomulado = sp.N(error_acomulado)
-                instancia_respuesta.agregar_fila([iteracion, x_actual, g_x_evaluada, error_acomulado])
+                instancia_respuesta.agregar_fila([iteracion, x_actual, g_x_evaluada,g_prima_evaluada, error_acomulado])
                 if(error_acomulado < error_aceptado):
                     break
                 elif abs(g_prima_evaluada) > 1:
