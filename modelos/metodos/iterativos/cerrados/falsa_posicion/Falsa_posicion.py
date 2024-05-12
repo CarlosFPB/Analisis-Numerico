@@ -1,6 +1,6 @@
 import sympy as sp
 from flask import jsonify
-from .....extras.Funciones import errores, falsaPosicion, respuesta_json
+from .....extras.Funciones import errores, falsaPosicion, respuesta_json, verificaciones
 
 
 class falsa_posicion():
@@ -9,7 +9,6 @@ class falsa_posicion():
         def calcular_falsa_posicion(json_data):
             try:
                 x = sp.symbols('x')
-
                 #instancio las respuest json
                 instancia_respuesta = respuesta_json()
 
@@ -26,6 +25,12 @@ class falsa_posicion():
                 except TypeError as e:
                     resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
                     return jsonify(resp), 400
+                
+                #verificar que sea grado mayor a 0
+                if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino no importa
+                    if verificaciones.obtener_grado(f_x) < 1:
+                        resp = instancia_respuesta.responder_error("La función debe ser de grado 1 o mayor")
+                        return jsonify(resp), 400
                 
                 #Verificar los valores iniciales
                 try:
@@ -64,6 +69,7 @@ class falsa_posicion():
                     error_acumulado = 0
                     valor_anterior = xr
                     xr = falsaPosicion.primera_aproximacion(f_x,x1,xu)
+                    xr = sp.N(xr)
                     #primera aproximacion
                     evaluacion = falsaPosicion.multiplicacion_evaluadas(f_x,x1,xr)
                     if evaluacion > 0:
@@ -73,16 +79,14 @@ class falsa_posicion():
                         condicion="<0"
                         xu = xr
                     else:
-                        xr = xr
                         xr = xr #ya encontre la raiz
                         error_acumulado = 0
                         instancia_respuesta.agregar_fila([iteracion,x1,xu,xr,evaluacion,condicion,error_acumulado])
                         break
 
                     if not iteracion == 1:
-                        #print(f"valor anterior {valor_anterior} valor actual {xr}")
                         error_acumulado = errores.error_aproximado_porcentual(valor_anterior,xr)
-                        #print(error_acumulado)
+                        error_acumulado = sp.N(error_acumulado)
                         if error_acumulado < error_aceptable:
                             instancia_respuesta.agregar_fila([iteracion,x1,xu,xr,evaluacion,condicion,error_acumulado])
                             break

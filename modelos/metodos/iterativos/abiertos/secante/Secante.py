@@ -15,7 +15,7 @@ class metodo_secante():
             #Verificar la funcion obtenida
             try:
                 #Ecuaion de la funcion
-                f_x = sp.sympify(json_data["funcion_g_x"])
+                f_x = sp.sympify(json_data["funcion"])
                 resultado = f_x.subs(x, 2)
                 if resultado > 0:
                     pass

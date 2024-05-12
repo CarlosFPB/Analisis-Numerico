@@ -1,6 +1,6 @@
 import  sympy as sp
 import numpy as np
-from .....extras.Funciones import errores, respuesta_json
+from .....extras.Funciones import errores, respuesta_json, verificaciones
 from flask import jsonify
 
 class metodo_muller():
@@ -27,6 +27,12 @@ class metodo_muller():
             except TypeError as e:
                 resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
                 return jsonify(resp), 400
+
+            #validar que sea grado mayor a 3 no importa sino es polinomica
+            if verificaciones.obtener_grado(f_x)!= None:#es porq es polinomica
+                if verificaciones.obtener_grado(f_x) < 3:
+                    resp = instancia_respuesta.responder_error("La función debe ser de grado 3 o mayor")
+                    return jsonify(resp), 400
             
             #verifico los datos ingresados
             try:
@@ -125,9 +131,12 @@ class metodo_muller():
                 else:
                     x_calculado = x2 + ((-2*c)/(b - D))# con b**2 tarda muchas iteraciones
 
+                x_calculado = sp.N(x_calculado)
+
 
                 #Error acomulado
                 error_acomulado = errores.error_aproximado_porcentual(x2,x_calculado)
+                error_acomulado = sp.N(error_acomulado)
                 instancia_respuesta.agregar_fila([iteracion, x0, x1, x2, x_calculado, error_acomulado])
                 #ahy error cuando el metodo tiene un error muy grande rompe el codigo ya q no puede vealuar la comparacion
                 if error_acomulado < error_aceptado:
@@ -145,4 +154,5 @@ class metodo_muller():
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()
             return jsonify(resp), 200
         except Exception as e:
-            return instancia_respuesta.responder_error(f"Error durante el procedimiento\nError: {e}"), 500
+            resp = instancia_respuesta.responder_error(f"Error durante el procedimiento\nError: {e}")
+            return jsonify(resp), 500

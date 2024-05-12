@@ -1,5 +1,5 @@
 import sympy as sp
-from modelos.extras.Funciones import  respuesta_json
+from modelos.extras.Funciones import  respuesta_json, verificaciones
 from flask import jsonify
 
 class metodo_cuadratico():
@@ -10,6 +10,10 @@ class metodo_cuadratico():
             try:
                 #Ecuaion de la funcion
                 f_x = sp.sympify(json_data["funcion"])
+                #Verificar si es polinomio
+                if not verificaciones.es_polinomio(f_x):
+                    resp = instancia_respuesta.responder_error("La función ingresada no es un polinomio")
+                    return jsonify(resp), 400
                 resultado = f_x.subs(x, 2)
                 if resultado > 0:
                     pass
@@ -21,7 +25,7 @@ class metodo_cuadratico():
                 return jsonify(resp), 400
             
             
-            grado = f_x.as_poly().degree()
+            grado = verificaciones.obtener_grado(f_x)
             if(grado == 2):
                 instancia_respuesta.agregar_titulo1("Metodo Cuadratico")
                 instancia_respuesta.agregar_parrafo("Este metodo nos sirve para encontrar la raiz de una ecuacion, para ello se necesita una funcion f(x) de grado 2 y usar formula cuadratica.")
@@ -30,19 +34,19 @@ class metodo_cuadratico():
                 instancia_respuesta.agregar_titulo1("Usando la formula cuadratica")
                 instancia_respuesta.agregar_parrafo("La formula cuadratica es: x = (-b ± √(b^2 - 4ac)) / 2a")
                 instancia_respuesta.agregar_parrafo("Donde a, b y c son los coeficientes de la funcion cuadratica")
-                polinomio = f_x.as_poly(x)
-                grado = polinomio.degree()
-                coeficientes = [polinomio.coeff_monomial(x**i) for i in range(grado, -1, -1)]#aunq haya 0
+                coeficientes = verificaciones.obtener_coeficientes(f_x)
                 a = coeficientes[0]
                 b = coeficientes[1]
                 c = coeficientes[2]
                 instancia_respuesta.agregar_parrafo(f"Coeficientes: a = {a}, b = {b}, c = {c}")
                 instancia_respuesta.agregar_titulo1("Calculando las raices")
                 instancia_respuesta.agregar_parrafo(f"Sustituyendo : x = (-{b} ± √({b}^2 - 4*{a}*{c})) / 2*{a}")
-                resp = (-b + sp.sqrt(b**2 - 4*a*c)) / 2*a
-                resp2 = (-b - sp.sqrt(b**2 - 4*a*c)) / 2*a
-                instancia_respuesta.agregar_clave_valor("Raiz 1:",f"x = {resp}")
-                instancia_respuesta.agregar_clave_valor("Raiz 2:",f"x = {resp2}")
+                x1 = (-b + sp.sqrt(b**2 - 4*a*c)) / 2*a
+                x2 = (-b - sp.sqrt(b**2 - 4*a*c)) / 2*a
+                x1 = sp.N(x1)
+                x2 = sp.N(x2)
+                instancia_respuesta.agregar_clave_valor("Raiz 1:",f"x = {x1}")
+                instancia_respuesta.agregar_clave_valor("Raiz 2:",f"x = {x2}")
                 respuesta = instancia_respuesta.obtener_y_limpiar_respuesta()
                 return jsonify(respuesta), 200
             else:

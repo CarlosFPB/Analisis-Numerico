@@ -1,5 +1,5 @@
 import sympy as sp
-from modelos.extras.Funciones import  respuesta_json
+from modelos.extras.Funciones import  respuesta_json, verificaciones
 from flask import jsonify
 
 class metodo_lineal():
@@ -11,6 +11,10 @@ class metodo_lineal():
             try:
                 #Ecuaion de la funcion
                 f_x = sp.sympify(json_data["funcion"])
+                #Verificar si es polinomio
+                if not verificaciones.es_polinomio(f_x):
+                    resp = instancia_respuesta.responder_error("La función ingresada no es un polinomio")
+                    return jsonify(resp), 400
                 resultado = f_x.subs(x, 2)
                 if resultado > 0:
                     pass
@@ -22,12 +26,11 @@ class metodo_lineal():
                 return jsonify(resp), 400
             
             #Comprobar si tiene raices
-            soluciones = sp.solve(sp.Eq(f_x, 0), x)
-            if not any(sol.is_real for sol in soluciones):
-                resp = instancia_respuesta.responder_error("La función no tiene raíces Realaes")
+            if not verificaciones.posee_raices_reales(f_x):
+                resp = instancia_respuesta.responder_error("La función no posee raices reales")
                 return jsonify(resp), 400
         
-            grado = f_x.as_poly().degree()
+            grado = verificaciones.obtener_grado(f_x)
             if(grado == 1):
                 instancia_respuesta.agregar_titulo1("Metodo de Lineal")
                 instancia_respuesta.agregar_parrafo("Este metodo nos sirve para encontrar la raiz de una ecuacion, para ello se necesita una funcion f(x) de grado 1 y despejar x.")

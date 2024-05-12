@@ -1,7 +1,7 @@
 import sympy as sp
 import math
 from flask import jsonify
-from modelos.extras.Funciones import errores, respuesta_json, Ferrari
+from modelos.extras.Funciones import errores, respuesta_json, verificaciones
 class metodo_ferrari:    
     
      
@@ -19,39 +19,33 @@ class metodo_ferrari:
                 f_x_crudo = sp.simplify(json_data["funcion"])
 
                 #Veificar si es polinomio
-                if not Ferrari.es_funcion_polinomio(f_x_crudo):
+                if not verificaciones.es_polinomio(f_x_crudo):
                     resp = respuesta.responder_error("La función ingresada no es un polinomio")
                     return jsonify(resp), 400
                 
-                #Verificar si tiene exponente 4, se pasa la funcion en string solo necesita verificar el exponente
-                if not Ferrari.es_funcion_cuarto_grado(json_data["funcion"]):
-                    resp = respuesta.responder_error("La función ingresada no es de cuarto grado")
+                #Verificar si tiene exponente 4
+                if verificaciones.obtener_grado(f_x_crudo) != 4:
+                    resp = respuesta.responder_error("La función ingresada no es de grado 4")
                     return jsonify(resp), 400
                 
                 f_x = f_x_crudo/f_x_crudo.as_poly(x).coeffs()[0]#para convertir en 0 el coeficiente de x^4
                 resultado = f_x_crudo.subs(x, 2)
                 if resultado > 0:
                     pass
-
             except sp.SympifyError:
                 resp = respuesta.responder_error("Error en la función ingresada")
                 return jsonify(resp), 400
             except TypeError as e:
                 resp = respuesta.responder_error("Error en la función ingresada")
                 return jsonify(resp), 400
-
-            #instanciar la respuesta
            
-
             respuesta.agregar_titulo1("Metodo de Ferrari")
             respuesta.agregar_parrafo("Este metodo Obtendra las raices de una funcion de grado 4")
             respuesta.agregar_parrafo("Funcion: "+str(f_x_crudo))
             respuesta.agregar_parrafo("Funcion simplificada: "+str(f_x))
 
             #obtiene los coeficientes de la funcion de forma descendente
-            polinomio = f_x.as_poly(x)
-            grado = polinomio.degree()
-            coefficientes = [polinomio.coeff_monomial(x**i) for i in range(grado, -1, -1)]
+            coefficientes = verificaciones.obtener_coeficientes(f_x)
             a = coefficientes[1]
             b = coefficientes[2]
             c = coefficientes[3]
@@ -85,8 +79,8 @@ class metodo_ferrari:
             #encontramos a b c de tartaglia
             #encontrar los coeficientes inlcuido los coeficientes 0
             polinomio = cubica.as_poly(y)
-            grado = polinomio.degree()
-            coeficientesTartaglia = [polinomio.coeff_monomial(y**i) for i in range(grado, -1, -1)]#aunq haya un coeficiente con 0
+            grado = verificaciones.obtener_grado(cubica)
+            coeficientesTartaglia = verificaciones.obtener_coeficientes(cubica)
             aT = coeficientesTartaglia[1]
             bT = coeficientesTartaglia[2]
             cT = coeficientesTartaglia[3]
@@ -154,6 +148,12 @@ class metodo_ferrari:
             x2 = (VF - sp.sqrt(VF**2 -4*(U - W)))/2 - (a/4)
             x3 = (-VF + sp.sqrt(VF**2 -4*(U + W)))/2 - (a/4)
             x4 = (-VF - sp.sqrt(VF**2 -4*(U + W)))/2 - (a/4)
+            
+            #convertir a su valor numerico
+            x1 = sp.N(x1)
+            x2 = sp.N(x2)
+            x3 = sp.N(x3)
+            x4 = sp.N(x4)
 
             respuesta.agregar_titulo1("Calculamos las raices")
             respuesta.agregar_clave_valor("x1", x1)
