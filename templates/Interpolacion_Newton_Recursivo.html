@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interpolacion de Lagrange</title>
+    <title>Interpolacion de Newton Recursivo</title>
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
 
@@ -36,13 +36,12 @@
 <body>
     <div>
     </div>
-    <span class="text_hero">Interpolacion de <span class="textGradient1">Lagrange</span></span>
-    <p>Es método utilizado para encontrar un polinomio que pase por un conjunto de
-        puntos dados</p>
+    <span class="text_hero">Interpolacion de <span class="textGradient1">Newton</span></span>
+    <p>Este método de interpolación se obtiene a partir de la fórmula de Newton Método Recursivo</p>
     <div class="content">
         <div id="main" class="main">
             <div class="descripocion">
-                <p>Ingrese los datos para calcular la raiz de la funcion</p>
+                <p>Por favor, ingrese los datos necesarios para realizar el cálculo.</p>
             </div>
             <div class="formulario">
                 <div class="valor">
@@ -51,7 +50,8 @@
                 </div>
                 <div class="valor">
                     <label for="funcion">Funcion:</label>
-                    <input type="text" name="funcion" id="funcion" required value="-x + exp(-x)" style="width: auto;">
+                    <input type="text" name="funcion" id="funcion" required value="3*x**3 + 5*x**2 - 4*x + 1"
+                        style="width: 16rem;">
                 </div>
             </div>
             <div class="tablas-input">
@@ -85,125 +85,6 @@
                     </div>
                 </div>
             </div>
-
-            <script>
-
-                let idpuntos = ["puntosX", "puntosY"]
-
-                function eliminarInputPunto() {
-
-                    if (document.getElementById("puntosX").children[1].children.length > 4) {
-                        idpuntos.forEach(id => {
-                            let puntos = document.getElementById(id).children[1];
-                            let input = puntos.children[puntos.children.length - 1];
-                            input.style.width = "0rem";
-                            input.style.padding = "0rem";
-                            input.style.height = "0rem";
-                            setTimeout(() => {
-                                puntos.removeChild(input);
-                            }, 500);
-                        });
-                    }
-                }
-
-
-                function cambiarTipo(checkbox) {
-                    if (checkbox.checked) {
-                        document.getElementById("funcion").style.transition = "opacity 0.5s";
-                        document.getElementById("funcion").style.zIndex = -40;
-
-
-                        setTimeout(() => {
-                            document.getElementById("funcion").style.opacity = 0.3;
-                        }, 10);
-                        document.getElementById("puntosY").style.display = "flex";
-                        setTimeout(() => {
-                            document.getElementById("puntosY").style.marginTop = 0;
-                            setTimeout(() => {
-                                document.getElementById("puntosY").style.opacity = 1;
-                            }, 300);
-                        }, 10);
-
-                    } else {
-                        document.getElementById("funcion").style.transition = "opacity 0.5s";
-                        setTimeout(() => {
-                            document.getElementById("funcion").style.opacity = 1;
-                        }, 10);
-                        document.getElementById("puntosY").style.marginTop = -document.getElementById("puntosY").offsetHeight + "px";
-                        document.getElementById("puntosY").style.opacity = 0;
-                        setTimeout(() => {
-                            document.getElementById("puntosY").style.display = "none";
-                        }, 500);
-                    }
-                }
-
-                function establecerSeleccion(elemento, tipo, mostrar) {
-                    let index = Array.from(elemento.parentNode.children).indexOf(elemento);
-                    idpuntos.forEach(id => {
-                        let puntos = document.getElementById(id).children[1];
-                        switch (tipo) {
-                            case 1:
-                                if (mostrar) {
-                                    puntos.children[index].classList.add("input-focus");
-                                } else {
-                                    puntos.children[index].classList.remove("input-focus");
-                                }
-                                break;
-                            case 2:
-                                if (mostrar) {
-                                    puntos.children[index].classList.add("input-hover");
-                                } else {
-                                    puntos.children[index].classList.remove("input-hover");
-                                }
-                                break;
-                        }
-                    });
-                }
-
-                function añadirInputPuntos() {
-                    idpuntos.forEach(id => {
-                        let puntos = document.getElementById(id).children[1];
-                        let input = document.createElement("input");
-                        input.type = "number";
-                        input.onfocus = function () {
-                            establecerSeleccion(this, 1, true);
-                        }
-                        input.onblur = function () {
-                            establecerSeleccion(this, 1, false);
-                        }
-                        input.onmouseover = function () {
-                            establecerSeleccion(this, 2, true);
-                        }
-                        input.onmouseout = function () {
-                            establecerSeleccion(this, 2, false);
-                        }
-                        input.style.width = "0rem";
-                        input.style.padding = "0rem";
-                        input.style.height = "0rem";
-                        puntos.insertBefore(input, puntos.children[puntos.children.length]);
-
-                        setTimeout(() => {
-                            input.style.width = "3rem";
-                            input.style.height = "2.4rem";
-                            input.style.padding = "0.5rem";
-                        }, 10);
-                    });
-                }
-                setTimeout(() => {
-                    for (let i = 0; i < 4; i++) {
-                        añadirInputPuntos();
-                    }
-                }, 50);
-
-
-
-            </script>
-
-
-
-
-
-
 
             <div class="ui">
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
@@ -269,7 +150,7 @@
     <!-- Sugerencias de Ejercicios 
     este sera una ventana que estara flotando a la derecha de la pagina
     -->
-    <div class="sugerencias" style="right: calc(-253px); display: none;">
+    <div class="sugerencias" style="right: calc(-253px);">
         <span><span class="textGradient1">
                 Ejercicios Sugeridos
             </span>
@@ -293,25 +174,23 @@
                     </span>
                 </span>
 
-                <h2>Explicación del Método de Lagrange
+
             </div>
-            <p>El método de Lagrange es un método de interpolación que permite encontrar un polinomio que pase por un
-                conjunto de puntos dados. Este polinomio se obtiene a partir de la fórmula:</p>
-            <p><code>P(x) = Σ f(x_i) * L_i(x)</code></p>
-            <p>Donde:</p>
-            <ul>
-                <li><code>P(x)</code>: El polinomio interpolante.</li>
-                <li><code>f(x_i)</code>: El valor de la función en el punto <code>x_i</code>.</li>
-                <li><code>L_i(x)</code>: El polinomio de Lagrange asociado al punto <code>x_i</code>.</li>
-            </ul>
-            <p>El polinomio de Lagrange se define como:</p>
-            <p><code>L_i(x) = Π (x - x_j) / (x_i - x_j)</code></p>
-            <p>Donde:</p>
-            <ul>
-                <li><code>x_j</code>: Los puntos distintos de <code>x_i</code>.</li>
-            </ul>
-            <p>Este método es muy útil para encontrar una aproximación de una función en un punto intermedio a partir de
-                los valores de la función en puntos cercanos.</p>
+            <h2>Explicación del Método de Newton Recursivo</h2>
+            <p>El método de Newton Recursivo es un método de interpolación que se obtiene a partir de la fórmula de
+                Newton. Este método se utiliza para encontrar un polinomio que pase por un conjunto de puntos dados. El
+                polinomio resultante es de la forma:</p>
+            <p>P_n(x) = f[x_0] + f[x_0,x_1](x-x_0) + f[x_0,x_1,x_2](x-x_0)(x-x_1) + ... +
+                f[x_0,x_1,...,x_n](x-x_0)(x-x_1)...(x-x_{n-1})</p>
+            <br>
+            <p>Donde los coeficientes \(f[x_0,x_1,...,x_k]\) se calculan de forma recursiva utilizando la fórmula:</p>
+            <p>f[x_0,x_1,...,x_k] = \frac{f[x_1,...,x_k] - f[x_0,...,x_{k-1}]}{x_k - x_0}</p>
+            <br>
+            <p>Para encontrar el polinomio interpolante, se evalúa la función en los puntos</p>
+            \(x_0, x_1, ..., x_n\)
+            <p>y se calculan los coeficientes \(f[x_0], f[x_0,x_1], ..., f[x_0,x_1,...,x_n]\) de forma recursiva.</p>
+            <br>
+            <p>El polinomio resultante es el polinomio interpolante de Newton, que pasa por los puntos dados.</p>
         </div>
     </dialog>
 
@@ -339,33 +218,53 @@
                         close
                     </span>
                 </span>
-                <h2>API del Método Bisección</h2>
-                <p>Para utilizar el método de la bisección a través de la API, debes realizar una petición POST al
-                    siguiente endpoint:</p>
-                <p><code>https://nummeth.herokuapp.com/metodos/directos/cerrados/Biseccion</code></p>
-                <p>Los parámetros que debes incluir en la petición son los siguientes:</p>
-                <ul>
-                    <li><code>funcion</code>: La función para la cual deseas encontrar la raíz.</li>
-                    <li><code>xi</code>: El valor inicial del intervalo [Xi, Xu].</li>
-                    <li><code>xu</code>: El valor final del intervalo [Xi, Xu].</li>
-                    <li><code>tolerancia</code>: La tolerancia deseada para la aproximación de la raíz.</li>
-                </ul>
-                <p>Al realizar la petición, recibirás como respuesta un objeto JSON con los siguientes campos:</p>
-                <ul>
-                    <li><code>raiz</code>: El valor aproximado de la raíz de la función.</li>
-                    <li><code>iteraciones</code>: El número de iteraciones realizadas para encontrar la raíz.</li>
-                    <li><code>error</code>: El error relativo porcentual de la aproximación.</li>
-                </ul>
-                <p>¡Inténtalo y encuentra la raíz de tus funciones de forma sencilla!</p>
-            </div>
-        </div>
+                <h2>API del Método de Newton Recursivo</h2>
+                <p>Para utilizar el método de Newton Recursivo a través de la API, debes realizar una petición POST al
+                    siguiente
+                    endpoint:</p>
+                <p>https://analisis-numerico.vercel.app/metodos/interpolacion/newton_recursivo</p>
+                <br>
+                <p>Los parametros se deben enviar en formato JSON, Existen dos formas para poder realizar el calculo:
+                </p>
+                <br>
+                <p>1. Ingresando la función y los puntos unicamente de X en donde se evaluará la función para obtener
+                    los
+                    puntos de Y</p>
+                <div class="example">
+                    <p>Ejemplo:</p>
+                    <pre>
+                        {
+                            "tipo": 1,
+                            "funcion": "3*x**3 + 5*x**2 - 4*x + 1",
+                            "matrizPuntos": [
+                                ["0", "1", "2", "3"]
+                            ]
+                        }
+                    </pre>
+                </div>
+
+                <p>2. Ingresando los puntos de X y Y sin la función</p>
+                <div class="example">
+                    <p>Ejemplo:</p>
+                    <pre>
+                        {
+                            "tipo": 2,
+                            "matrizPuntos": [
+                                ["0", "1", "2", "3"],
+                                ["-1", "6", "31", "18"]
+                            ]
+                        }
+                    </pre>
+                </div>
+
+
     </dialog>
 
 
 
     <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo
-        let endPoint = "/metodos/interpolacion/lagrange"
+        let endPoint = "/metodos/interpolacion/newton_recursivo"
         //Aqui iran los id de todos los datos que se enviaran al EndPoint
         let variables = ["funcion"];
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
@@ -389,13 +288,120 @@
             console.log(datos);
             realizarPeticionPOST(endPoint, datos);
         }
+        let idpuntos = ["puntosX", "puntosY"]
+        let numeroDePuntos = 0;
+
+        function cambiarTipo(checkbox) {
+            if (checkbox.checked) {
+                document.getElementById("funcion").style.transition = "opacity 0.5s";
+                document.getElementById("funcion").style.zIndex = -40;
+                setTimeout(() => {
+                    document.getElementById("funcion").style.opacity = 0.3;
+                }, 10);
+                document.getElementById("puntosY").style.display = "flex";
+                setTimeout(() => {
+                    document.getElementById("puntosY").style.marginTop = 0;
+                    setTimeout(() => {
+                        document.getElementById("puntosY").style.opacity = 1;
+                    }, 300);
+                }, 10);
+            } else {
+                document.getElementById("funcion").style.transition = "opacity 0.5s";
+                document.getElementById("funcion").style.zIndex = 0;
+                setTimeout(() => {
+                    document.getElementById("funcion").style.opacity = 1;
+                }, 10);
+                document.getElementById("puntosY").style.marginTop = -document.getElementById("puntosY").offsetHeight + "px";
+                document.getElementById("puntosY").style.opacity = 0;
+                setTimeout(() => {
+                    document.getElementById("puntosY").style.display = "none";
+                }, 500);
+            }
+        }
+
+        function establecerSeleccion(elemento, tipo, mostrar) {
+            let index = Array.from(elemento.parentNode.children).indexOf(elemento);
+            idpuntos.forEach(id => {
+                let puntos = document.getElementById(id).children[1];
+                switch (tipo) {
+                    case 1:
+                        if (mostrar) {
+                            puntos.children[index].classList.add("input-focus");
+                        } else {
+                            puntos.children[index].classList.remove("input-focus");
+                        }
+                        break;
+                    case 2:
+                        if (mostrar) {
+                            puntos.children[index].classList.add("input-hover");
+                        } else {
+                            puntos.children[index].classList.remove("input-hover");
+                        }
+                        break;
+                }
+            });
+        }
+
+        function añadirInputPuntos() {
+            numeroDePuntos++;
+            idpuntos.forEach(id => {
+                let puntos = document.getElementById(id).children[1];
+                let input = document.createElement("input");
+                input.type = "number";
+                input.onfocus = function () {
+                    establecerSeleccion(this, 1, true);
+                }
+                input.onblur = function () {
+                    establecerSeleccion(this, 1, false);
+                }
+                input.onmouseover = function () {
+                    establecerSeleccion(this, 2, true);
+                }
+                input.onmouseout = function () {
+                    establecerSeleccion(this, 2, false);
+                }
+                input.style.width = "0rem";
+                input.style.padding = "0rem";
+                input.style.height = "0rem";
+                puntos.insertBefore(input, puntos.children[puntos.children.length]);
+
+
+                setTimeout(() => {
+                    input.style.width = "3rem";
+                    input.style.height = "2.4rem";
+                    input.style.padding = "0.5rem";
+                }, 10);
+            });
+        }
+
+        function eliminarInputPunto() {
+            if (document.getElementById("puntosX").children[1].children.length > 4) {
+                numeroDePuntos--;
+                idpuntos.forEach(id => {
+                    let puntos = document.getElementById(id).children[1];
+                    let input = puntos.children[numeroDePuntos];
+                    input.style.width = "0rem";
+                    input.style.padding = "0rem";
+                    input.style.height = "0rem";
+                    setTimeout(() => {
+                        puntos.removeChild(input);
+                    }, 500);
+                });
+            }
+        }
+
+        setTimeout(() => {
+            for (let i = 0; i < 4; i++) {
+                añadirInputPuntos();
+            }
+        }, 100);
+
         //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
         let ejercicios = [
-            ["funcion", "xi", "xu", "tolerancia"],
-            ["-x + exp(-x)", 0.1, 1.5, 0.05],
-            ["x^2 - 4", -2, 2, 0.01],
-            ["sin(x)", 0, 3, 0.1],
-            ["log(x)", 1, 10, 0.001]
+            ["funcion"],
+            ["3*x**3 + 5*x**2 - 4*x + 1"],
+            ["log(x)"],
+            ["-28*x**3/3 + 37*x**2 - 62*x/3 - 1"]
         ]
     </script>
 
