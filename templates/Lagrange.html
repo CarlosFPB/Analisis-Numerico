@@ -46,35 +46,41 @@
             </div>
             <div class="formulario">
                 <div class="valor">
+                    <label for="tipo">Modo tabla:</label>
+                    <input type="checkbox" name="tipo" id="tipo" onchange="cambiarTipo(this)">
+                </div>
+                <div class="valor">
                     <label for="funcion">Funcion:</label>
                     <input type="text" name="funcion" id="funcion" required value="-x + exp(-x)" style="width: auto;">
                 </div>
-                <div class="valor">
-                    <label for="tipo">Tipo:</label>
-                    <input type="checkbox" name="tipo" id="tipo" onchange="cambiarTipo(this)">
-                </div>
             </div>
-            <div class="tablasInput">
-                <div id="puntosX" class="puntos" style="display: flex;">
-                    <div>X</div>
-                    <div class="puntosContainer" style="display: flex;
+            <div class="tablas-input">
+                <div class="inputTable">
+                    <div id="puntosX" class="puntos" style="display: flex;">
+                        <div>X</div>
+                        <div class="puntosContainer" style="display: flex;
                     flex-wrap: wrap;">
-                        <div id="borrar" class="buttonBig button-grey" onclick="pruebadethis()">
-                            <span class="material-symbols-outlined">
-                                add
-                            </span>
+                        </div>
+                    </div>
+                    <div id="puntosY" class="puntos" style="display: flex;
+                    opacity: 0;
+                    display: none;
+                    margin-top: -2.5rem;">
+                        <div>f(x)</div>
+                        <div class="puntosContainer" style="display: flex;
+                    flex-wrap: wrap;">
                         </div>
                     </div>
                 </div>
-                <div id="puntosY" class="puntos" style="display: flex;">
-                    <div>f(x)</div>
-                    <div class="puntosContainer" style="display: flex;
-                    flex-wrap: wrap;">
-                        
-                    </div>
-                    <div id="borrar" class="buttonBig button-grey" onclick="pruebadethis()">
+                <div class="control-tabla-input">
+                    <div class="buttonSmall button-grey" onclick="añadirInputPuntos()">
                         <span class="material-symbols-outlined">
                             add
+                        </span>
+                    </div>
+                    <div class="buttonSmall button-grey" onclick="eliminarInputPunto()">
+                        <span class="material-symbols-outlined">
+                            delete
                         </span>
                     </div>
                 </div>
@@ -84,67 +90,110 @@
 
                 let idpuntos = ["puntosX", "puntosY"]
 
+                function eliminarInputPunto() {
 
-                function obtenerArray() {
-                    arrayOfPuntos = [];
-                    idpuntos.forEach(id => {
-                        let puntos = Array.from(document.getElementById(id).children[1].children);
-                        puntos.pop();
-                        puntos = puntos.map(punto => punto.value);
-                        arrayOfPuntos.push(puntos);
-                    })
-                    console.table(arrayOfPuntos);
-                }
-
-
-
-                function cambiarTipo(checkbox) {
-                    if (checkbox.checked) {
-                        document.getElementById("puntosY").style.display = "flex";
-                        document.getElementById("funcion").style.display = "none";
-                    } else {
-                        document.getElementById("funcion").style.display = "unset";
-                        document.getElementById("puntosY").style.display = "none";
+                    if (document.getElementById("puntosX").children[1].children.length > 4) {
+                        idpuntos.forEach(id => {
+                            let puntos = document.getElementById(id).children[1];
+                            let input = puntos.children[puntos.children.length - 1];
+                            input.style.width = "0rem";
+                            input.style.padding = "0rem";
+                            input.style.height = "0rem";
+                            setTimeout(() => {
+                                puntos.removeChild(input);
+                            }, 500);
+                        });
                     }
                 }
 
 
-                function pruebadethis() {
+                function cambiarTipo(checkbox) {
+                    if (checkbox.checked) {
+                        document.getElementById("funcion").style.transition = "opacity 0.5s";
+                        document.getElementById("funcion").style.zIndex = -40;
 
+
+                        setTimeout(() => {
+                            document.getElementById("funcion").style.opacity = 0.3;
+                        }, 10);
+                        document.getElementById("puntosY").style.display = "flex";
+                        setTimeout(() => {
+                            document.getElementById("puntosY").style.marginTop = 0;
+                            setTimeout(() => {
+                                document.getElementById("puntosY").style.opacity = 1;
+                            }, 300);
+                        }, 10);
+
+                    } else {
+                        document.getElementById("funcion").style.transition = "opacity 0.5s";
+                        setTimeout(() => {
+                            document.getElementById("funcion").style.opacity = 1;
+                        }, 10);
+                        document.getElementById("puntosY").style.marginTop = -document.getElementById("puntosY").offsetHeight + "px";
+                        document.getElementById("puntosY").style.opacity = 0;
+                        setTimeout(() => {
+                            document.getElementById("puntosY").style.display = "none";
+                        }, 500);
+                    }
+                }
+
+                function establecerSeleccion(elemento, tipo, mostrar) {
+                    let index = Array.from(elemento.parentNode.children).indexOf(elemento);
+                    idpuntos.forEach(id => {
+                        let puntos = document.getElementById(id).children[1];
+                        switch (tipo) {
+                            case 1:
+                                if (mostrar) {
+                                    puntos.children[index].classList.add("input-focus");
+                                } else {
+                                    puntos.children[index].classList.remove("input-focus");
+                                }
+                                break;
+                            case 2:
+                                if (mostrar) {
+                                    puntos.children[index].classList.add("input-hover");
+                                } else {
+                                    puntos.children[index].classList.remove("input-hover");
+                                }
+                                break;
+                        }
+                    });
+                }
+
+                function añadirInputPuntos() {
                     idpuntos.forEach(id => {
                         let puntos = document.getElementById(id).children[1];
                         let input = document.createElement("input");
                         input.type = "number";
                         input.onfocus = function () {
-                            pruebafocus(this);
+                            establecerSeleccion(this, 1, true);
                         }
                         input.onblur = function () {
-                            pruebablur(this);
+                            establecerSeleccion(this, 1, false);
                         }
-                        puntos.insertBefore(input, puntos.children[puntos.children.length - 1]);
+                        input.onmouseover = function () {
+                            establecerSeleccion(this, 2, true);
+                        }
+                        input.onmouseout = function () {
+                            establecerSeleccion(this, 2, false);
+                        }
+                        input.style.width = "0rem";
+                        input.style.padding = "0rem";
+                        input.style.height = "0rem";
+                        puntos.insertBefore(input, puntos.children[puntos.children.length]);
+
+                        setTimeout(() => {
+                            input.style.width = "3rem";
+                            input.style.height = "2.4rem";
+                            input.style.padding = "0.5rem";
+                        }, 10);
                     });
                 }
-
-                function pruebafocus(elemento) {
-                    let index = Array.from(elemento.parentNode.children).indexOf(elemento);
-                    idpuntos.forEach(id => {
-                        let puntos = document.getElementById(id).children[1];
-                        puntos.children[index].style.backgroundColor = "lightblue";
-                    });
-                }
-
-                function pruebablur(elemento) {
-                    let index = Array.from(elemento.parentNode.children).indexOf(elemento);
-                    idpuntos.forEach(id => {
-                        let puntos = document.getElementById(id).children[1];
-                        puntos.children[index].style.backgroundColor = "";
-                    });
-                }
-
                 setTimeout(() => {
-                    pruebadethis();
-                    pruebadethis();
-                }, 100);
+                    for (let i = 0; i < 4; i++) {
+                        añadirInputPuntos();
+                    }
+                }, 50);
 
 
 
@@ -332,7 +381,6 @@
 
             for (let i = 0; i < (idpuntos.length - resta); i++) {
                 let puntos = Array.from(document.getElementById(idpuntos[i]).children[1].children);
-                puntos.pop();
                 puntos = puntos.map(punto => punto.value);
                 arrayOfPuntos.push(puntos);
             }

@@ -81,7 +81,7 @@ class metodo_lagrange:
                         for i in range(len(matrizPuntos[0])):
                             #comprobar que no haya pares ordenados con valores vacios
                             if (matrizPuntos[0][i] == "") ^ (matrizPuntos[1][i] == ""):
-                                mensajeerror += "No pueden haber pares ordenados con un valor vacio"
+                                mensajeerror = "No pueden haber pares ordenados con un valor vacio"
                                 activarerror = True
                             #comprobar que los puntos que se guardaran no sean vacios
                             elif not (matrizPuntos[0][i] == "" or matrizPuntos[1][i] == ""):
@@ -101,7 +101,7 @@ class metodo_lagrange:
                     else:
                         puntos_y = [f_x.subs(x, i) for i in puntos_x]
                 # Verificar que no hayan valores repetidos en los puntos X
-                if len(puntos_x) != len(set(puntos_x)):
+                if len(puntos_x) != len(set(puntos_x)) and not activarerror:
                     mensajeerror = "No pueden haber valores repetidos en los puntos en X"
                     activarerror = True
             
