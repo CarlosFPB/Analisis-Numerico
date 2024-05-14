@@ -17,6 +17,10 @@ from modelos.metodos.iterativos.polinomicos.muller.Muller import metodo_muller
 #interpolacion
 from modelos.metodos.interpolacion.lagrange.Lagrange import metodo_lagrange
 from modelos.metodos.interpolacion.newton_recursivo.Newton_recursivo import metodo_newton_recursivo
+from modelos.metodos.interpolacion.newton_fracciones_divididas.Newton_fracciones_divididas import metodo_newton_fracciones_divididas
+from modelos.metodos.interpolacion.hermite.Hermite import metodo_hermite
+
+
 app = Flask(__name__, static_url_path='/static')
 
 @app.route('/')
@@ -159,6 +163,28 @@ def calcular_newton_recursivo():
 @app.route('/metodos/interpolacion/newton_recursivo', methods=['GET'])
 def Newton_Recursivo():
     return render_template('Interpolacion_Newton_Recursivo.html')
+
+
+@app.route('/metodos/interpolacion/newton_fracciones_divididas', methods=['POST'])
+def calcular_newton_fracciones_divididas():
+    json_data = request.json
+    respuesta = metodo_newton_fracciones_divididas.calcular_newton_fracciones_divididas(json_data)
+    return respuesta
+
+@app.route('/metodos/interpolacion/newton_fracciones_divididas', methods=['GET'])
+def Newton_Fracciones_Divididas():
+    return render_template('Interpolacion_Newton_Fracciones_Divididas.html')
+
+@app.route('/metodos/interpolacion/hermite', methods=['POST'])
+def calcular_hermite():
+    json_data = request.json
+    respuesta = metodo_hermite.calcular_hermite(json_data)
+    return respuesta
+
+@app.route('/metodos/interpolacion/hermite', methods=['GET'])
+def Hermite():
+    return render_template('Interpolacion_Hermite.html')
+
 
 
 if __name__ == '__main__':

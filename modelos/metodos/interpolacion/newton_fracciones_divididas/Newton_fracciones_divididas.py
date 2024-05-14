@@ -3,10 +3,10 @@ from modelos.extras.Funciones import respuesta_json
 from flask import jsonify
 
 
-class metodo_newton_recursivo:
+class metodo_newton_fracciones_divididas:
 
     @staticmethod
-    def calcular_newton_recursivo(json_data):
+    def calcular_newton_fracciones_divididas(json_data):
         try:
             x = sp.symbols("x")
             f_x = ""
@@ -17,8 +17,6 @@ class metodo_newton_recursivo:
                 resp = instancia_respuesta.responder_error("Error en el argumento 'tipo'")
             if tipo == 1:
                 try:
-                    
-                    
                     f_x = sp.sympify(json_data["funcion"])
                 except:
                     resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
@@ -126,45 +124,47 @@ class metodo_newton_recursivo:
 
                 
                 #inicio del metodo
-                     
-                def calcular_diferencia(xinicial, xfinal):
-                    if xinicial == xfinal:
-                        valor = puntos_y[xinicial]
-                        texto = "<math><mn>" + str(puntos_y[xinicial]) + "</mn></math>"
-                        return [valor, texto]
-                    else:
-                        valor = (calcular_diferencia(xinicial + 1, xfinal)[0] - calcular_diferencia(xinicial, xfinal - 1)[0]) / (
-                            puntos_x[xfinal] - puntos_x[xinicial]
-                        )
-                        texto = "<math><mfrac><mrow><mn>"+ calcular_diferencia(xinicial + 1, xfinal)[1] +"</mn><mo>-</mo><mn>"+calcular_diferencia(xinicial, xfinal - 1)[1]+"</mn></mrow><mrow><mn>"+str(puntos_x[xfinal])+"</mn><mo>-</mo><mn>"+str(puntos_x[xinicial])+"</mn></mrow></mfrac></math>"
-                        return [valor, texto]
-                    
-
-                coeficientes = [calcular_diferencia(0, i) for i in range(len(puntos_x))]
+                
                 instancia_respuesta.agregar_titulo1("Polinomio de Interpolacion de Newton")
+                instancia_respuesta.agregar_parrafo("Se obtiene el polinomio de interpolacion de Newton mediante el metodo de fracciones divididas")
+                matris = []                
+                for i in range(len(puntos_x)):
+                    matris.append([puntos_x[i], puntos_y[i]])
+                
 
-                for i in range(len(coeficientes)):
-                    texto = "b" + str(i)+": <math>" + coeficientes[i][1] + "</math>"
-                    if i != 0:
-                        texto += "<math><mo> = </mo><mo></mo><mn>"+str(coeficientes[i][0])+"</mn></math>"
-                    instancia_respuesta.agregar_parrafo(texto)
+                instancia_respuesta.crear_tabla();
+                for i in range(1,len(matris)):
+                    for j in range(i , len(matris)):
+                        valor = (matris[j][i] - matris[j-1][i]) / (matris[j][0] - matris[j-i][0])
+                        matris[j].append(valor)
+                instancia_respuesta.agregar_fila(["x", "f(x)"])
+                for i in range(len(matris)):
+                    instancia_respuesta.agregar_fila(matris[i])
+                instancia_respuesta.agregar_tabla()
+
+                for i in range(len(matris)):
+                    print("b", i, " = ", matris[i][i+1])
+
+                coeficientes = [matris[i][i+1] for i in range(len(matris))]
+                instancia_respuesta.agregar_clave_valor("Coeficientes: ", str(coeficientes))
 
 
-
+                
                 p_x = 0
                 texto = ""
-                for i in range(len(coeficientes)):
+                for i in range(len(puntos_x)):
                     producto = 1
                     for j in range(i):
                         producto *= x - puntos_x[j]
-                    texto += str(coeficientes[i][0]) + " * [" + str(producto) + "]"
-                    if i != len(coeficientes) - 1:
+                    texto += str(matris[i][i+1]) + " * [" + str(producto) + "]"
+                    if i != len(puntos_x) - 1:
                         texto += " + "
-                    p_x += coeficientes[i][0] * producto
+                    p_x += matris[i][i+1] * producto
 
                 instancia_respuesta.agregar_parrafo("se hace la suma de los productos de los coeficientes con los productos de los factores")
                 instancia_respuesta.agregar_clave_valor("p(x): ", texto)
 
+                
                 instancia_respuesta.agregar_titulo1("Resultado")
                 instancia_respuesta.agregar_parrafo("Se simplifica la expresion obtenida:")
                 instancia_respuesta.agregar_clave_valor("p(x): ", sp.simplify(p_x))
@@ -174,32 +174,15 @@ class metodo_newton_recursivo:
 
 
 
+
                 resp = instancia_respuesta.obtener_y_limpiar_respuesta()
                 return jsonify(resp), 200
         except:
             resp = instancia_respuesta.responder_error("Error en el codigo interno del metodo de lagrange")
             return jsonify(resp), 400
         
-
-
-
-
-
-"""
-                
-
-
-
-
 """
 
 
 
-
-
-
-
-"""
-puntos_x = [0, 1, 2, 3]
-puntos_y = [-1, 6, 31, 18]
 """

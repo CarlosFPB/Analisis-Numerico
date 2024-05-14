@@ -3,10 +3,10 @@ from modelos.extras.Funciones import respuesta_json
 from flask import jsonify
 
 
-class metodo_newton_recursivo:
+class metodo_hermite:
 
     @staticmethod
-    def calcular_newton_recursivo(json_data):
+    def calcular_hermite(json_data):
         try:
             x = sp.symbols("x")
             f_x = ""
@@ -17,8 +17,6 @@ class metodo_newton_recursivo:
                 resp = instancia_respuesta.responder_error("Error en el argumento 'tipo'")
             if tipo == 1:
                 try:
-                    
-                    
                     f_x = sp.sympify(json_data["funcion"])
                 except:
                     resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
@@ -184,22 +182,3 @@ class metodo_newton_recursivo:
 
 
 
-
-"""
-                
-
-
-
-
-"""
-
-
-
-
-
-
-
-"""
-puntos_x = [0, 1, 2, 3]
-puntos_y = [-1, 6, 31, 18]
-"""

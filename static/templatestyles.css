@@ -317,6 +317,7 @@ input[type="checkbox"]:checked {
 input[type="checkbox"]:checked:before {
     transform: translateX(10px);
 }
+
 .clavevalor {
     display: flex;
     gap: 0.3rem;
@@ -495,7 +496,7 @@ input[type="checkbox"]:checked:before {
         'opsz' 32
 }
 
-math{
+math {
     font-family: math;
     font-style: italic;
     font-size: 1.5rem;
@@ -507,6 +508,42 @@ math{
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: auto;
+
+    .tabla-variables {
+        margin-left: calc(2rem + 1px);
+        display: flex;
+        flex-wrap: wrap;
+
+        min-width: 12rem;
+        max-width: 18rem;
+
+        border-radius: 0.5rem 0.5rem 0 0;
+        overflow: hidden;
+
+
+        div {
+            font-family: mate;
+            font-style: italic;
+            font-weight: 600;
+            width: calc(3rem - 1px);
+            text-align: center;
+            background: rgba(0, 106, 255, 0.152);
+            border-right: 1px solid rgba(0, 0, 0, 0.25);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+
+        }
+
+        .focus {
+            background: rgba(255, 0, 0, 0.17);
+            color: rgb(99, 37, 80);
+        }
+
+        .hover {
+
+            background: rgba(255, 0, 179, 0.17);
+            color: rgb(99, 37, 80);
+        }
+    }
 
     .control-tabla-input {
         align-self: center;
@@ -526,9 +563,9 @@ math{
 
     .inputTable {
         align-self: center;
+        grid-column: 1;
 
         .puntos {
-            grid-column: 1;
             transition: opacity 0.2s, margin 0.5s;
 
             .puntosContainer {
