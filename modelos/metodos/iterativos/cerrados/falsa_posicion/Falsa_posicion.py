@@ -3,7 +3,7 @@ from flask import jsonify
 from .....extras.Funciones import errores, falsaPosicion, respuesta_json, verificaciones
 
 
-class falsa_posicion():
+class metodo_falsa_posicion():
 
    
         def calcular_falsa_posicion(json_data):
@@ -43,6 +43,7 @@ class falsa_posicion():
                 
                 xr = 0
                 condicion = ""
+                iteracion = 0
 
                 #execpciones comunes
                 evaluar_x1 = f_x.subs(x,x1)
@@ -65,7 +66,7 @@ class falsa_posicion():
                 instancia_respuesta.agregar_clave_valor("Formula:","Xr = Xu - ( f(Xu) * (X1 - Xu) ) / ( f(X1) - f(Xu) )")
                 instancia_respuesta.agregar_parrafo(f"Iteracion 1: Xr = {xu} - ( f({xu}) * ({x1} - {xu}) ) / ( f({x1}) - f({xu}) ) = {falsaPosicion.primera_aproximacion(f_x,x1,xu)}")
                 while True:
-                    iteracion =1
+                    iteracion += 1
                     error_acumulado = 0
                     valor_anterior = xr
                     xr = falsaPosicion.primera_aproximacion(f_x,x1,xu)

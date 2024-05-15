@@ -51,7 +51,7 @@ class metodo_bairstow():
 
   
 
-    def calcular_Bairtow(json_data):
+    def calcular_bairstow(json_data):
         x = sp.symbols("x")
 
         #obtengo los valores del json
