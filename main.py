@@ -3,6 +3,7 @@ import os
 
 # Importaciones de métodos
 from modelos.metodos.iterativos.cerrados.biseccion.Biseccion import medoto_biseccion
+from modelos.metodos.iterativos.cerrados.falsa_posicion.Falsa_posicion import metodo_falsa_posicion
 from modelos.metodos.directos.polinomicas_mayor_3.ferrari.Ferrari import metodo_ferrari
 from  modelos.metodos.directos.polinomicas_mayor_3.tartaglia.Tartaglia import metodo_tartaglia
 from modelos.metodos.directos.polinomicas_menor_2.cuadratica.Cuadratica import metodo_cuadratico
@@ -11,11 +12,14 @@ from modelos.metodos.iterativos.abiertos.punto_fijo.Punto_fijo import metodo_pun
 from modelos.metodos.iterativos.abiertos.newton.Newton import metodo_newton
 from modelos.metodos.iterativos.abiertos.newton_modificado.Newton_modificado import metodo_newton_modificado
 from modelos.metodos.iterativos.abiertos.secante.Secante import metodo_secante
+from modelos.metodos.iterativos.polinomicos.bairstow.Bairstow import metodo_bairstow
 from modelos.metodos.iterativos.polinomicos.horner.Horner import metodo_horner
 from modelos.metodos.iterativos.polinomicos.muller.Muller import metodo_muller
 
+
 app = Flask(__name__, static_url_path='/static')
 
+#raiz y errores
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -31,6 +35,8 @@ def page_not_found(e):
     resp = {'error' :  'El servidor no responde'}
     return jsonify(resp), 504
 
+#metodos iterativos cerrados
+
 @app.route('/metodos/iterativos/cerrados/Biseccion', methods=['GET'])
 def renderizar_biseccion():
     return render_template('Biseccion.html')
@@ -41,55 +47,17 @@ def calcular_biseccion():
     respuesta = medoto_biseccion.calcular_biseccion(json_data)
     return respuesta
 
-@app.route('/metodos/directos/gradomas3/Ferrari', methods=['GET'])
-def renderizar_ferrari():
-    return render_template('Ferrari.html')
+@app.route('/metodos/iterativos/cerrados/Falsa_posicion', methods=['GET'])
+def renderizar_falsa_posicion():
+    return render_template('Falsa_posicion.html')
 
-@app.route('/metodos/directos/gradomas3/Ferrari', methods=['POST'])
-def calcular_ferrari():
+@app.route('/metodos/iterativos/cerrados/Falsa_posicion', methods=['POST'])
+def calcular_falsa_posicion():
     json_data = request.json
-    respuesta = metodo_ferrari.calcular_ferrari(json_data)
+    respuesta = metodo_falsa_posicion.calcular_falsa_posicion(json_data)
     return respuesta
 
-@app.route('/metodos/directos/gradomas3/Tartaglia', methods=['GET'])
-def renderizar_tartaglia():
-    return render_template('Tartaglia.html')
-
-@app.route('/metodos/directos/gradomas3/Tartaglia', methods=['POST'])
-def calcular_tartaglia():
-    json_data = request.json
-    respuesta = metodo_tartaglia.calcular_tartaglia(json_data)
-    return respuesta
-
-@app.route('/metodos/directos/gradomenos2/cuartica', methods=['GET'])
-def renderizar_cuartica():
-    return render_template('Cuadratica.html')
-
-@app.route('/metodos/directos/gradomenos2/cuartica', methods=['POST'])
-def calcular_cuartica():
-    json_data = request.json
-    respuesta = metodo_cuadratico.calcular_cuadratico(json_data)
-    return respuesta
-
-@app.route('/metodos/directos/gradomenos2/lineal', methods=['GET'])
-def renderizar_lineal():
-    return render_template('Lineal.html')
-
-@app.route('/metodos/directos/gradomenos2/lineal', methods=['POST'])
-def calcular_lineal():
-    json_data = request.json
-    respuesta = metodo_lineal.calcular_lineal(json_data)
-    return respuesta
-
-@app.route('/metodos/directos/abiertos/punto-Fijo', methods=['GET'])
-def Punto_fijo():
-    return render_template('Punto_fijo.html')
-
-@app.route('/metodos/directos/abiertos/punto-Fijo', methods=['POST'])
-def calcular_punto_fijo():
-    json_data = request.json
-    respuesta = metodo_punto_fijo.calcular_punto_fijo(json_data)
-    return respuesta    
+#metodos iterativos abiertos
 
 @app.route('/metodos/directos/abiertos/newton', methods=['GET'])
 def Newton():
@@ -111,6 +79,16 @@ def calcular_newton_modificado():
     respuesta = metodo_newton_modificado.calcular_newton_modificado(json_data)
     return respuesta
 
+@app.route('/metodos/directos/abiertos/punto-Fijo', methods=['GET'])
+def Punto_fijo():
+    return render_template('Punto_fijo.html')
+
+@app.route('/metodos/directos/abiertos/punto-Fijo', methods=['POST'])
+def calcular_punto_fijo():
+    json_data = request.json
+    respuesta = metodo_punto_fijo.calcular_punto_fijo(json_data)
+    return respuesta    
+
 @app.route('/metodos/directos/abiertos/Secante', methods=['GET'])
 def Secante():
     return render_template('Secante.html')
@@ -119,6 +97,18 @@ def Secante():
 def calcular_secante():
     json_data = request.json
     respuesta = metodo_secante.calcular_secante(json_data)
+    return respuesta
+
+#metodos iterativos polinomicos
+
+@app.route('/metodos/iterativos/polinomicos/bairstow', methods=['GET'])
+def Bairstow():
+    return render_template('Bairstow.html')
+
+@app.route('/metodos/iterativos/polinomicos/bairstow', methods=['POST'])
+def calcular_bairstow():
+    json_data = request.json
+    respuesta = metodo_bairstow.calcular_bairstow(json_data)
     return respuesta
 
 @app.route('/metodos/iterativos/polinomicos/horner', methods=['POST'])
@@ -141,8 +131,49 @@ def calcular_muller():
 def Muller():
     return render_template('Muller.html')
 
+#metodos directos
 
-        
+@app.route('/metodos/directos/gradomenos2/lineal', methods=['GET'])
+def renderizar_lineal():
+    return render_template('Lineal.html')
+
+@app.route('/metodos/directos/gradomenos2/lineal', methods=['POST'])
+def calcular_lineal():
+    json_data = request.json
+    respuesta = metodo_lineal.calcular_lineal(json_data)
+    return respuesta
+
+@app.route('/metodos/directos/gradomenos2/cuartica', methods=['GET'])
+def renderizar_cuartica():
+    return render_template('Cuadratica.html')
+
+@app.route('/metodos/directos/gradomenos2/cuartica', methods=['POST'])
+def calcular_cuartica():
+    json_data = request.json
+    respuesta = metodo_cuadratico.calcular_cuadratico(json_data)
+    return respuesta
+
+@app.route('/metodos/directos/gradomas3/Ferrari', methods=['GET'])
+def renderizar_ferrari():
+    return render_template('Ferrari.html')
+
+@app.route('/metodos/directos/gradomas3/Ferrari', methods=['POST'])
+def calcular_ferrari():
+    json_data = request.json
+    respuesta = metodo_ferrari.calcular_ferrari(json_data)
+    return respuesta
+
+@app.route('/metodos/directos/gradomas3/Tartaglia', methods=['GET'])
+def renderizar_tartaglia():
+    return render_template('Tartaglia.html')
+
+@app.route('/metodos/directos/gradomas3/Tartaglia', methods=['POST'])
+def calcular_tartaglia():
+    json_data = request.json
+    respuesta = metodo_tartaglia.calcular_tartaglia(json_data)
+    return respuesta
+    
+#metodos de interpolacion
  
 
 if __name__ == '__main__':

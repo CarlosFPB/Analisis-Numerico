@@ -38,8 +38,6 @@ class medoto_biseccion():
                 resp = instancia_respuesta.responder_error(f"Error en los valores iniciales\n {str(e)}")
                 return jsonify(resp), 400
             
-            xr = 0
-
             #execpciones comunes
             evaluar_x1 = f_x.subs(x,x1)
             evaluar_xu = f_x.subs(x,xu)
