@@ -52,12 +52,17 @@
                 <div class="valor">
                     <label for="funcion">Funcion:</label>
                     <input type="text" name="funcion" id="funcion" required value="3*x**3 + 5*x**2 - 4*x + 1"
-                        style="width: 16rem;">
+                        style="width: 14rem;">
+                </div>
+                <div class="valor">
+                    <label for="derivada">N°Derivada:</label>
+                    <input type="number" name="derivada" id="derivada" required>
                 </div>
             </div>
             <div class="tablas-input">
 
-                <div id="tabla_variables" class="tabla-variables">
+                <div id="tabla_variables" class="tabla-variables"
+                    style="transition: all 0.5s ease 0s; opacity: 0; display: flex; height: 0px;">
 
                     <div>x</div>
                     <div>f(x)</div>
@@ -69,9 +74,31 @@
 
 
                 <div class="inputTable">
-                    <div id="x0" class="puntos" style="display: flex;">
-                        <div>
+                    <div id="x" class="puntos"
+                        style="display: flex; overflow: visible; transition: all 0.5s ease 0s; height: auto;">
+                        <div style="border-radius: 0.5rem 0 0 0.5rem;" class="">
+                            <p>X</p>
+                        </div>
+                        <div class="puntosContainer" style="display: flex;
+                    flex-wrap: wrap;">
+                        </div>
+                    </div>
+
+
+                    <div id="x0" class="puntos"
+                        style="display: flex; transition: all 0.5s ease 0s; height: 0px; overflow: hidden;">
+                        <div style=" border-radius: 0.5rem 0 0 0">
                             <p>X<sub>0</sub></p>
+                        </div>
+                        <div class="puntosContainer" style="display: flex;
+                    flex-wrap: wrap;">
+                        </div>
+                    </div>
+
+                    <div id="x1" class="puntos"
+                        style="display: flex; transition: all 0.5s ease 0s; height: 0px; overflow: hidden;">
+                        <div>
+                            <p>X<sub>1</sub></p>
                         </div>
                         <div class="puntosContainer" style="display: flex;
                     flex-wrap: wrap;">
@@ -90,9 +117,8 @@
                         </span>
                     </div>
                 </div>
-                <div class="control-tabla-input" style="grid-column: 1;
-                justify-self:center;
-                ">
+                <div id="controlBottom" class="control-tabla-input"
+                    style="grid-column: 1; justify-self: center; transition: all 0.5s ease 0s; height: 0px; overflow: hidden;">
                     <div class="buttonSmall button-grey" onclick="añadirContainer()">
                         <span class="material-symbols-outlined">
                             add
@@ -170,7 +196,7 @@
     <!-- Sugerencias de Ejercicios 
     este sera una ventana que estara flotando a la derecha de la pagina
     -->
-    <div class="sugerencias" style="right: calc(-253px); display: none;">
+    <div class="sugerencias" style="right: calc(-253px);">
         <span><span class="textGradient1">
                 Ejercicios Sugeridos
             </span>
@@ -239,7 +265,7 @@
                 <p>Para utilizar el método de lagrange a través de la API, debes realizar una petición POST al
                     siguiente
                     endpoint:</p>
-                <p>https://analisis-numerico.vercel.app/metodos/interpolacion/lagrange</p>
+                <p>https://analisis-numerico.vercel.app/metodos/interpolacion/hermite</p>
                 <br>
                 <p>Los parametros se deben enviar en formato JSON, Existen dos formas para poder realizar el calculo:
                 </p>
@@ -283,7 +309,7 @@
 
     <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo
-        let endPoint = "/metodos/interpolacion/lagrange"
+        let endPoint = "/metodos/interpolacion/hermite"
         //Aqui iran los id de todos los datos que se enviaran al EndPoint
         let variables = ["funcion"];
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
@@ -294,20 +320,25 @@
             datos.tipo = tipo;
             if (tipo === 1) {
                 datos.funcion = document.getElementById("funcion").value;
+                datos.derivada = document.getElementById("derivada").value;
+                arrayOfPuntos = [Array.from(document.getElementById("x").children[1].children).map(punto => punto.value)]
             }
             let resta = tipo === 1 ? 1 : 0;
 
-            for (let i = 0; i < (idpuntos.length - resta); i++) {
-                let puntos = Array.from(document.getElementById(idpuntos[i]).children[1].children);
-                puntos = puntos.map(punto => punto.value);
-                arrayOfPuntos.push(puntos);
+            if (tipo === 2) {
+
+                for (let i = 1; i < (idpuntos.length - resta); i++) {
+                    let puntos = Array.from(document.getElementById(idpuntos[i]).children[1].children);
+                    puntos = puntos.map(punto => punto.value);
+                    arrayOfPuntos.push(puntos);
+                }
             }
 
             datos.matrizPuntos = arrayOfPuntos;
             console.log(datos);
             realizarPeticionPOST(endPoint, datos);
         }
-        let idpuntos = ["x0"]
+        let idpuntos = ["x", "x0", "x1"]
         let numeroDePuntos = 0;
 
         function cambiarTipo(checkbox) {
@@ -317,24 +348,137 @@
                 setTimeout(() => {
                     document.getElementById("funcion").style.opacity = 0.3;
                 }, 10);
-                document.getElementById("puntosY").style.display = "flex";
+
+                document.getElementById("derivada").style.transition = "opacity 0.5s";
+                document.getElementById("derivada").style.zIndex = -40;
                 setTimeout(() => {
-                    document.getElementById("puntosY").style.marginTop = 0;
-                    setTimeout(() => {
-                        document.getElementById("puntosY").style.opacity = 1;
-                    }, 300);
+                    document.getElementById("derivada").style.opacity = 0.3;
                 }, 10);
+
+                //Animacion de la tabla de marcadores
+                let tablaVariables = document.getElementById("tabla_variables");
+                tablaVariables.style.height = "auto";
+                let altura = tablaVariables.offsetHeight;
+                tablaVariables.style.transition = "all 0.5s";
+                tablaVariables.style.opacity = 1;
+                tablaVariables.style.height = "0px";
+                setTimeout(() => {
+                    tablaVariables.style.display = "flex";
+                    tablaVariables.style.height = `${altura}px`;
+                    setTimeout(() => {
+                        tablaVariables.style.height = "";
+                    }, 500);
+                }, 10);
+                /////////////////////////////////
+
+                //Animacion de los puntos X
+                let $puntosX = document.getElementById("x");
+                $puntosX.style.overflow = "hidden";
+                $puntosX.style.transition = "all 0.5s";
+
+                let altura2 = $puntosX.offsetHeight;
+                $puntosX.style.height = `${altura2}px`;
+                setTimeout(() => {
+                    $puntosX.style.height = "0px";
+                }, 10);
+                /////////////////////////////////
+
+                //Animacion de los puntos x0...
+
+
+                let puntos = idpuntos.slice(1).map(id => document.getElementById(id));
+                console.log(puntos);
+                puntos.forEach(punto => {
+                    punto.style.transition = "all 0.5s";
+                    punto.style.height = "auto";
+                    let alturas = punto.offsetHeight;
+                    punto.style.height = "0px";
+                    setTimeout(() => {
+                        punto.style.height = `${alturas}px`;
+                        punto.style.overflow = "hidden";
+                        setTimeout(() => {
+                            punto.style.height = "auto";
+                            punto.style.overflow = "visible";
+                        }, 500);
+                    }, 10);
+                });
+
+                let $controles = document.getElementById("controlBottom");
+                $controles.style.transition = "all 0.5s";
+                $controles.style.height = "auto";
+                let altura3 = $controles.offsetHeight;
+                $controles.style.height = "0px";
+                setTimeout(() => {
+                    $controles.style.height = `${altura3}px`;
+                    $controles.style.overflow = "visible";
+                }, 10);
+
             } else {
                 document.getElementById("funcion").style.transition = "opacity 0.5s";
                 document.getElementById("funcion").style.zIndex = 0;
                 setTimeout(() => {
                     document.getElementById("funcion").style.opacity = 1;
                 }, 10);
-                document.getElementById("puntosY").style.marginTop = -document.getElementById("puntosY").offsetHeight + "px";
-                document.getElementById("puntosY").style.opacity = 0;
+
+                document.getElementById("derivada").style.transition = "opacity 0.5s";
+                document.getElementById("derivada").style.zIndex = 0;
                 setTimeout(() => {
-                    document.getElementById("puntosY").style.display = "none";
-                }, 500);
+                    document.getElementById("derivada").style.opacity = 1;
+                }, 10);
+
+                //Animacion de la tabla de marcadores
+                let tablaVariables = document.getElementById("tabla_variables");
+                tablaVariables.style.transition = "all 0.5s";
+                let altura = tablaVariables.offsetHeight;
+                tablaVariables.style.height = `${altura}px`;
+                setTimeout(() => {
+                    tablaVariables.style.height = 0;
+                    tablaVariables.style.opacity = 0;
+                }, 10);
+                /////////////////////////////////
+
+                //Animacion de los puntos X
+                let $puntosX = document.getElementById("x");
+                $puntosX.style.transition = "all 0.5s";
+                $puntosX.style.height = "auto";
+                let altura2 = $puntosX.offsetHeight;
+                $puntosX.style.height = "0px";
+                setTimeout(() => {
+                    $puntosX.style.height = `${altura2}px`;
+                    $puntosX.style.overflow = "hidden";
+                    setTimeout(() => {
+                        $puntosX.style.height = "auto";
+                        $puntosX.style.overflow = "visible";
+                    }, 500);
+                }, 10);
+                /////////////////////////////////
+
+                //Animacion de los puntos x0...
+                let puntos = idpuntos.slice(1).map(id => document.getElementById(id));
+                console.log(puntos);
+                puntos.forEach(punto => {
+                    punto.style.overflow = "hidden";
+                    punto.style.transition = "all 0.5s";
+
+                    let alturas = punto.offsetHeight;
+                    punto.style.height = `${alturas}px`;
+                    setTimeout(() => {
+                        punto.style.height = "0px";
+                    }, 10);
+                });
+
+
+
+                let $controles = document.getElementById("controlBottom");
+                $controles.style.transition = "all 0.5s";
+                let altura3 = $controles.offsetHeight;
+                $controles.style.height = `${altura3}px`;
+                setTimeout(() => {
+                    $controles.style.height = "0px";
+                    $controles.style.overflow = "hidden";
+                }, 10);
+
+
             }
         }
 
@@ -343,24 +487,29 @@
             let puntos = elemento.parentNode;
             let marcador = document.getElementById("tabla_variables");
             let div = marcador.children[index];
+            let filaPadre = elemento.parentElement.parentElement.children[0];
 
             switch (tipo) {
                 case 1:
                     if (mostrar) {
                         div.classList.add("focus");
                         puntos.children[index].classList.add("input-focus");
+                        filaPadre.classList.add("focus");
                     } else {
                         puntos.children[index].classList.remove("input-focus");
                         div.classList.remove("focus");
+                        filaPadre.classList.remove("focus");
                     }
                     break;
                 case 2:
                     if (mostrar) {
                         div.classList.add("hover");
                         puntos.children[index].classList.add("input-hover");
+                        filaPadre.classList.add("hover");
                     } else {
                         div.classList.remove("hover");
                         puntos.children[index].classList.remove("input-hover");
+                        filaPadre.classList.remove("hover");
                     }
                     break;
             }
@@ -400,8 +549,22 @@
             if (numeroDePuntos > 4) {
                 let marcador = document.getElementById("tabla_variables")
                 let div = document.createElement("div");
-                div.innerHTML = `D<sup>${numeroDePuntos - 1}</sup>y`;
+                div.innerHTML = `D<sup>${numeroDePuntos - 2}</sup>y`;
                 marcador.appendChild(div);
+
+                div.style.width = "0px";
+                div.style.height = "0px";
+                div.style.overflow = "hidden";
+                div.style.transition = "all 0.5s";
+                setTimeout(() => {
+                    div.style.width = "calc(3rem - 1px)";
+                    div.style.height = "24.35px";
+                    setTimeout(() => {
+
+                        div.style.transition = "";
+                    }, 500);
+
+                }, 10);
             }
         }
 
@@ -418,14 +581,23 @@
                         puntos.removeChild(input);
                     }, 500);
                 });
-                let marcador = document.getElementById("tabla_variables");
-                marcador.removeChild(marcador.children[marcador.children.length - 1]);
+                let marcador = document.getElementById("tabla_variables").children[numeroDePuntos];
+                marcador.style.width = "0px";
+                marcador.style.height = "0px";
+                marcador.style.overflow = "hidden";
+                marcador.style.transition = "all 0.5s";
+                setTimeout(() => {
+                    marcador.style.transition = "";
+                    marcador.remove();
+                }, 500);
+
+
             }
         }
 
         function añadirContainer() {
             let padre = document.getElementById(idpuntos[idpuntos.length - 1]).parentElement
-            subindice = idpuntos.length;
+            subindice = idpuntos.length - 1;
             let div = document.createElement("div");
             let id = `x${subindice}`;
             div.id = id;
@@ -450,39 +622,46 @@
                 input.onmouseout = function () {
                     establecerSeleccion(this, 2, false);
                 }
-                input.style.width = "0rem";
-                input.style.padding = "0rem";
-                input.style.height = "0rem";
                 div.children[1].appendChild(input);
 
 
-                setTimeout(() => {
-                    input.style.width = "3rem";
-                    input.style.height = "2.4rem";
-                    input.style.padding = "0.5rem";
-                }, 10);
-
+                input.style.width = "3rem";
+                input.style.height = "2.4rem";
+                input.style.padding = "0.5rem";
             }
+
             padre.appendChild(div);
+            div.style.height = "auto";
+            let altura = div.offsetHeight;
+            div.style.height = "0px";
+            div.style.transition = "all 0.5s";
+            div.style.overflow = "hidden";
+            setTimeout(() => {
+                div.style.height = `${altura}px`;
+                setTimeout(() => {
+                    div.style.height = "auto";
+                    div.style.overflow = "visible";
+                    div.style.transition = "";
+                }, 500);
+            }, 10);
         }
-        
+
         function eliminarContainer() {
-            if (idpuntos.length > 2) {
+            if (idpuntos.length > 3) {
                 let padre = document.getElementById(idpuntos[idpuntos.length - 1]).parentElement;
                 let div = document.getElementById(idpuntos[idpuntos.length - 1]);
                 idpuntos.pop();
-                for (let i = 0; i < numeroDePuntos; i++) {
-                    let input = div.children[1].children[i];
-                    input.style.width = "0rem";
-                    input.style.padding = "0rem";
-                    input.style.height = "0rem";
+                let altura = div.offsetHeight;
+                div.style.height = `${altura}px`; setTimeout(() => {
+
+                    div.style.height = "0px";
+                    div.style.transition = "all 0.5s";
+                    div.style.overflow = "hidden";
+
                     setTimeout(() => {
-                        div.children[1].removeChild(input);
+                        padre.removeChild(div);
                     }, 500);
-                }
-                setTimeout(() => {
-                    padre.removeChild(div);
-                }, 500);
+                }, 10);
             }
         }
 

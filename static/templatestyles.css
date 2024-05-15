@@ -565,8 +565,10 @@ math {
         align-self: center;
         grid-column: 1;
 
+
         .puntos {
             transition: opacity 0.2s, margin 0.5s;
+
 
             .puntosContainer {
 
@@ -574,6 +576,8 @@ math {
                 max-width: 18rem;
                 display: flex;
                 align-items: center;
+
+
 
                 input {
                     grid-column: 1;
@@ -605,6 +609,17 @@ math {
 
             }
 
+            .focus {
+                background: rgba(255, 0, 0, 0.17) !important;
+                color: rgb(99, 37, 80) !important;
+            }
+
+            .hover {
+
+                background: rgba(0, 106, 255, 0.25) !important;
+                color: rgb(63, 37, 99) !important;
+            }
+
         }
 
 
@@ -621,9 +636,7 @@ math {
             font-weight: 600;
         }
 
-        .puntos:not(:first-child) {
-            border-top: 1px solid rgba(0, 0, 0, 0.25);
-        }
+        .puntos:not(:first-child) {}
 
         .puntos:first-child div:first-child {
             border-radius: .5rem 0 0;
@@ -807,6 +820,14 @@ dialog {
         color: rgb(0, 0, 0) !important;
         justify-content: start !important;
         align-items: start !important;
+
+    }
+    .text_hero{
+        margin-top: -40px;
+    }
+    .tablecontainer{
+        border: none;
+        padding: 0;
     }
 
     canvas {
