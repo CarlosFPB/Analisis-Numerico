@@ -114,24 +114,47 @@ class newton_modificado():
         respuesta = x0 - (f_x_evaluada * f_prima_evaluada)/(f_prima_evaluada**2 - f_x_evaluada * f_prima_prima_evaluada)
         return float(respuesta)
     
-class Ferrari():
-     @staticmethod
-     def es_funcion_cuarto_grado(funcion):
-        # Divide la función en términos separados
-        terminos = re.split(r'\+|\-', funcion)
-        for termino in terminos:
-        # Obtener el exponente del término
-            match = re.search(r'\*\*(\d+)', termino)
-            if match and int(match.group(1)) == 4:
-                return True
-        return False
      
-     @staticmethod
-     def es_funcion_polinomio(funcion):
+class verificaciones():
+
+    @staticmethod
+    def es_polinomio(funcion):
         x = sp.symbols('x')
         poly_funcion = funcion.as_poly(x)
-        
         if poly_funcion is None:
+            return False
+        return True
+    
+    #returna none si no es polinomica
+    @staticmethod
+    def obtener_grado(funcion):
+        x = sp.symbols('x')
+        if not verificaciones.es_polinomio(funcion):
+            return None
+        poly_funcion = funcion.as_poly(x)
+        return poly_funcion.degree()
+    
+    
+    @staticmethod
+    def obtener_coeficientes(funcion):
+        x = sp.symbols('x')
+        poly_funcion = funcion.as_poly(x)
+        grado = poly_funcion.degree()
+        coeficientes = [poly_funcion.coeff_monomial(x**i) for i in range(grado, -1, -1)]#aunq haya 0
+        return coeficientes
+    
+    def obtener_coeficientes_de_y(funcion):
+        y = sp.symbols('y')
+        poly_funcion = funcion.as_poly(y)
+        grado = poly_funcion.degree()
+        coeficientes = [poly_funcion.coeff_monomial(y**i) for i in range(grado, -1, -1)]
+        return coeficientes
+    
+    @staticmethod
+    def posee_raices_reales(funcion):
+        x = sp.symbols('x')
+        soluciones = sp.solve(sp.Eq(funcion, 0), x)
+        if not any(sol.is_real for sol in soluciones):
             return False
         return True
 

@@ -1,6 +1,7 @@
 import  sympy as sp
 import numpy as np
-from .....extras.Funciones import errores, respuesta_json
+from .....extras.Funciones import errores, respuesta_json, verificaciones
+from flask import jsonify
 
 class metodo_muller():
 
@@ -13,20 +14,43 @@ class metodo_muller():
             instancia_respuesta = respuesta_json()
             
             # obtengo los valores del json
-            f_x_crudo = json_data["funcion"]
-            x0_crudo = json_data["x0"]
-            x1_crudo = json_data["x1"]
-            x2_crudo = json_data["x2"]
-            tolerancia_crudo = json_data["tolerancia"]
+            #Verificar la funcion obtenida
             try:
-                f_x = sp.sympify(f_x_crudo)
-            except:
-                return instancia_respuesta.responder_error("La función ingresada es inválida, ingrese una funcion valida"), 400
-            x0 = float(x0_crudo)
-            x1 = float(x1_crudo)
-            x2 = float(x2_crudo)
-            error_aceptado = float(tolerancia_crudo)
+                #Ecuaion de la funcion
+                f_x = sp.sympify(json_data["funcion"])
+                resultado = f_x.subs(x, 2)
+                if resultado > 0:
+                    pass
+            except sp.SympifyError:
+                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                return jsonify(resp), 400
+            except TypeError as e:
+                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                return jsonify(resp), 400
 
+            #validar que sea grado mayor a 3 no importa sino es polinomica
+            if verificaciones.obtener_grado(f_x)!= None:#es porq es polinomica
+                if verificaciones.obtener_grado(f_x) < 3:
+                    resp = instancia_respuesta.responder_error("La función debe ser de grado 3 o mayor")
+                    return jsonify(resp), 400
+            else:
+                resp = instancia_respuesta.responder_error("La función debe ser polinomica de grado 3 o mayor")
+                return jsonify(resp), 400
+            
+            #verifico los datos ingresados
+            try:
+                x0_crudo = json_data["x0"]
+                x1_crudo = json_data["x1"]
+                x2_crudo = json_data["x2"]
+                tolerancia_crudo = json_data["tolerancia"]
+                x0 = float(x0_crudo)
+                x1 = float(x1_crudo)
+                x2 = float(x2_crudo)
+                error_aceptado = float(tolerancia_crudo)
+            except ValueError as e:
+                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+                return jsonify(resp), 400
+      
             #hacemos la primera iteracion para el frontend
             #calcular evaluadas
             f_x0 = f_x.subs(x, x0)
@@ -110,9 +134,12 @@ class metodo_muller():
                 else:
                     x_calculado = x2 + ((-2*c)/(b - D))# con b**2 tarda muchas iteraciones
 
+                x_calculado = sp.N(x_calculado)
+
 
                 #Error acomulado
                 error_acomulado = errores.error_aproximado_porcentual(x2,x_calculado)
+                error_acomulado = sp.N(error_acomulado)
                 instancia_respuesta.agregar_fila([iteracion, x0, x1, x2, x_calculado, error_acomulado])
                 #ahy error cuando el metodo tiene un error muy grande rompe el codigo ya q no puede vealuar la comparacion
                 if error_acomulado < error_aceptado:
@@ -128,6 +155,7 @@ class metodo_muller():
             instancia_respuesta.agregar_parrafo(f"El error acomulado es: {error_acomulado}")
             instancia_respuesta.agregar_parrafo(f"Iteraciones: {iteracion}")
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()
-            return resp, 200
+            return jsonify(resp), 200
         except Exception as e:
-            return instancia_respuesta.responder_error(f"Error durante el procedimiento\nError: {e}"), 500
+            resp = instancia_respuesta.responder_error(f"Error durante el procedimiento\nError: {e}")
+            return jsonify(resp), 500

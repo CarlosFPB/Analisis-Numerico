@@ -1,7 +1,7 @@
 import  sympy as sp
 import numpy as np
-from .....extras.Funciones import errores, respuesta_json
-
+from .....extras.Funciones import errores, respuesta_json, verificaciones
+from flask import jsonify
 
 
 class metodo_horner():
@@ -11,34 +11,52 @@ class metodo_horner():
         try:
             # Definir símbolos
             x = sp.symbols('x')
-
-            # Ecuación a dividir (dividendo)
-            f_x_crudo = json_data["funcion"]
-            x0_crudo = json_data["x0"]
-            tolerancia_crudo = json_data["tolerancia"]
+            
             #instarciar respuesta
             instancia_respuesta = respuesta_json()
-            try:
-                f_x = sp.sympify(f_x_crudo)
-            except:
-                res = instancia_respuesta.responder_error("Error en la funcion ingresada, Ingrese una funcion valida")
-                return res, 500
-        
-            x0 = float(x0_crudo)
-            error_aceptado = float(tolerancia_crudo)
 
+            #Verificar la funcion obtenida
+            try:
+                #Ecuaion de la funcion
+                f_x = sp.sympify(json_data["funcion"])
+                resultado = f_x.subs(x, 2)
+                if resultado > 0:
+                    pass
+            except sp.SympifyError:
+                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                return jsonify(resp), 400
+            except TypeError as e:
+                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                return jsonify(resp), 400
+            
+            #validar que sea grado mayor a 3 y polinomica
+            if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica
+                if verificaciones.obtener_grado(f_x) <3:
+                    resp = instancia_respuesta.responder_error("La función debe ser polinomica de grado 3 o mayor")
+                    return jsonify(resp), 400
+            else:#no es polinomica por ende ni tiene grado mayor a 3
+                resp = instancia_respuesta.responder_error("La función debe ser polinomica de grado 3 o mayor")
+                return jsonify(resp), 400
+        
+            
+            try:
+                x0_crudo = json_data["x0"]
+                tolerancia_crudo = json_data["tolerancia"]
+                x0 = float(x0_crudo)
+                error_aceptado = float(tolerancia_crudo)
+            except ValueError as e:
+                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+                return jsonify(resp), 400
+            
             f_x0 = x - x0 #- para cambiar signo
             iteracion = 0
             instancia_respuesta.agregar_titulo1("Metodo de Horner")
             instancia_respuesta.agregar_parrafo(f"Funcion ingresada: {f_x}")
             instancia_respuesta.agregar_parrafo(f"X0: {x0}")
             instancia_respuesta.agregar_parrafo(f"Tolerancia: {error_aceptado}")
-            #instancia_respuesta.agregar_fila(["Iteracion","X0","R","S","Xi","Ea%"])
             instancia_respuesta.agregar_parrafo("Se realiza la division sintetica de la funcion ingresada, para obtener el residuo y el cociente")
             
-            polinomio = f_x.as_poly(x)
-            grado = polinomio.degree()
-            coeficientes = [polinomio.coeff_monomial(x**i) for i in range(grado, -1, -1)]
+            coeficientes = verificaciones.obtener_coeficientes(f_x)
             divsion_sinterica1 = metodo_horner.calcular_divsion_sinterica(coeficientes, x0)
             instancia_respuesta.crear_tabla()
             instancia_respuesta.agregar_fila(divsion_sinterica1[0])
@@ -63,32 +81,40 @@ class metodo_horner():
             instancia_respuesta.agregar_clave_valor("xi",x_calculado)
             instancia_respuesta.agregar_parrafo("Se evalua el error aproximado y se vuelve a iterar hasta que el error sea menor a la tolerancia")
             instancia_respuesta.agregar_titulo1("Resultados")
+            #Algortimo para calcular la raiz con el metodo de horner
+            error_acomulado = 100
             while True:
                 iteracion += 1
                 # 1 div sintetica
                 cociente, residuo = sp.div(f_x, f_x0)
                 R = residuo
-                #2 divicion
+                #2 divicion sintetica
                 cociente2, residuo2 = sp.div(cociente, f_x0)
-                S = residuo2
+                S = residuo2 #validar que no sea 0
                 x_calculado = x0 - (R/S)
+                x_calculado = sp.N(x_calculado)
                 error_acomulado = errores.error_aproximado_porcentual(x0, x_calculado)
-                instancia_respuesta.agregar_fila([iteracion, x0, R, S, x_calculado, error_acomulado.evalf()])
+                error_acomulado = sp.N(error_acomulado)
+                instancia_respuesta.agregar_fila([iteracion, x0, R, S, x_calculado, error_acomulado])
                 if error_acomulado < error_aceptado:
                     break
                 f_x0 = x - x_calculado #- para que cambie el signo 
                 x0 = x_calculado
+                if iteracion > 100:
+                    resp = instancia_respuesta.responder_error("El metodo no converge")
+                    return jsonify(resp), 400
 
             instancia_respuesta.agregar_tabla()
             instancia_respuesta.agregar_clave_valor("Raiz",x_calculado)
             instancia_respuesta.agregar_parrafo(f"Numero de iteraciones: {iteracion}")
-            res = instancia_respuesta.obtener_y_limpiar_respuesta()
-            return res, 200
+            resp = instancia_respuesta.obtener_y_limpiar_respuesta()
+            return jsonify(resp), 200
+        except Exception as e:
+            #por si ahy una excepcion no controlada
+            resp = instancia_respuesta.responder_error(f"Error inesperado, por favor verifique los datos ingresados\n{e}")
+            return jsonify(resp), 500
         
-        except:
-            res = instancia_respuesta.responder_error("Error inesperado, por favor verifique los datos ingresados")
-            return res, 500
-        
+    @staticmethod
     def calcular_divsion_sinterica(coeficientes, divisor):
         divicion_sintetica = []
         divicion_sintetica.append(coeficientes) #Agregamos los coeficientes originales
