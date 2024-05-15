@@ -75,6 +75,15 @@ function borrarPasos() {
     ocultarStepByStep();
     toastify('Borrando pasos...', 4);
     $stepbystep = document.getElementById('stepbystep');
+    let inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.style.transition = "all 0.5s ease";
+        input.style.backgroundColor = "rgba(255, 150, 0, 0.2)";
+        input.value = '';
+        setTimeout(() => {
+            input.style.backgroundColor = "";
+        }, 500);
+    });
 
     setTimeout(() => {
 
@@ -197,7 +206,6 @@ function realizarPeticionPOST(endPoint, datos) {
         .then(response => {
             let status = response.status;
             console.log(`Status: ${status}`);
-            toastify(`Status: ${status}`, 5);
             return response.json();
         })
         .then(data => {
@@ -214,9 +222,6 @@ function realizarPeticionPOST(endPoint, datos) {
             toastify('Error al realizar la solicitud', 4);
             toastify(error, 5);
             console.error('Error al realizar la solicitud::', error);
-            console.log(datos);
-
-            mostrarPasos(mockJson);
         });
 }
 
@@ -305,211 +310,3 @@ function mostrarPasos(arrayPasos) {
     toastify('Pasos cargados', 2);
 }
 
-
-
-let mockJson = [
-    {
-        "content": "Valores Iniciales",
-        "type": "titulo1"
-    },
-    {
-        "content": [
-            "Funcion:",
-            "-x + exp(-x)"
-        ],
-        "type": "clavevalor"
-    },
-    {
-        "content": [
-            "Xi:",
-            "0.1"
-        ],
-        "type": "clavevalor"
-    },
-    {
-        "content": [
-            "Xu:",
-            "1.5"
-        ],
-        "type": "clavevalor"
-    },
-    {
-        "content": [
-            "Tolerancia:",
-            "0.05"
-        ],
-        "type": "clavevalor"
-    },
-    {
-        "content": "El calculo de la raiz se hace por la siguiente formula: ",
-        "type": "titulo1"
-    },
-    {
-        "content": "Formula: Xr = (X1 + Xu) / 2",
-        "type": "parrafo"
-    },
-    {
-        "content": "Iteracion 1: Xr = ( 0.1 + 1.5 ) / 2 = 0.8",
-        "type": "parrafo"
-    },
-    {
-        "content": "Evaluar f(Xr) = -0.350671035882778",
-        "type": "parrafo"
-    },
-    {
-        "content": "Resultados",
-        "type": "titulo1"
-    },
-    {
-        "content": [
-            "Iteraciones:",
-            "13"
-        ],
-        "type": "clavevalor"
-    },
-    {
-        "content": [
-            "Raiz:",
-            "0.5670654296875"
-        ],
-        "type": "clavevalor"
-    },
-    {
-        "content": [
-            "Error:",
-            "0.03013734016447552"
-        ],
-        "type": "clavevalor"
-    },
-    {
-        "content": [
-            [
-                "Iteracion",
-                "X1",
-                "Xu",
-                "Xr",
-                "f(Xr)",
-                "Condicion",
-                "Error"
-            ],
-            [
-                "1",
-                "0.1",
-                "0.8",
-                "0.8",
-                "-0.282233171099891",
-                "<0",
-                "100"
-            ],
-            [
-                "2",
-                "0.45",
-                "0.8",
-                "0.45",
-                "0.151010157102128",
-                ">0",
-                "77.77777777777779"
-            ],
-            [
-                "3",
-                "0.45",
-                "0.625",
-                "0.625",
-                "-0.0168374822961602",
-                "<0",
-                "27.999999999999996"
-            ],
-            [
-                "4",
-                "0.5375",
-                "0.625",
-                "0.5375",
-                "0.00876353787302869",
-                ">0",
-                "16.279069767441865"
-            ],
-            [
-                "5",
-                "0.5375",
-                "0.58125",
-                "0.58125",
-                "-0.00102993808767554",
-                "<0",
-                "7.526881720430119"
-            ],
-            [
-                "6",
-                "0.559375",
-                "0.58125",
-                "0.559375",
-                "0.000569412832638296",
-                ">0",
-                "3.910614525139681"
-            ],
-            [
-                "7",
-                "0.559375",
-                "0.5703125",
-                "0.5703125",
-                "-6.05141018501493e-5",
-                "<0",
-                "1.9178082191780899"
-            ],
-            [
-                "8",
-                "0.56484375",
-                "0.5703125",
-                "0.56484375",
-                "4.39517676379043e-5",
-                ">0",
-                "0.9681881051175697"
-            ],
-            [
-                "9",
-                "0.56484375",
-                "0.567578125",
-                "0.567578125",
-                "-2.45657024490014e-6",
-                "<0",
-                "0.481761871989"
-            ],
-            [
-                "10",
-                "0.5662109375",
-                "0.567578125",
-                "0.5662109375",
-                "5.26857160350921e-6",
-                ">0",
-                "0.24146257330115406"
-            ],
-            [
-                "11",
-                "0.56689453125",
-                "0.567578125",
-                "0.56689453125",
-                "5.69730752705318e-7",
-                ">0",
-                "0.12058570198105867"
-            ],
-            [
-                "12",
-                "0.56689453125",
-                "0.567236328125",
-                "0.567236328125",
-                "-5.68417934047504e-8",
-                "<0",
-                "0.060256520616342034"
-            ],
-            [
-                "13",
-                "0.5670654296875",
-                "0.567236328125",
-                "0.5670654296875",
-                "4.75708151508240e-8",
-                ">0",
-                "0.03013734016447552"
-            ]
-        ],
-        "type": "tabla"
-    }
-]

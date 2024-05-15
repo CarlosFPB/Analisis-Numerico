@@ -158,7 +158,8 @@ p {
 }
 
 body {
-    overflow-y: scroll; /* Siempre muestra la barra de desplazamiento vertical */
+    overflow-y: scroll;
+    /* Siempre muestra la barra de desplazamiento vertical */
 }
 
 .footer {
@@ -286,7 +287,36 @@ input {
     border-right: 0.1rem solid rgba(0, 0, 0, 0.103);
 }
 
+input[type="checkbox"] {
+    position: relative;
+    width: 40px;
+    height: 20px;
+    -webkit-appearance: none;
+    background-color: #ccc;
+    border-radius: 20px;
+    outline: none;
+    transition: background-color 0.3s;
+}
 
+input[type="checkbox"]:before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    top: 1px;
+    left: 1px;
+    background-color: white;
+    transition: transform 0.3s;
+}
+
+input[type="checkbox"]:checked {
+    background: #57b3ff;
+}
+
+input[type="checkbox"]:checked:before {
+    transform: translateX(10px);
+}
 
 .clavevalor {
     display: flex;
@@ -294,6 +324,7 @@ input {
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
+
 
     :first-child {
         font-style: italic;
@@ -413,6 +444,7 @@ input {
     align-items: center;
     gap: 0.3rem;
     opacity: 0.8;
+    user-select: none;
 }
 
 .buttonSmall .material-symbols-outlined {
@@ -453,6 +485,7 @@ input {
     align-items: center;
     gap: 0.3rem;
     opacity: 0.9;
+    user-select: none;
 }
 
 .buttonBig .material-symbols-outlined {
@@ -461,6 +494,162 @@ input {
         'wght' 400,
         'GRAD' 0,
         'opsz' 32
+}
+
+math {
+    font-family: math;
+    font-style: italic;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.tablas-input {
+    align-self: center;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+
+    .tabla-variables {
+        margin-left: calc(2rem + 1px);
+        display: flex;
+        flex-wrap: wrap;
+
+        min-width: 12rem;
+        max-width: 18rem;
+
+        border-radius: 0.5rem 0.5rem 0 0;
+        overflow: hidden;
+
+
+        div {
+            font-family: mate;
+            font-style: italic;
+            font-weight: 600;
+            width: calc(3rem - 1px);
+            text-align: center;
+            background: rgba(0, 106, 255, 0.152);
+            border-right: 1px solid rgba(0, 0, 0, 0.25);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+
+        }
+
+        .focus {
+            background: rgba(255, 0, 0, 0.17);
+            color: rgb(99, 37, 80);
+        }
+
+        .hover {
+
+            background: rgba(255, 0, 179, 0.17);
+            color: rgb(99, 37, 80);
+        }
+    }
+
+    .control-tabla-input {
+        align-self: center;
+        display: flex;
+
+
+        .buttonSmall {
+            grid-column: 2;
+            grid-row: inherit;
+            padding: 0.2rem;
+            margin: 0;
+
+            user-select: none;
+
+        }
+    }
+
+    .inputTable {
+        align-self: center;
+        grid-column: 1;
+
+
+        .puntos {
+            transition: opacity 0.2s, margin 0.5s;
+
+
+            .puntosContainer {
+
+                min-width: 12rem;
+                max-width: 18rem;
+                display: flex;
+                align-items: center;
+
+
+
+                input {
+                    grid-column: 1;
+                    width: 3rem;
+                    transition: transform 0.5s, outline 0.1s, width 0.5s, height 0.5s, padding 0.5s;
+                }
+
+                /* evitar menu de aumento y disminución de número en input */
+                input[type=number]::-webkit-inner-spin-button,
+                input[type=number]::-webkit-outer-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+
+                .input-focus {
+                    background: rgb(255, 236, 236);
+                    outline-color: rgba(255, 0, 0, 0.5);
+                    outline-style: solid;
+                    outline-width: .15rem;
+                    transform: scale(0.9) !important;
+                }
+
+                .input-hover {
+                    background: rgba(233, 233, 255, 0.978);
+                    outline-color: rgba(0, 0, 255, 0.25);
+                    outline-style: solid;
+                    outline-width: .2rem;
+                }
+
+            }
+
+            .focus {
+                background: rgba(255, 0, 0, 0.17) !important;
+                color: rgb(99, 37, 80) !important;
+            }
+
+            .hover {
+
+                background: rgba(0, 106, 255, 0.25) !important;
+                color: rgb(63, 37, 99) !important;
+            }
+
+        }
+
+
+
+        .puntos div:first-child {
+            background: rgba(0, 106, 255, 0.152);
+            min-width: 2em;
+            border-right: 1px solid rgba(0, 0, 0, 0.25);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: mate;
+            font-style: italic;
+            font-weight: 600;
+        }
+
+        .puntos:not(:first-child) {}
+
+        .puntos:first-child div:first-child {
+            border-radius: .5rem 0 0;
+        }
+
+        .puntos:last-child div:first-child {
+            border-radius: 0 0 0 0.5rem;
+        }
+
+    }
+
+
+
 }
 
 .sugerencias {
@@ -604,31 +793,26 @@ dialog {
     }
 }
 
-* {
-}
+* {}
 
 
-@media screen{
-    .stepbystep{
+@media screen {
+    .stepbystep {
         max-width: 70vw;
         min-width: 50vw;
     }
 }
 
 @media screen and (max-width: 1024px) {
-    
-    .stepbystep{
+
+    .stepbystep {
         max-width: calc(100vw - 2rem);
     }
 }
 
-@media screen and (max-width: 768px) {
-    
-}
+@media screen and (max-width: 768px) {}
 
-@media screen and (max-width: 480px) {
-    
-}
+@media screen and (max-width: 480px) {}
 
 @media print {
     * {
@@ -636,6 +820,14 @@ dialog {
         color: rgb(0, 0, 0) !important;
         justify-content: start !important;
         align-items: start !important;
+
+    }
+    .text_hero{
+        margin-top: -40px;
+    }
+    .tablecontainer{
+        border: none;
+        padding: 0;
     }
 
     canvas {
