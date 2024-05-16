@@ -1,6 +1,8 @@
 import sympy as sp
 from flask import jsonify
 from modelos.extras.Funciones import errores, biseccion, respuesta_json, verificaciones
+from modelos.extras.latex import conversla
+
 class medoto_biseccion():
 
     @staticmethod
@@ -12,7 +14,8 @@ class medoto_biseccion():
 
             #obtengo los valores del json
             try:
-                f_x = sp.sympify(json_data["funcion"])
+                f_x =conversla.latex_(json_data["latex"])
+                f_x = sp.sympify(f_x)
                 resultado = f_x.subs(x, 2)
                 if resultado > 0:
                     pass
