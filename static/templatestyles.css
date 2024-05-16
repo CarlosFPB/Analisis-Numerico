@@ -132,6 +132,17 @@ p {
     gap: 1rem;
 }
 
+#latex {
+    display: none;
+}
+
+#math-field {
+    width: 350px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    cursor: text;
+}
+
 .result {
     display: flex;
     flex-direction: column;
