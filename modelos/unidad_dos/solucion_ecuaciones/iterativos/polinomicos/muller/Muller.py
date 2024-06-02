@@ -1,6 +1,6 @@
 import  sympy as sp
 import numpy as np
-from .....extras.Funciones import errores, respuesta_json, verificaciones
+from ......extras.Funciones import errores, respuesta_json, verificaciones
 from flask import jsonify
 
 class metodo_muller():

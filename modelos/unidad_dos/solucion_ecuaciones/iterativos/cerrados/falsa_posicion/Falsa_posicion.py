@@ -1,6 +1,6 @@
 import sympy as sp
 from flask import jsonify
-from .....extras.Funciones import errores, falsaPosicion, respuesta_json, verificaciones
+from ......extras.Funciones import errores, falsaPosicion, respuesta_json, verificaciones
 
 
 class metodo_falsa_posicion():

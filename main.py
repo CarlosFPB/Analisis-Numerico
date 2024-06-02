@@ -2,25 +2,25 @@ from flask import Flask, render_template, request, jsonify, redirect
 import os
 
 # Importaciones de métodos
-from modelos.metodos.iterativos.cerrados.biseccion.Biseccion import medoto_biseccion
-from modelos.metodos.iterativos.cerrados.falsa_posicion.Falsa_posicion import metodo_falsa_posicion
-from modelos.metodos.directos.polinomicas_mayor_3.ferrari.Ferrari import metodo_ferrari
-from  modelos.metodos.directos.polinomicas_mayor_3.tartaglia.Tartaglia import metodo_tartaglia
-from modelos.metodos.directos.polinomicas_menor_2.cuadratica.Cuadratica import metodo_cuadratico
-from modelos.metodos.directos.polinomicas_menor_2.lineal.Lineal import metodo_lineal
-from modelos.metodos.iterativos.abiertos.punto_fijo.Punto_fijo import metodo_punto_fijo
-from modelos.metodos.iterativos.abiertos.newton.Newton import metodo_newton
-from modelos.metodos.iterativos.abiertos.newton_modificado.Newton_modificado import metodo_newton_modificado
-from modelos.metodos.iterativos.abiertos.secante.Secante import metodo_secante
-from modelos.metodos.iterativos.polinomicos.bairstow.Bairstow import metodo_bairstow
-from modelos.metodos.iterativos.polinomicos.horner.Horner import metodo_horner
-from modelos.metodos.iterativos.polinomicos.muller.Muller import metodo_muller
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.cerrados.biseccion.Biseccion import medoto_biseccion
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.cerrados.falsa_posicion.Falsa_posicion import metodo_falsa_posicion
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.abiertos.newton.Newton import metodo_newton
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.abiertos.newton_modificado.Newton_modificado import metodo_newton_modificado
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.abiertos.punto_fijo.Punto_fijo import metodo_punto_fijo
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.abiertos.secante.Secante import metodo_secante
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.polinomicos.bairstow.Bairstow import metodo_bairstow
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.polinomicos.horner.Horner import metodo_horner
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.polinomicos.muller.Muller import metodo_muller
+from modelos.unidad_dos.solucion_ecuaciones.directos.polinomicas_menor_2.lineal.Lineal import metodo_lineal
+from modelos.unidad_dos.solucion_ecuaciones.directos.polinomicas_menor_2.cuadratica.Cuadratica import metodo_cuadratico
+from modelos.unidad_dos.solucion_ecuaciones.directos.polinomicas_mayor_3.ferrari.Ferrari import metodo_ferrari
+from modelos.unidad_dos.solucion_ecuaciones.directos.polinomicas_mayor_3.tartaglia.Tartaglia import metodo_tartaglia
 
 #interpolacion
-from modelos.metodos.interpolacion.lagrange.Lagrange import metodo_lagrange
-from modelos.metodos.interpolacion.newton_recursivo.Newton_recursivo import metodo_newton_recursivo
-from modelos.metodos.interpolacion.newton_fracciones_divididas.Newton_fracciones_divididas import metodo_newton_fracciones_divididas
-from modelos.metodos.interpolacion.hermite.Hermite import metodo_hermite
+from modelos.unidad_tres.interpolacion.lagrange.Lagrange import metodo_lagrange
+from modelos.unidad_tres.interpolacion.newton_recursivo.Newton_recursivo import metodo_newton_recursivo
+from modelos.unidad_tres.interpolacion.newton_fracciones_divididas.Newton_fracciones_divididas import metodo_newton_fracciones_divididas
+from modelos.unidad_tres.interpolacion.hermite.Hermite import metodo_hermite
 
 
 app = Flask(__name__, static_url_path='/static')

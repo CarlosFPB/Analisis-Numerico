@@ -1,6 +1,6 @@
 import sympy as sp
 import math
-from modelos.extras.Funciones import errores, biseccion, respuesta_json, verificaciones
+from modelos.extras.Funciones import respuesta_json, verificaciones
 from flask import jsonify
 
 class metodo_tartaglia:

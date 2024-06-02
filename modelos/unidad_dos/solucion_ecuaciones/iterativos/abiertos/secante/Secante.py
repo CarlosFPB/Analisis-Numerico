@@ -1,7 +1,7 @@
 from flask import jsonify
 import  sympy as sp
 import numpy as np
-from .....extras.Funciones import errores, secante, respuesta_json, verificaciones
+from ......extras.Funciones import errores, secante, respuesta_json, verificaciones
 
 
 class metodo_secante():

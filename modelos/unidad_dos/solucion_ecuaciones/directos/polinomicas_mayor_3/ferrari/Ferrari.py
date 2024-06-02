@@ -1,7 +1,7 @@
 import sympy as sp
 import math
 from flask import jsonify
-from modelos.extras.Funciones import errores, respuesta_json, verificaciones
+from modelos.extras.Funciones import respuesta_json, verificaciones
 class metodo_ferrari:    
     
      
