@@ -57,9 +57,9 @@ class metodos_diferenciacion():
         if metodo == "cinco_puntos" and version < 1 and version > 5:
             resp = instancia_respuesta.responder_error("La version del metodo cinco_puntos debe ser entre 1 y 5")
             return jsonify(resp), 400
-        elif version < 1 or version > 2:
+        elif version < 1 or version > 2 and metodo != "cinco_puntos":
             resp = instancia_respuesta.responder_error("La version del metodo debe ser entre 1 y 2")
-            return jsonify(resp), 
+            return jsonify(resp), 400
 
         #calcular la derivada
         try:
@@ -144,11 +144,8 @@ class metodos_diferenciacion():
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()
 
             try:
-                print(json_data.get("clear", False))
                 clear = json_data.get("clear", False)
-                print(json_data.get("clearD", False))
                 clearD = json_data.get("clearD", False)
-                print(clear, clearD)
             except:
                 clear = clearD = False
             #verifica si viene de richardson con clearD
