@@ -157,6 +157,31 @@ class verificaciones():
         if not any(sol.is_real for sol in soluciones):
             return False
         return True
+    
+    @staticmethod
+    def es_matriz(matriz):
+        if isinstance(matriz, list) and all(isinstance(row, list) for row in matriz):
+            return True
+        else:
+            return False
+        
+    @staticmethod
+    def verificar_numeros_matriz(matriz):
+        for row in matriz:
+            if not isinstance(row, list):
+                return False
+            for element in row:
+                if not isinstance(element, (float, int)) or isinstance(element, str):
+                    return False
+            return True
+        
+    @staticmethod
+    def verificar_puntos_unicos(puntos):
+        if len(puntos) == len(set(puntos)):
+            return True
+        else:
+            return False
+
 
 class respuesta_json():
     respuesta = []

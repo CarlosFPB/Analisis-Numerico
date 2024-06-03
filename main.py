@@ -21,6 +21,8 @@ from modelos.unidad_tres.interpolacion.lagrange.Lagrange import metodo_lagrange
 from modelos.unidad_tres.interpolacion.newton_recursivo.Newton_recursivo import metodo_newton_recursivo
 from modelos.unidad_tres.interpolacion.newton_fracciones_divididas.Newton_fracciones_divididas import metodo_newton_fracciones_divididas
 from modelos.unidad_tres.interpolacion.hermite.Hermite import metodo_hermite
+from modelos.unidad_tres.interpolacion.trazadores_cubicos.Trazadores import metodo_trazadores
+from modelos.unidad_tres.interpolacion.interpolacion_lineal.Interpolacion_lineal import metodo_interpolacion_lineal
 
 
 app = Flask(__name__, static_url_path='/static')
@@ -222,6 +224,26 @@ def calcular_hermite():
 def Hermite():
     return render_template('Interpolacion_Hermite.html')
  
+@app.route('/metodos/interpolacion/trazadores_cubicos', methods=['GET'])
+def Trazadores():
+    return render_template('Interpolacion_Trazadores.html')
+
+@app.route('/metodos/interpolacion/trazadores_cubicos', methods=['POST'])
+def calcular_trazadores():
+    json_data = request.json
+    respuesta = metodo_trazadores.calcular_trazadores(json_data)
+    return respuesta
+
+@app.route('/metodos/interpolacion/lineal', methods=['GET'])
+def Interpolacion_lineal():
+    return render_template('Interpolacion_lineal.html')
+
+@app.route('/metodos/interpolacion/lineal', methods=['POST'])
+def calcular_interpolacion_lineal():
+    json_data = request.json
+    respuesta = metodo_interpolacion_lineal.calcular_interpolacion(json_data)
+    return respuesta
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))
