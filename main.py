@@ -24,6 +24,10 @@ from modelos.unidad_tres.interpolacion.hermite.Hermite import metodo_hermite
 from modelos.unidad_tres.interpolacion.trazadores_cubicos.Trazadores import metodo_trazadores
 from modelos.unidad_tres.interpolacion.interpolacion_lineal.Interpolacion_lineal import metodo_interpolacion_lineal
 
+#diferenciacion e integracion
+from modelos.unidad_cuatro.diferenciacion.derivadas.Diferenciacion import metodos_diferenciacion
+from modelos.unidad_cuatro.diferenciacion.richardson.Richardson import metodo_richardson
+
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -243,6 +247,28 @@ def calcular_interpolacion_lineal():
     json_data = request.json
     respuesta = metodo_interpolacion_lineal.calcular_interpolacion(json_data)
     return respuesta
+
+#metodos de diferenciacion e integracion
+
+@app.route('/metodos/diferenciacion/derivadas', methods=['POST'])
+def calcular_derivadas():
+    json_data = request.json
+    respuesta = metodos_diferenciacion.calcular_derivada(json_data)
+    return respuesta
+
+@app.route('/metodos/diferenciacion/derivadas', methods=['GET'])
+def Diferenciacion():
+    return render_template('Diferenciacion.html')
+
+@app.route('/metodos/diferenciacion/richardson', methods=['POST'])
+def calcular_richardson():
+    json_data = request.json
+    respuesta = metodo_richardson.calcular_richardson(json_data)
+    return respuesta
+
+@app.route('/metodos/diferenciacion/richardson', methods=['GET'])
+def Richardson():
+    return render_template('Richardson.html')
 
 
 if __name__ == '__main__':

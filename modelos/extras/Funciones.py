@@ -247,4 +247,8 @@ class respuesta_json():
         self.limpiar_respuesta()
         return res
     
+    def responder_solo_respuesta(self, contenido):
+        self.respuesta = []
+        res = {'respuesta' :  str(contenido)}
+        return res
 
