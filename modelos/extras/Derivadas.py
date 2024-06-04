@@ -272,7 +272,7 @@ class finita_central():
         e = f_x.subs(x,e)
         f = f_x.subs(x,f)
         g = f_x.subs(x,g)
-        respuesta = (-a+12*b+39*c+56*d-39*e+12*f+g)/(6*h**4)
+        respuesta = (-a+12*b-39*c+56*d-39*e+12*f-g)/(6*h**4)
         return respuesta
     
 class finita_tres_puntos():
