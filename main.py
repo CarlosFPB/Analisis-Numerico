@@ -117,7 +117,7 @@ def calcular_secante():
 def Bairstow():
     return render_template('unidad_dos/Bairstow.html')
 
-@app.route('/metodos/iterativos/polinomicos/bairstow', methods=['POST'])
+@app.route('/metodos/iterativos/polinomicos/Bairstow', methods=['POST'])
 def calcular_bairstow():
     json_data = request.json
     respuesta = metodo_bairstow.calcular_bairstow(json_data)
@@ -240,7 +240,7 @@ def calcular_trazadores():
 
 @app.route('/metodos/interpolacion/lineal', methods=['GET'])
 def Interpolacion_lineal():
-    return render_template('unidad_tres/Interpolacion_lineal.html')
+    return render_template('unidad_tres/Interpolacion_Lineal.html')
 
 @app.route('/metodos/interpolacion/lineal', methods=['POST'])
 def calcular_interpolacion_lineal():

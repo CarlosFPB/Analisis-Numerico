@@ -30,8 +30,7 @@ class metodo_bairstow():
     def calcular_bairstow(json_data):
         x = sp.symbols("x")
         instancia_respuesta = respuesta_json()
-
-         #Verificar la funcion obtenida
+        #Verificar la funcion obtenida
         try:
             #Ecuaion de la funcion
             f_x = sp.sympify(json_data["funcion"])
@@ -137,6 +136,7 @@ class metodo_bairstow():
             #sino volver a 
             
         #retornar los resultados
+        instancia_respuesta.agregar_titulo("Metodo de Bairstow itreacion #" + str(iteracion))
         instancia_respuesta.agregar_parrafo("Los resultados obtenidos son los siguientes:")
         instancia_respuesta.agregar_parrafo("Los valores de x son: ")
         for i in range(len(x_aproximada)):
