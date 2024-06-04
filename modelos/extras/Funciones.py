@@ -167,15 +167,23 @@ class verificaciones():
         else:
             return False
         
+    
     @staticmethod
     def verificar_numeros_matriz(matriz):
         for row in matriz:
             if not isinstance(row, list):
                 return False
             for element in row:
-                if not isinstance(element, (float, int)) or isinstance(element, str):
+                if isinstance(element, str):
+                    try:
+                        # Intentar convertir la cadena a un número
+                        float(element)
+                    except ValueError:
+                        return False
+                elif not isinstance(element, (float, int)):
                     return False
-            return True
+        return True
+
         
     @staticmethod
     def verificar_puntos_unicos(puntos):

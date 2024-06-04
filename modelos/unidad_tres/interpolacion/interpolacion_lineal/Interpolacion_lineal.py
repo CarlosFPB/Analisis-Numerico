@@ -27,6 +27,8 @@ class metodo_interpolacion_lineal():
             resp = instancia_respuesta.responder_error("Error en los datos ingresados")
             return jsonify(resp), 400
         
+
+        
         #verificar si la matriz de puntos esta vacia o tiene la cantidad nesesaria de datos
         if len(matriz_puntos) == 0:
             resp = instancia_respuesta.responder_error("No se ingresaron puntos")
@@ -39,6 +41,13 @@ class metodo_interpolacion_lineal():
             if len(matriz_puntos[0]) ==2 and len(matriz_puntos[1]) == 2:
                 #verificar que los puntos sean numeros
                 if verificaciones.verificar_numeros_matriz(matriz_puntos):
+                    # Convertir los datos a números
+                    try:
+                        matriz_puntos[0] = [float(x) for x in matriz_puntos[0]]
+                        matriz_puntos[1] = [float(y) for y in matriz_puntos[1]]
+                    except ValueError:
+                        resp = instancia_respuesta.responder_error("Los puntos deben ser números")
+                        return jsonify(resp), 400
                     #verificar si los puntos en x no se repiten
                     if not verificaciones.verificar_puntos_unicos(matriz_puntos[0]):
                         resp = instancia_respuesta.responder_error("Los puntos en x no deben repetirse")
