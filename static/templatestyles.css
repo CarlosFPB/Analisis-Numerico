@@ -318,6 +318,21 @@ input[type="checkbox"]:checked:before {
     transform: translateX(10px);
 }
 
+
+
+/* === range theme and appearance === */
+input[type="range"] {
+	font-size: 1.5rem;
+	width: 12rem;
+    padding: 0;
+}
+
+
+
+
+
+
+
 .clavevalor {
     display: flex;
     gap: 0.3rem;
