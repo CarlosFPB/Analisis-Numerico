@@ -133,40 +133,6 @@
                     <span>API</span>
                 </div>
             </div>
-
-            <script>
-
-                function cambiarMetodo(select) {
-                    let metodo = select.value;
-                    let derivada = document.getElementById("derivada");
-                    let version = document.getElementById("version");
-                    if (metodo == "5puntos") {
-                        derivada.innerHTML = "<option value='1'>1</option>";
-                        version.innerHTML = `
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            `;
-                    }   else if (metodo == "3puntos") {
-                        derivada.innerHTML = "<option value='1'>1</option>";
-                        version.innerHTML = `
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            `;
-                    } 
-                    else {
-                        derivada.innerHTML = `
-                        <option value='1'>1</option>
-                        <option value='2'>2</option>
-                        <option value='3'>3</option>
-                        <option value='4'>4</option>
-                        `;
-                        version.innerHTML = "<option value='1'>1</option><option value='2'>2</option>";
-                    }
-                }
-            </script>
         </div>
         <div id="stepbystep" class="stepbystep">
             <center>
@@ -279,7 +245,7 @@
         //Aqui debe ir la direccion del EndPoint de el Metodo
         let endPoint = "/metodos/directos/gradomas3/Tartaglia"
         //Aqui iran los id de todos los datos que se enviaran al EndPoint
-        let variables = ["funcion"];
+        let variables = ["funcion", "metodo", "derivada", "version", "h", "x"];
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
         function calcular() {
             let datos = {}
@@ -297,6 +263,40 @@
             ["x**3 - 6*x**2 + 11*x - 6"],
             ["x**3 + 3*x**2 - 4*x - 12"]
         ]
+
+
+
+
+        function cambiarMetodo(select) {
+            let metodo = select.value;
+            let derivada = document.getElementById("derivada");
+            let version = document.getElementById("version");
+            if (metodo == "5puntos") {
+                derivada.innerHTML = "<option value='1'>1</option>";
+                version.innerHTML = `
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            `;
+            } else if (metodo == "3puntos") {
+                derivada.innerHTML = "<option value='1'>1</option>";
+                version.innerHTML = `
+            <option value="1">1</option>
+            <option value="2">2</option>
+            `;
+            }
+            else {
+                derivada.innerHTML = `
+        <option value='1'>1</option>
+        <option value='2'>2</option>
+        <option value='3'>3</option>
+        <option value='4'>4</option>
+        `;
+                version.innerHTML = "<option value='1'>1</option><option value='2'>2</option>";
+            }
+        }
     </script>
 
     <script src="/static/Loader/background.js" async></script>
