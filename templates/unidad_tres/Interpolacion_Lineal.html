@@ -243,15 +243,11 @@
         function calcular() {
             let datos = {};
             let arrayOfPuntos = [];
-            let grado = document.getElementById("grado").value;
-            datos.grado = grado;
             for (let i = 0; i < idpuntos.length; i++) {
                 let puntos = Array.from(document.getElementById(idpuntos[i]).children[1].children);
                 puntos = puntos.map(punto => punto.value);
                 arrayOfPuntos.push(puntos);
             }
-
-
             datos.matrizPuntos = arrayOfPuntos;
             console.log(datos);
             realizarPeticionPOST(endPoint, datos);
