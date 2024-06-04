@@ -40,6 +40,9 @@ class metodo_falsa_posicion():
                 except ValueError as e:
                     resp = instancia_respuesta.responder_error("Error en los valores iniciales\n"+str(e))
                     return jsonify(resp), 400
+                except Exception as e:
+                    resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+                    return jsonify(resp), 400
                 
                 xr = 0
                 condicion = ""

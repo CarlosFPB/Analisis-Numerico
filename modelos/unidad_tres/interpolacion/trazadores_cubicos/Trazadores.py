@@ -1,6 +1,6 @@
 import sympy as sp
 from flask import jsonify
-from modelos.extras.Funciones import respuesta_json
+from modelos.extras.Funciones import respuesta_json,verificaciones
 
 def trazador_grado0(matriz_puntos):
     x = sp.Symbol('x')
@@ -149,139 +149,81 @@ class metodo_trazadores:
     def calcular_trazadores(json_data):
         try:
             x = sp.symbols("x")
-            f_x = ""
             instancia_respuesta = respuesta_json()
+            matriz_puntos = []
             try:
-                tipo = json_data["tipo"]
-            except:
-                resp = instancia_respuesta.responder_error("Error en el argumento 'tipo'")
-            if tipo == 1:
-                try:
-                    f_x = sp.sympify(json_data["funcion"])
-                except:
-                    resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                    return jsonify(resp), 400
-            try:
-                matrizPuntos = json_data["matrizPuntos"]
-            except:
-                resp = instancia_respuesta.responder_error("Error en los puntos ingresados")
-                return jsonify(resp), 400
-            try:
-                grado = json_data["grado"]
-                grado = int(grado)
-                if grado < 0:
-                    resp = instancia_respuesta.responder_error("El grado no puede ser negativo")
-                    return jsonify(resp), 400
-                elif grado > 3:
-                    resp = instancia_respuesta.responder_error("El grado no puede ser mayor a 3")
+                matriz_puntos = json_data["matrizPuntos"]
+                #verificar si la matriz de puntos es valida
+                if not verificaciones.es_matriz(matriz_puntos):
+                    resp = instancia_respuesta.responder_error("La matriz de puntos no es valida")
                     return jsonify(resp), 400
             except:
-                resp = instancia_respuesta.responder_error("Error en el argumento 'grado'")
+                resp = instancia_respuesta.responder_error("Error en los datos ingresados")
                 return jsonify(resp), 400
             
-
-            #variables         
-            puntos_x = []
-            puntos_y = []
-
-            #validaciones
-            activarerror = False
-            mensajeerror = ""
-            for i in range(len(matrizPuntos)):
-                for j in range(len(matrizPuntos[i])):
-                    try:
-                        matrizPuntos[i][j] = int(matrizPuntos[i][j])
-                    except ValueError:
-                        try:
-                            matrizPuntos[i][j] = float(matrizPuntos[i][j])
-                        except ValueError:
-                            if matrizPuntos[i][j] == "":
-                                continue
-                            mensajeerror = "No se pueden ingresar letras en los campos de puntos"
-                            activarerror = True
-                            break
-                if activarerror:
-                    break
-
-            if not activarerror:
-                if len(matrizPuntos) == 0:
-                    mensajeerror = "No se ingresaron puntos"
-                    activarerror = True
-                elif len(matrizPuntos) > 2:
-                    mensajeerror = "en 'Puntos' debe haber 1 lista con los puntos en X y aparte una funcion o 2 filas con los puntos en X y Y"
-                    activarerror = True
-                elif len(matrizPuntos[0]) < 2:
-                    mensajeerror = "Debe haber al menos 2 puntos en X"
-                    activarerror = True
-                elif tipo == 1 and len(matrizPuntos) == 2:
-                    mensajeerror = "Si se ingresa una funcion, no se deben ingresar puntos en Y"
-                    activarerror = True
-                elif tipo == 2 and len(matrizPuntos) == 1:
-                    mensajeerror = "Si es de tipo 2, se deben ingresar los puntos en X y Y"
-                    activarerror = True
-                #Caso tipo 2 con puntos en X y Y
-                elif tipo == 2 and len(matrizPuntos) == 2:
-                    #comprobar que vengan la misma cantidad de puntos en X y Y
-                    if len(matrizPuntos[0]) != len(matrizPuntos[1]):
-                        mensajeerror = "Debe haber la misma cantidad de puntos en X y Y en 'Puntos', es decir los pares ordenados"
-                        activarerror = True
-                    else:
-                        #recorrer los puntos
-                        for i in range(len(matrizPuntos[0])):
-                            #comprobar que no haya pares ordenados con valores vacios
-                            if (matrizPuntos[0][i] == "") ^ (matrizPuntos[1][i] == ""):
-                                mensajeerror = "No pueden haber pares ordenados con un valor vacio"
-                                activarerror = True
-                            #comprobar que los puntos que se guardaran no sean vacios
-                            elif not (matrizPuntos[0][i] == "" or matrizPuntos[1][i] == ""):
-                                puntos_x.append(matrizPuntos[0][i])
-                                puntos_y.append(matrizPuntos[1][i])
-                        if len(puntos_x) < 2 and not activarerror:
-                            mensajeerror = "Debe haber al menos 2 puntos en X"
-                            activarerror = True
-                #Caso tipo 1 con funcion y valores solo en X
-                elif tipo == 1 and len(matrizPuntos) == 1:
-                    for i in range(len(matrizPuntos[0])):
-                        if not matrizPuntos[0][i] == "":
-                            puntos_x.append(matrizPuntos[0][i])
-                    if len(puntos_x) < 2:
-                            mensajeerror = "Debe haber al menos 2 puntos en X"
-                            activarerror = True
-                    else:
-                        puntos_y = [f_x.subs(x, i) for i in puntos_x]
-                # Verificar que no hayan valores repetidos en los puntos X
-                if len(puntos_x) != len(set(puntos_x)) and not activarerror:
-                    mensajeerror = "No pueden haber valores repetidos en los puntos en X"
-                    activarerror = True
-
-            if activarerror:
-                resp = instancia_respuesta.responder_error(mensajeerror)
+            #verificar si la matriz de puntos esta vacia o tiene la cantidad nesesaria de datos
+            if len(matriz_puntos) == 0:
+                resp = instancia_respuesta.responder_error("No se ingresaron puntos")
                 return jsonify(resp), 400
-            else:
-                #el metodo de trazadores
-                #no se como tratar los datos si es funcion
-                print(matrizPuntos)
-                print(puntos_x, puntos_y)
-                if grado == 0:
-                    instancia_respuesta.agregar_parrafo("El grado de los trazadores es 0")
-                    s_x = trazador_grado0(matrizPuntos)
-                elif grado == 1:
-                    instancia_respuesta.agregar_parrafo("El grado de los trazadores es 1")
-                    s_x = trazador_grado1(matrizPuntos)
-                elif grado == 2:
-                    instancia_respuesta.agregar_parrafo("El grado de los trazadores es 2")
-                    s_x = trazador_grado2(matrizPuntos)
-                elif grado == 3:
-                    instancia_respuesta.agregar_parrafo("El grado de los trazadores es 3")
-                    s_x = trazador_grado3(matrizPuntos)
+            elif len(matriz_puntos) == 1:
+                resp = instancia_respuesta.responder_error("Faltan puntos en y")
+                return jsonify(resp), 400
+            elif len(matriz_puntos) == 2:
+                #verificar que cuente con dos parejas de puntos
+                if len(matriz_puntos[0]) ==2 and len(matriz_puntos[1]) == 2:
+                    #verificar que los puntos sean numeros
+                    if verificaciones.verificar_numeros_matriz(matriz_puntos):
+                        #verificar si los puntos en x no se repiten
+                        if not verificaciones.verificar_puntos_unicos(matriz_puntos[0]):
+                            resp = instancia_respuesta.responder_error("Los puntos en x no deben repetirse")
+                            return jsonify(resp), 400
+                        #Calcular la interpolacion lineal poreso salimos de las verificaciones
+                    else:
+                        resp = instancia_respuesta.responder_error("Los puntos deben ser numeros")
+                        return jsonify(resp), 400
                 else:
-                    resp = instancia_respuesta.responder_error("El grado no es valido")
+                    resp = instancia_respuesta.responder_error("Los puntos deben ser el mismo numero de puntos en x y y y deben ser 2")
                     return jsonify(resp), 400
-                instancia_respuesta.agregar_parrafo("Los trazadores son:")
-                for i in s_x:
-                    instancia_respuesta.agregar_parrafo(i)
-                resp = instancia_respuesta.obtener_y_limpiar_respuesta()
-                return jsonify(resp), 200
+            elif len(matriz_puntos) > 2:
+                resp = instancia_respuesta.responder_error("No debe de haber mas de dos pares de puntos")
+                return jsonify(resp), 400
+            try:
+                grado = int(json_data["grado"])
+            except Exception as e:
+                resp = instancia_respuesta.responder_error("Error en grado ingresado" + str(e))
+                return jsonify(resp), 400
+            if grado < 0 or grado > 3:
+                resp = instancia_respuesta.responder_error("El grado debe ser un numero entre 0 y 3")
+                return jsonify(resp), 400
+
+
+            matrizPuntos = matriz_puntos
+            puntos_x = matriz_puntos[0]
+            puntos_y = matriz_puntos[1]
+            #el metodo de trazadores
+            #no se como tratar los datos si es funcion
+            print(matrizPuntos)
+            print(puntos_x, puntos_y)
+            if grado == 0:
+                instancia_respuesta.agregar_parrafo("El grado de los trazadores es 0")
+                s_x = trazador_grado0(matrizPuntos)
+            elif grado == 1:
+                instancia_respuesta.agregar_parrafo("El grado de los trazadores es 1")
+                s_x = trazador_grado1(matrizPuntos)
+            elif grado == 2:
+                instancia_respuesta.agregar_parrafo("El grado de los trazadores es 2")
+                s_x = trazador_grado2(matrizPuntos)
+            elif grado == 3:
+                instancia_respuesta.agregar_parrafo("El grado de los trazadores es 3")
+                s_x = trazador_grado3(matrizPuntos)
+            else:
+                resp = instancia_respuesta.responder_error("El grado no es valido")
+                return jsonify(resp), 400
+            instancia_respuesta.agregar_parrafo("Los trazadores son:")
+            for i in s_x:
+                instancia_respuesta.agregar_parrafo(i)
+            resp = instancia_respuesta.obtener_y_limpiar_respuesta()
+            return jsonify(resp), 200
 
         except:
             resp = instancia_respuesta.responder_error("Error Interno del codigo del metodo de trazadores")

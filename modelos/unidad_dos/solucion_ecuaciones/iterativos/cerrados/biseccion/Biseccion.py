@@ -37,6 +37,9 @@ class medoto_biseccion():
             except ValueError as e:
                 resp = instancia_respuesta.responder_error(f"Error en los valores iniciales\n {str(e)}")
                 return jsonify(resp), 400
+            except Exception as e:
+                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+                return jsonify(resp), 400
             
             #execpciones comunes
             evaluar_x1 = f_x.subs(x,x1)

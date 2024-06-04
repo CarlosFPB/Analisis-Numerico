@@ -39,6 +39,9 @@ class metodo_secante():
             except ValueError as e:
                 resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
                 return jsonify(resp), 400
+            except Exception as e:
+                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+                return jsonify(resp), 400
             
             x_calculada = 0
             error_acomulado = 100

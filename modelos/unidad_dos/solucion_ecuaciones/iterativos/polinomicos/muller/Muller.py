@@ -50,6 +50,9 @@ class metodo_muller():
             except ValueError as e:
                 resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
                 return jsonify(resp), 400
+            except Exception as e:
+                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+                return jsonify(resp), 400
       
             #hacemos la primera iteracion para el frontend
             #calcular evaluadas

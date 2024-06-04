@@ -137,6 +137,7 @@ class verificaciones():
     
     @staticmethod
     def obtener_coeficientes(funcion):
+        #ordenado del grado mayor al menor
         x = sp.symbols('x')
         poly_funcion = funcion.as_poly(x)
         grado = poly_funcion.degree()
@@ -144,6 +145,7 @@ class verificaciones():
         return coeficientes
     
     def obtener_coeficientes_de_y(funcion):
+        #ordenado del grado mayor al menor
         y = sp.symbols('y')
         poly_funcion = funcion.as_poly(y)
         grado = poly_funcion.degree()

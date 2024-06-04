@@ -51,7 +51,7 @@ def page_not_found(e):
 
 @app.route('/metodos/iterativos/cerrados/Biseccion', methods=['GET'])
 def renderizar_biseccion():
-    return render_template('Biseccion.html')
+    return render_template('unidad_dos/Biseccion.html')
 
 @app.route('/metodos/iterativos/cerrados/Biseccion', methods=['POST'])
 def calcular_biseccion():
@@ -61,7 +61,7 @@ def calcular_biseccion():
 
 @app.route('/metodos/iterativos/cerrados/Falsa_posicion', methods=['GET'])
 def renderizar_falsa_posicion():
-    return render_template('Falsa_posicion.html')
+    return render_template('unidad_dos/Falsa_posicion.html')
 
 @app.route('/metodos/iterativos/cerrados/Falsa_posicion', methods=['POST'])
 def calcular_falsa_posicion():
@@ -73,7 +73,7 @@ def calcular_falsa_posicion():
 
 @app.route('/metodos/directos/abiertos/newton', methods=['GET'])
 def Newton():
-    return render_template('Newton.html')
+    return render_template('unidad_dos/Newton.html')
 
 @app.route('/metodos/directos/abiertos/newton', methods=['POST'])
 def calcular_newton():
@@ -83,7 +83,7 @@ def calcular_newton():
 
 @app.route('/metodos/directos/abiertos/Newton-Modificado', methods=['GET'])
 def Newton_Modificado():
-    return render_template('Newton_modificado.html')
+    return render_template('unidad_dos/Newton_modificado.html')
 
 @app.route('/metodos/directos/abiertos/Newton-Modificado', methods=['POST'])
 def calcular_newton_modificado():
@@ -93,7 +93,7 @@ def calcular_newton_modificado():
 
 @app.route('/metodos/directos/abiertos/punto-Fijo', methods=['GET'])
 def Punto_fijo():
-    return render_template('Punto_fijo.html')
+    return render_template('unidad_dos/Punto_fijo.html')
 
 @app.route('/metodos/directos/abiertos/punto-Fijo', methods=['POST'])
 def calcular_punto_fijo():
@@ -103,7 +103,7 @@ def calcular_punto_fijo():
 
 @app.route('/metodos/directos/abiertos/Secante', methods=['GET'])
 def Secante():
-    return render_template('Secante.html')
+    return render_template('unidad_dos/Secante.html')
 
 @app.route('/metodos/directos/abiertos/Secante', methods=['POST'])
 def calcular_secante():
@@ -115,7 +115,7 @@ def calcular_secante():
 
 @app.route('/metodos/iterativos/polinomicos/bairstow', methods=['GET'])
 def Bairstow():
-    return render_template('Bairstow.html')
+    return render_template('unidad_dos/Bairstow.html')
 
 @app.route('/metodos/iterativos/polinomicos/bairstow', methods=['POST'])
 def calcular_bairstow():
@@ -131,7 +131,7 @@ def calcular_horner():
 
 @app.route('/metodos/iterativos/polinomicos/horner', methods=['GET'])
 def Horner():
-    return render_template('Horner.html')
+    return render_template('unidad_dos/Horner.html')
 
 @app.route('/metodos/iterativos/polinomicos/muller', methods=['POST'])
 def calcular_muller():
@@ -141,13 +141,13 @@ def calcular_muller():
 
 @app.route('/metodos/iterativos/polinomicos/muller', methods=['GET'])
 def Muller():
-    return render_template('Muller.html')
+    return render_template('unidad_dos/Muller.html')
 
 #metodos directos
 
 @app.route('/metodos/directos/gradomenos2/lineal', methods=['GET'])
 def renderizar_lineal():
-    return render_template('Lineal.html')
+    return render_template('unidad_dos/Lineal.html')
 
 @app.route('/metodos/directos/gradomenos2/lineal', methods=['POST'])
 def calcular_lineal():
@@ -157,7 +157,7 @@ def calcular_lineal():
 
 @app.route('/metodos/directos/gradomenos2/cuartica', methods=['GET'])
 def renderizar_cuartica():
-    return render_template('Cuadratica.html')
+    return render_template('unidad_dos/Cuadratica.html')
 
 @app.route('/metodos/directos/gradomenos2/cuartica', methods=['POST'])
 def calcular_cuartica():
@@ -167,7 +167,7 @@ def calcular_cuartica():
 
 @app.route('/metodos/directos/gradomas3/Ferrari', methods=['GET'])
 def renderizar_ferrari():
-    return render_template('Ferrari.html')
+    return render_template('unidad_dos/Ferrari.html')
 
 @app.route('/metodos/directos/gradomas3/Ferrari', methods=['POST'])
 def calcular_ferrari():
@@ -177,7 +177,7 @@ def calcular_ferrari():
 
 @app.route('/metodos/directos/gradomas3/Tartaglia', methods=['GET'])
 def renderizar_tartaglia():
-    return render_template('Tartaglia.html')
+    return render_template('unidad_dos/Tartaglia.html')
 
 @app.route('/metodos/directos/gradomas3/Tartaglia', methods=['POST'])
 def calcular_tartaglia():
@@ -195,7 +195,7 @@ def calcular_lagrange():
 
 @app.route('/metodos/interpolacion/lagrange', methods=['GET'])
 def Interpolacion_Lagrange():
-    return render_template('Interpolacion_Lagrange.html')
+    return render_template('unidad_tres/Interpolacion_Lagrange.html')
 
 @app.route('/metodos/interpolacion/newton_recursivo', methods=['POST'])
 def calcular_newton_recursivo():
@@ -205,7 +205,7 @@ def calcular_newton_recursivo():
 
 @app.route('/metodos/interpolacion/newton_recursivo', methods=['GET'])
 def Newton_Recursivo():
-    return render_template('Interpolacion_Newton_Recursivo.html')
+    return render_template('unidad_tres/Interpolacion_Newton_Recursivo.html')
 
 
 @app.route('/metodos/interpolacion/newton_fracciones_divididas', methods=['POST'])
@@ -216,7 +216,7 @@ def calcular_newton_fracciones_divididas():
 
 @app.route('/metodos/interpolacion/newton_fracciones_divididas', methods=['GET'])
 def Newton_Fracciones_Divididas():
-    return render_template('Interpolacion_Newton_Fracciones_Divididas.html')
+    return render_template('unidad_tres/Interpolacion_Newton_Fracciones_Divididas.html')
 
 @app.route('/metodos/interpolacion/hermite', methods=['POST'])
 def calcular_hermite():
@@ -226,11 +226,11 @@ def calcular_hermite():
 
 @app.route('/metodos/interpolacion/hermite', methods=['GET'])
 def Hermite():
-    return render_template('Interpolacion_Hermite.html')
+    return render_template('unidad_tres/Interpolacion_Hermite.html')
  
 @app.route('/metodos/interpolacion/trazadores_cubicos', methods=['GET'])
 def Trazadores():
-    return render_template('Interpolacion_Trazadores.html')
+    return render_template('unidad_tres/Interpolacion_Trazadores.html')
 
 @app.route('/metodos/interpolacion/trazadores_cubicos', methods=['POST'])
 def calcular_trazadores():
@@ -240,7 +240,7 @@ def calcular_trazadores():
 
 @app.route('/metodos/interpolacion/lineal', methods=['GET'])
 def Interpolacion_lineal():
-    return render_template('Interpolacion_lineal.html')
+    return render_template('unidad_tres/Interpolacion_lineal.html')
 
 @app.route('/metodos/interpolacion/lineal', methods=['POST'])
 def calcular_interpolacion_lineal():
@@ -258,7 +258,7 @@ def calcular_derivadas():
 
 @app.route('/metodos/diferenciacion/derivadas', methods=['GET'])
 def Diferenciacion():
-    return render_template('Diferenciacion.html')
+    return render_template('unidad_cuatro/Diferenciacion.html')
 
 @app.route('/metodos/diferenciacion/richardson', methods=['POST'])
 def calcular_richardson():
@@ -268,7 +268,7 @@ def calcular_richardson():
 
 @app.route('/metodos/diferenciacion/richardson', methods=['GET'])
 def Richardson():
-    return render_template('Richardson.html')
+    return render_template('unidad_cuatro/Richardson.html')
 
 
 if __name__ == '__main__':

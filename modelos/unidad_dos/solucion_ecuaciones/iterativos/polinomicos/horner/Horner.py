@@ -47,6 +47,9 @@ class metodo_horner():
             except ValueError as e:
                 resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
                 return jsonify(resp), 400
+            except Exception as e:
+                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+                return jsonify(resp), 400
             
             f_x0 = x - x0 #- para cambiar signo
             iteracion = 0
