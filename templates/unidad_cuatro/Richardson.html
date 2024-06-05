@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extrapolacion de Richardson</title>
+    <!-- para el Loader -->
+    <link rel="stylesheet" href="/static/Loader/loaders.css">
+
+    <!-- Estilo de la pagina en General -->
+    <link rel="stylesheet" href="/static/templatestyles.css">
+
+    <!-- Dependencias del Toast -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css" />
+
+    <!-- Script Base JS -->
+    <script src="/static/funciones.js" async></script>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicono/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+
+<body>
+    <div>
+    </div>
+    <span class="text_hero">Extrapolacion de <span class="textGradient1">Richardson</span></span>
+    <p>La extrapolación de Richardson es una técnica para mejorar la precisión de la derivada numérica al reducir el error principal.
+    </p>
+
+    <div class="content">
+        <div id="main" class="main">
+            <div class="descripocion">
+                <p>Ingrese los datos necesarios para calcular la derivada de la función y nivel de Extrapolacion.</p>
+            </div>
+            <div class="formulario">
+                <div class="valor">
+                    <label for="funcion">Funcion:</label>
+                    <input type="text" name="funcion" id="funcion" required value="x**3 + x**2 + 2"
+                        style="width: 10rem;">
+                </div>
+
+                <div class="valor">
+                    <label for="metodo">Método:</label>
+                    <select name="metodo" id="metodo" style="width: 5rem;" onchange="cambiarMetodo(this)">
+                        <option value="adelante">Adelante</option>
+                        <option value="atras">Atrás</option>
+                        <option value="central">Central</option>
+                        <option value="tres_puntos">3 Puntos</option>
+                        <option value="cinco_puntos">5 Puntos</option>
+                    </select>
+                </div>
+
+
+                <div class="valor">
+                    <label for="orden">Derivada:</label>
+                    <select name="orden" id="orden" style="width: 2rem;">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+
+
+                <div class="valor">
+                    <label for="version">Versión:</label>
+                    <select name="version" id="version" style="width: 2rem;">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+
+
+                <div class="valor">
+                    <label for="h">h:</label>
+                    <input type="number" name="h" id="h" required value="0.3" min="0.0001" step="0.1"
+                        style="width: 3rem;">
+                </div>
+
+                <div class="valor">
+                    <label for="xi">x:</label>
+                    <input type="number" name="xi" id="xi" required value="1" style="width: 2rem;">
+                </div>
+
+                <div class="valor">
+                    <label for="nivel">nivel:</label>
+                    <input type="number" name="nivel" id="nivel" required value="2" min="2" step="1" pattern="\d+" 
+                        style="width: 3rem;">
+                </div>                
+
+            </div>
+
+
+            <div class="ui">
+
+                <div id="calcular" class="buttonBig button-green" onclick="calcular()">
+                    <span class="material-symbols-outlined">
+                        calculate
+                    </span>
+                    <span>Calcular</span>
+                </div>
+                <div id="guardar" class="buttonBig button-blue" onclick="guardarPDF('stepbystep')">
+                    <span class="material-symbols-outlined">
+                        save
+                    </span>
+                </div>
+                <div id="borrar" class="buttonBig button-red" onclick="borrarPasos()">
+                    <span class="material-symbols-outlined">
+                        delete
+                    </span>
+                </div>
+            </div>
+            <div class="ui">
+                <div class="buttonSmall button-yellow" onclick="mostrarDialog('explicamelo')">
+                    <span class="material-symbols-outlined">
+                        assignment
+                    </span>
+                    <span>Explícamelo</span>
+                </div>
+                <div class="buttonSmall button-orange" onclick="mostrarDialog('diagrama')">
+                    <span class="material-symbols-outlined">
+                        account_tree
+                    </span>
+                    <span>Diagrama de Flujo</span>
+                </div>
+                <div class="buttonSmall button-purple" onclick="mostrarDialog('api')">
+                    <span class="material-symbols-outlined">
+                        api
+                    </span>
+                    <span>API</span>
+                </div>
+            </div>
+        </div>
+        <div id="stepbystep" class="stepbystep">
+            <center>
+                <p style="
+                    opacity: 0.2;
+                    font-weight: 700;
+                    color: #16167f;
+                    width: 100%;
+                    ">Aqui se mostrará el procedimiento</p>
+            </center>
+        </div>
+        <div id="result" class="result" style="display: none;">
+            <h2><span class="textGradient5">Resultados</span></h2>
+            <div class="contentresult">
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="footer">
+        <a class="regresar" href="/">Regresar</a>
+    </div>
+
+    <!-- Sugerencias de Ejercicios 
+    este sera una ventana que estara flotando a la derecha de la pagina
+    -->
+    <div class="sugerencias" style="right: calc(-253px);">
+        <span><span class="textGradient1">
+                Ejercicios Sugeridos
+            </span>
+        </span>
+        <div id="ejercicios">
+
+        </div>
+        <div class="viñeta" onclick="cambiarEstadoSugerencias()">
+            <span class="material-symbols-outlined textGradient4">
+                keyboard_double_arrow_left
+            </span>
+        </div>
+    </div>
+
+    <dialog id="explicamelo">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('explicamelo')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+
+                <h1>Extrapolación de Richardson para Mejorar la Derivada Numérica</h1>
+                <p>
+                    La extrapolación de Richardson mejora la precisión de la derivada numérica al combinar dos aproximaciones con diferentes tamaños de paso.
+                </p>
+                <p>
+                    Primero, calcula la derivada numérica <em>D(h)</em> usando un paso <em>h</em>:
+                </p>
+                <pre>
+                    <code>
+                        D(h) = (f(x + h) - f(x)) / h
+                    </code>
+                </pre>
+                <p>
+                    Luego, calcula la derivada <em>D(h/2)</em> con un paso más pequeño <em>h/2</em>:
+                </p>
+                <pre>
+                    <code>
+                        D(h/2) = (f(x + h/2) - f(x)) / (h/2)
+                    </code>
+                </pre>
+                <p>
+                    Usa la extrapolación de Richardson para combinar estas dos estimaciones y reducir el error principal:
+                </p>
+                <pre>
+                    <code>
+                        D<sub>extrapolado</sub> = (4/3) * D(h/2) - (1/3) * D(h)
+                    </code>
+                </pre>
+                <p>
+                    Esta fórmula elimina el término de error principal, proporcionando una estimación más precisa de la derivada en el punto <em>x</em>.
+                </p>
+                <p>La formula de D(h1) varia dependiendo el metodo de diferenciacion finita escogido</p>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="diagrama">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('diagrama')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+                <h2>Diagrama de Flujo del Método Tartaglia</h2>
+                <center>
+                    <p>Aqui debe ir una imagen bien perrona del codigo</p>
+                </center>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="api">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('api')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+                <h2>API del Método de Extrapolacion de Richardson</h2>
+                <br>
+                <p>Para utilizar el método de Extrapolacion de Richardson, se debe realizar una petición POST al siguiente endpoint:</p>
+                <p>https://analisis-numerico-sand.vercel.app/metodos/diferenciacion/richardson</p>
+                <br>
+                <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
+                <br>
+                <pre>
+
+                    {
+                        "funcion":"funcion",
+                        "metodo":"nombre del metodo",
+                         "version":numero de version del metodo,
+                          "orden":orden de la derivada a calcular,
+                          "h":valor de h,
+                          "xi":valor de x a evaluar,
+                          "nivel":nivel de extrapolacion,
+                    }
+
+                </pre>
+            </div>
+        </div>
+    </dialog>
+
+
+
+    <script>
+        //Aqui debe ir la direccion del EndPoint de el Metodo
+        let endPoint = "/metodos/diferenciacion/richardson"
+        //Aqui iran los id de todos los datos que se enviaran al EndPoint
+        let variables = ["funcion", "metodo", "orden", "version", "h", "xi","nivel"];
+        //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
+        function calcular() {
+            let datos = {}
+            variables.forEach(variable => {
+                datos[variable] = document.getElementById(variable).value;
+            });
+            console.log(datos);
+            realizarPeticionPOST(endPoint, datos)
+        }
+        //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
+        let ejercicios = [
+            ["funcion"],
+            ["x**3 + x**2 + 2"],
+            ["x**3 - 13*x - 12"],
+            ["x**3 - 6*x**2 + 11*x - 6"],
+            ["x**3 + 3*x**2 - 4*x - 12"]
+        ]
+
+
+
+
+        function cambiarMetodo(select) {
+            let metodo = select.value;
+            let derivada = document.getElementById("orden");
+            let version = document.getElementById("version");
+            if (metodo == "cinco_puntos") {
+                derivada.innerHTML = "<option value='1'>1</option>";
+                version.innerHTML = `
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            `;
+            } else if (metodo == "tres_puntos") {
+                derivada.innerHTML = "<option value='1'>1</option>";
+                version.innerHTML = `
+            <option value="1">1</option>
+            <option value="2">2</option>
+            `;
+            }
+            else {
+                derivada.innerHTML = `
+        <option value='1'>1</option>
+        <option value='2'>2</option>
+        <option value='3'>3</option>
+        <option value='4'>4</option>
+        `;
+                version.innerHTML = "<option value='1'>1</option><option value='2'>2</option>";
+            }
+        }
+    </script>
+
+    <script src="/static/Loader/background.js" async></script>
+</body>
+
+</html>

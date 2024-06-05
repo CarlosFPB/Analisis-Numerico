@@ -7,21 +7,21 @@
     <title>Método Bairstow</title>
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
-
+    
     <!-- Estilo de la pagina en General -->
     <link rel="stylesheet" href="/static/templatestyles.css">
-
+    
     <!-- Dependencias del Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-
+    
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css" />
-
+    
     <!-- Script Base JS -->
     <script src="/static/funciones.js" async></script>
-
+    
     <link rel="apple-touch-icon" sizes="180x180" href="/static/favicono/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
@@ -32,8 +32,8 @@
     <div>
     </div>
     <span class="text_hero">Método <span class="textGradient1">Bairstow</span></span>
-    <p>Este metodo se utiliza para encontrar la raiz de una funcion en un intervalo [Xi,Xu]</p>
-
+    <p>Este metodo se utiliza para encontrar todas las raices de una funcion polinomica mayor a grado 3</p>
+    
     <div class="content">
         <div id="main" class="main">
             <div class="descripocion">
@@ -97,15 +97,15 @@
             </div>
         </div>
         <div id="errorDiv"></div>
-
+        
         <div id="stepbystep" class="stepbystep">
             <center>
                 <p style="
-                    opacity: 0.2;
-                    font-weight: 700;
-                    color: #16167f;
-                    width: 100%;
-                    ">Aqui se mostrará el procedimiento</p>
+                opacity: 0.2;
+                font-weight: 700;
+                color: #16167f;
+                width: 100%;
+                ">Aqui se mostrará el procedimiento</p>
             </center>
         </div>
         <div id="result" class="result" style="display: none;">
@@ -114,102 +114,110 @@
             </div>
         </div>
     </div>
-
+    
     <br>
     <div class="footer">
         <a class="regresar" href="/">Regresar</a>
     </div>
-
+    
     <!-- Sugerencias de Ejercicios 
-    este sera una ventana que estara flotando a la derecha de la pagina
+        este sera una ventana que estara flotando a la derecha de la pagina
     -->
     <div class="sugerencias" style="right: calc(-253px);">
         <span><span class="textGradient1">
-                Ejercicios Sugeridos
-            </span>
+            Ejercicios Sugeridos
         </span>
-        <div id="ejercicios">
+    </span>
+    <div id="ejercicios">
+        
+    </div>
+    <div class="viñeta" onclick="cambiarEstadoSugerencias()">
+        <span class="material-symbols-outlined textGradient4">
+            keyboard_double_arrow_left
+        </span>
+    </div>
+</div>
 
-        </div>
-        <div class="viñeta" onclick="cambiarEstadoSugerencias()">
-            <span class="material-symbols-outlined textGradient4">
-                keyboard_double_arrow_left
+<dialog id="explicamelo">
+    <div class="contenido">
+        <div class="dialog-content">
+            <span class="close" onclick="cerrarDialog('explicamelo')">
+                <span class="material-symbols-outlined">
+                    close
+                </span>
             </span>
+            <h1>Método de Bairstow para Aproximación de Raíces</h1>
+            <p>
+                El método de Bairstow es un algoritmo numérico utilizado para encontrar las raíces de un polinomio de grado arbitrario. A diferencia de otros métodos, como el método de Newton-Raphson, Bairstow puede encontrar raíces complejas y múltiples.
+            </p>
+            
+            <h2>Idea Básica</h2>
+            <p>
+                El método de Bairstow utiliza la división sintética para aproximar las raíces del polinomio. Se comienza con un polinomio de grado (n) y se le aplica el método para reducir gradualmente el grado del polinomio.
+            </p>
+            
+            <h2>Pasos del Método</h2>
+            <ol>
+                <li>Se eligen dos valores iniciales para las raíces r_0 y s_0 del polinomio.</li>
+                <li>Se utiliza la división sintética para dividir el polinomio por ( x - r_0 ) y ( x - s_0 ) para obtener un polinomio de grado ( n - 2 ).</li>
+                <li>Se resuelve un sistema de ecuaciones lineales para encontrar las correcciones a los valores de ( r_0 ) y ( s_0 ).</li>
+                <li>Se repiten los pasos 2 y 3 hasta que se alcance una precisión deseada.</li>
+            </ol>
+            
+            <h2>Consideraciones</h2>
+            <p>
+                El método de Bairstow puede ser sensible a la elección de los valores iniciales para ( r_0 ) y ( s_0 ), y puede converger lentamente o incluso divergir para ciertos polinomios. Sin embargo, sigue siendo una herramienta valiosa para encontrar raíces de polinomios complejos.
+            </p>
+            
         </div>
     </div>
+</dialog>
 
-    <dialog id="explicamelo">
-        <div class="contenido">
-            <div class="dialog-content">
-                <span class="close" onclick="cerrarDialog('explicamelo')">
-                    <span class="material-symbols-outlined">
-                        close
-                    </span>
+<dialog id="diagrama">
+    <div class="contenido">
+        <div class="dialog-content">
+            <span class="close" onclick="cerrarDialog('diagrama')">
+                <span class="material-symbols-outlined">
+                    close
                 </span>
+            </span>
+            <h2>Diagrama de Flujo del Método Bisección</h2>
+            <center>
+                <p>Aqui debe ir una imagen bien perrona del codigo</p>
+            </center>
+        </div>
+    </div>
+</dialog>
 
-                <h2>Explicación del Método Bisección</h2>
-                <p>El método de la bisección es un algoritmo utilizado para encontrar la raíz de una función en un
-                    intervalo dado. El algoritmo se basa en el teorema del valor intermedio, que establece que si una
-                    función es continua en un intervalo [a, b] y toma valores de signo opuesto en los extremos del
-                    intervalo, entonces existe al menos un punto c en el intervalo donde la función se anula.</p>
-                <p>El método de la bisección divide repetidamente el intervalo a la mitad y verifica en qué subintervalo
-                    se encuentra la raíz. El proceso continúa hasta que se alcance una tolerancia predefinida o se
-                    encuentre una aproximación suficientemente cercana a la raíz.</p>
-                <p>Para utilizar el método de la bisección, debes ingresar la función, los valores iniciales del
-                    intervalo [Xi, Xu] y la tolerancia deseada. Luego, al hacer clic en el botón "Calcular", se
-                    realizará la iteración del algoritmo y se mostrarán los resultados.</p>
-            </div>
+<dialog id="api">
+    <div class="contenido">
+        <div class="dialog-content">
+            <span class="close" onclick="cerrarDialog('api')">
+                <span class="material-symbols-outlined">
+                    close
+                </span>
+            </span>
+            <h2>API del Método de Bairstow</h2>
+            <p>Para utilizar el método de la bisección a través de la API, debes realizar una petición POST al
+                siguiente endpoint:</p>
+                <p>https://analisis-numerico-sand.vercel.app/metodos/iterativos/polinomicos/Bairstow</p>
+                <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
+                <br>
+                <pre>
+
+                    {
+                        "funcion":"funcion polinomica",
+                        "r0":valor inicial de r0,
+                        "s0":valor inicial de s0,
+                        "tolerancia":valor de la tolerancia en decimales
+                    }
+                </pre>
+                <p>La API responderá con un objeto JSON que contiene la raíz aproximada del polinomio y el número de iteraciones realizadas.</p>
         </div>
     </dialog>
-
-    <dialog id="diagrama">
-        <div class="contenido">
-            <div class="dialog-content">
-                <span class="close" onclick="cerrarDialog('diagrama')">
-                    <span class="material-symbols-outlined">
-                        close
-                    </span>
-                </span>
-                <h2>Diagrama de Flujo del Método Bisección</h2>
-                <center>
-                    <p>Aqui debe ir una imagen bien perrona del codigo</p>
-                </center>
-            </div>
-        </div>
-    </dialog>
-
-    <dialog id="api">
-        <div class="contenido">
-            <div class="dialog-content">
-                <span class="close" onclick="cerrarDialog('api')">
-                    <span class="material-symbols-outlined">
-                        close
-                    </span>
-                </span>
-                <h2>API del Método Bisección</h2>
-                <p>Para utilizar el método de la bisección a través de la API, debes realizar una petición POST al
-                    siguiente endpoint:</p>
-                <p><code>https://nummeth.herokuapp.com/metodos/directos/cerrados/Biseccion</code></p>
-                <p>Los parámetros que debes incluir en la petición son los siguientes:</p>
-                <ul>
-                    <li><code>funcion</code>: La función para la cual deseas encontrar la raíz.</li>
-                    <li><code>xi</code>: El valor inicial del intervalo [Xi, Xu].</li>
-                    <li><code>xu</code>: El valor final del intervalo [Xi, Xu].</li>
-                    <li><code>tolerancia</code>: La tolerancia deseada para la aproximación de la raíz.</li>
-                </ul>
-                <p>Al realizar la petición, recibirás como respuesta un objeto JSON con los siguientes campos:</p>
-                <ul>
-                    <li><code>raiz</code>: El valor aproximado de la raíz de la función.</li>
-                    <li><code>iteraciones</code>: El número de iteraciones realizadas para encontrar la raíz.</li>
-                    <li><code>error</code>: El error relativo porcentual de la aproximación.</li>
-                </ul>
-                <p>¡Inténtalo y encuentra la raíz de tus funciones de forma sencilla!</p>
-            </div>
-        </div>
-    </dialog>
-
-
-
+    
+    
+    
     <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo
         let endPoint = "/metodos/iterativos/polinomicos/Bairstow"
@@ -226,14 +234,14 @@
         }
         //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
         let ejercicios = [
-            ["funcion", "xi", "xu", "tolerancia"],
-            ["-x + exp(-x)", 0.1, 1.5, 0.05],
-            ["x^2 - 4", -2, 2, 0.01],
-            ["sin(x)", 0, 3, 0.1],
-            ["log(x)", 1, 10, 0.001]
+        ["funcion", "r0", "s0", "tolerancia"],
+        ["-x + exp(-x)", 0.1, 1.5, 0.01],
+        ["x^2 - 4", -2, 2, 0.01],
+        ["sin(x)", 0, 3, 0.01],
+        ["log(x)", 1, 10, 0.01]
         ]
     </script>
-
+    
     <script src="/static/Loader/background.js" async></script>
 </body>
 
