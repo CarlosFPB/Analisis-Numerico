@@ -271,6 +271,13 @@ table tr td:last-child {
     width: min-content;
     display: flex;
     align-items: center;
+
+}
+
+
+input[type="radio"] {
+    width: 1.5rem;
+    transform: scale(1.5);
 }
 
 input {
@@ -285,7 +292,9 @@ input {
     background: transparent;
     border-bottom: 0.1rem solid rgba(0, 0, 0, 0.103);
     border-right: 0.1rem solid rgba(0, 0, 0, 0.103);
+    transition: all 0.5s;
 }
+
 
 input[type="checkbox"] {
     position: relative;
@@ -326,6 +335,7 @@ input[type="range"] {
 	width: 12rem;
     padding: 0;
 }
+
 
 
 
@@ -808,7 +818,8 @@ dialog {
     }
 }
 
-* {}
+* {
+}
 
 
 @media screen {
