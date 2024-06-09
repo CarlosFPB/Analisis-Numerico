@@ -11,8 +11,6 @@
     --primary-font: 'Roboto', sans-serif;
     --secondary-font: "Work Sans", sans-serif;
     --third-font: "Source Sans 3", sans-serif;
-    font-family: var(--third-font);
-
 }
 
 body {
@@ -132,6 +130,7 @@ p {
     gap: 1rem;
 }
 
+
 #latex {
     display: none;
 }
@@ -139,7 +138,9 @@ p {
 #math-field {
     width: 350px;
     border: 1px solid #ccc;
+    /* Añade un borde para que sea visible */
     padding: 5px;
+    /* Añade algo de espacio interno */
     cursor: text;
 }
 
@@ -506,12 +507,11 @@ input[type="checkbox"]:checked:before {
         'GRAD' 0,
         'opsz' 32
 }
-
+    
 math {
-    font-family: math;
     font-style: italic;
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .tablas-input {
