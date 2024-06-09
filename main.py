@@ -1,29 +1,35 @@
 from flask import Flask, render_template, request, jsonify, redirect
 import os
+import time
 
 # Importaciones de métodos
-from modelos.metodos.iterativos.cerrados.biseccion.Biseccion import medoto_biseccion
-from modelos.metodos.iterativos.cerrados.falsa_posicion.Falsa_posicion import metodo_falsa_posicion
-from modelos.metodos.directos.polinomicas_mayor_3.ferrari.Ferrari import metodo_ferrari
-from  modelos.metodos.directos.polinomicas_mayor_3.tartaglia.Tartaglia import metodo_tartaglia
-from modelos.metodos.directos.polinomicas_menor_2.cuadratica.Cuadratica import metodo_cuadratico
-from modelos.metodos.directos.polinomicas_menor_2.lineal.Lineal import metodo_lineal
-from modelos.metodos.iterativos.abiertos.punto_fijo.Punto_fijo import metodo_punto_fijo
-from modelos.metodos.iterativos.abiertos.newton.Newton import metodo_newton
-from modelos.metodos.iterativos.abiertos.newton_modificado.Newton_modificado import metodo_newton_modificado
-from modelos.metodos.iterativos.abiertos.secante.Secante import metodo_secante
-from modelos.metodos.iterativos.polinomicos.bairstow.Bairstow import metodo_bairstow
-from modelos.metodos.iterativos.polinomicos.horner.Horner import metodo_horner
-from modelos.metodos.iterativos.polinomicos.muller.Muller import metodo_muller
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.cerrados.biseccion.Biseccion import medoto_biseccion
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.cerrados.falsa_posicion.Falsa_posicion import metodo_falsa_posicion
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.abiertos.newton.Newton import metodo_newton
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.abiertos.newton_modificado.Newton_modificado import metodo_newton_modificado
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.abiertos.punto_fijo.Punto_fijo import metodo_punto_fijo
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.abiertos.secante.Secante import metodo_secante
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.polinomicos.bairstow.Bairstow import metodo_bairstow
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.polinomicos.horner.Horner import metodo_horner
+from modelos.unidad_dos.solucion_ecuaciones.iterativos.polinomicos.muller.Muller import metodo_muller
+from modelos.unidad_dos.solucion_ecuaciones.directos.polinomicas_menor_2.lineal.Lineal import metodo_lineal
+from modelos.unidad_dos.solucion_ecuaciones.directos.polinomicas_menor_2.cuadratica.Cuadratica import metodo_cuadratico
+from modelos.unidad_dos.solucion_ecuaciones.directos.polinomicas_mayor_3.ferrari.Ferrari import metodo_ferrari
+from modelos.unidad_dos.solucion_ecuaciones.directos.polinomicas_mayor_3.tartaglia.Tartaglia import metodo_tartaglia
 
 #interpolacion
-from modelos.metodos.interpolacion.lagrange.Lagrange import metodo_lagrange
-from modelos.metodos.interpolacion.newton_recursivo.Newton_recursivo import metodo_newton_recursivo
-from modelos.metodos.interpolacion.newton_fracciones_divididas.Newton_fracciones_divididas import metodo_newton_fracciones_divididas
-from modelos.metodos.interpolacion.hermite.Hermite import metodo_hermite
+from modelos.unidad_tres.interpolacion.lagrange.Lagrange import metodo_lagrange
+from modelos.unidad_tres.interpolacion.newton_recursivo.Newton_recursivo import metodo_newton_recursivo
+from modelos.unidad_tres.interpolacion.newton_fracciones_divididas.Newton_fracciones_divididas import metodo_newton_fracciones_divididas
+from modelos.unidad_tres.interpolacion.hermite.Hermite import metodo_hermite
 
+
+#integracion
+from modelos.unidad_cuatro.Integracion.Integracion import integracion_
 
 app = Flask(__name__, static_url_path='/static')
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
 
 #raiz y errores
 @app.route('/')
@@ -45,7 +51,8 @@ def page_not_found(e):
 
 @app.route('/metodos/iterativos/cerrados/Biseccion', methods=['GET'])
 def renderizar_biseccion():
-    return render_template('Biseccion.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Biseccion.html', keyboard_content=keyboard_content, time=time.time())
 
 @app.route('/metodos/iterativos/cerrados/Biseccion', methods=['POST'])
 def calcular_biseccion():
@@ -55,7 +62,8 @@ def calcular_biseccion():
 
 @app.route('/metodos/iterativos/cerrados/Falsa_posicion', methods=['GET'])
 def renderizar_falsa_posicion():
-    return render_template('Falsa_posicion.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Falsa_posicion.html', keyboard_content=keyboard_content, time=time.time())
 
 @app.route('/metodos/iterativos/cerrados/Falsa_posicion', methods=['POST'])
 def calcular_falsa_posicion():
@@ -67,7 +75,8 @@ def calcular_falsa_posicion():
 
 @app.route('/metodos/directos/abiertos/newton', methods=['GET'])
 def Newton():
-    return render_template('Newton.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Newton.html', keyboard_content=keyboard_content, time=time.time())
 
 @app.route('/metodos/directos/abiertos/newton', methods=['POST'])
 def calcular_newton():
@@ -77,7 +86,8 @@ def calcular_newton():
 
 @app.route('/metodos/directos/abiertos/Newton-Modificado', methods=['GET'])
 def Newton_Modificado():
-    return render_template('Newton_modificado.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Newton_modificado.html', keyboard_content=keyboard_content, time=time.time())
 
 @app.route('/metodos/directos/abiertos/Newton-Modificado', methods=['POST'])
 def calcular_newton_modificado():
@@ -87,7 +97,8 @@ def calcular_newton_modificado():
 
 @app.route('/metodos/directos/abiertos/punto-Fijo', methods=['GET'])
 def Punto_fijo():
-    return render_template('Punto_fijo.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Punto_fijo.html', keyboard_content=keyboard_content, time=time.time())
 
 @app.route('/metodos/directos/abiertos/punto-Fijo', methods=['POST'])
 def calcular_punto_fijo():
@@ -97,7 +108,8 @@ def calcular_punto_fijo():
 
 @app.route('/metodos/directos/abiertos/Secante', methods=['GET'])
 def Secante():
-    return render_template('Secante.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Secante.html', keyboard_content=keyboard_content, time=time.time())
 
 @app.route('/metodos/directos/abiertos/Secante', methods=['POST'])
 def calcular_secante():
@@ -109,7 +121,8 @@ def calcular_secante():
 
 @app.route('/metodos/iterativos/polinomicos/bairstow', methods=['GET'])
 def Bairstow():
-    return render_template('Bairstow.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Bairstow.html', keyboard_content=keyboard_content, time=time.time())
 
 @app.route('/metodos/iterativos/polinomicos/bairstow', methods=['POST'])
 def calcular_bairstow():
@@ -125,7 +138,8 @@ def calcular_horner():
 
 @app.route('/metodos/iterativos/polinomicos/horner', methods=['GET'])
 def Horner():
-    return render_template('Horner.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Horner.html', keyboard_content=keyboard_content, time=time.time())
 
 @app.route('/metodos/iterativos/polinomicos/muller', methods=['POST'])
 def calcular_muller():
@@ -135,13 +149,15 @@ def calcular_muller():
 
 @app.route('/metodos/iterativos/polinomicos/muller', methods=['GET'])
 def Muller():
-    return render_template('Muller.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Muller.html', keyboard_content=keyboard_content, time=time.time())
 
 #metodos directos
 
 @app.route('/metodos/directos/gradomenos2/lineal', methods=['GET'])
 def renderizar_lineal():
-    return render_template('Lineal.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Lineal.html', keyboard_content=keyboard_content, time=time.time())
 
 @app.route('/metodos/directos/gradomenos2/lineal', methods=['POST'])
 def calcular_lineal():
@@ -151,7 +167,8 @@ def calcular_lineal():
 
 @app.route('/metodos/directos/gradomenos2/cuartica', methods=['GET'])
 def renderizar_cuartica():
-    return render_template('Cuadratica.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Cuadratica.html', keyboard_content=keyboard_content, time=time.time())
 
 @app.route('/metodos/directos/gradomenos2/cuartica', methods=['POST'])
 def calcular_cuartica():
@@ -161,7 +178,8 @@ def calcular_cuartica():
 
 @app.route('/metodos/directos/gradomas3/Ferrari', methods=['GET'])
 def renderizar_ferrari():
-    return render_template('Ferrari.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Ferrari.html', keyboard_content=keyboard_content, time=time.time())
 
 @app.route('/metodos/directos/gradomas3/Ferrari', methods=['POST'])
 def calcular_ferrari():
@@ -171,7 +189,8 @@ def calcular_ferrari():
 
 @app.route('/metodos/directos/gradomas3/Tartaglia', methods=['GET'])
 def renderizar_tartaglia():
-    return render_template('Tartaglia.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Tartaglia.html', keyboard_content=keyboard_content, time=time.time())
 
 @app.route('/metodos/directos/gradomas3/Tartaglia', methods=['POST'])
 def calcular_tartaglia():
@@ -189,7 +208,8 @@ def calcular_lagrange():
 
 @app.route('/metodos/interpolacion/lagrange', methods=['GET'])
 def Interpolacion_Lagrange():
-    return render_template('Interpolacion_Lagrange.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Interpolacion_Lagrange.html', keyboard_content=keyboard_content, time=time.time())
 
 @app.route('/metodos/interpolacion/newton_recursivo', methods=['POST'])
 def calcular_newton_recursivo():
@@ -199,7 +219,8 @@ def calcular_newton_recursivo():
 
 @app.route('/metodos/interpolacion/newton_recursivo', methods=['GET'])
 def Newton_Recursivo():
-    return render_template('Interpolacion_Newton_Recursivo.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Interpolacion_Newton_Recursivo.html', keyboard_content=keyboard_content, time=time.time())
 
 
 @app.route('/metodos/interpolacion/newton_fracciones_divididas', methods=['POST'])
@@ -210,7 +231,8 @@ def calcular_newton_fracciones_divididas():
 
 @app.route('/metodos/interpolacion/newton_fracciones_divididas', methods=['GET'])
 def Newton_Fracciones_Divididas():
-    return render_template('Interpolacion_Newton_Fracciones_Divididas.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Interpolacion_Newton_Fracciones_Divididas.html', keyboard_content=keyboard_content, time=time.time())
 
 @app.route('/metodos/interpolacion/hermite', methods=['POST'])
 def calcular_hermite():
@@ -220,8 +242,22 @@ def calcular_hermite():
 
 @app.route('/metodos/interpolacion/hermite', methods=['GET'])
 def Hermite():
-    return render_template('Interpolacion_Hermite.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Interpolacion_Hermite.html', keyboard_content=keyboard_content, time=time.time())
  
+
+ #integracion
+
+@app.route('/metodos/integracion/trapecio-simpson', methods =['POST'])
+def calcular_integracion():
+    json_data = request.json
+    respuesta = integracion_.calcular_integracion(json_data)
+    return respuesta
+
+@app.route('/metodos/integracion/trapecio-simpson', methods = ['GET'])
+def Integracion():
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('Trapecio_Simpson.html', keyboard_content=keyboard_content, time=time.time())
 
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))

@@ -114,7 +114,75 @@ class newton_modificado():
         respuesta = x0 - (f_x_evaluada * f_prima_evaluada)/(f_prima_evaluada**2 - f_x_evaluada * f_prima_prima_evaluada)
         return float(respuesta)
     
-     
+
+class integr_obtener():
+
+    @staticmethod
+    def integr_Obtener(sympy_expr):
+    
+        funciones = []
+        variables = []
+        limites2 = [] 
+
+        # Si la expresión es una suma de integrales, extraer cada una
+        if isinstance(sympy_expr, sp.Add):
+            num_inte = 0   
+            for term in sympy_expr.args:
+                if isinstance(term, sp.Integral):
+                    #Verifica el numero de integral
+                    tipo_integral = len(term.limits)
+                    #extraer_funcion_limites(term, tipo_integral, num_inte)
+                    if isinstance(term, sp.Integral):
+                        funcion = term.function
+                        if num_inte == 0:
+                            for i in range(tipo_integral):
+                                limites = term.limits[i]
+                                variable, limite_inferior, limite_superior = limites
+                                variables.append(variable)
+                                limites2.append(limite_inferior)
+                                limites2.append(limite_superior)
+                        funciones.append(funcion)
+                        num_inte =+ 1
+                    else:
+                        raise ValueError("El objeto proporcionado no es una integral válida")          
+        else:
+            # Caso en que solo hay una integral
+            if isinstance(sympy_expr, sp.Integral):
+                tipo_integral = len(sympy_expr.limits)
+
+                for i in range(tipo_integral):
+                        limites = sympy_expr.limits[i]
+                        variable, limite_inferior, limite_superior = limites
+                        variables.append(variable)
+                        limites2.append(limite_inferior)
+                        limites2.append(limite_superior)
+
+                funcion = sympy_expr.function
+                funciones = [funcion]
+
+        # Sumar las funciones
+        suma_funciones = sum(funciones)
+        print("Suma funciones: ", suma_funciones)
+
+        # Verificar que todos los límites sean iguales (asumimos que son iguales para simplificar)
+        print("Funciones extraídas y límites:")
+        for funcion in funciones:
+            print("Función:", funcion)
+
+        for limite in limites2:
+            print("Limite:", limite)
+
+        #Variables#
+        for variable in variables:
+            print("Variable:", variable)
+
+        print(f"Tipo limites: {limites2[0]}", type(limites2[0]))
+        print(f"Tipo limites: {variables[0]}", type(variables[0]))
+
+
+        return suma_funciones, variables, limites2
+
+
 class verificaciones():
 
     @staticmethod
