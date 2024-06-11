@@ -31,11 +31,12 @@ class metodo_muller():
             #validar que sea grado mayor a 3 no importa sino es polinomica
             if verificaciones.obtener_grado(f_x)!= None:#es porq es polinomica
                 if verificaciones.obtener_grado(f_x) < 3:
+                    print(verificaciones.obtener_grado(f_x))
                     resp = instancia_respuesta.responder_error("La función debe ser de grado 3 o mayor")
                     return jsonify(resp), 400
-            else:
-                resp = instancia_respuesta.responder_error("La función debe ser polinomica de grado 3 o mayor")
-                return jsonify(resp), 400
+            #else:
+            #    resp = instancia_respuesta.responder_error("La función debe ser polinomica de grado 3 o mayor")
+            #    return jsonify(resp), 400
             
             #verifico los datos ingresados
             try:
