@@ -5,12 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Método Ferrari</title>
+
+    <!--Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Importa Mathquill desde el CDN -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"></script>
+
+
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
 
     <!-- Estilo de la pagina en General -->
-    <link rel="stylesheet" href="/static/templatestyles.css">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
     <!-- Dependencias del Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
@@ -40,11 +50,11 @@
             <div class="descripocion">
                 <p>Ingrese la funcion para la cual desea encontrar la raíz</p>
             </div>
+            <div>
+                <p>Función: <span id="math-field"></span></p>
+                <p><span id="latex"></span></p>
+            </div>
             <div class="formulario">
-                <div class="valor">
-                    <label for="funcion">Funcion:</label>
-                    <input type="text" name="funcion" id="funcion" required value="x**4 + 4*x**3 - x**2 - 16*x - 12" style="width: 15rem;">
-                </div>
             </div>
             <div class="ui">
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
@@ -64,6 +74,9 @@
                     </span>
                 </div>
             </div>
+            {% block keyboard %}
+            {{ keyboard_content | safe }}
+            {% endblock %}
             <div class="ui">
                 <div class="buttonSmall button-yellow" onclick="mostrarDialog('explicamelo')">
                     <span class="material-symbols-outlined">
@@ -187,19 +200,31 @@
         </div>
     </dialog>
 
+    <script defer>
+        window.onload = function () {
+            var MQ = MathQuill.getInterface(2);  // Inicializa MathQuill
+            var mathFieldSpan = document.getElementById('math-field');
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // permite usar la tecla espacio como tab
+                handlers: {
+                    edit: function () { // se llama cada vez que hay una edición
+                        var latexSpan = document.getElementById('latex');
+                        latexSpan.textContent = mathField.latex(); // muestra LaTeX
+                    }
+                }
+            });
+        };
+    </script>
 
 
     <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo
         let endPoint = "/metodos/directos/gradomas3/Ferrari"
         //Aqui iran los id de todos los datos que se enviaran al EndPoint
-        let variables = ["funcion"];
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
         function calcular() {
             let datos = {}
-            variables.forEach(variable => {
-                datos[variable] = document.getElementById(variable).value;
-            });
+            datos["latex"] = document.getElementById("latex").textContent;
             console.log(datos);
             realizarPeticionPOST(endPoint, datos)
         }
@@ -212,6 +237,31 @@
 
         ]
     </script>
+    <!--Script de teclado-->
+<script defer>
+    $(document).ready(function () {
+        var MQ = MathQuill.getInterface(2); // for backcompat
+        var mathFieldSpan = document.getElementById('math-field');
+        var latexSpan = document.getElementById('latex');
+
+        var mathField = MQ.MathField(mathFieldSpan, {
+            spaceBehavesLikeTab: true, // configurable
+            handlers: {
+                edit: function () { // useful event handlers
+                    latexSpan.textContent = mathField.latex(); // simple API
+                }
+            }
+        });
+
+        // Añadir funcionalidad a los botones del panel matemático
+        $('.math-button').on('click', function () {
+            var symbol = $(this).data('symbol');
+            mathField.write(symbol);
+            mathField.focus({ focusVisible: true });
+        });
+
+    });
+</script>
 
     <script src="/static/Loader/background.js" async></script>
 </body>

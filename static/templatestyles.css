@@ -11,8 +11,6 @@
     --primary-font: 'Roboto', sans-serif;
     --secondary-font: "Work Sans", sans-serif;
     --third-font: "Source Sans 3", sans-serif;
-    font-family: var(--third-font);
-
 }
 
 body {
@@ -130,6 +128,20 @@ p {
 
     padding: 1rem;
     gap: 1rem;
+}
+
+
+#latex {
+    display: none;
+}
+
+#math-field {
+    width: 350px;
+    border: 1px solid #ccc;
+    /* Añade un borde para que sea visible */
+    padding: 5px;
+    /* Añade algo de espacio interno */
+    cursor: text;
 }
 
 .result {
@@ -271,6 +283,13 @@ table tr td:last-child {
     width: min-content;
     display: flex;
     align-items: center;
+
+}
+
+
+input[type="radio"] {
+    width: 1.5rem;
+    transform: scale(1.5);
 }
 
 input {
@@ -285,7 +304,9 @@ input {
     background: transparent;
     border-bottom: 0.1rem solid rgba(0, 0, 0, 0.103);
     border-right: 0.1rem solid rgba(0, 0, 0, 0.103);
+    transition: all 0.5s;
 }
+
 
 input[type="checkbox"] {
     position: relative;
@@ -326,6 +347,7 @@ input[type="range"] {
 	width: 12rem;
     padding: 0;
 }
+
 
 
 
@@ -510,12 +532,11 @@ input[type="range"] {
         'GRAD' 0,
         'opsz' 32
 }
-
+    
 math {
-    font-family: math;
     font-style: italic;
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .tablas-input {
@@ -808,7 +829,8 @@ dialog {
     }
 }
 
-* {}
+* {
+}
 
 
 @media screen {

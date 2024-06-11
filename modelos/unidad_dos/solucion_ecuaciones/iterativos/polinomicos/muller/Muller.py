@@ -1,6 +1,7 @@
 import  sympy as sp
 import numpy as np
 from ......extras.Funciones import errores, respuesta_json, verificaciones
+from ......extras.latex import conversla,conversla_html
 from flask import jsonify
 
 class metodo_muller():
@@ -17,7 +18,9 @@ class metodo_muller():
             #Verificar la funcion obtenida
             try:
                 #Ecuaion de la funcion
-                f_x = sp.sympify(json_data["funcion"])
+                f_x = conversla.latex_(json_data["latex"])
+                print(f_x)
+            
                 resultado = f_x.subs(x, 2)
                 if resultado > 0:
                     pass
@@ -31,11 +34,12 @@ class metodo_muller():
             #validar que sea grado mayor a 3 no importa sino es polinomica
             if verificaciones.obtener_grado(f_x)!= None:#es porq es polinomica
                 if verificaciones.obtener_grado(f_x) < 3:
+                    print(verificaciones.obtener_grado(f_x))
                     resp = instancia_respuesta.responder_error("La función debe ser de grado 3 o mayor")
                     return jsonify(resp), 400
-            else:
-                resp = instancia_respuesta.responder_error("La función debe ser polinomica de grado 3 o mayor")
-                return jsonify(resp), 400
+            #else:
+            #    resp = instancia_respuesta.responder_error("La función debe ser polinomica de grado 3 o mayor")
+            #    return jsonify(resp), 400
             
             #verifico los datos ingresados
             try:
@@ -83,7 +87,7 @@ class metodo_muller():
 
             #mensajes del frontend
             instancia_respuesta.agregar_titulo1("Método de Muller")
-            instancia_respuesta.agregar_clave_valor("Función", f_x)
+            instancia_respuesta.agregar_parrafo(f"Función{conversla_html.mathl_(f_x)}")
             instancia_respuesta.agregar_parrafo("Primer paso: Se evalua la función en los puntos x0, x1 y x2")
             instancia_respuesta.agregar_parrafo(f"Se evalua f(x0) = {f_x0}")
             instancia_respuesta.agregar_parrafo(f"Se evalua f(x1) = {f_x1}")

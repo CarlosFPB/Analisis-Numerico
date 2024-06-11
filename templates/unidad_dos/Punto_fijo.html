@@ -4,12 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Método Bisección</title>
+    <title>Método Punto Fijo</title>
+    <!--Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Importa Mathquill desde el CDN -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"></script>
+
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
 
     <!-- Estilo de la pagina en General -->
-    <link rel="stylesheet" href="/static/templatestyles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
+
 
     <!-- Dependencias del Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
@@ -22,32 +31,31 @@
     <!-- Script Base JS -->
     <script src="/static/funciones.js" async></script>
 
+
     <link rel="apple-touch-icon" sizes="180x180" href="/static/favicono/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
+
 </head>
 
 <body>
     <div>
     </div>
     <span class="text_hero">Método <span class="textGradient1">Punto Fijo</span></span>
-    <p>Este metodo se utiliza para encontrar la raiz de una funcion en un intervalo [Xi,Xu]</p>
+    <p>Este metodo se utiliza para encontrar la raiz de una función en un valor inicial [Xi]</p>
 
     <div class="content">
         <div id="main" class="main">
             <div class="descripocion">
                 <p>Ingrese los datos para calcular la raiz de la funcion</p>
             </div>
-            <div class="formulario">
-                <div class="valor">
-                    <label for="funcion">Funcion:</label>
-                    <input type="text" name="funcion" id="funcion" required value="x**2-2*x-3" style="width: auto;">
-                </div>
-                <div class="valor">
-                    <label for="funcion_g_x">Funcion Despejada X = :</label>
-                    <input type="text" name="funcion" id="funcion_g_x" required value="sqrt(2*x+3)" style="width: auto;">
-                </div>
+            <div>
+                <p>Función Despejada X=: <span id="math-field"></span></p>
+                <p><span id="latex"></span></p>
+            </div>
+
+            <div class="formulario" id="flex">
                 <div class="valor">
                     <label for="xi">Xi:</label>
                     <input type="number" name="xi" id="xi" required value="0.1" maxlength="5">
@@ -57,6 +65,9 @@
                     <input type="number" name="tolerancia" id="tolerancia" required value="0.05">
                 </div>
             </div>
+            {% block keyboard %}
+            {{ keyboard_content | safe }}
+            {% endblock %}
             <div class="ui">
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
                     <span class="material-symbols-outlined">
@@ -104,6 +115,8 @@
                     color: #16167f;
                     width: 100%;
                     ">Aqui se mostrará el procedimiento</p>
+
+                </p>
             </center>
         </div>
         <div id="result" class="result" style="display: none;">
@@ -145,17 +158,55 @@
                     </span>
                 </span>
 
-                <h2>Explicación del Método Bisección</h2>
-                <p>El método de la bisección es un algoritmo utilizado para encontrar la raíz de una función en un
-                    intervalo dado. El algoritmo se basa en el teorema del valor intermedio, que establece que si una
-                    función es continua en un intervalo [a, b] y toma valores de signo opuesto en los extremos del
-                    intervalo, entonces existe al menos un punto c en el intervalo donde la función se anula.</p>
-                <p>El método de la bisección divide repetidamente el intervalo a la mitad y verifica en qué subintervalo
-                    se encuentra la raíz. El proceso continúa hasta que se alcance una tolerancia predefinida o se
-                    encuentre una aproximación suficientemente cercana a la raíz.</p>
-                <p>Para utilizar el método de la bisección, debes ingresar la función, los valores iniciales del
-                    intervalo [Xi, Xu] y la tolerancia deseada. Luego, al hacer clic en el botón "Calcular", se
-                    realizará la iteración del algoritmo y se mostrarán los resultados.</p>
+                <h2>Explicación del Método Punto Fijo</h2>
+                <p>El método de punto fijo es una técnica iterativa utilizada para encontrar aproximaciones a las raíces
+                    de ecuaciones no necesariamente lineales. Se basa en la re-escritura de la ecuación
+                    <b><i>f(x)=0</i></b>
+                    en la forma <b><i>g=(x)</i></b> donde la solución es un punto fijo de la función <b><i>g</i></b>. A
+                    continuación te explico el método paso a paso:
+                </p><br>
+                <p>Reescritura de la ecuación: Comienza con la ecuación <b><i>f(x)=0</i></b> y reescríbela en la forma
+                    <b><i>x=g(x)</i></b>. La
+                    función <b><i>g</i></b> debe estar construida de tal manera que, en el intervalo de interés, las
+                    iteraciones
+                    converjan a la solución.
+                </p><br>
+                <p>Elección del punto inicial: Selecciona un valor inicial <b><i>X0</i></b> que esté cerca de la raíz
+                    buscada.</p>
+                <br>
+                <p>
+                    Iteración: Utiliza la siguiente fórmula iterativa para generar una secuencia de valores que se
+                    acercan a la raiz
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <msub>
+                            <mi>X</mi>
+                            <mrow>
+                                <mi>n</mi>
+                                <mo>+</mo>
+                                <mn>1</mn>
+                            </mrow>
+                        </msub>
+                        <mo>=</mo>
+                        <mi>g</mi>
+                        <mo>(</mo>
+                        <msub>
+                            <mi>X</mi>
+                            <mi>n</mi>
+                        </msub>
+                        <mo>)</mo>
+                    </math>
+                </p><br>
+                <p>Condición de Lipschitz: la derivada de <b><i>g(x)</i></b>debe de cumplir que <math
+                        xmlns="http://www.w3.org/1998/Math/MathML">
+                        <mi>g</mi>
+                        <mo>'</mo>
+                        <mo>(</mo>
+                        <mi>x</mi>
+                        <mo>)</mo>
+                        <mo>&lt;</mo>
+                        <mn>1</mn>
+                    </math>. Esta condición garantiza que la iteración no diverge y, en cambio, se acerca al punto fijo.
+                </p>
             </div>
         </div>
     </dialog>
@@ -206,16 +257,32 @@
         </div>
     </dialog>
 
+    <script defer>
+        window.onload = function () {
+            var MQ = MathQuill.getInterface(2);  // Inicializa MathQuill
+            var mathFieldSpan = document.getElementById('math-field');
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // permite usar la tecla espacio como tab
+                handlers: {
+                    edit: function () { // se llama cada vez que hay una edición
+                        var latexSpan = document.getElementById('latex');
+                        latexSpan.textContent = mathField.latex(); // muestra LaTeX
+                    }
+                }
+            });
+        };
+    </script>
 
 
     <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo
         let endPoint = "/metodos/directos/abiertos/punto-Fijo"
         //Aqui iran los id de todos los datos que se enviaran al EndPoint
-        let variables = ["funcion","funcion_g_x", "xi", "tolerancia"];
+        let variables = ["xi", "tolerancia"];
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
         function calcular() {
             let datos = {}
+            datos["latex"] = document.getElementById("latex").textContent;
             variables.forEach(variable => {
                 datos[variable] = document.getElementById(variable).value;
             });
@@ -237,7 +304,33 @@
         }, 4000);
     </script>
 
+    <!--Script de teclado-->
+    <script defer>
+        $(document).ready(function () {
+            var MQ = MathQuill.getInterface(2); // for backcompat
+            var mathFieldSpan = document.getElementById('math-field');
+            var latexSpan = document.getElementById('latex');
+
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // configurable
+                handlers: {
+                    edit: function () { // useful event handlers
+                        latexSpan.textContent = mathField.latex(); // simple API
+                    }
+                }
+            });
+
+            // Añadir funcionalidad a los botones del panel matemático
+            $('.math-button').on('click', function () {
+                var symbol = $(this).data('symbol');
+                mathField.write(symbol);
+                mathField.focus({ focusVisible: true });
+            });
+
+        });
+    </script>
     <script src="/static/Loader/background.js" async></script>
+
 </body>
 
 </html>

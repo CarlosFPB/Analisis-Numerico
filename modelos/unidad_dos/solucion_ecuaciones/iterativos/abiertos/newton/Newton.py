@@ -2,6 +2,7 @@ from flask import jsonify
 import  sympy as sp
 import numpy as np
 from ......extras.Funciones import errores, newton, respuesta_json, verificaciones
+from ......extras.latex import conversla, conversla_html
 
 class metodo_newton():
 
@@ -15,7 +16,8 @@ class metodo_newton():
             #Verificar la funcion obtenida
             try:
                 #Ecuaion de la funcion
-                f_x = sp.sympify(json_data["funcion"])
+                f_x = conversla.latex_(json_data["latex"])
+                f_x = sp.sympify(f_x)
                 resultado = f_x.subs(x, 2)
                 if resultado > 0:
                     pass
@@ -47,12 +49,18 @@ class metodo_newton():
             error_acomulado = 100
             iteracion = 0
 
-            instancia_respuesta.agregar_titulo1("Metodo de Newton")
-            instancia_respuesta.agregar_parrafo("asdas")
             instancia_respuesta.crear_tabla()
+            instancia_respuesta.agregar_titulo1("Valores Iniciales")
+            fx1 = conversla_html.mathl_(f_x)
+            instancia_respuesta.agregar_parrafo(f"Función: {fx1}")
+            instancia_respuesta.agregar_clave_valor("Xi: ",x_actual)
+            instancia_respuesta.agregar_clave_valor("Tolerancia:",error_aceptado)
             instancia_respuesta.agregar_fila(['Iteracion', 'X1', 'f(X1)', 'f\'(X1)', 'X1+1', 'Error'])
-
-
+            instancia_respuesta.agregar_titulo1("El calculo de la raiz se hace por la siguiente formula: ")
+            html_contetn = f"""<math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>X</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>X</mi><mi>i</mi><mo>-</mo><mfrac><mrow><mi>f</mi><mo>(</mo><mi>X</mi><mi>i</mi><mo>)</mo></mrow><mrow><mi>f</mi><mo>&#xb4;</mo><mo>(</mo><mi>X</mi><mi>i</mi><mo>)</mo></mrow></mfrac></math>"""
+            instancia_respuesta.agregar_parrafo(f"Formula: {html_contetn}")
+            html_contetn = f"""<math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>X</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>{x_actual}</mi><mo>-</mo><mfrac><mi>{f_x.subs(x, x_actual)}</mi><mi>{f_prima.subs(x, x_actual)}</mi></mfrac></math>"""
+            instancia_respuesta.agregar_parrafo(f"Iteración 1: {html_contetn} = {newton.aproximacion(f_x.subs(x, x_actual), f_prima.subs(x, x_actual), x_actual)}")
             while True:
                 iteracion += 1
                 f_prima_evaluada = f_prima.subs(x, x_actual)

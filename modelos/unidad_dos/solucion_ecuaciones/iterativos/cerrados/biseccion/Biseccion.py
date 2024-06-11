@@ -1,6 +1,10 @@
 import sympy as sp
 from flask import jsonify
 from modelos.extras.Funciones import errores, biseccion, respuesta_json, verificaciones
+from modelos.extras.latex import conversla,conversla_html
+
+
+
 class medoto_biseccion():
 
     @staticmethod
@@ -12,15 +16,21 @@ class medoto_biseccion():
 
             #obtengo los valores del json
             try:
-                f_x = sp.sympify(json_data["funcion"])
-                resultado = f_x.subs(x, 2)
-                if resultado > 0:
+                f_x =conversla.latex_(json_data["latex"])
+                resultado = f_x.subs(x, 1).evalf()
+                is_imaginary = resultado.is_imaginary
+
+                if resultado.is_real and resultado > 0:
                     pass
-            except sp.SympifyError:
+                elif is_imaginary:
+                    pass
+            except sp.SympifyError as e:
                 resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                print(e)
                 return jsonify(resp), 400
             except TypeError as e:
                 resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                print(e)
                 return jsonify(resp), 400
         
             #verificar que sea grado mayor a 0
@@ -56,14 +66,17 @@ class medoto_biseccion():
 
             instancia_respuesta.crear_tabla()
             instancia_respuesta.agregar_titulo1("Valores Iniciales")
-            instancia_respuesta.agregar_clave_valor("Funcion:",f_x)
+            fx1 = conversla_html.mathl_(f_x)
+            instancia_respuesta.agregar_parrafo(f"Funcion: {fx1}")
             instancia_respuesta.agregar_clave_valor("Xi:",x1)
             instancia_respuesta.agregar_clave_valor("Xu:",xu)
             instancia_respuesta.agregar_clave_valor("Tolerancia:",error_aceptable)
             instancia_respuesta.agregar_fila(['Iteracion','X1','Xu','Xr','f(Xr)','Condicion','Error'])
             instancia_respuesta.agregar_titulo1("El calculo de la raiz se hace por la siguiente formula: ")
-            instancia_respuesta.agregar_parrafo("Formula: Xr = (X1 + Xu) / 2")
-            instancia_respuesta.agregar_parrafo(f"Iteracion 1: Xr = ( {x1} + {xu} ) / 2 = {biseccion.primera_aproximacion(x1,xu)}")
+            html_content = f"""<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi><mi>r</mi><mo>=</mo><mfrac><mrow><mi>X</mi><mi>i</mi><mo>+</mo><mi>X</mi><mi>u</mi></mrow><mn>2</mn></mfrac></math>"""
+            instancia_respuesta.agregar_parrafo(f"Formula: {html_content}")
+            html_content = f"""<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi><mi>r</mi><mo>=</mo><mfrac><mrow><mi>{x1}</mi><mo>+</mo><mi>{xu}</mi></mrow><mn>2</mn></mfrac></math>"""
+            instancia_respuesta.agregar_parrafo(f"Iteracion 1: {html_content} = {biseccion.primera_aproximacion(x1,xu)}")
             instancia_respuesta.agregar_parrafo(f"Evaluar f(Xr) = {f_x.subs(x,biseccion.primera_aproximacion(x1,xu))}")
             while True:
                 #primera aproximacion
@@ -104,4 +117,3 @@ class medoto_biseccion():
             resp = instancia_respuesta.responder_error(f"Error interno del codigo\n {str(e)}")
             return jsonify(resp), 500
         
-

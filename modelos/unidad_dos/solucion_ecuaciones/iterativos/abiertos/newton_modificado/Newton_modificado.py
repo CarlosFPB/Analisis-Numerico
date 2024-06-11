@@ -2,6 +2,7 @@ from flask import jsonify
 import  sympy as sp
 import numpy as np
 from ......extras.Funciones import errores, newton_modificado, respuesta_json, verificaciones
+from modelos.extras.latex import conversla
 
 class metodo_newton_modificado():
     @staticmethod
@@ -14,7 +15,7 @@ class metodo_newton_modificado():
            #Verificar la funcion obtenida
             try:
                 #Ecuaion de la funcion
-                f_x = sp.sympify(json_data["funcion"])
+                f_x = conversla.latex_(json_data["latex"])
                 resultado = f_x.subs(x, 2)
                 if resultado > 0:
                     pass
