@@ -28,6 +28,10 @@ from modelos.unidad_tres.interpolacion.interpolacion_lineal.Interpolacion_lineal
 from modelos.unidad_cuatro.diferenciacion.derivadas.Diferenciacion import metodos_diferenciacion
 from modelos.unidad_cuatro.diferenciacion.richardson.Richardson import metodo_richardson
 
+#metodos multipasos
+from modelos.unidad_cinco.multipasos.Multipasos import metodo_multipasos
+from modelos.unidad_cinco.iterativos.Runge_kutta import metodo_runge_kutta
+from modelos.unidad_cinco.iterativos.Euler import metodo_euler
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -270,6 +274,36 @@ def calcular_richardson():
 def Richardson():
     return render_template('unidad_cuatro/Richardson.html')
 
+#metodos unidad 5
+@app.route('/metodos/unidad_cinco/multipasos', methods=['POST'])
+def calcular_multipasos():
+    json_data = request.json
+    respuesta = metodo_multipasos.calcular_multipasos(json_data)
+    return respuesta
+
+@app.route('/metodos/unidad_cinco/multipasos', methods=['GET'])
+def Multipasos():
+    return render_template('unidad_cinco/Multipasos.html')
+
+@app.route('/metodos/unidad_cinco/iterativos/Runge_kutta', methods=['POST'])
+def calcular_runge_kutta():
+    json_data = request.json
+    respuesta = metodo_runge_kutta.calcular_metodo_runge_kutta(json_data)
+    return respuesta
+
+@app.route('/metodos/unidad_cinco/iterativos/Runge_kutta', methods=['GET'])
+def Runge_kutta():
+    return render_template('unidad_cinco/Runge_kutta.html')
+
+@app.route('/metodos/unidad_cinco/iterativos/euler', methods=['POST'])
+def calcular_euler_mejorado():
+    json_data = request.json
+    respuesta = metodo_euler.calcular_euler(json_data)
+    return respuesta
+
+@app.route('/metodos/unidad_cinco/iterativos/euler', methods=['GET'])
+def Euler_mejorado():
+    return render_template('unidad_cinco/Euler_mejorado.html')
 
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))

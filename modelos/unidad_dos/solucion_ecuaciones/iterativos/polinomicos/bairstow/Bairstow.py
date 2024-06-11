@@ -157,7 +157,7 @@ class metodo_bairstow():
                     else:
                         break
                         #terminar
-                if iteracion > 15:
+                if iteracion > 200:
                     resp = instancia_respuesta.responder_error("El metodo no converge")
                     return jsonify(resp), 400
                 #sino volver a 

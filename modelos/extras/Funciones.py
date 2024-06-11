@@ -167,6 +167,15 @@ class verificaciones():
         else:
             return False
         
+
+    def es_entero(parametro):
+        if isinstance(parametro, int):
+            return True
+        elif isinstance(parametro, str):
+            return parametro.isdigit()
+        else:
+            return False
+        
     
     @staticmethod
     def verificar_numeros_matriz(matriz):
