@@ -183,13 +183,35 @@ function cargarEjercicio(i) {
 
     try {
         let ejercicio = ejercicios[i];
-        variables.forEach((variable, index) => {
+        ejercicios[0].forEach((variable, index) => {
             document.getElementById(variable).value = ejercicio[index];
         });
         toastify(`Ejercicio #${i}`, 1);
     } catch (error) {
         toastify('Error al cargar el ejercicio', 4);
     }
+}
+
+function cambiarTipoTolerancia(elemento) {
+    let elementosTolerancia = Array.from(document.querySelectorAll('[name="tipoTolerancia"]'))
+    elementosTolerancia.forEach(element => {
+        let hijos = Array.from(element.parentElement.children)
+        if (hijos.includes(elemento)) {
+            hijos.shift()
+            hijos.forEach(hijo => {
+                hijo.disabled = false
+                hijo.style.opacity = 1
+            })
+            variables.pop()
+            variables.push(hijos[1].id)
+        }else{
+            hijos.shift()
+            hijos.forEach(hijo => {
+                hijo.disabled = true
+                hijo.style.opacity = 0.5
+            })
+        }
+    })
 }
 
 //#region Manejo de peticiones

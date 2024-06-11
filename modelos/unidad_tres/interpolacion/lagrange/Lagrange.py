@@ -1,6 +1,7 @@
 import sympy as sp
 from modelos.extras.Funciones import respuesta_json
 from flask import jsonify
+from modelos.extras.latex import conversla
 
 
 class metodo_lagrange:
@@ -17,7 +18,7 @@ class metodo_lagrange:
                 resp = instancia_respuesta.responder_error("Error en el argumento 'tipo'")
             if tipo == 1:
                 try:
-                    f_x = sp.sympify(json_data["funcion"])
+                    f_x = conversla.latex_(json_data["funcion"])
                 except:
                     resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
                     return jsonify(resp), 400

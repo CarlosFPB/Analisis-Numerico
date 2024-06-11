@@ -1,6 +1,9 @@
 import sympy as sp
 from flask import jsonify
 from ......extras.Funciones import errores, falsaPosicion, respuesta_json, verificaciones
+from modelos.extras.latex import conversla
+from modelos.extras.latex import conversla,conversla_html
+
 
 
 class metodo_falsa_posicion():
@@ -15,10 +18,17 @@ class metodo_falsa_posicion():
                 #Verificar la funcion obtenida
                 try:
                     #Ecuaion de la funcion
-                    f_x = sp.sympify(json_data["funcion"])
-                    resultado = f_x.subs(x, 2)
-                    if resultado > 0:
+                    f_x =conversla.latex_(json_data["latex"])
+                    f_x = sp.sympify(f_x)
+
+                    resultado = f_x.subs(x, 1).evalf()
+                    is_imaginary = resultado.is_imaginary
+
+                    if resultado.is_real and resultado > 0:
                         pass
+                    elif is_imaginary:
+                        pass
+
                 except sp.SympifyError:
                     resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
                     return jsonify(resp), 400
@@ -60,14 +70,18 @@ class metodo_falsa_posicion():
                 instancia_respuesta.agregar_parrafo("Este metodo nos sirve para encontrar la raiz de una ecuacion, para ello se necesita una funcion f(x) continua en un intervalo [a,b] que contenga a la raiz.")
                 instancia_respuesta.crear_tabla()
                 instancia_respuesta.agregar_titulo1("Valores Iniciales")
-                instancia_respuesta.agregar_parrafo(f"Funcion: {f_x}")
-                instancia_respuesta.agregar_parrafo(f"Xi: {x1}")
-                instancia_respuesta.agregar_parrafo(f"Xu: {xu}")
-                instancia_respuesta.agregar_parrafo(f"Tolerancia: {error_aceptable}")
+                fx1 = conversla_html.mathl_(f_x)
+                instancia_respuesta.agregar_parrafo(f"Funcion: {fx1}")
+                instancia_respuesta.agregar_clave_valor("Xi: ", x1)
+                instancia_respuesta.agregar_clave_valor(f"Xu: ", xu)
+                instancia_respuesta.agregar_clave_valor(f"Tolerancia: ", error_aceptable)
                 instancia_respuesta.agregar_fila(['Iteracion','X1','Xu','Xr','f(Xr)','Condicion','Error'])
                 instancia_respuesta.agregar_titulo1("El calculo de la raiz se hace por la siguiente formula: ")
-                instancia_respuesta.agregar_clave_valor("Formula:","Xr = Xu - ( f(Xu) * (X1 - Xu) ) / ( f(X1) - f(Xu) )")
-                instancia_respuesta.agregar_parrafo(f"Iteracion 1: Xr = {xu} - ( f({xu}) * ({x1} - {xu}) ) / ( f({x1}) - f({xu}) ) = {falsaPosicion.primera_aproximacion(f_x,x1,xu)}")
+                hmtl_conten = f"""<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>X</mi><mi>r</mi><mo>=</mo><mi>X</mi><mi>u</mi><mo>&#x2212;</mo><mfrac><mrow><mi>f</mi><mo form="prefix" stretchy="false">(</mo><mi>X</mi><mi>u</mi><mo form="postfix" stretchy="false">)</mo><mo form="prefix" stretchy="false">(</mo><mi>X</mi><mi>i</mi><mo>&#x2212;</mo><mi>X</mi><mi>u</mi><mo form="postfix" stretchy="false">)</mo></mrow><mrow><mi>f</mi><mo form="prefix" stretchy="false">(</mo><mi>X</mi><mi>i</mi><mo form="postfix" stretchy="false">)</mo><mo>&#x2212;</mo><mi>f</mi><mo form="prefix" stretchy="false">(</mo><mi>X</mi><mi>u</mi><mo form="postfix" stretchy="false">)</mo></mrow></mfrac></mrow></math>
+"""
+                instancia_respuesta.agregar_parrafo(f"Formula: {hmtl_conten}" )
+                hmtl_conten = f"""<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>X</mi><mi>r</mi><mo>=</mo><mi>{xu}</mi><mo>&#x2212;</mo><mfrac><mrow><mi>f</mi><mo form="prefix" stretchy="false">(</mo><mi>{xu}</mi><mo form="postfix" stretchy="false">)</mo><mo form="prefix" stretchy="false">(</mo><mi>{x1}</mi><mo>&#x2212;</mo><mi>{xu}</mi><mo form="postfix" stretchy="false">)</mo></mrow><mrow><mi>f</mi><mo form="prefix" stretchy="false">(</mo><mi>{x1}</mi><mo form="postfix" stretchy="false">)</mo><mo>&#x2212;</mo><mi>f</mi><mo form="prefix" stretchy="false">(</mo><mi>{xu}</mi><mo form="postfix" stretchy="false">)</mo></mrow></mfrac></math>"""
+                instancia_respuesta.agregar_parrafo(f"Iteracion 1: {hmtl_conten} = {falsaPosicion.primera_aproximacion(f_x,x1,xu)}")
                 while True:
                     iteracion += 1
                     error_acumulado = 0
