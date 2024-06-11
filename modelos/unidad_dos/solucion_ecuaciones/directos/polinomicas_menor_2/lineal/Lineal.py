@@ -1,6 +1,7 @@
 import sympy as sp
 from modelos.extras.Funciones import  respuesta_json, verificaciones
 from flask import jsonify
+from modelos.extras.latex import conversla
 
 class metodo_lineal():
 
@@ -10,7 +11,7 @@ class metodo_lineal():
             instancia_respuesta = respuesta_json()
             try:
                 #Ecuaion de la funcion
-                f_x = sp.sympify(json_data["funcion"])
+                f_x = conversla.latex_(json_data["latex"])
                 #Verificar si es polinomio
                 if not verificaciones.es_polinomio(f_x):
                     resp = instancia_respuesta.responder_error("La función ingresada no es un polinomio")

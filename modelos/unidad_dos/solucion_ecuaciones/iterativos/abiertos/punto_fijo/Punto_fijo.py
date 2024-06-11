@@ -2,6 +2,7 @@ from flask import jsonify
 import  sympy as sp
 import numpy as np
 from ......extras.Funciones import errores, respuesta_json, verificaciones
+from ......extras.latex import conversla, conversla_html
 
 class metodo_punto_fijo():
 
@@ -18,7 +19,7 @@ class metodo_punto_fijo():
             #Verificar la funcion obtenida
             try:
                 #Ecuaion de la funcion
-                g_x = sp.sympify(json_data["funcion_g_x"])
+                g_x = conversla.latex_(json_data["latex"])
                 resultado = g_x.subs(x, 2)
                 if resultado > 0:
                     pass
@@ -54,9 +55,19 @@ class metodo_punto_fijo():
             x_anterior = 0
             iteracion = 0
 
-            instancia_respuesta.agregar_titulo1("Punto Fijo")
-            instancia_respuesta.agregar_parrafo("A continuacion se muestra la tabla de iteraciones del metodo de punto fijo, para encontrar la raiz de la funcion ingresada.")
             instancia_respuesta.crear_tabla()
+            instancia_respuesta.agregar_titulo1("Valores Iniciales")
+            fx1 = conversla_html.mathl_(g_x)
+            instancia_respuesta.agregar_parrafo(f"Funcion: {fx1}")
+            instancia_respuesta.agregar_clave_valor("Xi:",x_actual)
+            instancia_respuesta.agregar_clave_valor("Tolerancia:",error_aceptado)
+            instancia_respuesta.agregar_titulo1("El calculo de la raiz se hace por la siguiente formula: ")
+            html_conten = f"""<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>X</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>g</mi><mrow><mo fence="true" form="prefix">(</mo><msub><mi>X</mi><mi>n</mi></msub><mo fence="true" form="postfix">)</mo></mrow></mrow></math>"""
+            instancia_respuesta.agregar_parrafo(f"Formula: {html_conten}")
+            html_conten = f"""<math xmlns="http://www.w3.org/1998/Math/MathML"><msub><mi>X</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>{float(g_x.subs(x, x_actual))}</mi></math>"""
+            instancia_respuesta.agregar_parrafo(f"Iteración 1: {html_conten}")
+            instancia_respuesta.agregar_parrafo(f"Derivada de La función: {conversla_html.mathl_(g_prima)}")
+            instancia_respuesta.agregar_parrafo(f"Convergencia: {float(g_prima.subs(x, x_actual))} < 1")
             instancia_respuesta.agregar_fila(['Iteracion', 'X', 'g(x)', 'g\'(x)', 'Error'])
 
             while True:

@@ -2,6 +2,7 @@ import sympy as sp
 import math
 from modelos.extras.Funciones import respuesta_json, verificaciones
 from flask import jsonify
+from modelos.extras.latex import conversla
 
 class metodo_tartaglia:
     
@@ -17,7 +18,7 @@ class metodo_tartaglia:
             #Verificar la funcion obtenida
             try:
                 #Ecuaion de la funcion
-                f_x_crudo = sp.sympify(json_data["funcion"])
+                f_x_crudo = conversla.latex_(json_data["latex"])
                 f_x_crudo = sp.expand(f_x_crudo)#para que se vea bien la funcion
                 #Verificar si es polinomio
                 if not verificaciones.es_polinomio(f_x_crudo):

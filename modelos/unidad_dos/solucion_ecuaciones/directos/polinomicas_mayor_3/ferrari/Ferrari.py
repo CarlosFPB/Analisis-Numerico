@@ -2,6 +2,10 @@ import sympy as sp
 import math
 from flask import jsonify
 from modelos.extras.Funciones import respuesta_json, verificaciones
+from modelos.extras.latex import conversla
+import traceback
+
+
 class metodo_ferrari:    
     
      
@@ -16,7 +20,8 @@ class metodo_ferrari:
             try:
                 
                 #obtener los valores del json
-                f_x_crudo = sp.simplify(json_data["funcion"])
+                f_x_crudo = conversla.latex_(json_data["latex"])
+                print(f_x_crudo)
                 f_x_crudo = sp.expand(f_x_crudo)#para que se vea bien
                 #Veificar si es polinomio
                 if not verificaciones.es_polinomio(f_x_crudo):
@@ -164,5 +169,7 @@ class metodo_ferrari:
             return jsonify(resp), 200
         
         except Exception as e:
+            traceback.print_exc()
+            print(e)
             resp = respuesta.responder_error("Error interno del codigo\n"+str(e)), 500
             return jsonify(resp), 500

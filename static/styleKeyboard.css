@@ -1,0 +1,44 @@
+
+/*Teclado*/
+#math-panel {
+    width:600px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ccc; /* Borde alrededor del panel */
+    border-radius: 10px;
+    background-color: #f9f9f9; /* Color de fondo del panel */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra del panel */
+}
+
+.math-button, .math-p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 32px;
+    margin: 5px; /* Espacio interno de los botones */
+    border: 2px solid #007bff; /* Borde de los botones */
+    border-radius: 5px;
+    background-color: #ffffff; /* Color de fondo de los botones */
+    font-size: 22px;
+    font-weight: bold;
+    color: #000000b5; /* Color del texto de los botones */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s; /* Transiciones suaves para los botones */
+}
+
+.math-button:hover {
+    background-color: #007bff; /* Color de fondo al pasar el ratón */
+    color: #ffffff; /* Color del texto al pasar el ratón */
+}
+
+.math-button:active {
+    background-color: #0056b3; /* Color de fondo al hacer clic */
+    color: #ffffff; /* Color del texto al hacer clic */
+}
+
+img{
+    width:28px;
+}

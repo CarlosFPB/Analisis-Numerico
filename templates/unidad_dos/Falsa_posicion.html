@@ -1,16 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Método falsa posicion</title>
+
+    <!--Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Importa Mathquill desde el CDN -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"></script>
+
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
 
     <!-- Estilo de la pagina en General -->
-    <link rel="stylesheet" href="/static/templatestyles.css">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
+    
     <!-- Dependencias del Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
@@ -39,11 +50,11 @@
             <div class="descripocion">
                 <p>Ingrese los datos para calcular la raiz de la funcion</p>
             </div>
+            <div>
+                <p>Función: <span id="math-field"></span></p>
+                <p><span id="latex"></span></p>
+            </div>
             <div class="formulario">
-                <div class="valor">
-                    <label for="funcion">Funcion:</label>
-                    <input type="text" name="funcion" id="funcion" required value="-x + exp(-x)" style="width: auto;">
-                </div>
                 <div class="valor">
                     <label for="xi">Xi:</label>
                     <input type="number" name="xi" id="xi" required value="0.1" maxlength="5">
@@ -63,6 +74,9 @@
                     <input type="number" name="cifras" id="cifras" min="1" value="5" style="width: 2rem; opacity: 0.5;" step="1" disabled="">
                 </div>
             </div>
+            {% block keyboard %}
+            {{ keyboard_content | safe }}
+            {% endblock %}
             <div class="ui">
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
                     <span class="material-symbols-outlined">
@@ -112,6 +126,7 @@
                     color: #16167f;
                     width: 100%;
                     ">Aqui se mostrará el procedimiento</p>
+                <p>
             </center>
         </div>
         <div id="result" class="result" style="display: none;">
@@ -153,17 +168,74 @@
                     </span>
                 </span>
 
-                <h2>Explicación del Método Bisección</h2>
-                <p>El método de la bisección es un algoritmo utilizado para encontrar la raíz de una función en un
-                    intervalo dado. El algoritmo se basa en el teorema del valor intermedio, que establece que si una
-                    función es continua en un intervalo [a, b] y toma valores de signo opuesto en los extremos del
-                    intervalo, entonces existe al menos un punto c en el intervalo donde la función se anula.</p>
-                <p>El método de la bisección divide repetidamente el intervalo a la mitad y verifica en qué subintervalo
-                    se encuentra la raíz. El proceso continúa hasta que se alcance una tolerancia predefinida o se
-                    encuentre una aproximación suficientemente cercana a la raíz.</p>
-                <p>Para utilizar el método de la bisección, debes ingresar la función, los valores iniciales del
-                    intervalo [Xi, Xu] y la tolerancia deseada. Luego, al hacer clic en el botón "Calcular", se
-                    realizará la iteración del algoritmo y se mostrarán los resultados.</p>
+                <h2>Explicación del Método Falsa Posición</h2>
+                <p>El método de la falsa posición es un método numérico para encontrar aproximaciones a la raíz de una
+                    función.
+                    Funciona de manera similar al método de la bisección, pero en lugar de dividir el intervalo por la
+                    mitad en cada iteración,
+                    lo hace de acuerdo con la posición de la recta secante entre los extremos de la función en el
+                    intervalo. Aquí te dejo una
+                    explicación detallada del método:</p><br>
+                <p>Intervalo inicial: Selecciona un intervalo inicial [Xi, Xu] donde se sospecha que se encuentra la
+                    raíz de la función f(x).</p>
+                <p>Cálculo de los extremos: Calcula los valores de f(Xi) y f(Xu).</p>
+                <p>Determinación del siguiente punto: Calcula el siguiente punto Xr, que es la intersección de la recta
+                    secante entre los puntos
+                    (Xi, f(Xi)) y (Xu, f(Xu)) con el eje x. La fórmula para calcular Xr es:
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <mrow>
+                            <mi>X</mi>
+                            <mi>r</mi>
+                            <mo>=</mo>
+                            <mi>X</mi>
+                            <mi>u</mi>
+                            <mo>&#x2212;</mo>
+                            <mfrac>
+                                <mrow>
+                                    <mi>f</mi>
+                                    <mo form="prefix" stretchy="false">(</mo>
+                                    <mi>X</mi>
+                                    <mi>u</mi>
+                                    <mo form="postfix" stretchy="false">)</mo>
+                                    <mo form="prefix" stretchy="false">(</mo>
+                                    <mi>X</mi>
+                                    <mi>i</mi>
+                                    <mo>&#x2212;</mo>
+                                    <mi>X</mi>
+                                    <mi>u</mi>
+                                    <mo form="postfix" stretchy="false">)</mo>
+                                </mrow>
+                                <mrow>
+                                    <mi>f</mi>
+                                    <mo form="prefix" stretchy="false">(</mo>
+                                    <mi>X</mi>
+                                    <mi>i</mi>
+                                    <mo form="postfix" stretchy="false">)</mo>
+                                    <mo>&#x2212;</mo>
+                                    <mi>f</mi>
+                                    <mo form="prefix" stretchy="false">(</mo>
+                                    <mi>X</mi>
+                                    <mi>u</mi>
+                                    <mo form="postfix" stretchy="false">)</mo>
+                                </mrow>
+                            </mfrac>
+                        </mrow>
+                    </math>
+                </p><br>
+                <p>Evaluación en el punto intermedio: Calcula el valor de f(Xr).
+                </p><br>
+                <p>
+                    Reemplazo del extremo opuesto: Reemplaza el extremo que tenga el mismo signo que f(Xr) por Xr. Es
+                    decir, si f(Xi) y f(Xu) tienen el mismo signo, entonces Xi = Xr; de lo contrario, Xu = Xr.
+                </p><br>
+                <p>
+                    Criterio de parada: Repite los pasos hasta que se cumpla un criterio de parada, como una
+                    tolerancia específica o un número máximo de iteraciones.
+                </p> <br>
+                <p>
+                    Resultado aproximado: La raíz aproximada de la función se considera como el último punto Xr obtenido
+                    en la iteración final.
+                </p>
             </div>
         </div>
     </dialog>
@@ -214,16 +286,32 @@
         </div>
     </dialog>
 
-
+    <script defer>
+        window.onload = function () {
+            var MQ = MathQuill.getInterface(2);  // Inicializa MathQuill
+            var mathFieldSpan = document.getElementById('math-field');
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // permite usar la tecla espacio como tab
+                handlers: {
+                    edit: function () { // se llama cada vez que hay una edición
+                        var latexSpan = document.getElementById('latex');
+                        latexSpan.textContent = mathField.latex(); // muestra LaTeX
+                    }
+                }
+            });
+        };
+    </script>
 
     <script>
+   
         //Aqui debe ir la direccion del EndPoint de el Metodo
         let endPoint = "/metodos/iterativos/cerrados/Falsa_posicion"
         //Aqui iran los id de todos los datos que se enviaran al EndPoint
-        let variables = ["funcion", "xi", "xu", "tolerancia"];
+        let variables = ["xi", "xu", "tolerancia"];
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
         function calcular() {
             let datos = {}
+            datos["latex"] = document.getElementById("latex").textContent;
             variables.forEach(variable => {
                 datos[variable] = document.getElementById(variable).value;
             });
@@ -243,11 +331,39 @@
             ["sin(x)", 0, 3, 0.1,5],
             ["log(x)", 1, 10, 0.001,3]
         ]
-
-        
-
+        //metodos de inicio para que se vea bien la interfaz
+        mostrarEjercicio()
+        setTimeout(() => {
+            cambiarEstadoSugerencias()
+        }, 4000);
     </script>
 
+    <!--Script de teclado-->
+<script defer>
+    $(document).ready(function () {
+        var MQ = MathQuill.getInterface(2); // for backcompat
+        var mathFieldSpan = document.getElementById('math-field');
+        var latexSpan = document.getElementById('latex');
+
+        var mathField = MQ.MathField(mathFieldSpan, {
+            spaceBehavesLikeTab: true, // configurable
+            handlers: {
+                edit: function () { // useful event handlers
+                    latexSpan.textContent = mathField.latex(); // simple API
+                }
+            }
+        });
+
+        // Añadir funcionalidad a los botones del panel matemático
+        $('.math-button').on('click', function () {
+            var symbol = $(this).data('symbol');
+            mathField.write(symbol);
+            mathField.focus({ focusVisible: true });
+        });
+
+    });
+</script>
+   
     <script src="/static/Loader/background.js" async></script>
 </body>
 
