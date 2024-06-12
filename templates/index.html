@@ -1,93 +1,339 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú de Métodos</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url('https://www.mundodeportivo.com/alfabeta/hero/2023/10/estas-son-todas-las-muertes-de-personajes-de-la-franquicia-creada-por-kishimoto.jpg?width=1200'); /* URL de la imagen de fondo */
-            background-size: cover;
-            background-repeat: no-repeat;
-            margin: 0;
-            padding: 0;
-            color: #fff; /* Color de texto */
-            opacity: 0.9; /* Opacidad del fondo */
-        }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Analisis Numérico</title>
+    <link rel="stylesheet" href="/static/templatestyles.css">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-        h1 {
-            text-align: center;
-            margin-top: 30px;
-            color: #fff; /* Color de texto */
-        }
+    <!--
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.3.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.3.1/core.js"></script>
+    -->
 
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0 auto;
-            width: 80%;
-            max-width: 600px;
-        }
-
-        li {
-            margin-bottom: 10px;
-        }
-
-        a.button {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            text-align: center;
-            background-color: rgba(0, 123, 255, 0.7); /* Fondo del botón con transparencia */
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s, color 0.3s; /* Agregamos transición de color de fondo y texto */
-        }
-
-        a.button:active {
-            box-shadow: none; /* Quitamos el sombreado al hacer clic */
-            background-color: rgba(0, 123, 255, 0.9); /* Color de fondo más oscuro al hacer clic */
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-    </style>
 </head>
+
 <body>
-    <h1>Menú de Métodos</h1>
-    <ul>
-        <li><a href="/metodos/iterativos/cerrados/Biseccion" class="button">Método de Bisección</a></li>
-       <li><a href="/metodos/iterativos/cerrados/Falsa_posicion" class="button">Método de Falsa Posición</a></li>
-       <li><a href="/metodos/directos/abiertos/newton" class="button">Método de Newton</a></li>
-       <li><a href="/metodos/directos/abiertos/Newton-Modificado" class="button">Método de Newton Modificado</a></li>
-       <li><a href="/metodos/directos/abiertos/punto-Fijo" class="button">Método de Punto Fijo</a></li>
-       <li><a href="/metodos/directos/abiertos/Secante" class="button">Método de Secante</a></li>
-       <li><a href="/metodos/iterativos/polinomicos/bairstow" class="button">Método de Bairstow</a></li>
-       <li><a href="/metodos/iterativos/polinomicos/horner" class="button">Método de Horner</a></li>
-       <li><a href="/metodos/iterativos/polinomicos/muller" class="button">Método de Muller</a></li>
-       <li><a href="/metodos/directos/gradomenos2/lineal" class="button">Método Lineal</a></li>
-       <li><a href="/metodos/directos/gradomenos2/cuartica" class="button">Método Cuadrático</a></li>
-       <li><a href="/metodos/directos/gradomas3/Ferrari" class="button">Método de Ferrari</a></li>
-       <li><a href="/metodos/directos/gradomas3/Tartaglia" class="button">Método de Tartaglia</a></li>
-       <li><a href="/metodos/interpolacion/lagrange" class="button">Interpolación de Lagrange</a></li>
-       <li><a href="/metodos/interpolacion/newton_recursivo" class="button">Interpolación de Newton Recursivo</a></li>
-       <li><a href="/metodos/interpolacion/newton_fracciones_divididas" class="button">Interpolación de Newton por Fracciones Divididas</a></li>
-       <li><a href="/metodos/interpolacion/hermite" class="button">Interpolación de Hermite</a></li>
-       <li><a href="/metodos/interpolacion/trazadores_cubicos" class="button">Interpolación por Trazadores Cúbicos</a></li>
-       <li><a href="/metodos/interpolacion/lineal" class="button">Interpolación Lineal</a></li>
-       <li><a href="/metodos/diferenciacion/derivadas" class="button">Diferenciación por Derivadas</a></li>
-       <li><a href="/metodos/diferenciacion/richardson" class="button">Método de Richardson</a></li>
-    </ul>
+
+    <span class="text_hero">Analisis <span class="bg-gradient1">Numérico</span></span>
+
+    <div class="content">
+        <div class="descripcion">
+            <p>En este sitio web encontrarás información sobre los métodos numéricos más utilizados para encontrar
+                raíces de
+                funciones.</p>
+        </div>
+
+
+
+        <div class="panel_metodos">
+            <a href="" class="metodo grafico">
+                <div class="">
+                    <h2>Método <span class="textGradient1">Gráfico</span></h2>
+                    <img src="img/grafica.png" alt="" width="300px">
+                    <p>Este método consiste en graficar la función y encontrar la intersección con el eje x.</p>
+                </div>
+            </a>
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h2>Métodos <span class="textGradient2">Iterativos</span></h2>
+                        <p>Estos métodos consisten en encontrar la raíz de una función mediante cálculos iterativos.</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="mep" onclick="showDialog('cerrados')">
+                            <h2>Cerrados</h2>
+                            <i class="icon bi bi-box-arrow-in-right"></i>
+                        </div>
+                        <div class="mep" onclick="showDialog('polinomicos')"">
+                            <h2>Polinimocos</h2>
+                            <i class=" icon bi bi-box-arrow-in-right"></i>
+                        </div>
+                        <div class="mep" onclick="showDialog('abiertos')">
+                            <h2>Abiertos</h2>
+                            <i class="icon bi bi-box-arrow-in-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h2>Métodos <span class="textGradient3">Directos</span></h2>
+                        <p>Estos métodos consisten en encontrar la raíz de una función mediante cálculos directos.</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="mep" onclick="showDialog('Polinimocos12')">
+                            <h2>Polinimocos de 1º y 2º grado</h2>
+                            <i class="icon bi bi-box-arrow-in-right"></i>
+                        </div>
+                        <div class="mep" onclick="showDialog('Polinimocos3+')">
+                            <h2>Polinimocos mayor de 3º</h2>
+                            <i class="icon bi bi-box-arrow-in-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="información">
+            <div class="metodo" style="
+                --bgcolor: rgba(130, 0, 252, 0.541);
+                font-size: xx-large;
+                color: rgba(255, 255, 255, 0.918);
+                " onclick="showDialog('work')">
+                <i class="bi bi-question-circle-fill"></i>
+            </div>
+            <div class="metodo" style="
+            --bgcolor: rgba(0, 255, 85, 0.521);
+            font-size: xx-large;
+            color: rgba(0, 0, 0, 0.692);
+            " onclick="showDialog('who')">
+                <i class="bi bi-patch-exclamation-fill"></i>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- <script type="py" src="./main.py" config="./pyscript.json"></script>-->
+
+
+
+    <div id="cerrados" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideDialog('cerrados')">&times;</span>
+            <h2><span class="textGradient2">Cerrados</span></h2>
+            <br>
+            <p>Los métodos cerrados son aquellos que requieren de un intervalo inicial para encontrar la raíz de una
+                función.</p>
+
+            <div class="links">
+                <a href="Metodos/Iterativos/Cerrados/Biseccion.html" class="link">
+                    <i class="icon bi bi-arrow-right-square-fill"></i>
+                    <h2>Bisección</h2>
+                </a>
+                <a href="" class="link">
+                    <i class="icon bi bi-arrow-right-square-fill"></i>
+                    <h2>Falsa posición</h2>
+                </a>
+
+            </div>
+        </div>
+    </div>
+    <div id="polinomicos" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideDialog('polinomicos')">&times;</span>
+            <h2><span class="textGradient2">Polinomicos</span></h2>
+            <br>
+            <p>Los métodos polinomicos son aquellos que requieren de un polinomio para encontrar la raíz de una
+                función.</p>
+
+            <div class="links">
+                <a href="Metodos/Iterativos/polinomicos/Muller/Muller.html" class="link">
+                    <i class="icon bi bi-arrow-right-square-fill"></i>
+                    <h2>Muller</h2>
+                </a>
+                <a href="Metodos/Iterativos/polinomicos/bairstow/Bairstow.html" class="link">
+                    <i class="icon bi bi-arrow-right-square-fill"></i>
+                    <h2>Bairstow</h2>
+                </a>
+                <a href="Metodos/Iterativos/polinomicos/Horner/Horner.html" class="link">
+                    <i class="icon bi bi-arrow-right-square-fill"></i>
+                    <h2>Horner</h2>
+                </a>
+
+            </div>
+        </div>
+    </div>
+    <div id="abiertos" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideDialog('abiertos')">&times;</span>
+            <h2><span class="textGradient2">Abiertos</span></h2>
+            <br>
+            <p>Los métodos abiertos son aquellos que no requieren de un intervalo inicial para encontrar la raíz de una
+                función.</p>
+
+            <div class="links">
+                <a href="" class="link">
+                    <i class="icon bi bi-arrow-right-square-fill"></i>
+                    <h2>Newton-Raphson</h2>
+                </a>
+                <a href="" class="link">
+                    <i class="icon bi bi-arrow-right-square-fill"></i>
+                    <h2>Secante</h2>
+                </a>
+                <a href="" class="link">
+                    <i class="icon bi bi-arrow-right-square-fill"></i>
+                    <h2>Punto Fijo</h2>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="Polinimocos12" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideDialog('Polinimocos12')">&times;</span>
+            <h2><span class="textGradient2">Polinomicos de 1º y 2º grado</span></h2>
+            <br>
+            <p>Son aquellos que requieren de un polinomio de 1º o 2º grado para
+                encontrar la raíz de una función.</p>
+
+            <div class="links">
+                <a href="" class="link">
+                    <i class="icon bi bi-arrow-right-square-fill"></i>
+                    <h2>Lineal</h2>
+                </a>
+                <a href="" class="link">
+                    <i class="icon bi bi-arrow-right-square-fill"></i>
+                    <h2>Cuadrática</h2>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="Polinimocos3+" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideDialog('Polinimocos3+')">&times;</span>
+            <h2><span class="textGradient2">Polinomicos mayor de 3º</span></h2>
+            <br>
+            <p>Son aquellos que requieren de un polinomio mayor de 3º grado para
+                encontrar la raíz de una función.</p>
+
+            <div class="links">
+                <a href="" class="link">
+                    <i class="icon bi bi-arrow-right-square-fill"></i>
+                    <h2>Tartaglia</h2>
+                </a>
+                <a href="" class="link">
+                    <i class="icon bi bi-arrow-right-square-fill"></i>
+                    <h2>Ferrari</h2>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="work" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideDialog('work')">&times;</span>
+            <h2><span class="textGradient2">¿Cómo funciona?</span></h2>
+            <br>
+            <p>Para encontrar la raíz de una función, se deben seguir los siguientes pasos:</p>
+            <ol>
+                <li>Seleccionar un método.</li>
+                <li>Ingresar la función.</li>
+                <li>Ingresar el intervalo inicial (en caso de ser necesario).</li>
+                <li>Seleccionar el número de iteraciones.</li>
+                <li>Calcular.</li>
+            </ol>
+        </div>
+    </div>
+    <div id="who" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideDialog('who')">&times;</span>
+            <h2><span class="textGradient2">¿Quién lo creo?</span></h2>
+            <br>
+            <p>Este sitio fue creado por estudiantes de la <br>
+                <span class="textGradient4">Universidad Nacional de El Salvador</span>
+
+            </p>
+            <p>Este sitio web fue creado por
+                <span class="textGradient1">Sión Alberto Rivas Mata</span>
+
+        </div>
+
+
+        <script>
+
+            function showDialog(id) {
+                var modal = document.getElementById(id);
+                modal.style.display = 'block';
+            }
+
+            function hideDialog(id) {
+                var modal = document.getElementById(id);
+                modal.style.display = 'none';
+            }
+        </script>
+        <script>
+            // init
+            var maxx = document.body.clientWidth;
+            var maxy = document.body.clientHeight;
+            var halfx = maxx / 2;
+            var halfy = maxy / 2;
+            var canvas = document.createElement("canvas");
+            document.body.appendChild(canvas);
+            canvas.width = maxx;
+            canvas.height = maxy;
+            var context = canvas.getContext("2d");
+            var dotCount = 200;
+            var dots = [];
+            // create dots
+            for (var i = 0; i < dotCount; i++) {
+                dots.push(new dot());
+            }
+
+            // dots animation
+            function render() {
+                function cleanCanvas() {
+                    context.clearRect(0, 0, maxx, maxy);
+                }
+
+                // Call the cleanCanvas function before rendering the dots
+                cleanCanvas();
+                context.fillStyle = "transparent";
+                context.fillRect(0, 0, maxx, maxy);
+                for (var i = 0; i < dotCount; i++) {
+                    dots[i].draw();
+                    dots[i].move();
+                }
+                requestAnimationFrame(render);
+            }
+
+            // dots class
+            // @constructor
+            function dot() {
+
+                this.rad_x = 2 * Math.random() * halfx + 1;
+                this.rad_y = 1.2 * Math.random() * halfy + 1;
+                this.alpha = Math.random() * 360 + 1;
+                this.speed = Math.random() * 100 < 50 ? 1 : -1;
+                this.speed *= 0.05;
+                this.size = Math.random() * 5 + 2;
+                this.color = Math.floor(Math.random() * 256);
+
+            }
+
+            // drawing dot
+            dot.prototype.draw = function () {
+
+                // calc polar coord to decart
+                var dx = halfx + this.rad_x * Math.cos(this.alpha / 180 * Math.PI);
+                var dy = halfy + this.rad_y * Math.sin(this.alpha / 180 * Math.PI);
+                // set color
+                context.fillStyle = "rgb(104, 164, 255," + Math.floor(Math.random() * 256) + ")";
+                // draw dot
+                context.fillRect(dx, dy, this.size, this.size);
+
+            };
+
+            // calc new position in polar coord
+            dot.prototype.move = function () {
+
+                this.alpha += this.speed;
+                // change color
+                if (Math.random() * 100 < 50) {
+                    this.color += 1;
+                } else {
+                    this.color -= 1;
+                }
+
+            };
+
+            // start animation
+            render();
+        </script>
+
 </body>
+
 </html>
