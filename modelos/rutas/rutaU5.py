@@ -39,4 +39,4 @@ def calcular_euler_mejorado():
 
 @U5.route('/metodos/unidad_cinco/iterativos/euler', methods=['GET'])
 def Euler_mejorado():
-    return render_template('unidad_cinco/Euler_mejorado.html')
+    return render_template('unidad_cinco/Euler.html')
