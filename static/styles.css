@@ -199,6 +199,8 @@ canvas {
     background: linear-gradient(135deg, #ff1d1d 0%, #951eda 100%);
     background-clip: text;
     color: transparent !important;
+    
+    text-shadow: -5px 10px 5px rgba(0, 0, 0, 0.192);
 }
 
 .mep:hover h2 {
@@ -313,7 +315,7 @@ canvas {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            z-index: 60;
+            padding: 0rem 1rem;
 
             box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.164);
         }
@@ -335,6 +337,8 @@ canvas {
 
 .flip-card:hover .flip-card-inner {
     transform: rotateY(180deg) scale(1.1);
+}
+.flip-card:hover {
     z-index: 70;
 }
 
@@ -389,6 +393,7 @@ canvas {
     gap: 1rem;
     margin: 2rem;
 
+
 }
 
 a {
@@ -396,6 +401,7 @@ a {
     text-decoration: none;
     font-size: 0.8rem;
     z-index: 10;
+
 
 }
 
@@ -413,10 +419,12 @@ a {
     background: linear-gradient(135deg, #ff831d 0%, #8f00e2 100%);
     background-clip: text;
     color: transparent !important;
+    
 }
 
 .link:hover h2 {
     color: transparent !important;
+    
 }
 
 @keyframes fadeIn {
