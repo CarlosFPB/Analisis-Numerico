@@ -14,14 +14,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"></script>
 
-    
+
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
 
     <!-- Estilo de la pagina en General -->
-   <!-- Estilo de la pagina en General -->
-   <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
-   <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
+    <!-- Estilo de la pagina en General -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
 
     <!-- Dependencias del Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
@@ -41,6 +41,10 @@
 </head>
 
 <body>
+    {% block keyboard %}
+    {{ keyboard_content | safe }}
+    {% endblock %}
+
     <div>
     </div>
     <span class="text_hero">Método <span class="textGradient1">Bisección</span></span>
@@ -69,9 +73,6 @@
                     <input type="number" name="tolerancia" id="tolerancia" required value="0.05">
                 </div>
             </div>
-            {% block keyboard %}
-            {{ keyboard_content | safe }}
-            {% endblock %}
             <div class="ui">
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
                     <span class="material-symbols-outlined">
@@ -138,12 +139,16 @@
     <!-- Sugerencias de Ejercicios 
     este sera una ventana que estara flotando a la derecha de la pagina
     -->
-    <div class="sugerencias" style="right: calc(-253px);">
+    <div id="sugerencias" class="sugerencias" style="right: calc(-253px);">
         <span><span class="textGradient1">
-                Ejercicios Sugeridos
+                Ejercicio Sugerido
             </span>
         </span>
         <div id="ejercicios">
+            <p>Funcion:-x + e<sup>-x</sup></p>
+            <p>X<sub>i</sub>: 0.1</p>
+            <p>X<sub>u</sub>: 1.5</p>
+            <p>Tolerancia: 0.05</p>
 
         </div>
         <div class="viñeta" onclick="cambiarEstadoSugerencias()">
@@ -241,60 +246,52 @@
 
 
     <script>
-            //Aqui debe ir la direccion del EndPoint de el Metodo
-            let endPoint = "/metodos/iterativos/cerrados/Biseccion"
-            //Aqui iran los id de todos los datos que se enviaran al EndPoint
-            let variables = ["xi", "xu", "tolerancia"];
-            //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
-            function calcular() {
-                let datos = {}
-                datos["latex"] = document.getElementById("latex").textContent;
-                variables.forEach(variable => {
-                    datos[variable] = document.getElementById(variable).value;
-                });
-                console.log(datos);
-                realizarPeticionPOST(endPoint, datos)
-            }
-            //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
-            let ejercicios = [
-                ["funcion", "xi", "xu", "tolerancia"],
-                ["-x + exp(-x)", 0.1, 1.5, 0.05],
-                ["x^2 - 4", -2, 2, 0.01],
-                ["sin(x)", 0, 3, 0.1],
-                ["log(x)", 1, 10, 0.001]
-            ]
-                //metodos de inicio para que se vea bien la interfaz
-            mostrarEjercicio()
-            setTimeout(() => {
-                cambiarEstadoSugerencias()
-            }, 4000);
-        </script>
+        //Aqui debe ir la direccion del EndPoint de el Metodo
+        let endPoint = "/metodos/iterativos/cerrados/Biseccion"
+        //Aqui iran los id de todos los datos que se enviaran al EndPoint
+        let variables = ["xi", "xu", "tolerancia"];
+        //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
+        function calcular() {
+            let datos = {}
+            datos["latex"] = document.getElementById("latex").textContent;
+            variables.forEach(variable => {
+                datos[variable] = document.getElementById(variable).value;
+            });
+            console.log(datos);
+            realizarPeticionPOST(endPoint, datos)
+        }
+        //metodos de inicio para que se vea bien la interfaz
+        mostrarEjercicio()
+        setTimeout(() => {
+            cambiarEstadoSugerencias()
+        }, 4000);
+    </script>
 
     <!--Script de teclado-->
-<script defer>
-    $(document).ready(function () {
-        var MQ = MathQuill.getInterface(2); // for backcompat
-        var mathFieldSpan = document.getElementById('math-field');
-        var latexSpan = document.getElementById('latex');
+    <script defer>
+        $(document).ready(function () {
+            var MQ = MathQuill.getInterface(2); // for backcompat
+            var mathFieldSpan = document.getElementById('math-field');
+            var latexSpan = document.getElementById('latex');
 
-        var mathField = MQ.MathField(mathFieldSpan, {
-            spaceBehavesLikeTab: true, // configurable
-            handlers: {
-                edit: function () { // useful event handlers
-                    latexSpan.textContent = mathField.latex(); // simple API
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // configurable
+                handlers: {
+                    edit: function () { // useful event handlers
+                        latexSpan.textContent = mathField.latex(); // simple API
+                    }
                 }
-            }
-        });
+            });
 
-        // Añadir funcionalidad a los botones del panel matemático
-        $('.math-button').on('click', function () {
-            var symbol = $(this).data('symbol');
-            mathField.write(symbol);
-            mathField.focus({ focusVisible: true });
-        });
+            // Añadir funcionalidad a los botones del panel matemático
+            $('.math-button').on('click', function () {
+                var symbol = $(this).data('symbol');
+                mathField.write(symbol);
+                mathField.focus({ focusVisible: true });
+            });
 
-    });
-</script>
+        });
+    </script>
 
     <script src="/static/Loader/background.js" async></script>
 </body>
