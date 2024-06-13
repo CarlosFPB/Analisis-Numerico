@@ -5,38 +5,50 @@ from modelos.extras.Funciones import verificaciones, respuesta_json
 class metodo_taylor:
 
     @staticmethod
-    def formular_taylor(xi, yi, h, yprima, grado):
-        x = sp.symbols('x')
-        y = sp.symbols('y')
+    def derivar_en_xy(EDO, grado):
+        x = sp.Symbol("x") 
+        y = sp.Function("y")(x)
+        funcion = EDO.subs(y, y)
         derivadas = []
-        derivadas.append(yprima)
+        derivadas.append(EDO)
+        for i in range(1, grado):
+            funcion = funcion.diff().subs(y.diff(), EDO)
+            derivadas.append(funcion)
+        return derivadas
+
+    @staticmethod
+    def formular_taylor(xi, yi, h, yprima, grado):
+        x = sp.Symbol("x")
+        y = sp.Function("y")(x)
+        derivadas = []
         yi_siguiente = 0
         if grado == 0:
             yi_siguiente = yi
             return yi_siguiente
-        for i in range(2, grado):
-            derivadas.append(sp.diff(yprima, x, i))
+        if grado == 1:
+            derivadas.append(yprima)
+        else:
+            derivadas = metodo_taylor.derivar_en_xy(yprima, grado)
         #formulando respuesta
-        for i in range(grado):
+        for i in range(0 ,grado+1):
             if i == 0:
                 yi_siguiente += yi
             else:
                 yi_siguiente += (h**i)/sp.factorial(i)*derivadas[i-1].subs({x:xi, y:yi})
-
         yi_siguiente = sp.N(yi_siguiente)
         return yi_siguiente
         
     @staticmethod
     def calcular_taylor(json_data):
         x= sp.symbols('x')
-        y= sp.symbols('y')
+        y= sp.Function('y')(x)
         instancia_respuesta = respuesta_json()
         # Se obtienen los datos del json
         try:
-            x0 = float(json_data['x0'])
-            y0 = float(json_data['y0'])
+            x0 = float(json_data['xinicial'])
+            y0 = float(json_data['yinicial'])
             h = float(json_data['h'])
-            x_buscado = float(json_data['x_buscado'])
+            x_buscado = float(json_data['xfinal'])
             if verificaciones.es_entero(json_data['grado']):
                 grado = int(json_data['grado'])
                 if grado < 0:
@@ -46,15 +58,15 @@ class metodo_taylor:
                 resp = instancia_respuesta.responder_error("El grado debe ser un valor entero mayor o igual a 0")
                 return jsonify(resp), 400
             try:
-                f_x = sp.simplify(json_data["funcion"])
-                rs = f_x.subs(x, 2).subs(y, 3)
+                f_x = sp.sympify(json_data['funcion'])
+                rs = f_x.subs({x: x0, y: y0})
                 if rs > 0:
                     pass
             except sp.SympifyError:
                 resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
                 return jsonify(resp), 400
             except Exception as e:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                resp = instancia_respuesta.responder_error("Error en la funcion ingresada "+str(e))
                 return jsonify(resp), 400
         except ValueError as e:
             resp = instancia_respuesta.responder_error(f"Error de conversión de datos {e}")

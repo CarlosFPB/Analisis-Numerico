@@ -3,7 +3,7 @@ import sympy as sp
 class euler():
 
     @staticmethod
-    def xeuler_mejorado(xi,yi,h,yprima):
+    def euler_mejorado(xi,yi,h,yprima):
         x = sp.symbols('x')
         y = sp.symbols('y')
         Y_ray = yi+h* yprima.subs({x: xi, y: yi})
@@ -18,7 +18,7 @@ class euler():
         x = sp.symbols('x')
         y = sp.symbols('y')
         y_ray = yi + h*yprima.subs({x: xi, y: yi})
-        xi_siguiente = xi + h
+        xi_siguiente = round(xi + h,10)
         yi_siguiente = yi + h*yprima.subs({x: xi_siguiente, y: y_ray})
         yi_siguiente = sp.N(yi_siguiente)
         return yi_siguiente

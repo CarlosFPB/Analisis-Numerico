@@ -11,11 +11,11 @@ class metodo_euler():
         y = sp.symbols('y')
         instancia_respuesta = respuesta_json()
         try:
-            x0 = float(json_data['x0'])
-            y0 = float(json_data['y0'])
+            x0 = float(json_data['xinicial'])
+            y0 = float(json_data['yinicial'])
             h = float(json_data['h'])
-            x_buscado = float(json_data['x_buscado'])
-            metodo = json_data["metodo"]
+            x_buscado = float(json_data['xfinal'])
+            metodo = json_data["tipo"]
             try:
                 f_x = sp.simplify(json_data["funcion"])
                 rs = f_x.subs(x, 2).subs(y, 3)

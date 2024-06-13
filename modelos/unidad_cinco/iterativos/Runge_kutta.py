@@ -11,10 +11,10 @@ class metodo_runge_kutta():
         instancia_respuesta = respuesta_json()
         # Se obtienen los datos del json
         try:
-            x0 = float(json_data['x0'])
-            y0 = float(json_data['y0'])
+            x0 = float(json_data['xinicial'])
+            y0 = float(json_data['yinicial'])
             h = float(json_data['h'])
-            x_buscado = float(json_data['x_buscado'])
+            x_buscado = float(json_data['xfinal'])
             if verificaciones.es_entero(json_data['orden']):
                 orden = int(json_data['orden'])
                 if orden <2 or orden > 4:
@@ -53,6 +53,7 @@ class metodo_runge_kutta():
             while True:
                 xs = round(xs + h, 8)
                 lista_x.append(xs)
+                print(xs, x_buscado)
                 if xs >= (x_buscado):
                     break
             if x_buscado != lista_x[-1]:
