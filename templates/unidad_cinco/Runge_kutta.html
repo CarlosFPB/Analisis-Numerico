@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Método de Euler</title>
+    <title>Método de runge kutta</title>
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
 
@@ -31,7 +31,7 @@
 <body>
     <div>
     </div>
-    <span class="text_hero">Método de <span class="textGradient1">Euler</span></span>
+    <span class="text_hero">Método de <span class="textGradient1">Runge Kutta</span></span>
     <p>La extrapolación de Richardson es una técnica para mejorar la precisión de la derivada numérica al reducir el error principal.
     </p>
 
@@ -67,12 +67,11 @@
                     <input type="number" name="xfinal" id="xfinal" required value="1" style="width: 3rem;">
                 </div>
                 <div class="valor">
-                    <label for="tipo">Tipo:</label>
-                    <select name="tipo" id="tipo" style="width: 10rem;">
-                        <option value="euler_hacia_adelante">Euler hacia adelante</option>
-                        <option value="euler_centrada">Euler Centrada</option>
-                        <option value="euler_hacia_atras">Euler hacia Atras</option>
-                        <option value="euler_mejorado">Euler Mejorado</option>
+                    <label for="orden">Orden:</label>
+                    <select name="orden" id="orden" style="width: 5rem;">
+                        <option value="2">Orden 2</option>
+                        <option value="3">Orden 3</option>
+                        <option value="4">Orden 4</option>
                     </select>
 
                 </div>
@@ -257,9 +256,9 @@
 
     <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo
-        let endPoint = "/metodos/unidad_cinco/iterativos/euler"
+        let endPoint = "/metodos/unidad_cinco/iterativos/Runge_kutta"
         //Aqui iran los id de todos los datos que se enviaran al EndPoint
-        let variables = ["funcion", "h", "yinicial","xinicial", "xfinal", "tipo"];
+        let variables = ["funcion", "h", "yinicial","xinicial", "xfinal", "orden"];
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
         function calcular() {
             let datos = {}

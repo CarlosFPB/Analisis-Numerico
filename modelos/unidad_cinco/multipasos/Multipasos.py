@@ -14,10 +14,10 @@ class metodo_multipasos():
 
             # Se obtienen los datos del json
             try:
-                x0 = float(json_data['x0'])
-                y0 = float(json_data['y0'])
+                x0 = float(json_data['xinicial'])
+                y0 = float(json_data['yinicial'])
                 h = float(json_data['h'])
-                x_buscado = float(json_data['x_buscado'])
+                x_buscado = float(json_data['xfinal'])
                 if verificaciones.es_entero(json_data['pasos']):
                     pasos = int(json_data['pasos'])
                     if pasos != 2 and pasos != 4:
@@ -52,8 +52,9 @@ class metodo_multipasos():
             if pasos == 2:
                 lista_x.append(x0)
                 lista_y.append(y0)
-                lista_x.append(x0 + h)
+                lista_x.append(round(x0 + h,10))
                 lista_y.append(runge_kutta.orden_2(x0, y0, h, f_x)['yi_siguiente'])
+                print(lista_x)
                 #aplico adams bashfort
                 lista_x, lista_y, y2 = adams_bashfort.orden_2(lista_x, lista_y, h, f_x)
                 #evaluo si llege al x buscado con h tamaño de paso
