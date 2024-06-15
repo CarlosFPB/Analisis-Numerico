@@ -46,7 +46,7 @@ def trazador_grado1(matriz_puntos):
         funcion = sp.N(ecuaciones[i].subs(solucion))
         intervalo = intervalos_x[i]
         s_x.append(f"{funcion} ; {intervalo}")
-    return s_x
+    return s_x, ecuaciones_evalauadas, solucion
 
 def trazador_grado2(matriz_puntos):
     x = sp.Symbol('x')
@@ -90,7 +90,7 @@ def trazador_grado2(matriz_puntos):
         funcion = sp.N(ecuaciones[i].subs(solucion))
         intervalo = intervalos_x[i]
         s_x.append(f"{funcion} ; {intervalo}")
-    return s_x
+    return s_x, ecuaciones_evalauadas, solucion
 
 def trazador_grado3(matriz_puntos):
     x = sp.Symbol('x')
@@ -143,7 +143,7 @@ def trazador_grado3(matriz_puntos):
         funcion = sp.N(ecuaciones[i].subs(solucion))
         intervalo = intervalos_x[i]
         s_x.append(f"{funcion} ; {intervalo}")
-    return s_x
+    return s_x, ecuaciones_evalauadas, solucion
 
 class metodo_trazadores:
     def calcular_trazadores(json_data):
@@ -228,26 +228,50 @@ class metodo_trazadores:
                 resp = instancia_respuesta.responder_error("El grado debe ser un numero entre 0 y 3")
                 return jsonify(resp), 400
             
+            instancia_respuesta.agregar_titulo1("Trazadores Cúbicos grado "+str(grado))
+            instancia_respuesta.crear_tabla()
+            instancia_respuesta.agregar_fila(["Puntos en X", "Puntos en Y"])
+            for i in range(len(puntos_x)):
+                instancia_respuesta.agregar_fila([puntos_x[i], puntos_y[i]])
             matrizPuntos = [puntos_x, puntos_y]
+            ecuaciones_evaluadas = []
+            solucion_ecuaciones = []
             #el metodo de trazadores
             if grado == 0:
                 instancia_respuesta.agregar_parrafo("El grado de los trazadores es 0")
+                instancia_respuesta.agregar_parrafo("La tabla incial es:")
+                instancia_respuesta.agregar_tabla()
                 s_x = trazador_grado0(matrizPuntos)
             elif grado == 1:
                 instancia_respuesta.agregar_parrafo("El grado de los trazadores es 1")
-                s_x = trazador_grado1(matrizPuntos)
+                instancia_respuesta.agregar_parrafo("La tabla incial es:")
+                instancia_respuesta.agregar_tabla()
+                s_x, ecuaciones_evaluadas, solucion_ecuaciones = trazador_grado1(matrizPuntos)
             elif grado == 2:
                 instancia_respuesta.agregar_parrafo("El grado de los trazadores es 2")
-                s_x = trazador_grado2(matrizPuntos)
+                instancia_respuesta.agregar_parrafo("La tabla incial es:")
+                instancia_respuesta.agregar_tabla()
+                s_x, ecuaciones_evaluadas, solucion_ecuaciones = trazador_grado2(matrizPuntos)
             elif grado == 3:
                 instancia_respuesta.agregar_parrafo("El grado de los trazadores es 3")
-                s_x = trazador_grado3(matrizPuntos)
+                instancia_respuesta.agregar_parrafo("La tabla incial es:")
+                instancia_respuesta.agregar_tabla()
+                s_x, ecuaciones_evaluadas, solucion_ecuaciones = trazador_grado3(matrizPuntos)
             else:
                 resp = instancia_respuesta.responder_error("El grado no es valido")
                 return jsonify(resp), 400
-            instancia_respuesta.agregar_parrafo("Los trazadores son:")
+            if grado != 0:
+                instancia_respuesta.agregar_parrafo("Las ecuaciones formadas son:")
+                for i in ecuaciones_evaluadas:
+                        instancia_respuesta.agregar_clave_valor("0 =",i)
+                instancia_respuesta.agregar_titulo1("Solucion del sistema de ecuaciones")
+                for i in solucion_ecuaciones:
+                    instancia_respuesta.agregar_clave_valor(i, solucion_ecuaciones[i])
+                instancia_respuesta.agregar_parrafo("Reemplazamos y obtenemos los trazadores")
+            instancia_respuesta.agregar_titulo1("Resultado")
+            instancia_respuesta.agregar_parrafo(f"Los trazadores de grado {grado} son:")
             for i in s_x:
-                instancia_respuesta.agregar_parrafo(i)
+                instancia_respuesta.agregar_clave_valor("S(x)=",i)
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()
             return jsonify(resp), 200
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diferenciación numérica</title>
+    <title>Método de Taylor</title>
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
     
@@ -31,64 +31,42 @@
 <body>
     <div>
     </div>
-    <span class="text_hero">Diferenciación <span class="textGradient1">numérica</span></span>
-    <p>La diferenciación numérica es un método para encontrar la derivada de una función mediante diferencias finitas.
+    <span class="text_hero">Método de <span class="textGradient1">Taylor</span></span>
+    <p> El método de Taylor es una técnica numérica que utiliza la expansión en series de Taylor para aproximar la solución de ecuaciones diferenciales ordinarias (EDO).
     </p>
     
     <div class="content">
         <div id="main" class="main">
             <div class="descripocion">
-                <p>Ingrese los datos necesarios para calcular la derivada de la función.</p>
+                <p>Ingrese los datos para calcular con taylor.</p>
             </div>
             <div class="formulario">
                 <div class="valor">
-                    <label for="funcion">Funcion:</label>
-                    <input type="text" name="funcion" id="funcion" required value="x**3 + x**2 + 2"
+                    <label for="funcion" style="text-wrap: nowrap;">Y′(x):</label>
+                    <input type="text" name="funcion" id="funcion" required value="y(x)-x**2"
                     style="width: 10rem;">
                 </div>
                 
                 <div class="valor">
-                    <label for="metodo">Método:</label>
-                    <select name="metodo" id="metodo" style="width: 5rem;" onchange="cambiarMetodo(this)">
-                        <option value="adelante">Adelante</option>
-                        <option value="atras">Atrás</option>
-                        <option value="central">Central</option>
-                        <option value="tres_puntos">3 Puntos</option>
-                        <option value="cinco_puntos">5 Puntos</option>
-                    </select>
-                </div>
-                
-                
-                <div class="valor">
-                    <label for="orden">Derivada:</label>
-                    <select name="orden" id="orden" style="width: 2rem;">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select>
-                </div>
-                
-                
-                <div class="valor">
-                    <label for="version">Versión:</label>
-                    <select name="version" id="version" style="width: 2rem;">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                    </select>
-                </div>
-                
-                
-                
-                <div class="valor">
                     <label for="h">h:</label>
-                    <input type="number" name="h" id="h" required value="0.3" min="0.0001" step="0.1"
+                    <input type="number" name="h" id="h" required value="0.5" min="0.0001" step="0.1"
                     style="width: 3rem;">
                 </div>
-                
                 <div class="valor">
-                    <label for="xi">x:</label>
-                    <input type="number" name="xi" id="xi" required value="1" style="width: 2rem;">
+                    <label for="x_inicial">X<sub>inicial</sub></label>
+                    <input type="number" name="x_inicial" id="x_inicial" required value="0" style="width: 3rem;">
+                </div>
+                <div class="valor">
+                    <label for="y_inicial">Y<sub>inicial</sub></label>
+                    <input type="number" name="y_inicial" id="y_inicial" required value="2" style="width: 3rem;">
+                </div>
+                <div class="valor">
+                    <label for="x_final" style="text-wrap: nowrap;">X<sub>final</sub>:</label>
+                    <input type="number" name="x_final" id="x_final" required value="1" style="width: 3rem;">
+                </div>
+                <div class="valor">
+                    <label for="grado" style="text-wrap: nowrap;">Grado:</label>
+                    <input type="number" name="grado" id="grado" required value="2" style="width: 3rem;">
                 </div>
                 
             </div>
@@ -157,7 +135,7 @@
     </div>
     
     <!-- Sugerencias de Ejercicios 
-        este sera una ventana que estara flotando a la derecha de la pagina
+    este sera una ventana que estara flotando a la derecha de la pagina
     -->
     <div class="sugerencias" style="right: calc(-253px);">
         <span><span class="textGradient1">
@@ -182,81 +160,54 @@
                     close
                 </span>
             </span>
-            
-            <h1>Métodos de Diferenciación Finita</h1>
+            <h1>Método de Taylor para EDO</h1>
             <p>
-                La diferenciación finita es una técnica numérica para aproximar la derivada de una función
-                utilizando valores discretos. Aquí se describen cinco métodos: adelante, atrás, central, 3 puntos y
-                5 puntos.
+                El método de Taylor es una técnica numérica que utiliza la expansión en series de Taylor para aproximar la solución de ecuaciones diferenciales ordinarias (EDO). Este método se basa en la idea de que una función puede ser expresada como una serie infinita de términos calculados a partir de las derivadas de la función en un punto específico.
             </p>
             
-            <h2>1. Diferenciación Adelante</h2>
+            <h2>Concepto Básico</h2>
             <p>
-                La fórmula de diferencia finita hacia adelante estima la derivada en un punto <em>x</em> usando el
-                siguiente punto:
+                La solución de una EDO \( y' = f(x, y) \) se aproxima mediante una serie de Taylor centrada en un punto inicial \( (x_0, y_0) \). La fórmula general de la serie de Taylor de orden \( n \) es:
             </p>
             <pre>
                 <code>
-                    f'(x) ≈ (f(x + h) - f(x)) / h
+                    y(x+h) ≈ y(x) + h y'(x) + \frac{h^2}{2!} y''(x) + \frac{h^3}{3!} y'''(x) + ... + \frac{h^n}{n!} y^{(n)}(x)
                 </code>
             </pre>
             
-            <h2>2. Diferenciación Atrás</h2>
+            <h2>Aplicación del Método de Taylor</h2>
             <p>
-                La fórmula de diferencia finita hacia atrás estima la derivada en un punto <em>x</em> usando el
-                punto anterior:
+                Para aplicar el método de Taylor, se sigue el siguiente procedimiento:
+            </p>
+            <ol>
+                <li>Seleccionar un punto inicial \( (x_0, y_0) \) y un tamaño de paso \( h \).</li>
+                <li>Calcular las derivadas sucesivas de la función hasta el orden deseado.</li>
+                <li>Utilizar la serie de Taylor para encontrar la aproximación de \( y \) en el siguiente punto \( x + h \).</li>
+                <li>Repetir el proceso para avanzar a lo largo del intervalo de interés.</li>
+            </ol>
+            
+            <h2>Ventajas y Limitaciones</h2>
+            <p>
+                El método de Taylor es muy preciso cuando se utilizan órdenes altos de la serie, ya que incluye más términos de la expansión. Sin embargo, calcular las derivadas de orden superior puede ser complicado y costoso en términos de tiempo de cómputo. Además, el método puede ser sensible a errores de redondeo cuando se utilizan pasos grandes.
+            </p>
+            
+            <h2>Ejemplo</h2>
+            <p>
+                Supongamos que tenemos la EDO \( y' = f(x, y) \) y queremos aproximar la solución en un punto \( x \) usando una serie de Taylor de segundo orden. Los pasos serían:
             </p>
             <pre>
                 <code>
-                    f'(x) ≈ (f(x) - f(x - h)) / h
+                    y(x+h) ≈ y(x) + h y'(x) + \frac{h^2}{2!} y''(x)
                 </code>
             </pre>
-            
-            <h2>3. Diferenciación Central</h2>
             <p>
-                La fórmula de diferencia finita central estima la derivada en un punto <em>x</em> usando los puntos
-                anterior y siguiente:
-            </p>
-            <pre>
-                <code>
-                    f'(x) ≈ (f(x + h) - f(x - h)) / (2h)
-                </code>
-            </pre>
-            
-            <h2>4. Diferenciación de 3 Puntos</h2>
-            <p>
-                La fórmula de diferencia finita de 3 puntos es una técnica más precisa que utiliza tres puntos:
-            </p>
-            <pre>
-                <code>
-                    f'(x) ≈ (-3f(x) + 4f(x + h) - f(x + 2h)) / (2h)
-                </code>
-            </pre>
-            
-            <h2>5. Diferenciación de 5 Puntos</h2>
-            <p>
-                La fórmula de diferencia finita de 5 puntos proporciona una aproximación más exacta utilizando cinco
-                puntos:
-            </p>
-            <pre>
-                <code>
-                    f'(x) ≈ (f(x - 2h) - 8f(x - h) + 8f(x + h) - f(x + 2h)) / (12h)
-                </code>
-            </pre>
-            
-            <p>
-                Estos métodos permiten calcular aproximaciones de derivadas en puntos específicos utilizando valores
-                discretos de la función, mejorando la precisión según la cantidad de puntos considerados.
+                Donde \( y'(x) \) se obtiene directamente de la EDO y \( y''(x) \) se obtiene derivando \( y'(x) \) con respecto a \( x \).
             </p>
             
+            <h2>Conclusión</h2>
             <p>
-                Además, cada uno de estos métodos tiene más de una fórmula y puede usarse para calcular derivadas de
-                orden superior. Por ejemplo, también existen fórmulas para las segundas, terceras y cuartas
-                derivadas basadas en diferencias finitas hacia adelante, hacia atrás y centrales. Estos métodos
-                avanzados permiten mayor flexibilidad y precisión en la aproximación de derivadas numéricas en
-                diferentes contextos.
+                El método de Taylor es una herramienta poderosa para resolver EDOs cuando se pueden calcular las derivadas de la función. Ofrece una alta precisión y es una base para muchos otros métodos numéricos avanzados.
             </p>
-            
         </div>
     </div>
 </dialog>
@@ -269,7 +220,7 @@
                     close
                 </span>
             </span>
-            <h2>Diagrama de Flujo del Método Tartaglia</h2>
+            <h2>Diagrama de Flujo del Método de Taylor</h2>
             <center>
                 <p>Aqui debe ir una imagen bien perrona del codigo</p>
             </center>
@@ -285,25 +236,23 @@
                     close
                 </span>
             </span>
-            <h2>API de los metodos de diferenciacion finita</h2>
+            <h2>API del Método de Taylor</h2>
             <br>
-            <p>Para utilizar el método de diferenciacion Finita, se debe realizar una petición POST al siguiente endpoint:</p>
-            <p>https://analisis-numerico-sand.vercel.app/metodos/diferenciacion/derivadas</p>
+            <p>Para utilizar el método de Taylor, se debe realizar una petición POST al siguiente endpoint:</p>
+            <p>https://analisis-numerico-sand.vercel.app/metodos/unidad_cinco/iterativos/taylor</p>
             <br>
             <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
             <br>
             <pre>
                 
                 {
-                    "funcion":"funcion",
-                    "metodo":"nombre del metodo",
-                    "version":numero de version del metodo,
-                    "orden":orden de la derivada a calcular,
+                    "funcion":"funcion y prima",
+                    "grado":"grado de Taylor",
                     "h":valor de h,
-                    "xi":valor de x a evaluar,
+                    "x_inicial":valor de x inicial,
+                    "x_final":valor de x final,
+                    "y_inicial":valor de y inicial
                 }
-                
-                
             </pre>
         </div>
     </div>
@@ -313,9 +262,9 @@
 
 <script>
     //Aqui debe ir la direccion del EndPoint de el Metodo
-    let endPoint = "/metodos/diferenciacion/derivadas"
+    let endPoint = "/metodos/unidad_cinco/iterativos/taylor"
     //Aqui iran los id de todos los datos que se enviaran al EndPoint
-    let variables = ["funcion", "metodo", "orden", "version", "h", "xi"];
+    let variables = ["funcion", "h", "y_inicial","x_inicial", "x_final", "grado"];
     //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
     function calcular() {
         let datos = {}
@@ -327,46 +276,13 @@
     }
     //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
     let ejercicios = [
-    ["x**3 + x**2 + 2", "adelante", "1", "1", "0.3", "1"],
-    ["x**3 + x**2 + 2", "atras", "1", "1", "0.3", "1"],
-    ["x**3 + x**2 + 2", "central", "1", "1", "0.3", "1"],
-    ["x**3 + x**2 + 2", "tres_puntos", "1", "1", "0.3", "1"],
-    ["x**3 + x**2 + 2", "cinco_puntos", "1", "1", "0.3", "1"],
+    ["y(x)-x**2", "0.5", "0", "2", "1", "2"],
+    ["y(x)-x**2", "0.5", "0", "2", "1", "3"],
+    ["y(x)-x**2", "0.5", "0", "2", "1", "4"],
+    ["y(x)-x**2", "0.5", "0", "2", "1", "5"],
     ];
     
     
-    
-    
-    function cambiarMetodo(select) {
-        let metodo = select.value;
-        let derivada = document.getElementById("orden");
-        let version = document.getElementById("version");
-        if (metodo == "cinco_puntos") {
-            derivada.innerHTML = "<option value='1'>1</option>";
-            version.innerHTML = `
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            `;
-        } else if (metodo == "tres_puntos") {
-            derivada.innerHTML = "<option value='1'>1</option>";
-            version.innerHTML = `
-            <option value="1">1</option>
-            <option value="2">2</option>
-            `;
-        }
-        else {
-            derivada.innerHTML = `
-            <option value='1'>1</option>
-            <option value='2'>2</option>
-            <option value='3'>3</option>
-            <option value='4'>4</option>
-            `;
-            version.innerHTML = "<option value='1'>1</option><option value='2'>2</option>";
-        }
-    }
 </script>
 
 <script src="/static/Loader/background.js" async></script>

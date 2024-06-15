@@ -161,36 +161,43 @@ function cambiarEstadoSugerencias() {
     }
 }
 
-function mostrarEjercicio() {
-    for (let i = 1; i < ejercicios.length; i++) {
-        let ejercicio = ejercicios[i];
-        let div = document.createElement("div");
-        div.innerHTML = `Ejericio ${i}`;
-        div.setAttribute("onclick", `cargarEjercicio(${i})`);
-        document.getElementById("ejercicios").appendChild(div);
-    }
-}
-
-setTimeout(() => {
-    mostrarEjercicio();
-}, 200);
 
 setTimeout(() => {
     cambiarEstadoSugerencias()
 }, 4000);
 
-function cargarEjercicio(i) {
+let teclaodvisible = false;
+function mostrarTeclado() {
+    teclado = document.getElementById("math-panel");
+    teclado.style.display = "flex";
+    setTimeout(() => {
+        teclado.style.bottom = "0px";
+        teclado.style.opacity = "1";
+        teclado.style.transform = "scale(1)";
+    }, 50);
 
-    try {
-        let ejercicio = ejercicios[i];
-        ejercicios[0].forEach((variable, index) => {
-            document.getElementById(variable).value = ejercicio[index];
-        });
-        toastify(`Ejercicio #${i}`, 1);
-    } catch (error) {
-        toastify('Error al cargar el ejercicio', 4);
-    }
+    teclaodvisible = true;
 }
+
+function ocultarTeclado() {
+    teclado = document.getElementById("math-panel");
+    teclado.style.bottom = "-100px";
+    teclado.style.opacity = "0";
+    teclado.style.transform = "scale(0.8)";
+    setTimeout(() => {
+        teclado.style.display = "none";
+    }, 500);
+    teclaodvisible = false;
+}
+
+document.addEventListener('click', function (e) {
+    if (!(e.target.closest('#math-panel') || e.target.closest('#math-field') || e.target.closest(".sugerencias"))) {
+        ocultarTeclado();
+    }
+    else if(!e.target.closest(".sugerencias")){
+        mostrarTeclado();
+    }
+});
 
 function cambiarTipoTolerancia(elemento) {
     let elementosTolerancia = Array.from(document.querySelectorAll('[name="tipoTolerancia"]'))

@@ -331,6 +331,7 @@ class respuesta_json():
     
     def obtener_y_limpiar_respuesta(self):
         res = self.respuesta
+        self.tabla = []
         self.limpiar_respuesta()
         return res
     

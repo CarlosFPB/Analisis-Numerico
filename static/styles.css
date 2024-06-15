@@ -24,7 +24,7 @@ html {
 
 .text_hero {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 40px;
     font-family: var(--primary-font);
     font-weight: 900;
     font-size: 4em;
@@ -55,23 +55,31 @@ p {
 
 
 .panel_metodos {
-    height: 50vh;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
     gap: 1rem;
     align-items: unset;
+    max-width: 764px;
+    align-self: center;
+
 }
 
 .grafico {
     grid-row: span 2;
 }
 
+.interpolacion {
+    grid-column: span 2;
+}
+.información{
+    grid-column: span 2;
+}
+
 .content {
     display: flex;
     flex-direction: column;
-    width: 80vw;
     gap: 1rem;
+    padding: 2rem;
 }
 
 .información {
@@ -92,26 +100,20 @@ p {
     padding: 1rem;
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 1rem;
-}
-body,
+
 canvas {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  z-index: -99;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    z-index: -99;
 }
+
 .textGradient1 {
     font-family: var(--primary-font);
     font-weight: 900;
-    background: linear-gradient(135deg, #ff651d 0%, #dad61e 100%);
+    background: linear-gradient(135deg, #ff651d 0%, #dfdb0d 100%);
     background-clip: text;
     color: transparent;
 }
@@ -131,6 +133,7 @@ canvas {
     background-clip: text;
     color: transparent;
 }
+
 .textGradient4 {
     font-family: var(--primary-font);
     font-weight: 900;
@@ -138,6 +141,15 @@ canvas {
     background-clip: text;
     color: transparent;
 }
+
+.textGradient5 {
+    font-family: var(--primary-font);
+    font-weight: 900;
+    background: linear-gradient(135deg, #ff42aa 0%, #f00034 100%);
+    background-clip: text;
+    color: transparent;
+}
+
 .metodo {
     position: relative;
     padding: 1rem;
@@ -146,17 +158,33 @@ canvas {
     backdrop-filter: blur(7px);
     text-decoration: none;
     transition: all 0.5s;
-    overflow: hidden;
     align-content: center;
+    z-index: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    cursor: pointer;
+
+    box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.164);
+
+    * {
+        transition: all 0.5s;
+    }
+    
+    img{
+        align-self: center;
+        filter: grayscale(100%);
+    }
 }
+
 .metodo:hover {
     transform: scale(1.1);
-    z-index: 9999;
+    z-index: 10;
 
 }
 
 .mep {
-    width: 80%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -171,8 +199,11 @@ canvas {
     background: linear-gradient(135deg, #ff1d1d 0%, #951eda 100%);
     background-clip: text;
     color: transparent !important;
+    
+    text-shadow: -5px 10px 5px rgba(0, 0, 0, 0.192);
 }
-.mep:hover h2{
+
+.mep:hover h2 {
     color: transparent !important;
 }
 
@@ -180,55 +211,135 @@ canvas {
 .icon {
     font-weight: 900;
     font-size: 2.5em;
-
 }
 
 
 
+
+.bgcRed {
+    --colorGradiente1: #f5ab6f;
+    --colorGradiente2: #ff2121;
+}
+
+.bgcBluesky {
+    --colorGradiente1: #3ac7dc;
+    --colorGradiente2: #2a5ffe;
+}
+
+.bgcGray {
+    --colorGradiente1: #aea4b3;
+    --colorGradiente2: #271430;
+}
+
+
+
+.etiqueta {
+    grid-column: span 2;
+    background: linear-gradient(135deg, var(--colorGradiente2) 0%, var(--colorGradiente1) 90%);
+    color: white;
+    width: max-content;
+    text-wrap: nowrap;
+    position: relative;
+    font-family: var(--secondary-font);
+    font-size: large;
+    font-weight: 700;
+    padding: 0.2rem 1rem;
+    border-radius: 0.5rem 0 0 0.5rem;
+    margin-bottom: -0.5rem;
+    z-index: 20;
+    opacity: 0.9;
+
+    animation: etiquetaAnimation 200s infinite;
+    ;
+
+}
+
+.etiqueta::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -40px;
+    border-bottom: 1.7rem solid transparent;
+    border-left: 40px solid var(--colorGradiente1);
+
+}
+
+.etiqueta::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: -40px;
+    border-top: 1.7rem solid transparent;
+    border-left: 41px solid var(--colorGradiente1);
+}
+
+@keyframes etiquetaAnimation {
+    0% {
+        transform: scaleX(1);
+    }
+
+    50% {
+        transform: scaleX(1.03);
+    }
+
+    100% {
+        transform: scaleX(1);
+    }
+
+}
+
+.etiqueta {
+    animation: etiquetaAnimation 2s infinite;
+}
 
 .flip-card {
     perspective: 1000px;
     font-family: sans-serif;
-}
+    height: min-content;
 
-.flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
 
+    .flip-card-inner {
+        position: relative;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: auto;
+            backface-visibility: hidden;
+            backdrop-filter: blur(7px);
+            border: 3px solid rgba(255, 255, 255, 0.149);
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0rem 1rem;
+
+            box-shadow: -10px 10px 5px rgba(0, 0, 0, 0.164);
+        }
+
+        .flip-card-front:hover,
+        .flip-card-back:hover {
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            z-index: 70;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+    }
 }
 
 .flip-card:hover .flip-card-inner {
     transform: rotateY(180deg) scale(1.1);
 }
-
-.flip-card-front,
-.flip-card-back {
-    position: absolute;
-    width: calc(100% - 2.5rem);
-    height: calc(100% - 2.5rem);
-    backface-visibility: hidden;
-    backdrop-filter: blur(7px);
-    border: 3px solid rgba(255, 255, 255, 0.149);
-    border-radius: 1rem;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.flip-card-front:hover,
-.flip-card-back:hover {
-    border: 3px solid rgba(255, 255, 255, 0.5);
-}
-
-.flip-card-back {
-    transform: rotateY(180deg);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+.flip-card:hover {
+    z-index: 70;
 }
 
 
@@ -236,7 +347,7 @@ canvas {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 99;
     left: 0;
     top: 0;
     width: 100%;
@@ -245,42 +356,56 @@ canvas {
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(2px);
     transition: all 0.5s;
+
+
+    .modal-content {
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 1rem;
+        margin: calc(100vh - 80vh) auto;
+        padding: 2rem;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        transition: all 0.5s;
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 34px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: rgb(255, 0, 0);
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
 }
 
-.modal-content {
-    background-color: rgba(255, 255, 255, 0.95);
-    border-radius: 1rem;
-    margin: calc(100vh - 80vh) auto;
-    padding: 2rem;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
-    transition: all 0.5s;
-}
 
 /* Estilos para el botón de cierre de la ventana modal */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 34px;
-    font-weight: bold;
-}
 
-.close:hover,
-.close:focus {
-    color: rgb(255, 0, 0);
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.links{
+.links {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     margin: 2rem;
+
+
 }
 
-.link{
+a {
+    border: 3px solid rgba(255, 255, 255, 0.149);
+    text-decoration: none;
+    font-size: 0.8rem;
+    z-index: 10;
+
+
+}
+
+.link {
     display: flex;
     justify-content: start;
     gap: 1rem;
@@ -288,12 +413,31 @@ canvas {
     color: var(--var-primary);
     transition: all 0.5s;
 }
+
 .link:hover {
     transform: scale(1.1);
     background: linear-gradient(135deg, #ff831d 0%, #8f00e2 100%);
     background-clip: text;
     color: transparent !important;
+    
 }
-.link:hover h2{
+
+.link:hover h2 {
     color: transparent !important;
+    
 }
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Add animation to the body 
+body {
+    animation: fadeIn 1s ease-in;
+}*/

@@ -63,9 +63,16 @@ class metodos_diferenciacion():
 
         #calcular la derivada
         try:
+            instancia_respuesta.agregar_titulo1("Diferenciación numérica")
+            instancia_respuesta.agregar_parrafo("Se calculará la derivada de la función")
+            instancia_respuesta.agregar_parrafo(str(f_x))
+            instancia_respuesta.agregar_parrafo("En el punto xi = "+str(xi))
+            instancia_respuesta.agregar_parrafo("Con h = "+str(h))
+
             #instancia de las derivadas
             m_derivada = Diferenciacion()
             if metodo == "adelante":
+                instancia_respuesta.agregar_parrafo("Usando el metodo de diferenciación hacia adelante")
                 if version == 1:
                     if orden == 1:
                         derivada = m_derivada.finita_hacia_delante.primera_derivada_v1(f_x, xi, h)
@@ -85,6 +92,7 @@ class metodos_diferenciacion():
                     elif orden == 4:
                         derivada = m_derivada.finita_hacia_delante.cuarta_derivada_v2(f_x, xi, h)
             elif metodo == "central":
+                instancia_respuesta.agregar_parrafo("Usando el metodo de diferenciación central")
                 if version == 1:
                     if orden == 1:
                         derivada = m_derivada.finita_central.primera_derivada_v1(f_x, xi, h)
@@ -104,6 +112,7 @@ class metodos_diferenciacion():
                     elif orden == 4:
                         derivada = m_derivada.finita_central.cuarta_derivada_v2(f_x, xi, h)
             elif metodo == "atras":
+                instancia_respuesta.agregar_parrafo("Usando el metodo de diferenciación hacia atras")
                 if version == 1:
                     if orden == 1:
                         derivada = m_derivada.finita_hacia_atras.primera_derivada_v1(f_x, xi, h)
@@ -123,6 +132,7 @@ class metodos_diferenciacion():
                     elif orden == 4:
                         derivada = m_derivada.finita_hacia_atras.cuarta_derivada_v2(f_x, xi, h)
             elif metodo == "cinco_puntos":
+                instancia_respuesta.agregar_parrafo("Usando el metodo de diferenciación cinco puntos")
                 if version == 1:
                     derivada = m_derivada.finita_cinco_puntos.primera_derivada_v1(f_x, xi, h)
                 elif version == 2:
@@ -134,14 +144,16 @@ class metodos_diferenciacion():
                 elif version == 5:
                     derivada = m_derivada.finita_cinco_puntos.primera_derivada_v5(f_x, xi, h)
             elif metodo == "tres_puntos":
+                instancia_respuesta.agregar_parrafo("Usando el metodo de diferenciación tres puntos")
                 if version == 1:
                     derivada = m_derivada.finita_tres_puntos.primera_derivada_v1(f_x, xi, h)
                 elif version == 2:
                     derivada = m_derivada.finita_tres_puntos.primera_derivada_v2(f_x, xi, h)
 
-            instancia_respuesta.agregar_parrafo("La derivada es")
-            instancia_respuesta.agregar_parrafo(derivada)
-            resp = instancia_respuesta.obtener_y_limpiar_respuesta()
+            #detallar respuestas
+            instancia_respuesta.agregar_titulo1("Resultado")
+            instancia_respuesta.agregar_parrafo("La derivada de la función es:")
+            instancia_respuesta.agregar_clave_valor("Derivada:", derivada)
 
             try:
                 clear = json_data.get("clear", False)
@@ -152,6 +164,7 @@ class metodos_diferenciacion():
             if clear or clearD:
                 resp = instancia_respuesta.responder_solo_respuesta(derivada)
                 return jsonify(resp), 200
+            resp = instancia_respuesta.obtener_y_limpiar_respuesta()
             #responder normalmente
             return jsonify(resp), 200
 

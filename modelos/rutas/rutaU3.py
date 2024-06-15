@@ -65,7 +65,7 @@ def Hermite():
  
 @U3.route('/metodos/interpolacion/trazadores_cubicos', methods=['GET'])
 def Trazadores():
-    return render_template('unidad_tres/unidad_tres/Interpolacion_Trazadores.html')
+    return render_template('unidad_tres/Interpolacion_Trazadores.html')
 
 @U3.route('/metodos/interpolacion/trazadores_cubicos', methods=['POST'])
 def calcular_trazadores():

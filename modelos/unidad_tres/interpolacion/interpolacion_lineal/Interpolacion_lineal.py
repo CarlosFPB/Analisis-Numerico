@@ -65,10 +65,18 @@ class metodo_interpolacion_lineal():
         
 
         #calcular la interpolacion lineal sino ocurrio ningun error
+        instancia_respuesta.agregar_titulo1("Interpolación Lineal")
+        instancia_respuesta.agregar_parrafo("Se calculara la interpolación lineal con los dos pares de puntos ingresados")
+        instancia_respuesta.agregar_parrafo("Los puntos ingresados son: ")
+        instancia_respuesta.agregar_parrafo("Puntos en x: "+str(matriz_puntos[0]))
+        instancia_respuesta.agregar_parrafo("Puntos en y: "+str(matriz_puntos[1]))
+        instancia_respuesta.agregar_parrafo("Reemplazando los puntos en la formula de interpolación lineal se obtiene:")
+        formula = f"y = {matriz_puntos[1][0]} + ({matriz_puntos[1][1]} - {matriz_puntos[1][0]})/({matriz_puntos[0][1]} - {matriz_puntos[0][0]})*(x - {matriz_puntos[0][0]})"
+        instancia_respuesta.agregar_parrafo(formula)
         try:
             polinomio = metodo_interpolacion_lineal.interpolacion_lineal(matriz_puntos)
             instancia_respuesta.agregar_parrafo("El polinomio interpolante es: ")
-            instancia_respuesta.agregar_parrafo(polinomio)
+            instancia_respuesta.agregar_clave_valor("P(x)=", polinomio)
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()
             return jsonify(resp), 200
         except Exception as e:
