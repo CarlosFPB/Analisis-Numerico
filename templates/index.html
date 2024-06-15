@@ -22,13 +22,12 @@
 
 <body>
 
-    <p class="text_hero">Analisis <span class="bg-gradient1">Numérico</span></p>
+    <p class="text_hero">Análisis <span class="bg-gradient1">Numérico</span></p>
 
     <div class="content">
         <div class="descripcion">
-            <p>En este sitio web encontrarás información sobre los métodos numéricos más utilizados para encontrar
-                raíces de
-                funciones.</p>
+            <p>En este sitio web encontrarás una serie de métodos numéricos que te ayudarán a resolver problemas
+                matemáticos de una manera rápida y eficiente.</p>
         </div>
 
 
@@ -67,11 +66,11 @@
 
             <div class="flip-card">
                 <div class="flip-card-inner">
-                    <div class="flip-card-front">
+                    <div class="flip-card-front divgreen">
                         <h2>Métodos <span class="textGradient3">Directos</span></h2>
                         <p>Estos métodos consisten en encontrar la raíz de una función mediante cálculos directos.</p>
                     </div>
-                    <div class="flip-card-back">
+                    <div class="flip-card-back divgreen">
                         <div class="mep" onclick="mostrarDialog('Polinimocos12')">
                             <h2>Polinimocos de 1º y 2º grado</h2>
                             <i class="icon bi bi-box-arrow-in-right"></i>
@@ -84,9 +83,9 @@
                 </div>
             </div>
             <div class="etiqueta bgcBluesky">Interpolación</div>
-            <div class="metodo interpolacion" onclick="mostrarDialog('interpolacion')">
-                <h2>Métodos de <span class="textGradient5">Interpolación</span></h2>
-                <p>Estos métodos consisten en encontrar la raíz de una función mediante cálculos iterativos.</p>
+            <div class="metodo interpolacion divpink" onclick="mostrarDialog('interpolacion')">
+                <h2>Métodos de <span class="textGradient6">Interpolación</span></h2>
+                <p>Este métodos consiste en la obtención de un polinomio que pase por los puntos dados.</p>
                 <img src="/static/img/interpolacion.png" alt="" width="250px">
             </div>
 
@@ -94,13 +93,19 @@
             <div class="etiqueta bgcGray">Diferenciación e Integración</div>
             <div class="metodo" onclick="mostrarDialog('Diferenciacion')">
                 <h2>Métodos de <span class="textGradient2">Diferenciación</span></h2>
-                <p>Estos métodos consisten en encontrar la raíz de una función mediante cálculos iterativos.</p>
+                <p>Estos métodos consisten en la obtención de la derivada de una función.</p>
             </div>
             <div class="metodo" onclick="mostrarDialog('Integracion')">
-                <h2>Métodos de <span class="textGradient3">Integración</span></h2>
-                <p>Estos métodos consisten en encontrar la raíz de una función mediante cálculos iterativos.</p>
+                <h2>Métodos de <span class="textGradient5">Integración</span></h2>
+                <p>Estos métodos consisten en la obtención de la integral de una función.</p>
             </div>
-
+            
+            <div class="etiqueta bgcram">Ecuaciones Diferenciables con Valos inicial</div>
+            <div class="metodo valorInicial divblue" onclick="mostrarDialog('valorInicial')">
+                <h2>Métodos de <span class="textGradient1">Valor Inicial</span></h2>
+                <p>Estos métodos son utilizados para resolver problemas de valor inicial para ecuaciones diferenciales ordinarias.</p>
+                <img src="/static/img/inicial2.png" alt="" width="250px">
+            </div>
             <div class="información">
                 <div class="metodo" style="
                 --bgcolor: rgba(130, 0, 252, 0.541);
@@ -388,6 +393,40 @@
         </div>
     </dialog>
 
+    <dialog id="valorInicial">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('valorInicial')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+                <h2><span class="textGradient2">Valor Inicial</span></h2>
+                <br>
+                <p>Los métodos de valor inicial son aquellos que requieren de un polinomio para encontrar la raíz de una
+                    función.</p>
+
+                <div class="links">
+                    <a href="/metodos/unidad_cinco/iterativos/euler" class="link">
+                        <i class="icon bi bi-arrow-right-square-fill"></i>
+                        <h2>Euler</h2>
+                    </a>
+                    <a href="/metodos/unidad_cinco/iterativos/taylor" class="link">
+                        <i class="icon bi bi-arrow-right-square-fill"></i>
+                        <h2>Taylor</h2>
+                    </a>
+                    <a href="/metodos/unidad_cinco/iterativos/Runge_kutta" class="link">
+                        <i class="icon bi bi-arrow-right-square-fill"></i>
+                        <h2>Runge-Kutta</h2>
+                    </a>
+                    <a href="/metodos/unidad_cinco/iterativos/multipasos" class="link">
+                        <i class="icon bi bi-arrow-right-square-fill"></i>
+                        <h2>Multipasos</h2>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </dialog>
     <dialog id="work">
         <div class="contenido">
             <div class="dialog-content">

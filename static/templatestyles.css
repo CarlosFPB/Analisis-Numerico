@@ -87,6 +87,13 @@ p {
     background-clip: text;
     color: transparent;
 }
+.textGradient6 {
+    font-family: var(--primary-font);
+    font-weight: 900;
+    background: linear-gradient(135deg, #ff42aa 0%, #f00034 100%);
+    background-clip: text;
+    color: transparent;
+}
 
 .text_hero {
     text-align: center;

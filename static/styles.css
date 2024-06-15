@@ -71,7 +71,12 @@ p {
 .interpolacion {
     grid-column: span 2;
 }
-.información{
+
+.valorInicial {
+    grid-column: span 2;
+}
+
+.información {
     grid-column: span 2;
 }
 
@@ -110,45 +115,6 @@ canvas {
     z-index: -99;
 }
 
-.textGradient1 {
-    font-family: var(--primary-font);
-    font-weight: 900;
-    background: linear-gradient(135deg, #ff651d 0%, #dfdb0d 100%);
-    background-clip: text;
-    color: transparent;
-}
-
-.textGradient2 {
-    font-family: var(--primary-font);
-    font-weight: 900;
-    background: linear-gradient(135deg, #28e431 0%, #006e65 100%);
-    background-clip: text;
-    color: transparent;
-}
-
-.textGradient3 {
-    font-family: var(--primary-font);
-    font-weight: 900;
-    background: linear-gradient(135deg, #a442ff 0%, #234dbe 100%);
-    background-clip: text;
-    color: transparent;
-}
-
-.textGradient4 {
-    font-family: var(--primary-font);
-    font-weight: 900;
-    background: linear-gradient(135deg, #ff1b1b 0%, #4f017c 100%);
-    background-clip: text;
-    color: transparent;
-}
-
-.textGradient5 {
-    font-family: var(--primary-font);
-    font-weight: 900;
-    background: linear-gradient(135deg, #ff42aa 0%, #f00034 100%);
-    background-clip: text;
-    color: transparent;
-}
 
 .metodo {
     position: relative;
@@ -171,8 +137,8 @@ canvas {
     * {
         transition: all 0.5s;
     }
-    
-    img{
+
+    img {
         align-self: center;
         filter: grayscale(100%);
     }
@@ -195,11 +161,11 @@ canvas {
 }
 
 .mep:hover {
-    transform: scale(1.1);
+    transform: scale(1.08);
     background: linear-gradient(135deg, #ff1d1d 0%, #951eda 100%);
     background-clip: text;
     color: transparent !important;
-    
+
     text-shadow: -5px 10px 5px rgba(0, 0, 0, 0.192);
 }
 
@@ -217,7 +183,7 @@ canvas {
 
 
 .bgcRed {
-    --colorGradiente1: #f5ab6f;
+    --colorGradiente1: #f59330;
     --colorGradiente2: #ff2121;
 }
 
@@ -230,6 +196,70 @@ canvas {
     --colorGradiente1: #aea4b3;
     --colorGradiente2: #271430;
 }
+
+.bgcram {
+    --colorGradiente1: #284f7c;
+    --colorGradiente2: #02b402;
+}
+
+.divpink {
+
+    background: radial-gradient(circle at 0% 0%, #c20e35 0%, #0c1b3d 63%, #000000 100%);
+    opacity: 0.95;
+
+    span {
+        text-shadow: -5px 10px 5px rgba(0, 0, 0, 0.192);
+    }
+
+    h2,
+    p {
+        color: white;
+    }
+
+    img {
+        filter: invert(1) drop-shadow(0px 4px 10px rgb(0, 85, 134));
+    }
+
+}
+
+.divgreen {
+    background: radial-gradient(circle at 0% 0%, #444444 0%, #0c1b3d 63%, #000000 100%);
+    opacity: 0.95;
+
+    span {
+        text-shadow: -5px 10px 5px rgba(0, 0, 0, 0.192);
+    }
+
+    h2,
+    p {
+        color: white;
+    }
+
+    img {
+        filter: invert(1);
+    }
+
+}
+
+.divblue {
+    background: radial-gradient(circle at 0% 0%, #855b02 0%, #0c1b3d 63%, #000000 100%);
+    opacity: 0.95;
+
+    span {
+        text-shadow: -5px 10px 5px rgba(0, 0, 0, 0.192);
+    }
+
+    h2,
+    p {
+        color: white;
+    }
+
+    img {
+        filter: invert(1) drop-shadow(0px 4px 10px rgb(0, 85, 134));
+    }
+
+}
+
 
 
 
@@ -338,6 +368,7 @@ canvas {
 .flip-card:hover .flip-card-inner {
     transform: rotateY(180deg) scale(1.1);
 }
+
 .flip-card:hover {
     z-index: 70;
 }
@@ -419,12 +450,12 @@ a {
     background: linear-gradient(135deg, #ff831d 0%, #8f00e2 100%);
     background-clip: text;
     color: transparent !important;
-    
+
 }
 
 .link:hover h2 {
     color: transparent !important;
-    
+
 }
 
 @keyframes fadeIn {
