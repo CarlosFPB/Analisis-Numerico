@@ -11,10 +11,10 @@ class metodo_euler():
         y = sp.symbols('y')
         instancia_respuesta = respuesta_json()
         try:
-            x0 = float(json_data['xinicial'])
-            y0 = float(json_data['yinicial'])
+            x0 = float(json_data['x_inicial'])
+            y0 = float(json_data['y_inicial'])
             h = float(json_data['h'])
-            x_buscado = float(json_data['xfinal'])
+            x_buscado = float(json_data['x_final'])
             metodo = json_data["tipo"]
             try:
                 f_x = sp.simplify(json_data["funcion"])
@@ -54,30 +54,61 @@ class metodo_euler():
                 return jsonify(resp), 400
             n = len(lista_x)
             ys = y0
-            #aqui se selecciona el metodo a utilizar
+            #registro valores iniciales
+            instancia_respuesta.agregar_titulo1("Metodo de Euler")
+            instancia_respuesta.agregar_parrafo("Datos iniciales: ")
+            instancia_respuesta.agregar_clave_valor("Funcion: ", f_x)
+            instancia_respuesta.agregar_parrafo("x0: "+str(x0))
+            instancia_respuesta.agregar_parrafo("y0: "+str(y0))
+            instancia_respuesta.agregar_parrafo("h: "+str(h))
+            instancia_respuesta.agregar_parrafo("x final: "+str(x_buscado))
+            #aqui se aplica el metodo seleccioando
             if metodo == "euler_mejorado":
+                instancia_respuesta.agregar_titulo1("Aplicando metodo de Euler Mejorado")
+                instancia_respuesta.agregar_parrafo("se calcula yraya con la formula: y_raya1 = y0 + h*f(x0, y0)")
+                instancia_respuesta.agregar_parrafo("Se calcula el nuevo valor de x con la formula: x1 = x0 + h")
+                instancia_respuesta.agregar_parrafo("se calcula el nuevo y con la formula: y1 = y0 + h/2*[(f(x0, y0) + f(x1, y_raya1)]")
+                instancia_respuesta.agregar_parrafo("se repite el proceso hasta llegar al valor buscado")
                 for i in range(0, n-1):
                     ys = euler.euler_mejorado(lista_x[i], ys, h, f_x)
                     lista_y.append(ys)
             elif metodo == "euler_hacia_atras":
+                instancia_respuesta.agregar_titulo1("Aplicando metodo de Euler hacia atras")
+                instancia_respuesta.agregar_parrafo("se calcula y_raya con la formula: y_raya = y0 + h*f(x0, y0)")
+                instancia_respuesta.agregar_parrafo("Se calcula el nuevo valor de x con la formula: x1 = x0 + h")
+                instancia_respuesta.agregar_parrafo("se calcula el nuevo y con la formula: y1 = y0 + h*f(x1, y_raya)")
+                instancia_respuesta.agregar_parrafo("se repite el proceso hasta llegar al valor buscado")
                 for i in range(0, n-1):
                     ys = euler.euler_hacia_atras(lista_x[i], ys, h, f_x)
                     lista_y.append(ys)
             elif metodo == "euler_hacia_adelante":
+                instancia_respuesta.agregar_titulo1("Aplicando metodo de Euler hacia adelante")
+                instancia_respuesta.agregar_parrafo("se calcula el nuevo y con la formula: y1 = y0 + h*f(x0, y0)")
+                instancia_respuesta.agregar_parrafo("Se calcula el nuevo valor de x con la formula: x1 = x0 + h")
+                instancia_respuesta.agregar_parrafo("se repite el proceso hasta llegar al valor buscado")
                 for i in range(0, n-1):
                     ys = euler.euler_hacia_adelante(lista_x[i], ys, h, f_x)
                     lista_y.append(ys)
             elif metodo == "euler_centrada":
+                instancia_respuesta.agregar_titulo1("Aplicando metodo de Euler centrado")
+                instancia_respuesta.agregar_parrafo("se calcula el nuevo y con la formula: y1 = y0 + h*f(x0, y0)")
+                instancia_respuesta.agregar_parrafo("Se calcula el nuevo valor de x con la formula: x1 = x0 + h")
+                instancia_respuesta.agregar_parrafo("se repite el proceso hasta llegar al valor buscado")
                 for i in range(0, n-1):
                     ys = euler.euler_centrada(lista_x[i], ys, h, f_x)
                     lista_y.append(ys)
             else:
                 resp = instancia_respuesta.responder_error("Metodo no valido\nLos metodos validos son: euler_mejorado, euler_hacia_atras, euler_hacia_adelante, euler_centrada")
                 return jsonify(resp), 400
-
-            instancia_respuesta.agregar_parrafo("Los valores de x son: "+str(lista_x))
-            instancia_respuesta.agregar_parrafo("Los valores de y son: "+str(lista_y))
-            instancia_respuesta.agregar_parrafo(f"Respuesta de x: {x_buscado} y: {lista_y[-1]}")
+            
+            #se registra la respuesta
+            instancia_respuesta.agregar_titulo1("Resultados: ")
+            instancia_respuesta.crear_tabla()
+            instancia_respuesta.agregar_fila(["x", "valor de x", "y", "valor de y"])
+            for i in range(0, n):
+                instancia_respuesta.agregar_fila([f"x{i}", f"{lista_x[i]}", f"y{i}", f"{lista_y[i]}"])
+            instancia_respuesta.agregar_tabla()
+            instancia_respuesta.agregar_clave_valor("Respuesta final: ", f"y({x_buscado}) = {lista_y[-1]}")
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()
             return jsonify(resp), 200
         except Exception as e:

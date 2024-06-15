@@ -7,21 +7,21 @@
     <title>Método Multipasos</title>
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
-
+    
     <!-- Estilo de la pagina en General -->
     <link rel="stylesheet" href="/static/templatestyles.css">
-
+    
     <!-- Dependencias del Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-
+    
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css" />
-
+    
     <!-- Script Base JS -->
     <script src="/static/funciones.js" async></script>
-
+    
     <link rel="apple-touch-icon" sizes="180x180" href="/static/favicono/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
@@ -32,54 +32,54 @@
     <div>
     </div>
     <span class="text_hero">Método de <span class="textGradient1">Multipasos</span></span>
-    <p>La extrapolación de Richardson es una técnica para mejorar la precisión de la derivada numérica al reducir el error principal.
+    <p> El método multipasos es una técnica numérica para resolver ecuaciones diferenciales ordinarias, que utiliza varios pasos anteriores para calcular la solución en el siguiente punto.
     </p>
-
+    
     <div class="content">
         <div id="main" class="main">
             <div class="descripocion">
-                <p>Ingrese los datos necesarios para calcular la derivada de la función y nivel de Extrapolacion.</p>
+                <p>Ingrese los datos necesarios para resolver la EDO.</p>
             </div>
             <div class="formulario">
                 <div class="valor">
                     <label for="funcion" style="text-wrap: nowrap;">Y′(x):</label>
                     <input type="text" name="funcion" id="funcion" required value="x+y-1"
-                        style="width: 10rem;">
+                    style="width: 10rem;">
                 </div>
-
-
-
+                
+                
+                
                 <div class="valor">
                     <label for="h">h:</label>
                     <input type="number" name="h" id="h" required value="0.2" min="0.0001" step="0.1"
-                        style="width: 3rem;">
+                    style="width: 3rem;">
                 </div>
                 <div class="valor">
-                    <label for="xinicial">X<sub>inicial</sub></label>
-                    <input type="number" name="xinicial" id="xinicial" required value="0" style="width: 3rem;">
+                    <label for="x_inicial">X<sub>inicial</sub></label>
+                    <input type="number" name="x_inicial" id="x_inicial" required value="0" style="width: 3rem;">
                 </div>
                 <div class="valor">
-                    <label for="yinicial">Y<sub>inicial</sub></label>
-                    <input type="number" name="yinicial" id="yinicial" required value="1" style="width: 3rem;">
+                    <label for="y_inicial">Y<sub>inicial</sub></label>
+                    <input type="number" name="y_inicial" id="y_inicial" required value="1" style="width: 3rem;">
                 </div>
                 <div class="valor">
-                    <label for="xfinal" style="text-wrap: nowrap;">X<sub>final</sub>:</label>
-                    <input type="number" name="xfinal" id="xfinal" required value="0.8" style="width: 3rem;">
+                    <label for="x_final" style="text-wrap: nowrap;">X<sub>final</sub>:</label>
+                    <input type="number" name="x_final" id="x_final" required value="0.8" style="width: 3rem;">
                 </div>
                 <div class="valor">
                     <label for="pasos">pasos:</label>
-                    <select name="pasos" id="pasos" style="width: 5rem;">
+                    <select name="pasos" id="pasos" required value="4" style="width: 5rem;">
                         <option value="2">pasos 2</option>
-                        <option value="4">pasos 4</option>
+                        <option value="4" selected>pasos 4</option>
                     </select>
-
+                    
                 </div>
-
+                
             </div>
-
-
+            
+            
             <div class="ui">
-
+                
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
                     <span class="material-symbols-outlined">
                         calculate
@@ -121,11 +121,11 @@
         <div id="stepbystep" class="stepbystep">
             <center>
                 <p style="
-                    opacity: 0.2;
-                    font-weight: 700;
-                    color: #16167f;
-                    width: 100%;
-                    ">Aqui se mostrará el procedimiento</p>
+                opacity: 0.2;
+                font-weight: 700;
+                color: #16167f;
+                width: 100%;
+                ">Aqui se mostrará el procedimiento</p>
             </center>
         </div>
         <div id="result" class="result" style="display: none;">
@@ -134,152 +134,143 @@
             </div>
         </div>
     </div>
-
+    
     <br>
     <div class="footer">
         <a class="regresar" href="/">Regresar</a>
     </div>
-
+    
     <!-- Sugerencias de Ejercicios 
     este sera una ventana que estara flotando a la derecha de la pagina
     -->
     <div class="sugerencias" style="right: calc(-253px);">
         <span><span class="textGradient1">
-                Ejercicios Sugeridos
-            </span>
+            Ejercicios Sugeridos
         </span>
-        <div id="ejercicios">
+    </span>
+    <div id="ejercicios">
+        
+    </div>
+    <div class="viñeta" onclick="cambiarEstadoSugerencias()">
+        <span class="material-symbols-outlined textGradient4">
+            keyboard_double_arrow_left
+        </span>
+    </div>
+</div>
 
-        </div>
-        <div class="viñeta" onclick="cambiarEstadoSugerencias()">
-            <span class="material-symbols-outlined textGradient4">
-                keyboard_double_arrow_left
+<dialog id="explicamelo">
+    <div class="contenido">
+        <div class="dialog-content">
+            <span class="close" onclick="cerrarDialog('explicamelo')">
+                <span class="material-symbols-outlined">
+                    close
+                </span>
             </span>
+            <h1>Método Multipasos para EDO</h1>
+            <p>
+                El método multipasos es una técnica numérica utilizada para resolver ecuaciones diferenciales ordinarias (EDO) que emplea información de varios puntos anteriores para calcular la solución en el siguiente punto. Esto permite obtener soluciones más precisas y estables que las obtenidas con métodos de un solo paso.
+            </p>
+            
+            <h2>Concepto Básico</h2>
+            <p>
+                A diferencia de los métodos de un solo paso, como los métodos de Euler o Runge-Kutta, que solo utilizan el punto actual para avanzar al siguiente, los métodos multipasos utilizan varios puntos previos en la aproximación de la solución. Esto se traduce en una mayor precisión y estabilidad en la solución de EDOs.
+            </p>
+            
+            <h2>Variantes del Método Multipasos</h2>
+            <p>
+                Existen diferentes variantes de métodos multipasos, entre los más comunes se encuentran:
+            </p>
+            <ul>
+                <li><strong>Método de Adams-Bashforth:</strong> Es un método explícito que utiliza las derivadas evaluadas en puntos anteriores.</li>
+                <li><strong>Método de Adams-Moulton:</strong> Es un método implícito que también utiliza las derivadas en puntos anteriores pero incluye la derivada en el punto futuro, requiriendo una solución iterativa.</li>
+            </ul>
+            
+            <h2>Aplicación</h2>
+            <p>
+                Para aplicar un método multipasos, primero se requieren métodos de un solo paso (como Runge-Kutta) para calcular los primeros puntos. Luego, se utilizan las fórmulas del método multipasos seleccionado para avanzar en la solución.
+            </p>
+            
+            <h2>Ventajas y Consideraciones</h2>
+            <p>
+                Los métodos multipasos son eficaces para obtener soluciones precisas de EDOs y son especialmente útiles en problemas donde la estabilidad es crítica. Sin embargo, requieren el almacenamiento de varios puntos anteriores y pueden ser más complejos de implementar que los métodos de un solo paso.
+            </p>
         </div>
     </div>
+</dialog>
 
-    <dialog id="explicamelo">
-        <div class="contenido">
-            <div class="dialog-content">
-                <span class="close" onclick="cerrarDialog('explicamelo')">
-                    <span class="material-symbols-outlined">
-                        close
-                    </span>
+<dialog id="diagrama">
+    <div class="contenido">
+        <div class="dialog-content">
+            <span class="close" onclick="cerrarDialog('diagrama')">
+                <span class="material-symbols-outlined">
+                    close
                 </span>
-
-                <h1>Extrapolación de Richardson para Mejorar la Derivada Numérica</h1>
-                <p>
-                    La extrapolación de Richardson mejora la precisión de la derivada numérica al combinar dos aproximaciones con diferentes tamaños de paso.
-                </p>
-                <p>
-                    Primero, calcula la derivada numérica <em>D(h)</em> usando un paso <em>h</em>:
-                </p>
-                <pre>
-                    <code>
-                        D(h) = (f(x + h) - f(x)) / h
-                    </code>
-                </pre>
-                <p>
-                    Luego, calcula la derivada <em>D(h/2)</em> con un paso más pequeño <em>h/2</em>:
-                </p>
-                <pre>
-                    <code>
-                        D(h/2) = (f(x + h/2) - f(x)) / (h/2)
-                    </code>
-                </pre>
-                <p>
-                    Usa la extrapolación de Richardson para combinar estas dos estimaciones y reducir el error principal:
-                </p>
-                <pre>
-                    <code>
-                        D<sub>extrapolado</sub> = (4/3) * D(h/2) - (1/3) * D(h)
-                    </code>
-                </pre>
-                <p>
-                    Esta fórmula elimina el término de error principal, proporcionando una estimación más precisa de la derivada en el punto <em>x</em>.
-                </p>
-                <p>La formula de D(h1) varia dependiendo el metodo de diferenciacion finita escogido</p>
-            </div>
+            </span>
+            <h2>Diagrama de Flujo del Método Multipasos</h2>
+            <center>
+                <p>Aqui debe ir una imagen bien perrona del codigo</p>
+            </center>
         </div>
-    </dialog>
+    </div>
+</dialog>
 
-    <dialog id="diagrama">
-        <div class="contenido">
-            <div class="dialog-content">
-                <span class="close" onclick="cerrarDialog('diagrama')">
-                    <span class="material-symbols-outlined">
-                        close
-                    </span>
+<dialog id="api">
+    <div class="contenido">
+        <div class="dialog-content">
+            <span class="close" onclick="cerrarDialog('api')">
+                <span class="material-symbols-outlined">
+                    close
                 </span>
-                <h2>Diagrama de Flujo del Método Tartaglia</h2>
-                <center>
-                    <p>Aqui debe ir una imagen bien perrona del codigo</p>
-                </center>
-            </div>
+            </span>
+            <h2>API del Método de Extrapolacion de Richardson</h2>
+            <br>
+            <p>Para utilizar el método de multipasos, se debe realizar una petición POST al siguiente endpoint:</p>
+            <p>https://analisis-numerico-sand.vercel.app/metodos/unidad_cinco/iterativos/multipasos</p>
+            <br>
+            <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
+            <br>
+            <pre>
+                
+                {
+                    "funcion":"funcion y prima",
+                    "pasos":"numero de pasos",
+                    "h":valor de h,
+                    "x_inicial":valor de x inicial,
+                    "x_final":valor de x final,
+                    "y_inicial":valor de y inicial
+                }
+                
+            </pre>
         </div>
-    </dialog>
-
-    <dialog id="api">
-        <div class="contenido">
-            <div class="dialog-content">
-                <span class="close" onclick="cerrarDialog('api')">
-                    <span class="material-symbols-outlined">
-                        close
-                    </span>
-                </span>
-                <h2>API del Método de Extrapolacion de Richardson</h2>
-                <br>
-                <p>Para utilizar el método de Extrapolacion de Richardson, se debe realizar una petición POST al siguiente endpoint:</p>
-                <p>https://analisis-numerico-sand.vercel.app/metodos/diferenciacion/richardson</p>
-                <br>
-                <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
-                <br>
-                <pre>
-
-                    {
-                        "funcion":"funcion",
-                        "metodo":"nombre del metodo",
-                         "version":numero de version del metodo,
-                          "orden":orden de la derivada a calcular,
-                          "h":valor de h,
-                          "xi":valor de x a evaluar,
-                          "nivel":nivel de extrapolacion,
-                    }
-
-                </pre>
-            </div>
-        </div>
-    </dialog>
+    </div>
+</dialog>
 
 
 
-    <script>
-        //Aqui debe ir la direccion del EndPoint de el Metodo
-        let endPoint = "/metodos/unidad_cinco/iterativos/multipasos"
-        //Aqui iran los id de todos los datos que se enviaran al EndPoint
-        let variables = ["funcion", "h", "yinicial","xinicial", "xfinal", "pasos"];
-        //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
-        function calcular() {
-            let datos = {}
-            variables.forEach(variable => {
-                datos[variable] = document.getElementById(variable).value;
-            });
-            console.log(datos);
-            realizarPeticionPOST(endPoint, datos)
-        }
-        //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
-        let ejercicios = [
-            ["funcion"],
-            ["x**3 + x**2 + 2"],
-            ["x**3 - 13*x - 12"],
-            ["x**3 - 6*x**2 + 11*x - 6"],
-            ["x**3 + 3*x**2 - 4*x - 12"]
-        ]
+<script>
+    //Aqui debe ir la direccion del EndPoint de el Metodo
+    let endPoint = "/metodos/unidad_cinco/iterativos/multipasos"
+    //Aqui iran los id de todos los datos que se enviaran al EndPoint
+    let variables = ["funcion", "h", "y_inicial","x_inicial", "x_final", "pasos"];
+    //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
+    function calcular() {
+        let datos = {}
+        variables.forEach(variable => {
+            datos[variable] = document.getElementById(variable).value;
+        });
+        console.log(datos);
+        realizarPeticionPOST(endPoint, datos)
+    }
+    //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
+    let ejercicios = [
+    ["x+y-1", "0.2", "0", "1", "0.8", "2"],
+    ["x+y-1", "0.2", "0", "1", "0.8", "4"]
+    ];
+    
+    
+</script>
 
-
-    </script>
-
-    <script src="/static/Loader/background.js" async></script>
+<script src="/static/Loader/background.js" async></script>
 </body>
 
 </html>

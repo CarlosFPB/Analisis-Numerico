@@ -63,55 +63,54 @@ class metodo_richardson():
             return jsonify(resp), 400
         
         h = float(json_data["h"])
-        tabla = []
+        tablaR = []
         hs = [h]
 
         try:
+            instancia_respuesta.agregar_titulo1("Metodo de Richardson")
+            instancia_respuesta.agregar_parrafo("Se calculara la derivada de la funcion ingresada mediante el metodo de Richardson")
+            instancia_respuesta.agregar_parrafo("Funcion ingresada: " + json_data["funcion"])
+            instancia_respuesta.agregar_parrafo("Con h = "+str(h))
+            instancia_respuesta.agregar_parrafo("Nivel = "+str(nivel))
+            instancia_respuesta.agregar_parrafo("Evaluando la derivada en el punto xi = "+str(json_data["xi"]))
+
             for i in range(1, nivel):
                 h = h/2
                 hs.append(h)
             for i in range(1, nivel+1):
                 if i == 1:#estamos en primer nivel
-                    tabla.append([])
+                    tablaR.append([])
                     for j in range(0, nivel):
+                        json_data["h"] = hs[j]
                         response, status_code = metodos_diferenciacion.calcular_derivada(json_data)
                         if status_code == 200:
                             data = response.get_json()  # Obtener el contenido JSON de la respuesta
                             derivada_evaluada = float(data["respuesta"])
-                            tabla[0].append(derivada_evaluada)
+                            tablaR[0].append(derivada_evaluada)
                         else:
                             resp = instancia_respuesta.responder_error("Error en la derivada")
                             return jsonify(resp), 400
                 elif i == 2:
-                    tabla.append([])
+                    tablaR.append([])
                     for j in range(0, nivel-1):#estamos en nivel dos desde su formula
-                        response, status_code = metodos_diferenciacion.calcular_derivada(json_data)
-                        if status_code == 200:
-                            data = response.get_json()  # Obtener el contenido JSON de la respuesta
-                            derivada_evaluada = float(data["respuesta"])
-                            tabla[1].append(derivada_evaluada)
-                        else:
-                            resp = instancia_respuesta.responder_error("Error en la derivada")
-                            return jsonify(resp), 400
+                        derivada_evaluada = metodo_richardson.nivel_dos(tablaR[0][j+1], tablaR[0][j])
+                        tablaR[1].append(derivada_evaluada)
                 else:#nivel 3 para delante
-                    tabla.append([])
+                    tablaR.append([])
                     for j in range(0, nivel-(i-1)):
-                        response, status_code = metodos_diferenciacion.calcular_derivada(json_data)
-                        if status_code == 200:
-                            data = response.get_json()  # Obtener el contenido JSON de la respuesta
-                            derivada_evaluada = float(data["respuesta"])
-                            tabla[i-1].append(derivada_evaluada)
-                        else:
-                            resp = instancia_respuesta.responder_error("Error en la derivada")
-                            return jsonify(resp), 400
+                        indice1 = (i-2)
+                        derivada_evaluada = metodo_richardson.nivel_mayorq3(tablaR[indice1][j+1], tablaR[indice1][j], i)
+                        tablaR[i-1].append(derivada_evaluada)
+            #sino ahy errores
+            instancia_respuesta.crear_tabla()
+            for tabla_nivel in tablaR:
+                instancia_respuesta.agregar_fila(tabla_nivel)
+            instancia_respuesta.agregar_titulo1("Tabla de Richardson")
+            instancia_respuesta.agregar_clave_valor("Respuesta de la derivada por richardson es:x", tablaR[-1][-1])
+            instancia_respuesta.agregar_tabla()
+            resp = instancia_respuesta.obtener_y_limpiar_respuesta()
+            return jsonify(resp), 200
         except Exception as e:
             resp = instancia_respuesta.responder_error(f"Error en el calculo de richardson\n {str(e)}")
             return jsonify(resp), 400
-        #sino ahy errores
-        instancia_respuesta.crear_tabla
-        for tabla_nivel in tabla:
-            instancia_respuesta.agregar_fila(tabla_nivel)
-        instancia_respuesta.agregar_parrafo(f"Respuesta : {tabla[-1][0]}")
-        instancia_respuesta.obtener_tabla()
-        resp = instancia_respuesta.obtener_y_limpiar_respuesta()
-        return jsonify(resp), 200
+        
