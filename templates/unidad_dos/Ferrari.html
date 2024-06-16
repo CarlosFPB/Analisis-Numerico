@@ -35,6 +35,9 @@
 </head>
 
 <body>
+    {% block keyboard %}
+    {{ keyboard_content | safe }}
+    {% endblock %}
     <div>
     </div>
     <span class="text_hero">Método <span class="textGradient1">Ferrari</span></span>
@@ -70,9 +73,7 @@
                     </span>
                 </div>
             </div>
-            {% block keyboard %}
-            {{ keyboard_content | safe }}
-            {% endblock %}
+            
             <div class="ui">
                 <div class="buttonSmall button-yellow" onclick="mostrarDialog('explicamelo')">
                     <span class="material-symbols-outlined">
