@@ -40,6 +40,9 @@
 </head>
 
 <body>
+    {% block keyboard %}
+    {{ keyboard_content | safe }}
+    {% endblock %}
     <div>
     </div>
     <span class="text_hero">Método <span class="textGradient1">Punto Fijo</span></span>
@@ -65,9 +68,6 @@
                     <input type="number" name="tolerancia" id="tolerancia" required value="0.05">
                 </div>
             </div>
-            {% block keyboard %}
-            {{ keyboard_content | safe }}
-            {% endblock %}
             <div class="ui">
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
                     <span class="material-symbols-outlined">

@@ -75,7 +75,7 @@ class metodo_multipasos():
                 if x_buscado != lista_x[-1]:
                     resp = instancia_respuesta.responder_error("No se puede llegar al valor buscado con el tamanho de paso dado")
                     return jsonify(resp), 400
-                instancia_respuesta.agregar_parrafo("Se aplicara el metodo de Adams Moulton para obtener el valor de y3 en x = "+str(x_buscado))
+                instancia_respuesta.agregar_parrafo("Se aplicara el metodo de Adams Moulton para mejorar el valor de y3 en x = "+str(x_buscado))
                 instancia_respuesta.agregar_titulo1("Datos obtenidos de Adams Moulton: ")
                 lista_x, lista_y, y2 = adams_moulton.orden_1(lista_x, lista_y, h, f_x)
                 instancia_respuesta.agregar_parrafo(f"El valor de y3 obtenido en Adams Moulton en x = {lista_x[-1]} es: {y2}")
@@ -108,7 +108,7 @@ class metodo_multipasos():
                 instancia_respuesta.agregar_parrafo(f"El valor de y4 obtenido por Adams Bashfort en x = {lista_x[-1]} es: {y4}")
                 #aplico adams moulton
                 lista_x, lista_y, y4 = adams_moulton.orden_3(lista_x, lista_y, h, f_x)
-                instancia_respuesta.agregar_parrafo("Se aplicara el metodo de Adams Moulton para obtener el valor de y4 en x = "+str(x_buscado))
+                instancia_respuesta.agregar_parrafo("Se aplicara el metodo de Adams Moulton para mejorar el valor de y4 en x = "+str(x_buscado))
                 instancia_respuesta.agregar_titulo1("Datos obtenidos de Adams Moulton: ")
                 instancia_respuesta.agregar_parrafo(f"El valor de y4 obtenido por Adams Moulton en x = {lista_x[-1]} es: {y4}")
             else:

@@ -156,6 +156,10 @@ class metodo_muller():
                 x1 = x2
                 x2 = x_calculado
 
+                if iteracion > 300:
+                    resp = instancia_respuesta.responder_error("El metodo sobrepaso el numero maximo de iteraciones permitidas")
+                    return jsonify(resp), 400
+
             instancia_respuesta.agregar_titulo1("Resultado")
             instancia_respuesta.agregar_tabla()
             instancia_respuesta.agregar_parrafo(f"La raíz aproximada es: {x_calculado}")

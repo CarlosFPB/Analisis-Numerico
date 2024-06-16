@@ -2,7 +2,7 @@ import sympy as sp
 import math
 from flask import jsonify
 from modelos.extras.Funciones import respuesta_json, verificaciones
-from modelos.extras.latex import conversla
+from modelos.extras.latex import conversla, conversla_html
 import traceback
 
 
@@ -46,8 +46,8 @@ class metodo_ferrari:
            
             respuesta.agregar_titulo1("Metodo de Ferrari")
             respuesta.agregar_parrafo("Este metodo Obtendra las raices de una funcion de grado 4")
-            respuesta.agregar_parrafo("Funcion: "+str(f_x_crudo))
-            respuesta.agregar_parrafo("Funcion simplificada: "+str(f_x))
+            respuesta.agregar_parrafo(f"Funcion: {f_x_crudo}")
+            respuesta.agregar_parrafo(f"Funcion simplificada: {f_x}")
 
             #obtiene los coeficientes de la funcion de forma descendente
             coefficientes = verificaciones.obtener_coeficientes(f_x)
@@ -57,7 +57,7 @@ class metodo_ferrari:
             d = coefficientes[4]
 
             #coeficientes del polinomio
-            respuesta.agregar_titulo1("Coeficientes: ")
+            respuesta.agregar_titulo1("Coeficientes del polinomio: ")
             respuesta.agregar_parrafo("a = "+str(a))
             respuesta.agregar_parrafo("b = "+str(b))
             respuesta.agregar_parrafo("c = "+str(c))
@@ -68,18 +68,23 @@ class metodo_ferrari:
             Q = (a**3 - 4*a*b + 8*c)/8
             R = (-3*a**4 + 256*d - 64*a*c + 16*a**2*b)/256
 
-            respuesta.agregar_titulo1("Calculamos P, Q y R")
-            respuesta.agregar_parrafo("P = "+str(P))
-            respuesta.agregar_parrafo("Q = "+str(Q))
-            respuesta.agregar_parrafo("R = "+str(R))
-
+            respuesta.agregar_titulo1("Calculamos P, Q y R con las siguientes formulas:")
+            funcion_str = "(8*b - 3*a**2)/8)"
+            html_fx = """<math xmlns="http://www.w3.org/1998/Math/MathML"><mfrac><mrow><mn>8</mn><mo>&#xd7;</mo><mi>b</mi><mo>&#xA0;</mo><mo>-</mo><mo>&#xA0;</mo><mn>3</mn><mo>&#xd7;</mo><msup><mi>a</mi><mn>2</mn></msup></mrow><mn>8</mn></mfrac></math>"""
+            respuesta.agregar_parrafo(f"P = {html_fx}")
+            funcion_str = "(a**3 - 4*a*b + 8*c)/8"
+            respuesta.agregar_clave_valor(funcion_str, f"Q={Q}")
+            funcion_str = "(-3*a**4 + 256*d - 64*a*c + 16*a**2*b)/256"
+            respuesta.agregar_clave_valor(funcion_str, f"R={R}")
 
             #contruimos la cubica
             y = sp.symbols('y')
             cubica = sp.simplify(y**3 - (P/2)*y**2 - R*y + (4*P*R - Q**2)/8)
 
             respuesta.agregar_titulo1("Construimos la cubica para tartaglia")
-            respuesta.agregar_parrafo("Cubica: "+str(cubica))
+            funcion_str = "y**3 - (P/2)*y**2 - R*y + (4*P*R - Q**2)/8"
+            respuesta.agregar_parrafo(f"Reemplazo en la formula: {funcion_str}")
+            respuesta.agregar_parrafo(f"Cubica: {cubica}")
 
             #encontramos a b c de tartaglia
             #encontrar los coeficientes inlcuido los coeficientes 0
@@ -101,16 +106,23 @@ class metodo_ferrari:
             deltaT = (qT/2)**2 + (pT/3)**3
 
             respuesta.agregar_titulo1("Calculamos p, q y delta de tartaglia")
-            respuesta.agregar_parrafo("pT = "+str(pT))
-            respuesta.agregar_parrafo("qT = "+str(qT))
+            funcion_str = "(3*bT-aT**2)/3"
+            respuesta.agregar_clave_valor(funcion_str, f"pT={pT}")
+            funcion_str = "(2*aT**3 - 9*aT*bT + 27*cT)/27"
+            respuesta.agregar_clave_valor(funcion_str, f"qT={qT}")
+            funcion_str = "(qT/2)**2 + (pT/3)**3"
+            respuesta.agregar_clave_valor(funcion_str, f"deltaT={deltaT}")
 
+            respuesta.agregar_titulo1("Calculamos la raiz real de tartaglia")
             #obtener 1 raiz real
             if deltaT == 0:
                 if pT==0 and qT==0:
                     #tiene raiz triple
                     xreal = (-aT/3)
+                    funcion_str = "(-aT/3)"
                 if pT*qT != 0:
                     xreal = ((-4*pT**2)/(9*qT)) - (aT/3)
+                    funcion_str = "((-4*pT**2)/(9*qT)) - (aT/3)"
 
             elif deltaT > 0:
                 #calculamos u y v
@@ -118,13 +130,16 @@ class metodo_ferrari:
                 v = math.cbrt(-qT/2 - sp.sqrt(deltaT))
                 #obtenemos las raices
                 xreal = u + v - (aT/3) #raiz real
+                funcion_str = "u + v - (aT/3)"
 
             elif deltaT < 0:
                 #calculamos angulo
                 k = 0
                 angulo = sp.acos((-qT/2)/sp.sqrt(-(pT/3)**3))
                 xreal = (2*sp.sqrt(-pT/3))*sp.cos((angulo+2*k*sp.pi)/3) - (aT/3)
+                funcion_str = "(2*sqrt(-pT/3))*cos((angulo+2*k*pi)/3) - (aT/3)"
 
+            respuesta.agregar_clave_valor("y = ", funcion_str)
             respuesta.agregar_parrafo("La raiz real de tartaglia es: "+str(xreal))
 
             #reescribimos
@@ -145,7 +160,9 @@ class metodo_ferrari:
             W = -(Q/(2*VF))
 
             respuesta.agregar_titulo1("Encontramos V y W")
+            respuesta.agregar_clave_valor("V", "sqrt(2*U - P)")
             respuesta.agregar_parrafo("V = "+str(VF))
+            respuesta.agregar_clave_valor("W", "-Q/(2*V)")
             respuesta.agregar_parrafo("W = "+str(W))
 
             #encontramos las raices
@@ -153,6 +170,12 @@ class metodo_ferrari:
             x2 = (VF - sp.sqrt(VF**2 -4*(U - W)))/2 - (a/4)
             x3 = (-VF + sp.sqrt(VF**2 -4*(U + W)))/2 - (a/4)
             x4 = (-VF - sp.sqrt(VF**2 -4*(U + W)))/2 - (a/4)
+
+            respuesta.agregar_titulo1("Calculamos las raices con las siguientes formulas")
+            respuesta.agregar_clave_valor("x1= ", "(V + sqrt(V^2 - 4(U - W)))/2 - (a/4)")
+            respuesta.agregar_clave_valor("x2= ", "(V - sqrt(V^2 - 4(U - W)))/2 - (a/4)")
+            respuesta.agregar_clave_valor("x3= ", "(-V + sqrt(V^2 - 4(U + W)))/2 - (a/4)")
+            respuesta.agregar_clave_valor("x4= ", "(-V - sqrt(V^2 - 4(U + W)))/2 - (a/4)")
             
             #convertir a su valor numerico
             x1 = sp.N(x1)
@@ -160,11 +183,11 @@ class metodo_ferrari:
             x3 = sp.N(x3)
             x4 = sp.N(x4)
 
-            respuesta.agregar_titulo1("Calculamos las raices")
-            respuesta.agregar_clave_valor("x1", x1)
-            respuesta.agregar_clave_valor("x2", x2)
-            respuesta.agregar_clave_valor("x3", x3)
-            respuesta.agregar_clave_valor("x4", x4)
+            respuesta.agregar_titulo1("Raices obtenidas")
+            respuesta.agregar_clave_valor("x1= ", x1)
+            respuesta.agregar_clave_valor("x2= ", x2)
+            respuesta.agregar_clave_valor("x3= ", x3)
+            respuesta.agregar_clave_valor("x4= ", x4)
             resp = respuesta.obtener_y_limpiar_respuesta()
             return jsonify(resp), 200
         

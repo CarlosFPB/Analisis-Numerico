@@ -39,6 +39,9 @@
 </head>
 
 <body>
+    {% block keyboard %}
+    {{ keyboard_content | safe }}
+    {% endblock %}
     <div>
     </div>
     <span class="text_hero">Método <span class="textGradient1">Tartaglia</span></span>
@@ -54,9 +57,6 @@
                 <p>Función: <span id="math-field"></span></p>
                 <p><span id="latex"></span></p>
             </div>
-            {% block keyboard %}
-            {{ keyboard_content | safe }}
-            {% endblock %}
             <div class="ui">
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
                     <span class="material-symbols-outlined">

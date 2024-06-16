@@ -105,8 +105,8 @@ class metodo_horner():
                     break
                 f_x0 = x - x_calculado #- para que cambie el signo 
                 x0 = x_calculado
-                if iteracion > 100:
-                    resp = instancia_respuesta.responder_error("El metodo no converge")
+                if iteracion > 300:
+                    resp = instancia_respuesta.responder_error("El metodo sobrepaso el numero maximo de iteraciones permitidas")
                     return jsonify(resp), 400
 
             instancia_respuesta.agregar_tabla()

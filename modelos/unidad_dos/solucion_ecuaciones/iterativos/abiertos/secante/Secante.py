@@ -65,6 +65,9 @@ class metodo_secante():
                 x_actual = x_calculada
                 if(error_acomulado < error_aceptado):
                     break
+                if iteracion > 300:
+                    resp = instancia_respuesta.responder_error("El metodo sobrepaso el numero de iteraciones permitidas")
+                    return jsonify(resp), 400
                 
             instancia_respuesta.agregar_tabla()
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()
