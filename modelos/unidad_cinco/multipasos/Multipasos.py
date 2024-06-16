@@ -19,7 +19,7 @@ class metodo_multipasos():
                 h = float(json_data['h'])
                 if h == 0:
                     resp = instancia_respuesta.responder_error("El tamaño de paso debe ser diferente de 0")
-                return jsonify(resp), 400
+                    return jsonify(resp), 400
                 x_buscado = float(json_data['x_final'])
                 if verificaciones.es_entero(json_data['pasos']):
                     pasos = int(json_data['pasos'])
@@ -87,7 +87,7 @@ class metodo_multipasos():
                 xs = x0
                 for i in range(1, 4):
                     xs = round(xs + h, 8)
-                    if xs == (x_buscado - h):
+                    if xs == (x_buscado - h) or (h<0 and xs == (x_buscado + h)):
                         break
                     lista_x.append(xs)
                 for i in range(0, 3):
