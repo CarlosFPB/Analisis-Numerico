@@ -72,82 +72,144 @@ class metodos_diferenciacion():
             #instancia de las derivadas
             m_derivada = Diferenciacion()
             if metodo == "adelante":
-                instancia_respuesta.agregar_parrafo("Usando el metodo de diferenciación hacia adelante")
+                instancia_respuesta.agregar_titulo1("Usando el metodo de diferenciación hacia adelante")
                 if version == 1:
                     if orden == 1:
+                        instancia_respuesta.agregar_parrafo("Usando la version 1 de la primera derivada")
+                        instancia_respuesta.agregar_parrafo("f'(x) = (f(x+h) - f(x))/h")
                         derivada = m_derivada.finita_hacia_delante.primera_derivada_v1(f_x, xi, h)
                     elif orden == 2:
+                        instancia_respuesta.agregar_parrafo("Usando la version 1 de la segunda derivada")
+                        instancia_respuesta.agregar_parrafo("f''(x) = (f(x+2h) - 2f(x+h) + f(x))/h^2")
                         derivada = m_derivada.finita_hacia_delante.segunda_derivada_v1(f_x, xi, h)
                     elif orden == 3:
+                        instancia_respuesta.agregar_parrafo("Usando la version 1 de la tercera derivada")
+                        instancia_respuesta.agregar_parrafo("f'''(x) = (f(x+3h) - 3f(x+2h) + 3f(x+h) - f(x))/h^3")
                         derivada = m_derivada.finita_hacia_delante.tercer_derivada_v1(f_x, xi, h)
                     elif orden == 4:
+                        instancia_respuesta.agregar_parrafo("Usando la version 1 de la cuarta derivada")
+                        instancia_respuesta.agregar_parrafo("f''''(x) = (f(x+4h) - 4f(x+3h) + 6f(x+2h) - 4f(x+h) + f(x))/h^4")
                         derivada = m_derivada.finita_hacia_delante.cuarta_derivada_v1(f_x, xi, h)
                 elif version == 2:
                     if orden == 1:
+                        instancia_respuesta.agregar_parrafo("Usando la version 2 de la primera derivada")
+                        instancia_respuesta.agregar_parrafo("f'(x) = (-f(x+2h) + 4f(x+h) - 3f(x))/2h")
                         derivada = m_derivada.finita_hacia_delante.primera_derivada_v2(f_x, xi, h)
                     elif orden == 2:
+                        instancia_respuesta.agregar_parrafo("Usando la version 2 de la segunda derivada")
+                        instancia_respuesta.agregar_parrafo("f''(x) = (2f(x+2h) - 5f(x+h) + 4f(x) - f(x-h))/h^2")
                         derivada = m_derivada.finita_hacia_delante.segunda_derivada_v2(f_x, xi, h)
                     elif orden == 3:
+                        instancia_respuesta.agregar_parrafo("Usando la version 2 de la tercera derivada")
+                        instancia_respuesta.agregar_parrafo("f'''(x) = (-f(x+3h) + 8f(x+2h) - 13f(x+h) + 13f(x) - 5f(x-h))/2h^3")
                         derivada = m_derivada.finita_hacia_delante.tercer_derivada_v2(f_x, xi, h)
                     elif orden == 4:
+                        instancia_respuesta.agregar_parrafo("Usando la version 2 de la cuarta derivada")
+                        instancia_respuesta.agregar_parrafo("f''''(x) = (3f(x+2h) - 14f(x+h) + 26f(x) - 24f(x-h) + 11f(x-2h) - 2f(x-3h))/h^4")
                         derivada = m_derivada.finita_hacia_delante.cuarta_derivada_v2(f_x, xi, h)
             elif metodo == "central":
-                instancia_respuesta.agregar_parrafo("Usando el metodo de diferenciación central")
+                instancia_respuesta.agregar_titulo1("Usando el metodo de diferenciación central")
                 if version == 1:
                     if orden == 1:
+                        instancia_respuesta.agregar_parrafo("Usando la version 1 de la primera derivada")
+                        instancia_respuesta.agregar_parrafo("f'(x) = (f(x+h) - f(x-h))/2h")
                         derivada = m_derivada.finita_central.primera_derivada_v1(f_x, xi, h)
                     elif orden == 2:
+                        instancia_respuesta.agregar_parrafo("Usando la version 1 de la segunda derivada")
+                        instancia_respuesta.agregar_parrafo("f''(x) = (f(x+h) - 2f(x) + f(x-h))/h^2")
                         derivada = m_derivada.finita_central.segunda_derivada_v1(f_x, xi, h)
                     elif orden == 3:
+                        instancia_respuesta.agregar_parrafo("Usando la version 1 de la tercera derivada")
+                        instancia_respuesta.agregar_parrafo("f'''(x) = (f(x+2h) - 2f(x+h) + 2f(x-h) - f(x-2h))/2h^3")
                         derivada = m_derivada.finita_central.tercer_derivada_v1(f_x, xi, h)
                     elif orden == 4:
+                        instancia_respuesta.agregar_parrafo("Usando la version 1 de la cuarta derivada")
+                        instancia_respuesta.agregar_parrafo("f''''(x) = (f(x+2h) - 4f(x+h) + 6f(x) - 4f(x-h) + f(x-2h))/h^4")
                         derivada = m_derivada.finita_central.cuarta_derivada_v1(f_x, xi, h)
                 elif version == 2:
                     if orden == 1:
+                        instancia_respuesta.agregar_parrafo("Usando la version 2 de la primera derivada")
+                        instancia_respuesta.agregar_parrafo("f'(x) = (f(x+2h) - f(x-2h))/4h")
                         derivada = m_derivada.finita_central.primera_derivada_v2(f_x, xi, h)
                     elif orden == 2:
+                        instancia_respuesta.agregar_parrafo("Usando la version 2 de la segunda derivada")
+                        instancia_respuesta.agregar_parrafo("f''(x) = (f(x+2h) - 2f(x+h) + 2f(x-h) - f(x-2h))/4h^2")
                         derivada = m_derivada.finita_central.segunda_derivada_v2(f_x, xi, h)
                     elif orden == 3:
+                        instancia_respuesta.agregar_parrafo("Usando la version 2 de la tercera derivada")
+                        instancia_respuesta.agregar_parrafo("f'''(x) = (f(x+3h) - 3f(x+2h) + 3f(x-h) - f(x-3h))/8h^3")
                         derivada = m_derivada.finita_central.tercer_derivada_v2(f_x, xi, h)
                     elif orden == 4:
+                        instancia_respuesta.agregar_parrafo("Usando la version 2 de la cuarta derivada")
+                        instancia_respuesta.agregar_parrafo("f''''(x) = (f(x+2h) - 4f(x+h) + 6f(x) - 4f(x-h) + f(x-2h))/h^4")
                         derivada = m_derivada.finita_central.cuarta_derivada_v2(f_x, xi, h)
             elif metodo == "atras":
-                instancia_respuesta.agregar_parrafo("Usando el metodo de diferenciación hacia atras")
+                instancia_respuesta.agregar_titulo1("Usando el metodo de diferenciación hacia atras")
                 if version == 1:
                     if orden == 1:
+                        instancia_respuesta.agregar_parrafo("Usando la version 1 de la primera derivada")
+                        instancia_respuesta.agregar_parrafo("f'(x) = (f(x) - f(x-h))/h")
                         derivada = m_derivada.finita_hacia_atras.primera_derivada_v1(f_x, xi, h)
                     elif orden == 2:
+                        instancia_respuesta.agregar_parrafo("Usando la version 1 de la segunda derivada")
+                        instancia_respuesta.agregar_parrafo("f''(x) = (f(x) - 2f(x-h) + f(x-2h))/h^2")
                         derivada = m_derivada.finita_hacia_atras.segunda_derivada_v1(f_x, xi, h)
                     elif orden == 3:
+                        instancia_respuesta.agregar_parrafo("Usando la version 1 de la tercera derivada")
+                        instancia_respuesta.agregar_parrafo("f'''(x) = (f(x) - 3f(x-h) + 3f(x-2h) - f(x-3h))/h^3")
                         derivada = m_derivada.finita_hacia_atras.tercer_derivada_v1(f_x, xi, h)
                     elif orden == 4:
+                        instancia_respuesta.agregar_parrafo("Usando la version 1 de la cuarta derivada")
+                        instancia_respuesta.agregar_parrafo("f''''(x) = (f(x) - 4f(x-h) + 6f(x-2h) - 4f(x-3h) + f(x-4h))/h^4")
                         derivada = m_derivada.finita_hacia_atras.cuarta_derivada_v1(f_x, xi, h)
                 elif version == 2:
                     if orden == 1:
+                        instancia_respuesta.agregar_parrafo("Usando la version 2 de la primera derivada")
+                        instancia_respuesta.agregar_parrafo("f'(x) = (3f(x) - 4f(x-h) + f(x-2h))/2h")
                         derivada = m_derivada.finita_hacia_atras.primera_derivada_v2(f_x, xi, h)
                     elif orden == 2:
+                        instancia_respuesta.agregar_parrafo("Usando la version 2 de la segunda derivada")
+                        instancia_respuesta.agregar_parrafo("f''(x) = (2f(x) - 5f(x-h) + 4f(x-2h) - f(x-3h))/h^2")
                         derivada = m_derivada.finita_hacia_atras.segunda_derivada_v2(f_x, xi, h)
                     elif orden == 3:
+                        instancia_respuesta.agregar_parrafo("Usando la version 2 de la tercera derivada")
+                        instancia_respuesta.agregar_parrafo("f'''(x) = (5f(x) - 18f(x-h) + 24f(x-2h) - 14f(x-3h) + 3f(x-4h))/2h^3")
                         derivada = m_derivada.finita_hacia_atras.tercer_derivada_v2(f_x, xi, h)
                     elif orden == 4:
+                        instancia_respuesta.agregar_parrafo("Usando la version 2 de la cuarta derivada")
+                        instancia_respuesta.agregar_parrafo("f''''(x) = (11f(x) - 56f(x-h) + 114f(x-2h) - 104f(x-3h) + 35f(x-4h) - 6f(x-5h))/h^4")
                         derivada = m_derivada.finita_hacia_atras.cuarta_derivada_v2(f_x, xi, h)
             elif metodo == "cinco_puntos":
-                instancia_respuesta.agregar_parrafo("Usando el metodo de diferenciación cinco puntos")
+                instancia_respuesta.agregar_titulo1("Usando el metodo de diferenciación cinco puntos")
                 if version == 1:
+                    instancia_respuesta.agregar_parrafo("Usando la version 1 de la primera derivada")
+                    instancia_respuesta.agregar_parrafo("f'(x) = (-f(x+2h) + 8f(x+h) - 8f(x-h) + f(x-2h))/12h")
                     derivada = m_derivada.finita_cinco_puntos.primera_derivada_v1(f_x, xi, h)
                 elif version == 2:
+                    instancia_respuesta.agregar_parrafo("Usando la version 2 de la primera derivada")
+                    instancia_respuesta.agregar_parrafo("f'(x) = (f(x+2h) - 8f(x+h) + 8f(x-h) - f(x-2h))/12h")
                     derivada = m_derivada.finita_cinco_puntos.primera_derivada_v2(f_x, xi, h)
                 elif version == 3:
+                    instancia_respuesta.agregar_parrafo("Usando la version 3 de la primera derivada")
+                    instancia_respuesta.agregar_parrafo("f'(x) = (-f(x+3h) + 9f(x+2h) - 45f(x+h) + 45f(x-h) - 9f(x-2h) + f(x-3h))/60h")
                     derivada = m_derivada.finita_cinco_puntos.primera_derivada_v3(f_x, xi, h)
                 elif version == 4:
+                    instancia_respuesta.agregar_parrafo("Usando la version 4 de la primera derivada")
+                    instancia_respuesta.agregar_parrafo("f'(x) = (-f(x+3h) + 12f(x+2h) - 39f(x+h) + 56f(x) - 39f(x-h) + 12f(x-2h) - f(x-3h))/6h")
                     derivada = m_derivada.finita_cinco_puntos.primera_derivada_v4(f_x, xi, h)
                 elif version == 5:
+                    instancia_respuesta.agregar_parrafo("Usando la version 5 de la primera derivada")
+                    instancia_respuesta.agregar_parrafo("f'(x) = (f(x+3h) - 9f(x+2h) + 45f(x+h) - 45f(x-h) + 9f(x-2h) - f(x-3h))/60h")
                     derivada = m_derivada.finita_cinco_puntos.primera_derivada_v5(f_x, xi, h)
             elif metodo == "tres_puntos":
-                instancia_respuesta.agregar_parrafo("Usando el metodo de diferenciación tres puntos")
+                instancia_respuesta.agregar_titulo1("Usando el metodo de diferenciación tres puntos")
                 if version == 1:
+                    instancia_respuesta.agregar_parrafo("Usando la version 1 de la primera derivada")
+                    instancia_respuesta.agregar_parrafo("f'(x) = (f(x+h) - f(x-h))/2h")
                     derivada = m_derivada.finita_tres_puntos.primera_derivada_v1(f_x, xi, h)
                 elif version == 2:
+                    instancia_respuesta.agregar_parrafo("Usando la version 2 de la primera derivada")
+                    instancia_respuesta.agregar_parrafo("f'(x) = (-f(x+2h) + 4f(x+h) - 3f(x))/2h")
                     derivada = m_derivada.finita_tres_puntos.primera_derivada_v2(f_x, xi, h)
 
             #detallar respuestas
