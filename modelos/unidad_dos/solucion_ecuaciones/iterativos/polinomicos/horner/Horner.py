@@ -98,6 +98,13 @@ class metodo_horner():
                 S = residuo2 #validar que no sea 0
                 x_calculado = x0 - (R/S)
                 x_calculado = sp.N(x_calculado)
+                if x_calculado == 0:
+                    instancia_respuesta.agregar_parrafo(f"El valor calculado de x es 0, en la iteracion #{iteracion}, por lo tanto no se puede realizar el calculo del error acomulado")
+                    instancia_respuesta.agregar_fila([iteracion, x0, R, S, x_calculado, "No se puede calcular"])
+                    instancia_respuesta.agregar_titulo1("Se muestra la tabla de iteraciones")
+                    instancia_respuesta.agregar_tabla()
+                    resp= instancia_respuesta.obtener_y_limpiar_respuesta()
+                    return jsonify(resp), 200
                 error_acomulado = errores.error_aproximado_porcentual(x0, x_calculado)
                 error_acomulado = sp.N(error_acomulado)
                 instancia_respuesta.agregar_fila([iteracion, x0, R, S, x_calculado, error_acomulado])
@@ -105,8 +112,8 @@ class metodo_horner():
                     break
                 f_x0 = x - x_calculado #- para que cambie el signo 
                 x0 = x_calculado
-                if iteracion > 100:
-                    resp = instancia_respuesta.responder_error("El metodo no converge")
+                if iteracion > 300:
+                    resp = instancia_respuesta.responder_error("El metodo sobrepaso el numero maximo de iteraciones permitidas")
                     return jsonify(resp), 400
 
             instancia_respuesta.agregar_tabla()
