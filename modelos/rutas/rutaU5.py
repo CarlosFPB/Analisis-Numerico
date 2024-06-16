@@ -33,14 +33,15 @@ def Runge_kutta():
     return render_template('unidad_cinco/Runge_kutta.html')
 
 @U5.route('/metodos/unidad_cinco/iterativos/euler', methods=['POST'])
-def calcular_euler_mejorado():
+def calcular_euler():
     json_data = request.json
     respuesta = metodo_euler.calcular_euler(json_data)
     return respuesta
 
 @U5.route('/metodos/unidad_cinco/iterativos/euler', methods=['GET'])
-def Euler_mejorado():
-    return render_template('unidad_cinco/Euler.html')
+def Euler():
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('unidad_cinco/Euler.html', keyboard_content=keyboard_content, time=time.time())
 
 
 @U5.route('/metodos/unidad_cinco/iterativos/taylor', methods=['POST'])
