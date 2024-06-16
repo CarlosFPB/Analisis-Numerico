@@ -68,6 +68,13 @@ class metodo_newton():
                 x_anterior = x_actual
                 x_actual = newton.aproximacion(f_x_evaluada, f_prima_evaluada, x_anterior)
                 x_actual = sp.N(x_actual)
+                if x_actual == 0:
+                    instancia_respuesta.agregar_parrafo(f"El valor calculado de x es 0, en la iteracion #{iteracion}, por lo tanto no se puede realizar el calculo del error acomulado")
+                    instancia_respuesta.agregar_fila([iteracion, x_anterior, f_x_evaluada, f_prima_evaluada, x_actual, "Error no calculado"])
+                    instancia_respuesta.agregar_titulo1("Se muestra la tabla de iteraciones")
+                    instancia_respuesta.agregar_tabla()
+                    resp= instancia_respuesta.obtener_y_limpiar_respuesta()
+                    return jsonify(resp), 200
                 error_acomulado = errores.error_aproximado_porcentual(x_anterior,x_actual)
                 error_acomulado = sp.N(error_acomulado)
                 instancia_respuesta.agregar_fila([iteracion, x_anterior, f_x_evaluada, f_prima_evaluada, x_actual, error_acomulado])

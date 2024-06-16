@@ -125,7 +125,7 @@ class metodo_bairstow():
                 else: 
                     error_s = abs(solucion[ds] / s0) *100
                 print("error r: "+ str(error_r) + " error s: "+ str(error_s))
-                if error_r < 1 and error_s < 1:
+                if error_r < error_aceptado and error_s < error_aceptado:
                     r0 = sp.N(r0)
                     s0 = sp.N(s0)
                     x_aproximada.append((r0 + sp.sqrt((r0**2) + (4 * s0))) / 2)
@@ -157,10 +157,9 @@ class metodo_bairstow():
                     else:
                         break
                         #terminar
-                if iteracion > 200:
-                    resp = instancia_respuesta.responder_error("El metodo no converge")
+                if iteracion > 300:
+                    resp = instancia_respuesta.responder_error("El metodo sobrepaso la cantidad de iteraciones permitidas")
                     return jsonify(resp), 400
-                #sino volver a 
                 
             #retornar los resultados
             instancia_respuesta.agregar_titulo1("Metodo de Bairstow itreacion #" + str(iteracion))

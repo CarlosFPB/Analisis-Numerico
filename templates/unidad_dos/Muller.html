@@ -7,8 +7,10 @@
     <title>Método Muller</title>
     <!--Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- Importa Mathquill -->
-    <link rel="stylesheet" href="/static/matquill/mathquill.css">
+    <!-- Importa Mathquill desde el CDN -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"></script>
 
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
@@ -36,9 +38,6 @@
 </head>
 
 <body>
-     {% block keyboard %}
-     {{ keyboard_content | safe }}
-     {% endblock %}
     <div>
     </div>
     <span class="text_hero">Método <span class="textGradient1">Muller</span></span>
@@ -71,7 +70,9 @@
                     <input type="number" name="tolerancia" id="tolerancia" required value="0.05">
                 </div>
             </div>
-           
+            {% block keyboard %}
+            {{ keyboard_content | safe }}
+            {% endblock %}
             <div class="ui">
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
                     <span class="material-symbols-outlined">
@@ -221,29 +222,20 @@
         </div>
     </dialog>
 
-<script type="text/javascript" src="/static/matquill/mathquill.js"></script>
-    <script type="text/javascript">
-      MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
-
-      var latex = $('#math-field').bind('keydown keypress', function () {
-        var prev = latex.val();
-        setTimeout(function () {
-          var now = latex.val();
-          if (now !== prev) mq.latex(now);
-        });
-      });
-      var mq = MQ.MathField($('#latex')[0], {
-        autoSubscriptNumerals: true,
-        autoCommands:
-          'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
-        autoParenthesizedFunctions: 'sin cos',
-        handlers: {
-          edit: function () {
-            if (!latex.is(':focus')) latex.val(mq.latex());
-          },
-        },
-      });
-      latex.val(mq.latex());
+    <script defer>
+        window.onload = function () {
+            var MQ = MathQuill.getInterface(2);  // Inicializa MathQuill
+            var mathFieldSpan = document.getElementById('math-field');
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // permite usar la tecla espacio como tab
+                handlers: {
+                    edit: function () { // se llama cada vez que hay una edición
+                        var latexSpan = document.getElementById('latex');
+                        latexSpan.textContent = mathField.latex(); // muestra LaTeX
+                    }
+                }
+            });
+        };
     </script>
     <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo

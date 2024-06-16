@@ -103,6 +103,13 @@ class metodo_falsa_posicion():
                         break
 
                     if not iteracion == 1:
+                        if xr == 0:
+                            instancia_respuesta.agregar_parrafo(f"El valor calculado de x es 0, en la iteracion #{iteracion}, por lo tanto no se puede realizar el calculo del error acomulado")
+                            instancia_respuesta.agregar_fila([iteracion,x1,xu,xr,evaluacion,condicion,"No se puede calcular"])
+                            instancia_respuesta.agregar_titulo1("Se muestra la tabla de iteraciones")
+                            instancia_respuesta.agregar_tabla()
+                            resp= instancia_respuesta.obtener_y_limpiar_respuesta()
+                            return jsonify(resp), 200
                         error_acumulado = errores.error_aproximado_porcentual(valor_anterior,xr)
                         error_acumulado = sp.N(error_acumulado)
                         if error_acumulado < error_aceptable:

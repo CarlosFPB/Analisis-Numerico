@@ -87,7 +87,7 @@ class metodo_runge_kutta():
                 instancia_respuesta.agregar_parrafo("Se calcula k2 con la formula: k2 = f(x0 + h/2, y0 + (h/2)*k1)")
                 instancia_respuesta.agregar_parrafo("Se calcula k3 con la formula: k3 = f(x0 + h, y0 - h*k1 + 2*h*k2)")
                 instancia_respuesta.agregar_parrafo("Se calcula y1 con la formula: y1 = y0 + (1/6)*h*(k1 + 4*k2 + k3)")
-                instancia_respuesta.agregar_parrafo("Se calculo el nuevo valor de x2 y repite el proceso hasta llegar al valor de x buscado")
+                instancia_respuesta.agregar_parrafo("Se calcula el nuevo valor de x2 y repite el proceso hasta llegar al valor de x buscado")
                 for i in range(0, n-1):
                     lista_y.append(runge_kutta.orden_3(lista_x[i], lista_y[i], h, f_x)['yi_siguiente'])
             elif orden == 4:
