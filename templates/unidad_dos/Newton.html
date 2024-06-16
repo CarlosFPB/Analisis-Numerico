@@ -2,9 +2,6 @@
 <html lang="es">
 
 <head>
-    {% block keyboard %}
-    {{ keyboard_content | safe }}
-    {% endblock %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Método Newton</title>
@@ -39,6 +36,9 @@
 </head>
 
 <body>
+    {% block keyboard %}
+    {{ keyboard_content | safe }}
+    {% endblock %}
     <div>
     </div>
     <span class="text_hero">Método <span class="textGradient1">Newton</span></span>
