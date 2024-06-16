@@ -794,6 +794,7 @@ dialog {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(3px);
     display: none;
     justify-content: center;
     align-items: center;
@@ -897,3 +898,4 @@ dialog {
         padding: 0;
     }
 }
+

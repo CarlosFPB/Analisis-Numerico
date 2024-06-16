@@ -59,6 +59,7 @@ p {
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
     align-items: unset;
+    width: 100%;
     max-width: 764px;
     align-self: center;
 
@@ -85,6 +86,8 @@ p {
     flex-direction: column;
     gap: 1rem;
     padding: 2rem;
+    justify-content: center;
+    max-width: 90vw;
 }
 
 .información {
@@ -125,6 +128,7 @@ canvas {
     text-decoration: none;
     transition: all 0.5s;
     align-content: center;
+    justify-content: center;
     z-index: 0;
 
     display: flex;
@@ -140,7 +144,7 @@ canvas {
 
     img {
         align-self: center;
-        filter: grayscale(100%);
+        filter: drop-shadow(0px 4px 10px rgba(76, 0, 255, 0.275)) hue-rotate(-40deg) saturate(200%) brightness(0.9);
     }
 }
 
@@ -203,23 +207,18 @@ canvas {
 }
 
 .divpink {
-
     background: radial-gradient(circle at 0% 0%, #c20e35 0%, #0c1b3d 63%, #000000 100%);
     opacity: 0.95;
-
     span {
         text-shadow: -5px 10px 5px rgba(0, 0, 0, 0.192);
     }
-
     h2,
     p {
         color: white;
     }
-
     img {
         filter: invert(1) drop-shadow(0px 4px 10px rgb(0, 85, 134));
     }
-
 }
 
 .divgreen {
@@ -276,13 +275,14 @@ canvas {
     padding: 0.2rem 1rem;
     border-radius: 0.5rem 0 0 0.5rem;
     margin-bottom: -0.5rem;
-    z-index: 20;
+    z-index:0;
     opacity: 0.9;
 
     animation: etiquetaAnimation 200s infinite;
     ;
 
 }
+
 
 .etiqueta::before {
     content: "";
@@ -325,18 +325,18 @@ canvas {
 .flip-card {
     perspective: 1000px;
     font-family: sans-serif;
-    height: min-content;
+    width: auto;
 
 
     .flip-card-inner {
         position: relative;
         transition: transform 0.8s;
         transform-style: preserve-3d;
+        
 
         .flip-card-front,
         .flip-card-back {
             position: absolute;
-            width: 100%;
             height: auto;
             backface-visibility: hidden;
             backdrop-filter: blur(7px);
@@ -429,11 +429,7 @@ canvas {
 
 a {
     border: 3px solid rgba(255, 255, 255, 0.149);
-    text-decoration: none;
-    font-size: 0.8rem;
     z-index: 10;
-
-
 }
 
 .link {
@@ -467,6 +463,33 @@ a {
         opacity: 1;
     }
 }
+
+
+@media screen and (max-width: 550px) {
+    
+    .panel_metodos {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .etiqueta {
+    text-wrap: wrap !important;
+    max-width: 60vw;
+    }
+
+    html{
+        overflow-x: hidden;
+    }
+
+    
+}
+
+body{
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
 
 /* Add animation to the body 
 body {

@@ -35,11 +35,10 @@
         <div class="panel_metodos">
             <div class="etiqueta bgcRed">Soluciones de ecuaciones de una variable</div>
             <a href="" class="metodo grafico">
-                <div class="">
                     <h2>Método <span class="textGradient1">Gráfico</span></h2>
                     <img src="/static/img/grafica.png" alt="" width="300px">
                     <p>Este método consiste en graficar la función y encontrar la intersección con el eje x.</p>
-                </div>
+              
             </a>
             <div class="flip-card">
                 <div class="flip-card-inner">
@@ -63,7 +62,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="flip-card">
                 <div class="flip-card-inner">
                     <div class="flip-card-front divgreen">
@@ -82,14 +80,17 @@
                     </div>
                 </div>
             </div>
+
+        </div>
+        <div class="panel_metodos">
             <div class="etiqueta bgcBluesky">Interpolación</div>
             <div class="metodo interpolacion divpink" onclick="mostrarDialog('interpolacion')">
                 <h2>Métodos de <span class="textGradient6">Interpolación</span></h2>
                 <p>Este métodos consiste en la obtención de un polinomio que pase por los puntos dados.</p>
                 <img src="/static/img/interpolacion.png" alt="" width="250px">
             </div>
-
-
+        </div>
+        <div class="panel_metodos">
             <div class="etiqueta bgcGray">Diferenciación e Integración</div>
             <div class="metodo" onclick="mostrarDialog('Diferenciacion')">
                 <h2>Métodos de <span class="textGradient2">Diferenciación</span></h2>
@@ -99,11 +100,15 @@
                 <h2>Métodos de <span class="textGradient5">Integración</span></h2>
                 <p>Estos métodos consisten en la obtención de la integral de una función.</p>
             </div>
+
             
+        </div>
+        <div class="panel_metodos">
             <div class="etiqueta bgcram">Ecuaciones Diferenciables con Valos inicial</div>
             <div class="metodo valorInicial divblue" onclick="mostrarDialog('valorInicial')">
                 <h2>Métodos de <span class="textGradient1">Valor Inicial</span></h2>
-                <p>Estos métodos son utilizados para resolver problemas de valor inicial para ecuaciones diferenciales ordinarias.</p>
+                <p>Estos métodos son utilizados para resolver problemas de valor inicial para ecuaciones diferenciales
+                    ordinarias.</p>
                 <img src="/static/img/inicial2.png" alt="" width="250px">
             </div>
             <div class="información">
@@ -127,20 +132,33 @@
 
     <script>
 
-        window.onload = function () {
+        function actualizarTamañoCard() {
             const flipCards = Array.from(document.querySelectorAll('.flip-card'))
             flipCards.forEach(flipCard => {
-                hijos = Array.from(flipCard.children[0].children)
-                altura1 = hijos[0].offsetHeight
-                altura2 = hijos[1].offsetHeight
-                altura = altura1 > altura2 ? altura1 : altura2
+                let ancho = flipCard.offsetWidth
+
+
+                let hijos = Array.from(flipCard.children[0].children)
+                hijos[0].style.height = `auto`
+                hijos[1].style.height = `auto`
+                flipCard.style.height = `auto`
+                var altura1 = hijos[0].offsetHeight
+                var altura2 = hijos[1].offsetHeight
+                var altura = altura1 > altura2 ? altura1 : altura2
                 flipCard.style.height = altura + 'px'
                 hijos.forEach(hijo => {
                     hijo.style.height = `calc(${altura}px)`
+                    hijo.style.width = `calc(${ancho - 6}px - 2rem)`
                 })
-                console.log(altura1);
-
+                console.log(altura);
             })
+        }
+
+        window.onload = function () {
+            actualizarTamañoCard()
+        }
+        window.onresize = function () {
+            actualizarTamañoCard()
         }
 
     </script>
