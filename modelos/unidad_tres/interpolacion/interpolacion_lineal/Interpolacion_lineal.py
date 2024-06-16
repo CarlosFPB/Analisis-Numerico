@@ -75,6 +75,7 @@ class metodo_interpolacion_lineal():
         instancia_respuesta.agregar_parrafo(formula)
         try:
             polinomio = metodo_interpolacion_lineal.interpolacion_lineal(matriz_puntos)
+            instancia_respuesta.agregar_titulo1("Respueta: ")
             instancia_respuesta.agregar_parrafo("El polinomio interpolante es: ")
             instancia_respuesta.agregar_clave_valor("P(x)=", polinomio)
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()

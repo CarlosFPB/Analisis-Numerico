@@ -60,6 +60,9 @@ class metodo_taylor:
             x0 = float(json_data['x_inicial'])
             y0 = float(json_data['y_inicial'])
             h = float(json_data['h'])
+            if h == 0:
+                resp = instancia_respuesta.responder_error("El tamaño de paso debe ser diferente de 0")
+                return jsonify(resp), 400
             x_buscado = float(json_data['x_final'])
             if verificaciones.es_entero(json_data['grado']):
                 grado = int(json_data['grado'])
@@ -96,13 +99,16 @@ class metodo_taylor:
             lista_y.append(y0)
             #llenar lista x hasta el x buscado
             xs = x0
+            # Generar lista_x en la dirección correcta
             while True:
                 xs = round(xs + h, 8)
                 lista_x.append(xs)
-                if xs >= (x_buscado):
+                if (h > 0 and xs >= x_buscado) or (h < 0 and xs <= x_buscado):
                     break
-            if x_buscado != lista_x[-1]:
-                resp = instancia_respuesta.responder_error("No se puede llegar al valor buscado con el tamanho de paso dado")
+            
+            # Verificar si se alcanzó exactamente el valor buscado
+            if (h > 0 and x_buscado != lista_x[-1]) or (h < 0 and x_buscado != lista_x[-1]):
+                resp = instancia_respuesta.responder_error("No se puede llegar al valor buscado con el tamaño de paso dado")
                 return jsonify(resp), 400
             n = len(lista_x)
             #aplicacion del metodo de taylor

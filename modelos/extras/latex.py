@@ -1,9 +1,12 @@
 from sympy import expand, printing
 from latex2sympy2 import latex2sympy
+import importlib
 
-class conversla():
+
+class conversla(): #soluciona bug de variables
     @staticmethod
-    def latex_(latex):        
+    def latex_(latex):   
+        importlib.reload(importlib.import_module('latex2sympy2'))
         return expand(latex2sympy(latex))
 
 class conversla_html():
