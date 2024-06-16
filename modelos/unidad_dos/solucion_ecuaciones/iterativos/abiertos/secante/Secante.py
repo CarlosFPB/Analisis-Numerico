@@ -58,6 +58,13 @@ class metodo_secante():
                 f_x_evaluada_actual = f_x.subs(x, x_actual)
                 x_calculada = secante.aproximacion(f_x_evaluada_anterior,f_x_evaluada_actual,x_anterior,x_actual)
                 x_calculada = sp.N(x_calculada)
+                if x_calculada == 0:
+                    instancia_respuesta.agregar_parrafo(f"El valor calculado de x es 0, en la iteracion #{iteracion}, por lo tanto no se puede realizar el calculo del error acomulado")
+                    instancia_respuesta.agregar_fila([iteracion, x_anterior, x_actual, f_x_evaluada_anterior, f_x_evaluada_actual, x_calculada, "No se puede calcular"])
+                    instancia_respuesta.agregar_titulo1("Se muestra la tabla de iteraciones")
+                    instancia_respuesta.agregar_tabla()
+                    resp= instancia_respuesta.obtener_y_limpiar_respuesta()
+                    return jsonify(resp), 200
                 error_acomulado = errores.error_aproximado_porcentual(x_actual,x_calculada)
                 error_acomulado = sp.N(error_acomulado)
                 instancia_respuesta.agregar_fila([iteracion, x_anterior, x_actual, f_x_evaluada_anterior, f_x_evaluada_actual, x_calculada, error_acomulado])

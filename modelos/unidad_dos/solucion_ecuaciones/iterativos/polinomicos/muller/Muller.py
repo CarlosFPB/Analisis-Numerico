@@ -142,7 +142,13 @@ class metodo_muller():
                     x_calculado = x2 + ((-2*c)/(b - D))# con b**2 tarda muchas iteraciones
 
                 x_calculado = sp.N(x_calculado)
-
+                if x_calculado == 0:
+                    instancia_respuesta.agregar_parrafo(f"El valor calculado de x es 0, en la iteracion #{iteracion}, por lo tanto no se puede realizar el calculo del error acomulado")
+                    instancia_respuesta.agregar_fila([iteracion, x0, x1, x2, x_calculado, "No se puede calcular"])
+                    instancia_respuesta.agregar_titulo1("Se muestra la tabla de iteraciones")
+                    instancia_respuesta.agregar_tabla()
+                    resp= instancia_respuesta.obtener_y_limpiar_respuesta()
+                    return jsonify(resp), 200
 
                 #Error acomulado
                 error_acomulado = errores.error_aproximado_porcentual(x2,x_calculado)

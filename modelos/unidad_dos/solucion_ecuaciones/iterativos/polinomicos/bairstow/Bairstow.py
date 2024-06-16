@@ -125,7 +125,7 @@ class metodo_bairstow():
                 else: 
                     error_s = abs(solucion[ds] / s0) *100
                 print("error r: "+ str(error_r) + " error s: "+ str(error_s))
-                if error_r < 1 and error_s < 1:
+                if error_r < error_aceptado and error_s < error_aceptado:
                     r0 = sp.N(r0)
                     s0 = sp.N(s0)
                     x_aproximada.append((r0 + sp.sqrt((r0**2) + (4 * s0))) / 2)
