@@ -110,7 +110,7 @@ p {
 
 
 canvas {
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     margin: 0;
@@ -207,22 +207,25 @@ canvas {
 }
 
 .divpink {
-    background: radial-gradient(circle at 0% 0%, #c20e35 0%, #0c1b3d 63%, #000000 100%);
+    background: radial-gradient(circle at 0% 0%, #c20e35 0%, #0c1b3d 63%, #000000 100%) !important;
     opacity: 0.95;
+
     span {
         text-shadow: -5px 10px 5px rgba(0, 0, 0, 0.192);
     }
+
     h2,
     p {
         color: white;
     }
+
     img {
         filter: invert(1) drop-shadow(0px 4px 10px rgb(0, 85, 134));
     }
 }
 
 .divgreen {
-    background: radial-gradient(circle at 0% 0%, #444444 0%, #0c1b3d 63%, #000000 100%);
+    background: radial-gradient(circle at 0% 0%, #444444 0%, #0c1b3d 63%, #000000 100%) !important;
     opacity: 0.95;
 
     span {
@@ -241,7 +244,7 @@ canvas {
 }
 
 .divblue {
-    background: radial-gradient(circle at 0% 0%, #855b02 0%, #0c1b3d 63%, #000000 100%);
+    background: radial-gradient(circle at 0% 0%, #855b02 0%, #0c1b3d 63%, #000000 100%) !important;
     opacity: 0.95;
 
     span {
@@ -275,7 +278,7 @@ canvas {
     padding: 0.2rem 1rem;
     border-radius: 0.5rem 0 0 0.5rem;
     margin-bottom: -0.5rem;
-    z-index:0;
+    z-index: 0;
     opacity: 0.9;
 
     animation: etiquetaAnimation 200s infinite;
@@ -332,7 +335,7 @@ canvas {
         position: relative;
         transition: transform 0.8s;
         transform-style: preserve-3d;
-        
+
 
         .flip-card-front,
         .flip-card-back {
@@ -466,7 +469,18 @@ a {
 
 
 @media screen and (max-width: 550px) {
-    
+    .metodo,.grafico, .flip-card-front, .flip-card-back {
+        background: rgb(235, 235, 235,0.8);
+    }
+
+    *{
+        backdrop-filter: none !important;
+    }
+}
+
+
+@media screen and (max-width: 550px) {
+
     .panel_metodos {
         display: flex;
         flex-direction: column;
@@ -474,18 +488,18 @@ a {
     }
 
     .etiqueta {
-    text-wrap: wrap !important;
-    max-width: 60vw;
+        text-wrap: wrap !important;
+        max-width: 60vw;
     }
 
-    html{
+    html {
         overflow-x: hidden;
     }
 
-    
+
 }
 
-body{
+body {
     overflow-x: hidden;
     overflow-y: scroll;
 }
