@@ -38,6 +38,9 @@
 </head>
 
 <body>
+    {% block keyboard %}
+    {{ keyboard_content | safe }}
+    {% endblock %}
     <div>
     </div>
     <span class="text_hero">Método de <span class="textGradient1">Falsa posicion</span></span>
@@ -72,9 +75,6 @@
                     <input type="number" name="cifras" id="cifras" min="1" value="5" style="width: 2rem; opacity: 0.5;" step="1" disabled="">
                 </div>
             </div>
-            {% block keyboard %}
-            {{ keyboard_content | safe }}
-            {% endblock %}
             <div class="ui">
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
                     <span class="material-symbols-outlined">
