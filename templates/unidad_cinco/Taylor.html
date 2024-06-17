@@ -5,11 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Método de Taylor</title>
+
+    <!--Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <!-- Importa Mathquill -->
+    <link rel="stylesheet" href="/static/matquill/mathquill.css">
+    
+    
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
     
     <!-- Estilo de la pagina en General -->
-    <link rel="stylesheet" href="/static/templatestyles.css">
+    <!-- Estilo de la pagina en General -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
     
     <!-- Dependencias del Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
@@ -29,6 +39,9 @@
 </head>
 
 <body>
+    {% block keyboard %}
+    {{ keyboard_content | safe }}
+    {% endblock %}
     <div>
     </div>
     <span class="text_hero">Método de <span class="textGradient1">Taylor</span></span>
@@ -40,12 +53,11 @@
             <div class="descripocion">
                 <p>Ingrese los datos para calcular con taylor.</p>
             </div>
+            <div>
+                <p>Y′(x): <span id="math-field"></span></p>
+                <p><span id="latex"></span></p>
+            </div>
             <div class="formulario">
-                <div class="valor">
-                    <label for="funcion" style="text-wrap: nowrap;">Y′(x):</label>
-                    <input type="text" name="funcion" id="funcion" required value="y(x)-x**2"
-                    style="width: 10rem;">
-                </div>
                 
                 <div class="valor">
                     <label for="h">h:</label>
@@ -258,31 +270,78 @@
     </div>
 </dialog>
 
+<script type="text/javascript" src="/static/matquill/mathquill.js"></script>
+    <script type="text/javascript">
+      MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+
+      var latex = $('#math-field').bind('keydown keypress', function () {
+        var prev = latex.val();
+        setTimeout(function () {
+          var now = latex.val();
+          if (now !== prev) mq.latex(now);
+        });
+      });
+      var mq = MQ.MathField($('#latex')[0], {
+        autoSubscriptNumerals: true,
+        autoCommands:
+          'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+        autoParenthesizedFunctions: 'sin cos',
+        handlers: {
+          edit: function () {
+            if (!latex.is(':focus')) latex.val(mq.latex());
+          },
+        },
+      });
+      latex.val(mq.latex());
+    </script>
 
 
 <script>
     //Aqui debe ir la direccion del EndPoint de el Metodo
     let endPoint = "/metodos/unidad_cinco/iterativos/taylor"
     //Aqui iran los id de todos los datos que se enviaran al EndPoint
-    let variables = ["funcion", "h", "y_inicial","x_inicial", "x_final", "grado"];
+    let variables = ["h", "y_inicial","x_inicial", "x_final", "grado"];
     //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
     function calcular() {
-        let datos = {}
-        variables.forEach(variable => {
-            datos[variable] = document.getElementById(variable).value;
+            let datos = {}
+            datos["latex"] = document.getElementById("latex").textContent;
+            variables.forEach(variable => {
+                datos[variable] = document.getElementById(variable).value;
+            });
+            console.log(datos);
+            realizarPeticionPOST(endPoint, datos)
+        }
+        //metodos de inicio para que se vea bien la interfaz
+        mostrarEjercicio()
+        setTimeout(() => {
+            cambiarEstadoSugerencias()
+        }, 4000);
+    </script>
+
+<!--Script de teclado-->
+<script defer>
+    $(document).ready(function () {
+        var MQ = MathQuill.getInterface(2); // for backcompat
+        var mathFieldSpan = document.getElementById('math-field');
+        var latexSpan = document.getElementById('latex');
+        
+        var mathField = MQ.MathField(mathFieldSpan, {
+            spaceBehavesLikeTab: true, // configurable
+            handlers: {
+                edit: function () { // useful event handlers
+                    latexSpan.textContent = mathField.latex(); // simple API
+                }
+            }
         });
-        console.log(datos);
-        realizarPeticionPOST(endPoint, datos)
-    }
-    //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
-    let ejercicios = [
-    ["y(x)-x**2", "0.5", "0", "2", "1", "2"],
-    ["y(x)-x**2", "0.5", "0", "2", "1", "3"],
-    ["y(x)-x**2", "0.5", "0", "2", "1", "4"],
-    ["y(x)-x**2", "0.5", "0", "2", "1", "5"],
-    ];
-    
-    
+        
+        // Añadir funcionalidad a los botones del panel matemático
+        $('.math-button').on('click', function () {
+            var symbol = $(this).data('symbol');
+            mathField.write(symbol);
+            mathField.focus({ focusVisible: true });
+        });
+        
+    });
 </script>
 
 <script src="/static/Loader/background.js" async></script>

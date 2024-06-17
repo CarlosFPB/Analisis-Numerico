@@ -160,9 +160,15 @@ class metodo_ferrari:
             W = -(Q/(2*VF))
 
             respuesta.agregar_titulo1("Encontramos V y W")
-            respuesta.agregar_clave_valor("V", "sqrt(2*U - P)")
+            respuesta.agregar_clave_valor("V= ", "sqrt(2*U - P)")
             respuesta.agregar_parrafo("V = "+str(VF))
-            respuesta.agregar_clave_valor("W", "-Q/(2*V)")
+            respuesta.agregar_clave_valor("W= ", "-Q/(2*V)")
+            if VF == 0:
+                respuesta.agregar_parrafo("El valor de V es 0, no se puede continuar calculando W")
+                respuesta.agregar_parrafo(f"W = {Q}/(2*0)")
+                respuesta.agregar_parrafo("No se puede continuar con el metodo de Ferrari")
+                resp = respuesta.obtener_y_limpiar_respuesta()
+                return jsonify(resp), 200
             respuesta.agregar_parrafo("W = "+str(W))
 
             #encontramos las raices

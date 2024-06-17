@@ -2,6 +2,7 @@ import sympy as sp
 from flask import jsonify
 from modelos.extras.Formulas_multipasos import runge_kutta
 from modelos.extras.Funciones import verificaciones, respuesta_json
+from modelos.extras.latex import conversla,conversla_html
 
 class metodo_runge_kutta():
 
@@ -26,16 +27,23 @@ class metodo_runge_kutta():
             else:
                 resp = instancia_respuesta.responder_error("El numero de orden debe ser un entero entre (2 y 4)")
                 return jsonify(resp), 400
+            
             try:
-                f_x = sp.simplify(json_data["funcion"])
-                rs = f_x.subs(x, 2).subs(y, 3)
-                if rs > 0:
+                f_x =conversla.latex_(json_data["latex"])
+                resultado = f_x.subs(x, 1).evalf()
+                is_imaginary = resultado.is_imaginary
+
+                if resultado.is_real and resultado > 0:
                     pass
-            except sp.SympifyError:
+                elif is_imaginary:
+                    pass
+            except sp.SympifyError as e:
                 resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                print(e)
                 return jsonify(resp), 400
-            except Exception as e:
+            except TypeError as e:
                 resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                print(e)
                 return jsonify(resp), 400
         except ValueError as e:
             resp = instancia_respuesta.responder_error(f"Error de conversión de datos {e}")

@@ -1,8 +1,17 @@
 import sympy as sp
 from flask import jsonify
 from modelos.extras.Funciones import verificaciones, respuesta_json
+from modelos.extras.latex import conversla 
 
 class metodo_taylor:
+
+    @staticmethod
+    def cambiara_yx(EDO):
+        x = sp.Symbol("x")
+        y = sp.Symbol("y")
+        z = sp.Function("y")(x)
+        EDO = EDO.subs(y, z)
+        return EDO
 
     @staticmethod
     def derivar_en_xy(EDO, grado):
@@ -73,15 +82,21 @@ class metodo_taylor:
                 resp = instancia_respuesta.responder_error("El grado debe ser un valor entero mayor o igual a 0")
                 return jsonify(resp), 400
             try:
-                f_x = sp.sympify(json_data['funcion'])
-                rs = f_x.subs({x: x0, y: y0})
-                if rs > 0:
+                f_x =conversla.latex_(json_data["latex"])
+                resultado = f_x.subs(x, 1).evalf()
+                is_imaginary = resultado.is_imaginary
+                f_x = metodo_taylor.cambiara_yx(f_x)
+                if resultado.is_real and resultado > 0:
                     pass
-            except sp.SympifyError:
+                elif is_imaginary:
+                    pass
+            except sp.SympifyError as e:
                 resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                print(e)
                 return jsonify(resp), 400
-            except Exception as e:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada "+str(e))
+            except TypeError as e:
+                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                print(e)
                 return jsonify(resp), 400
         except ValueError as e:
             resp = instancia_respuesta.responder_error(f"Error de conversión de datos {e}")
