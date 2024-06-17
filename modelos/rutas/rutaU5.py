@@ -20,7 +20,8 @@ def calcular_multipasos():
 
 @U5.route('/metodos/unidad_cinco/iterativos/multipasos', methods=['GET'])
 def Multipasos():
-    return render_template('unidad_cinco/Multipasos.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('unidad_cinco/Multipasos.html', keyboard_content=keyboard_content, time=time.time())
 
 @U5.route('/metodos/unidad_cinco/iterativos/Runge_kutta', methods=['POST'])
 def calcular_runge_kutta():
@@ -30,7 +31,8 @@ def calcular_runge_kutta():
 
 @U5.route('/metodos/unidad_cinco/iterativos/Runge_kutta', methods=['GET'])
 def Runge_kutta():
-    return render_template('unidad_cinco/Runge_kutta.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('unidad_cinco/Runge_kutta.html', keyboard_content=keyboard_content, time=time.time())
 
 @U5.route('/metodos/unidad_cinco/iterativos/euler', methods=['POST'])
 def calcular_euler():
@@ -52,4 +54,5 @@ def calcular_taylor():
 
 @U5.route('/metodos/unidad_cinco/iterativos/taylor', methods=['GET'])
 def Taylor():
-    return render_template('unidad_cinco/Taylor.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('unidad_cinco/Taylor.html', keyboard_content=keyboard_content, time=time.time())

@@ -24,7 +24,9 @@ def calcular_derivadas():
 
 @U4.route('/metodos/diferenciacion/derivadas', methods=['GET'])
 def Diferenciacion():
-    return render_template('unidad_cuatro/Diferenciacion.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('unidad_cuatro/Diferenciacion.html', keyboard_content=keyboard_content, time=time.time())
+
 
 @U4.route('/metodos/diferenciacion/richardson', methods=['POST'])
 def calcular_richardson():
@@ -34,7 +36,8 @@ def calcular_richardson():
 
 @U4.route('/metodos/diferenciacion/richardson', methods=['GET'])
 def Richardson():
-    return render_template('unidad_cuatro/Richardson.html')
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('unidad_cuatro/Richardson.html', keyboard_content=keyboard_content, time=time.time())
 
 
  #integracion

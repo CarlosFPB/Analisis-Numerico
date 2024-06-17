@@ -5,11 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diferenciación numérica</title>
+    
+    <!--Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <!-- Importa Mathquill -->
+    <link rel="stylesheet" href="/static/matquill/mathquill.css">
+    
+    
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
     
     <!-- Estilo de la pagina en General -->
-    <link rel="stylesheet" href="/static/templatestyles.css">
+    <!-- Estilo de la pagina en General -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
     
     <!-- Dependencias del Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
@@ -29,6 +39,10 @@
 </head>
 
 <body>
+    {% block keyboard %}
+    {{ keyboard_content | safe }}
+    {% endblock %}
+    
     <div>
     </div>
     <span class="text_hero">Diferenciación <span class="textGradient1">numérica</span></span>
@@ -40,12 +54,11 @@
             <div class="descripocion">
                 <p>Ingrese los datos necesarios para calcular la derivada de la función.</p>
             </div>
+            <div>
+                <p>Función: <span id="math-field"></span></p>
+                <p><span id="latex"></span></p>
+            </div>
             <div class="formulario">
-                <div class="valor">
-                    <label for="funcion">Funcion:</label>
-                    <input type="text" name="funcion" id="funcion" required value="x**3 + x**2 + 2"
-                    style="width: 10rem;">
-                </div>
                 
                 <div class="valor">
                     <label for="metodo">Método:</label>
@@ -165,6 +178,12 @@
         </span>
     </span>
     <div id="ejercicios">
+        <p>funcion: e<sup>x</sup></p>
+        <p>metodo: central</p>
+        <p>derivada: 1</p>
+        <p>version: 1</p>
+        <p>h: 0.05</p>
+        <p>x: 2</p>
         
     </div>
     <div class="viñeta" onclick="cambiarEstadoSugerencias()">
@@ -309,34 +328,81 @@
     </div>
 </dialog>
 
+<script type="text/javascript" src="/static/matquill/mathquill.js"></script>
+<script type="text/javascript">
+  MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
 
+  var latex = $('#math-field').bind('keydown keypress', function () {
+    var prev = latex.val();
+    setTimeout(function () {
+      var now = latex.val();
+      if (now !== prev) mq.latex(now);
+    });
+  });
+  var mq = MQ.MathField($('#latex')[0], {
+    autoSubscriptNumerals: true,
+    autoCommands:
+      'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+    autoParenthesizedFunctions: 'sin cos',
+    handlers: {
+      edit: function () {
+        if (!latex.is(':focus')) latex.val(mq.latex());
+      },
+    },
+  });
+  latex.val(mq.latex());
+</script>
 
 <script>
     //Aqui debe ir la direccion del EndPoint de el Metodo
     let endPoint = "/metodos/diferenciacion/derivadas"
     //Aqui iran los id de todos los datos que se enviaran al EndPoint
-    let variables = ["funcion", "metodo", "orden", "version", "h", "xi"];
+    let variables = ["metodo", "orden", "version", "h", "xi"];
     //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
     function calcular() {
-        let datos = {}
-        variables.forEach(variable => {
-            datos[variable] = document.getElementById(variable).value;
+            let datos = {}
+            datos["latex"] = document.getElementById("latex").textContent;
+            variables.forEach(variable => {
+                datos[variable] = document.getElementById(variable).value;
+            });
+            console.log(datos);
+            realizarPeticionPOST(endPoint, datos)
+        }
+        //metodos de inicio para que se vea bien la interfaz
+        mostrarEjercicio()
+        setTimeout(() => {
+            cambiarEstadoSugerencias()
+        }, 4000);
+    </script>
+    
+    
+    <!--Script de teclado-->
+    <script defer>
+        $(document).ready(function () {
+            var MQ = MathQuill.getInterface(2); // for backcompat
+            var mathFieldSpan = document.getElementById('math-field');
+            var latexSpan = document.getElementById('latex');
+
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // configurable
+                handlers: {
+                    edit: function () { // useful event handlers
+                        latexSpan.textContent = mathField.latex(); // simple API
+                    }
+                }
+            });
+
+            // Añadir funcionalidad a los botones del panel matemático
+            $('.math-button').on('click', function () {
+                var symbol = $(this).data('symbol');
+                mathField.write(symbol);
+                mathField.focus({ focusVisible: true });
+            });
+
         });
-        console.log(datos);
-        realizarPeticionPOST(endPoint, datos)
-    }
-    //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
-    let ejercicios = [
-    ["x**3 + x**2 + 2", "adelante", "1", "1", "0.3", "1"],
-    ["x**3 + x**2 + 2", "atras", "1", "1", "0.3", "1"],
-    ["x**3 + x**2 + 2", "central", "1", "1", "0.3", "1"],
-    ["x**3 + x**2 + 2", "tres_puntos", "1", "1", "0.3", "1"],
-    ["x**3 + x**2 + 2", "cinco_puntos", "1", "1", "0.3", "1"],
-    ];
+    </script>
     
-    
-    
-    
+    <script>
     function cambiarMetodo(select) {
         let metodo = select.value;
         let derivada = document.getElementById("orden");
