@@ -3,7 +3,7 @@ import traceback
 from flask import jsonify
 import sympy as sp
 import numpy as np
-from ....extras.Funciones import respuesta_json, verificaciones, integr_obtener
+from ....extras.Funciones import respuesta_json, verificaciones
 from ....extras.latex import conversla, conversla_html
 
 class metodo_trapecio:
