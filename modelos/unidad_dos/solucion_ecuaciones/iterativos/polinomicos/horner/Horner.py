@@ -8,6 +8,42 @@ from modelos.extras.latex import conversla
 
 class metodo_horner():
 
+    @staticmethod
+    def generar_salida_json(instancia_respuesta, f_x, x0, error_aceptado):
+
+        instancia_respuesta.agregar_titulo1("Metodo de Horner")
+        instancia_respuesta.agregar_clave_valor("Funcion ingresada",f_x)
+        instancia_respuesta.agregar_parrafo(f"X0: {x0}")
+        instancia_respuesta.agregar_parrafo(f"Tolerancia: {error_aceptado}")
+        instancia_respuesta.agregar_parrafo("Se realiza la division sintetica de la funcion ingresada, para obtener el residuo y el cociente")
+            
+        coeficientes = verificaciones.obtener_coeficientes(f_x)
+        divsion_sinterica1 = metodo_horner.calcular_divsion_sinterica(coeficientes, x0)
+        instancia_respuesta.crear_tabla()
+        instancia_respuesta.agregar_fila(divsion_sinterica1[0])
+        instancia_respuesta.agregar_fila(divsion_sinterica1[1])
+        instancia_respuesta.agregar_fila(divsion_sinterica1[2])
+        R = divsion_sinterica1[-1].pop()
+        instancia_respuesta.agregar_tabla()
+        instancia_respuesta.agregar_parrafo(f"R = {R}")
+        instancia_respuesta.crear_tabla()
+        divsion_sinterica2 = metodo_horner.calcular_divsion_sinterica(divsion_sinterica1[-1], x0)
+        instancia_respuesta.agregar_fila(divsion_sinterica2[0])
+        instancia_respuesta.agregar_fila(divsion_sinterica2[1])
+        instancia_respuesta.agregar_fila(divsion_sinterica2[2])
+        instancia_respuesta.agregar_tabla()
+        S = divsion_sinterica2[-1].pop()
+        instancia_respuesta.agregar_parrafo(f"S = {S}")
+        instancia_respuesta.crear_tabla()
+        instancia_respuesta.agregar_fila(["Iteracion","X0","R","S","Xi","Ea%"])
+        instancia_respuesta.agregar_titulo1("Teniendo S y R, se calcula la nueva x")
+        instancia_respuesta.agregar_parrafo("Se calcula la nueva x con la formula: xi = x0 - (R/S)")
+        instancia_respuesta.agregar_parrafo(f"xi = {x0} - ({R}/{S})")
+        x_calculado = x0 - (R/S)
+        instancia_respuesta.agregar_clave_valor("xi",x_calculado)
+        instancia_respuesta.agregar_parrafo("Se evalua el error aproximado y se vuelve a iterar hasta que el error sea menor a la tolerancia")
+        return instancia_respuesta
+
     def calcular_Horner(json_data):
 
         try:
@@ -55,37 +91,9 @@ class metodo_horner():
             
             f_x0 = x - x0 #- para cambiar signo
             iteracion = 0
-            instancia_respuesta.agregar_titulo1("Metodo de Horner")
-            instancia_respuesta.agregar_parrafo(f"Funcion ingresada: {f_x}")
-            instancia_respuesta.agregar_parrafo(f"X0: {x0}")
-            instancia_respuesta.agregar_parrafo(f"Tolerancia: {error_aceptado}")
-            instancia_respuesta.agregar_parrafo("Se realiza la division sintetica de la funcion ingresada, para obtener el residuo y el cociente")
+
+            instancia_respuesta = metodo_horner.generar_salida_json(instancia_respuesta, f_x, x0, error_aceptado)
             
-            coeficientes = verificaciones.obtener_coeficientes(f_x)
-            divsion_sinterica1 = metodo_horner.calcular_divsion_sinterica(coeficientes, x0)
-            instancia_respuesta.crear_tabla()
-            instancia_respuesta.agregar_fila(divsion_sinterica1[0])
-            instancia_respuesta.agregar_fila(divsion_sinterica1[1])
-            instancia_respuesta.agregar_fila(divsion_sinterica1[2])
-            R = divsion_sinterica1[-1].pop()
-            instancia_respuesta.agregar_tabla()
-            instancia_respuesta.agregar_parrafo(f"R = {R}")
-            instancia_respuesta.crear_tabla()
-            divsion_sinterica2 = metodo_horner.calcular_divsion_sinterica(divsion_sinterica1[-1], x0)
-            instancia_respuesta.agregar_fila(divsion_sinterica2[0])
-            instancia_respuesta.agregar_fila(divsion_sinterica2[1])
-            instancia_respuesta.agregar_fila(divsion_sinterica2[2])
-            instancia_respuesta.agregar_tabla()
-            S = divsion_sinterica2[-1].pop()
-            instancia_respuesta.agregar_parrafo(f"S = {S}")
-            instancia_respuesta.crear_tabla()
-            instancia_respuesta.agregar_fila(["Iteracion","X0","R","S","Xi","Ea%"])
-            instancia_respuesta.agregar_titulo1("Teneindo S y R, la nueva x se calcula con la formula xi = x0 - (R/S)")
-            instancia_respuesta.agregar_parrafo(f"xi = {x0} - ({R}/{S})")
-            x_calculado = x0 - (R/S)
-            instancia_respuesta.agregar_clave_valor("xi",x_calculado)
-            instancia_respuesta.agregar_parrafo("Se evalua el error aproximado y se vuelve a iterar hasta que el error sea menor a la tolerancia")
-            instancia_respuesta.agregar_titulo1("Resultados")
             #Algortimo para calcular la raiz con el metodo de horner
             error_acomulado = 100
             while True:
@@ -116,8 +124,10 @@ class metodo_horner():
                     resp = instancia_respuesta.responder_error("El metodo sobrepaso el numero maximo de iteraciones permitidas")
                     return jsonify(resp), 400
 
+            instancia_respuesta.agregar_titulo1("Resultados")
+            instancia_respuesta.agregar_parrafo("Se muestra la tabla de iteraciones")
             instancia_respuesta.agregar_tabla()
-            instancia_respuesta.agregar_clave_valor("Raiz",x_calculado)
+            instancia_respuesta.agregar_clave_valor("Raiz= ",x_calculado)
             instancia_respuesta.agregar_parrafo(f"Numero de iteraciones: {iteracion}")
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()
             return jsonify(resp), 200

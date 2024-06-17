@@ -3,6 +3,7 @@ from modelos.extras.Funciones import verificaciones, respuesta_json
 from flask import jsonify
 from modelos.extras.Derivadas import Diferenciacion
 from modelos.unidad_cuatro.diferenciacion.derivadas.Diferenciacion import metodos_diferenciacion
+from modelos.extras.latex import conversla
 
 class metodo_richardson():
 
@@ -29,9 +30,28 @@ class metodo_richardson():
         return None
 
     def calcular_richardson(json_data):
-
+        x = sp.symbols('x')
         #evaluar errores en derivada
         instancia_respuesta = respuesta_json()
+
+        try:
+            f_x =conversla.latex_(json_data["latex"])
+            resultado = f_x.subs(x, 1)
+            if  resultado > 0:
+                pass
+        except sp.SympifyError as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            print(e)
+            return jsonify(resp), 400
+        except TypeError as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            print(e)
+            return jsonify(resp), 400
+        #verificar que sea grado mayor a 0 si es polinomica
+        if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino lo es no importa el grado
+            if verificaciones.obtener_grado(f_x) < 1:
+                resp = instancia_respuesta.responder_error("La funcion es una constante")
+                return jsonify(resp), 400
 
         try:
             json_data = metodo_richardson.agregar_clearD(json_data)
@@ -68,10 +88,11 @@ class metodo_richardson():
 
         try:
             instancia_respuesta.agregar_titulo1("Metodo de Richardson")
-            instancia_respuesta.agregar_parrafo("Se calculara la derivada de la funcion ingresada mediante el metodo de Richardson")
-            instancia_respuesta.agregar_parrafo("Funcion ingresada: " + json_data["funcion"])
+            instancia_respuesta.agregar_parrafo(f"Se calculara la '{json_data["orden"]}' derivada de la funcion ingresada mediante el metodo de Richardson")
+            instancia_respuesta.agregar_clave_valor("Funcion ingresada: ", f_x)
             instancia_respuesta.agregar_parrafo("Con h = "+str(h))
             instancia_respuesta.agregar_parrafo("Nivel = "+str(nivel))
+            instancia_respuesta.agregar_parrafo(f"Utilizando la formula del metodo de diferencia finita: {json_data['metodo']}")
             instancia_respuesta.agregar_parrafo("Evaluando la derivada en el punto xi = "+str(json_data["xi"]))
 
             for i in range(1, nivel):

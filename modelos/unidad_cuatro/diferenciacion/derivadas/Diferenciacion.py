@@ -2,6 +2,7 @@ import sympy as sp
 from flask import jsonify
 from modelos.extras.Funciones import verificaciones, respuesta_json
 from modelos.extras.Derivadas import Diferenciacion
+from modelos.extras.latex import conversla
 
 class metodos_diferenciacion():
 
@@ -17,21 +18,23 @@ class metodos_diferenciacion():
         x = sp.symbols('x')
         instancia_respuesta = respuesta_json()
         try:
-            f_x = sp.simplify(json_data["funcion"])
-            rs = f_x.subs(x, 2)
-            if rs > 0:
+            f_x =conversla.latex_(json_data["latex"])
+            resultado = f_x.subs(x, 1)
+            if  resultado > 0:
                 pass
-            #verificar que sea grado mayor a 0 si es polinomica
-            if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino lo es no importa el grado
-                if verificaciones.obtener_grado(f_x) < 1:
-                    resp = instancia_respuesta.responder_error("La funcion es una constante")
-                    return jsonify(resp), 400
-        except sp.SympifyError:
+        except sp.SympifyError as e:
             resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            print(e)
             return jsonify(resp), 400
         except TypeError as e:
             resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            print(e)
             return jsonify(resp), 400
+        #verificar que sea grado mayor a 0 si es polinomica
+        if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino lo es no importa el grado
+            if verificaciones.obtener_grado(f_x) < 1:
+                resp = instancia_respuesta.responder_error("La funcion es una constante")
+                return jsonify(resp), 400
         
         #Verificar los valores iniciales
         try:
@@ -65,7 +68,7 @@ class metodos_diferenciacion():
         try:
             instancia_respuesta.agregar_titulo1("Diferenciación numérica")
             instancia_respuesta.agregar_parrafo("Se calculará la derivada de la función")
-            instancia_respuesta.agregar_parrafo(str(f_x))
+            instancia_respuesta.agregar_clave_valor("Función ingresada:", f_x)
             instancia_respuesta.agregar_parrafo("En el punto xi = "+str(xi))
             instancia_respuesta.agregar_parrafo("Con h = "+str(h))
 
