@@ -143,8 +143,9 @@ class metodo_simpson:
             count_a += 2
             count_b += 2
             funcion = I
-            instancia_respuesta.agregar_parrafo(f"Resultado Integral = {I}")
-        
+            fx1 = conversla_html.mathl_(I)
+            instancia_respuesta.agregar_parrafo(f"Resultado: {fx1}")
+
         instancia_respuesta.agregar_clave_valor_segundo("Respuesta: ", I)
         resp = instancia_respuesta.obtener_y_limpiar_respuesta()
         return resp
