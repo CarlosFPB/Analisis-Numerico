@@ -48,6 +48,11 @@ p {
     color: var(--var-secondary);
 }
 
+.text_descripcion p{
+    text-align: center;
+    width: 745px;
+}
+
 .textGradient1 {
     font-family: var(--primary-font);
     font-weight: 900;
@@ -239,7 +244,7 @@ body {
     padding: 0.5rem;
     border-radius: 1rem;
     overflow-x: scroll;
-    max-width: min-content;
+    max-width: max-content;
 }
 
 table tr:first-child td {

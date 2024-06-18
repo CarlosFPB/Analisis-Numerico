@@ -88,7 +88,7 @@ class metodo_richardson():
 
         try:
             instancia_respuesta.agregar_titulo1("Metodo de Richardson")
-            instancia_respuesta.agregar_parrafo(f"Se calculara la '{json_data["orden"]}' derivada de la funcion ingresada mediante el metodo de Richardson")
+            instancia_respuesta.agregar_parrafo(f'Se calculara la "{json_data["orden"]}" derivada de la funcion ingresada mediante el metodo de Richardson')
             instancia_respuesta.agregar_clave_valor("Funcion ingresada: ", f_x)
             instancia_respuesta.agregar_parrafo("Con h = "+str(h))
             instancia_respuesta.agregar_parrafo("Nivel = "+str(nivel))

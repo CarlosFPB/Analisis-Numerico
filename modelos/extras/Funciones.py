@@ -226,6 +226,10 @@ class respuesta_json():
         cont = [str(clave), str(contenido)]
         self.respuesta.append({'type': "clavevalor", 'content': cont})
 
+    def agregar_clave_valor_segundo(self, clave, contenido):
+        cont = [str(clave), str(contenido)]
+        self.respuesta.insert(2, {'type': "clavevalor", 'content': cont})
+
     def agregar_divicion_sinterica(self, contenido):
         #contenido es una matriz con 3 filas
         resp = []

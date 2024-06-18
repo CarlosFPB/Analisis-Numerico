@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Métodos Trapecio y Simpson</title>
+    <title>Método Cuadratura Gaussiana</title>
     <!--Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Importa Mathquill -->
     <link rel="stylesheet" href="/static/matquill/mathquill.css">
+
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
 
@@ -33,7 +34,13 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-
+    <style>
+        #gauss{
+            width: 800px;
+            height: 600px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 
 <body>
@@ -42,10 +49,11 @@
     {% endblock %}
     <div>
     </div>
-    <span class="text_hero">Métodos <span class="textGradient1">Trapecio y Simpson</span></span>
+    <span class="text_hero">Método <span class="textGradient1">Cuadratura Gaussiana</span></span>
     <div class="text_descripcion">
-        <p>Son técnicas de integración numérica que aproximan el área bajo una curva utilizando segmentos trapezoidales y parábolas, respectivamente</p>
+        <p>Método que aproxima una integral definida utilizando puntos y pesos óptimos para lograr una precisión máxima</p>
     </div>
+    
     <div class="content">
         <div id="main" class="main">
             <div class="descripocion">
@@ -58,21 +66,15 @@
 
             <div class="formulario" id="flex">
 
-                <label for="metodo">Método</label>
-                <select name="metodo" id="metodo">
-                    <option value="Trapecio">Trapecio</option>
-                    <option value="Simpson 1/3">Simpson 1/3</option>
-                    <option value="Simpson 3/8">Simpson 3/8</option>
+                <label for="puntos">Puntos</label>
+                <select name="puntos" id="puntos">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
                 </select>
 
-                <label for="tipo">Tipo</label>
-                <select name="tipo" id="tipo">
-                    <option value="Simple">Simple</option>
-                    <option value="Compuesto">Compuesto</option>
-                </select>
-
-                <label for="intervalos">Intervalos</label>
-                <input type="number" id="intervalos" min="1" pattern="[1-9]+" required>
             </div>
             <div class="ui">
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
@@ -113,7 +115,6 @@
                 </div>
             </div>
         </div>
-        
         <div id="stepbystep" class="stepbystep">
             <center>
                 <p style="
@@ -141,29 +142,22 @@
     <!-- Sugerencias de Ejercicios 
     este sera una ventana que estara flotando a la derecha de la pagina
     -->
-    <div id="sugerencias" class="sugerencias" style="right: calc(-253px);">
+    <div class="sugerencias" style="right: calc(-253px);">
         <span><span class="textGradient1">
-                Ejercicio Sugerido Tipo Simple
+                Ejercicios Sugeridos
             </span>
         </span>
         <div id="ejercicios">
-            <p><math xmlns="http://www.w3.org/1998/Math/MathML"><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mn>2</mn><mn>4</mn></munderover><mfrac><mrow><msup><mi>e</mi><mi>x</mi></msup></mrow><mi>x</mi></mfrac><mi>d</mi><mi>x</mi></math> </p>
+            <math xmlns="http://www.w3.org/1998/Math/MathML"><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mn>3</mn><mn>7</mn></munderover><mfrac><mrow><mi>tan</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mrow><msup><mi>e</mi><mi>x</mi></msup></mrow></mfrac><mi lspace="0.2em" rspace="0">d</mi><mi>x</mi></math>
+            <math xmlns="http://www.w3.org/1998/Math/MathML"><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mn>1.2</mn><mn>3.1</mn></munderover><mi>csc</mi><mfenced><mi>t</mi></mfenced><mo>+</mo><msup><mi>e</mi><mi>t</mi></msup><mi>d</mi><mi>t</mi></math>
 
         </div>
-        <span><span class="textGradient1">
-            Ejercicio Sugerido Tipo Compuesto
-        </span>
-    </span>
-    <div id="ejercicios">
-        <p><math xmlns="http://www.w3.org/1998/Math/MathML"><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mn>2</mn><mn>4</mn></munderover><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mn>3</mn><mn>5</mn></munderover><mfrac><mrow><msup><mi>e</mi><mi>x</mi></msup></mrow><mi>x</mi></mfrac><mo>+</mo><mfrac><mrow><msup><mi>e</mi><mi>y</mi></msup></mrow><mi>y</mi></mfrac><mi>d</mi><mi>x</mi><mi>d</mi><mi>y</mi></math></p>
-    </div>
         <div class="viñeta" onclick="cambiarEstadoSugerencias()">
             <span class="material-symbols-outlined textGradient4">
                 keyboard_double_arrow_left
             </span>
         </div>
     </div>
-
 
     <dialog id="explicamelo">
         <div class="contenido">
@@ -173,31 +167,16 @@
                         close
                     </span>
                 </span>
-                <h2>Método del Trapecio Simple</h2>
-    <p>El método del trapecio simple es una técnica de integración numérica que aproxima el área bajo una curva dividiendo el área en un solo trapecio. La fórmula es:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><mo>(</mo><mi>b</mi><mo>-</mo><mi>a</mi><mo>)</mo><mfrac><mrow><mi>f</mi><mo>(</mo><mi>a</mi><mo>)</mo><mo>+</mo><mi>f</mi><mo>(</mo><mi>b</mi><mo>)</mo></mrow><mn>2</mn></mfrac></math>
+                <h2>Método de Cuadratura Gaussiana</h2>
+    <p>El método de cuadratura gaussiana es una técnica de integración numérica que utiliza puntos y pesos óptimos para lograr una precisión máxima. La fórmula para una cuadratura gaussiana de n puntos es:
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mrow><mi>z</mi><mi>a</mi></mrow><mrow><mi>z</mi><mi>b</mi></mrow></munderover><mi>w</mi><mo>(</mo><mi>z</mi><mo>)</mo><mi>f</mi><mo>(</mo><mi>z</mi><mo>)</mo><mi>d</mi><mi>z</mi></math>
+        <math xmlns="http://www.w3.org/1998/Math/MathML"><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mi>a</mi><mi>b</mi></munderover><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi lspace="0.2em" rspace="0">d</mi><mi>x</mi><mo>=</mo><mfrac><mrow><mo>(</mo><mi>b</mi><mo>-</mo><mi>a</mi><mo>)</mo></mrow><mn>2</mn></mfrac><munderover accent='false' accentunder='false'><mo>&#x2211;</mo><mrow><mi>k</mi><mo>=</mo><mn>0</mn></mrow><mi>n</mi></munderover><msub><mi>W</mi><mi>k</mi></msub><mi>f</mi><mo>(</mo><mfrac><mrow><mo>(</mo><mi>b</mi><mo>-</mo><mi>a</mi><mo>)</mo><msub><mi>t</mi><mi>k</mi></msub><mo>+</mo><mo>(</mo><mi>b</mi><mo>-</mo><mi>a</mi><mo>)</mo></mrow><mn>2</mn></mfrac><mo>)</mo></math>
+    </p>
     
-    <h2>Método del Trapecio Compuesto</h2>
-    <p>El método del trapecio compuesto extiende el método del trapecio simple dividiendo el intervalo de integración en varios subintervalos, aplicando el método del trapecio a cada uno y sumando los resultados. La fórmula es:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><mo>(</mo><mi>b</mi><mo>-</mo><mi>a</mi><mo>)</mo><mfrac><mrow><mi>f</mi><mo>(</mo><msub><mi>x</mi><mn>0</mn></msub><mo>)</mo><mo>+</mo><mn>2</mn><munderover accent='false' accentunder='false'><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi><mo>-</mo><mn>1</mn></mrow></munderover><mi>f</mi><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>)</mo><mo>+</mo><mi>f</mi><mo>(</mo><msub><mi>x</mi><mi>n</mi></msub><mo>)</mo></mrow><mrow><mn>2</mn><mi>n</mi></mrow></mfrac></math>
-    
-    <h2>Método de Simpson 1/3 Simple</h2>
-    <p>El método de Simpson 1/3 simple utiliza parábolas para aproximar el área bajo una curva. Es más preciso que el método del trapecio. La fórmula es:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><mo>(</mo><mi>b</mi><mo>-</mo><mi>a</mi><mo>)</mo><mfenced open="[" close="]"><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mi>a</mi><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>m</mi></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mi>b</mi><mo>)</mo></mrow></mrow><mn>6</mn></mfrac></mfenced></math>           
-    
-    <h2>Método de Simpson 1/3 Compuesto</h2>
-    <p>El método de Simpson 1/3 compuesto aplica el método de Simpson 1/3 simple a subintervalos del intervalo de integración, sumando los resultados. La fórmula es:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><mrow><mo>(</mo><mrow><mi>b</mi><mo>-</mo><mi>a</mi></mrow><mo>)</mo></mrow><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><munderover accent='false' accentunder='false'><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>m</mi><mi>i</mi></mrow></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><munderover accent='false' accentunder='false'><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi><mo>-</mo><mn>1</mn></mrow></munderover><mi>f</mi><mfenced><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow></mfenced><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow></mrow><mrow><mn>6</mn><mi>n</mi></mrow></mfrac></math>
-    
-    <h2>Método de Simpson 3/8 Simple</h2>
-    <p>El método de Simpson 3/8 simple es otra técnica de integración numérica que utiliza polinomios cúbicos para aproximar el área bajo una curva. La fórmula es:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><mfenced><mrow><mo>(</mo><mi>b</mi><mo>-</mo><mi>a</mi><mo>)</mo></mrow></mfenced><mfenced open="[" close="]"><mfrac><mrow><mi>f</mi><mo>(</mo><msub><mi>x</mi><mn>0</mn></msub><mo>)</mo><mo>+</mo><mn>3</mn><mi>f</mi><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>)</mo><mo>+</mo><mn>3</mn><mi>f</mi><mfenced><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow></mfenced><mo>+</mo><mi>f</mi><mo>(</mo><msub><mi>x</mi><mn>3</mn></msub><mo>)</mo></mrow><mn>8</mn></mfrac></mfenced></math>
-    
-    <h2>Método de Simpson 3/8 Compuesto</h2>
-    <p>El método de Simpson 3/8 compuesto aplica el método de Simpson 3/8 simple a subintervalos del intervalo de integración, sumando los resultados. La fórmula es:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><mfenced><mo>(</mo><mfrac><mrow><mi>b</mi><mo>-</mo><mi>a</mi></mrow><mrow><mn>8</mn><mi>n</mi></mrow></mfrac><mo>)</mo></mfenced><mfenced open="[" close="]"><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>3</mn><munderover accent='false' accentunder='false'><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>m</mi><mi>i</mi></mrow></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><munderover accent='false' accentunder='false'><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi><mo>-</mo><mn>1</mn></mrow></munderover><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow></mrow></mfenced></math>
-</body>                
-            </div>
+    <p>donde w(z) son los pesos y f(z) son los puntos de Gauss. </p>
+   
+    <img id="gauss" src="/static/img/puntos_gauss.jpeg" alt="puntos_gauss">
+        </div>
         </div>
     </dialog>
 
@@ -215,7 +194,6 @@
                 </center>
             </div>
         </div>
-        
     </dialog>
 
     <dialog id="api">
@@ -246,7 +224,6 @@
                 <p>¡Inténtalo y encuentra la raíz de tus funciones de forma sencilla!</p>
             </div>
         </div>
-        
     </dialog>
 
     <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
@@ -275,65 +252,24 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const tipoSelect = document.getElementById('tipo');
-            const intervalosInput = document.getElementById('intervalos');
-
-            // Function to handle enabling/disabling the input
-            function handleTipoChange() {
-                if (tipoSelect.value === 'Simple') {
-                    intervalosInput.disabled = true;
-                    intervalosInput.value = '';
-                } else {
-                    intervalosInput.disabled = false;
-                }
-            }
-
-            // Add event listener for change event
-            tipoSelect.addEventListener('change', handleTipoChange);
-
-            // Initial check on page load
-            handleTipoChange();
-        });
-    </script>
-
-
-    <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo
-        let endPoint = "/metodos/integracion/trapecio-simpson"
+        let endPoint = "/metodos/integracion/cuadratura-gaussiana"
         //Aqui iran los id de todos los datos que se enviaran al EndPoint
-        let variables = ["metodo", "tipo", "intervalos"];
+        let variables = ["puntos"];
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
         function calcular() {
-
-            // Obtener el input
-            const input = document.getElementById('intervalos');
-
-            // Verificar la validez del input
-            if (!input.checkValidity()) {
-                // Si no es válido, mostrar el mensaje de error
-                input.classList.add('error');
-                input.reportValidity(); // Mostrar el mensaje de validación propio del navegador
-            } else {
-                // Si es válido, remover la clase de error y realizar el cálculo
-                input.classList.remove('error');
-                console.log('Realizando el cálculo con intervalos:', input.value);
-                let datos = {}
-                datos["latex"] = document.getElementById("latex").textContent;
-                variables.forEach(variable => {
-                    datos[variable] = document.getElementById(variable).value;
-                });
-                console.log(datos);
-                realizarPeticionPOST(endPoint, datos)
-            }
-            
+            let datos = {}
+            datos["latex"] = document.getElementById("latex").textContent;
+            variables.forEach(variable => {
+                datos[variable] = document.getElementById(variable).value;
+            });
+            console.log(datos);
+            realizarPeticionPOST(endPoint, datos)
         }
-        //metodos de inicio para que se vea bien la interfaz
-        mostrarEjercicio()
-        setTimeout(() => {
-            cambiarEstadoSugerencias()
-        }, 4000);
+        //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
+        
     </script>
+
 
     <!--Script de teclado-->
     <script defer>
@@ -361,6 +297,7 @@
         });
     </script>
     <script src="/static/Loader/background.js" async></script>
+
 </body>
 
 </html>
