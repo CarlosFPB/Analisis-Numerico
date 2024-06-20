@@ -44,7 +44,8 @@
     </div>
     <span class="text_hero">Métodos <span class="textGradient1">Trapecio y Simpson</span></span>
     <div class="text_descripcion">
-        <p>Son técnicas de integración numérica que aproximan el área bajo una curva utilizando segmentos trapezoidales y parábolas, respectivamente</p>
+        <p>Son técnicas de integración numérica que aproximan el área bajo una curva utilizando segmentos trapezoidales
+            y parábolas, respectivamente</p>
     </div>
     <div class="content">
         <div id="main" class="main">
@@ -55,8 +56,41 @@
                 <p>Integral: <span id="math-field"></span></p>
                 <p><span id="latex"></span></p>
             </div>
+            <div class="tablas-input" style="transition: all 0.5s ease 0s; transform: scale(1, 0); height: 0px;">
+                <div class="inputTable">
+                    <div id="puntosX" class="puntos" style="display: flex;">
+                        <div>X</div>
+                        <div class="puntosContainer" style="display: flex;
+                    flex-wrap: wrap;">
+                        </div>
+                    </div>
+                    <div id="puntosY" class="puntos" style="display: flex;">
+                        <div>f(x)</div>
+                        <div class="puntosContainer" style="display: flex;
+                    flex-wrap: wrap;">
+                        </div>
+                    </div>
+                </div>
+                <div class="control-tabla-input">
+                    <div class="buttonSmall button-grey" onclick="añadirInputPuntos()">
+                        <span class="material-symbols-outlined">
+                            add
+                        </span>
+                    </div>
+                    <div class="buttonSmall button-grey" onclick="eliminarInputPunto()">
+                        <span class="material-symbols-outlined">
+                            delete
+                        </span>
+                    </div>
+                </div>
+            </div>
 
             <div class="formulario" id="flex">
+
+                <div class="valor">
+                    <label for="modo">Modo tabla:</label>
+                    <input type="checkbox" name="modo" id="modo" onchange="cambiarTipo(this)">
+                </div>
 
                 <label for="metodo">Método</label>
                 <select name="metodo" id="metodo">
@@ -71,8 +105,11 @@
                     <option value="Compuesto">Compuesto</option>
                 </select>
 
-                <label for="intervalos">Intervalos</label>
-                <input type="number" id="intervalos" min="1" pattern="[1-9]+" required>
+
+                <div class="valor">
+                    <label for="intervalos">Intervalos</label>
+                    <input type="number" id="intervalos" min="1" pattern="[1-9]+">
+                </div>
             </div>
             <div class="ui">
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
@@ -113,7 +150,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div id="stepbystep" class="stepbystep">
             <center>
                 <p style="
@@ -122,7 +159,6 @@
                     color: #16167f;
                     width: 100%;
                     ">Aqui se mostrará el procedimiento</p>
-
                 </p>
             </center>
         </div>
@@ -147,16 +183,67 @@
             </span>
         </span>
         <div id="ejercicios">
-            <p><math xmlns="http://www.w3.org/1998/Math/MathML"><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mn>2</mn><mn>4</mn></munderover><mfrac><mrow><msup><mi>e</mi><mi>x</mi></msup></mrow><mi>x</mi></mfrac><mi>d</mi><mi>x</mi></math> </p>
+            <p><math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <munderover accent='false' accentunder='false'>
+                        <mo>&#x222b;</mo>
+                        <mn>2</mn>
+                        <mn>4</mn>
+                    </munderover>
+                    <mfrac>
+                        <mrow>
+                            <msup>
+                                <mi>e</mi>
+                                <mi>x</mi>
+                            </msup>
+                        </mrow>
+                        <mi>x</mi>
+                    </mfrac>
+                    <mi>d</mi>
+                    <mi>x</mi>
+                </math> </p>
 
         </div>
         <span><span class="textGradient1">
-            Ejercicio Sugerido Tipo Compuesto
+                Ejercicio Sugerido Tipo Compuesto
+            </span>
         </span>
-    </span>
-    <div id="ejercicios">
-        <p><math xmlns="http://www.w3.org/1998/Math/MathML"><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mn>2</mn><mn>4</mn></munderover><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mn>3</mn><mn>5</mn></munderover><mfrac><mrow><msup><mi>e</mi><mi>x</mi></msup></mrow><mi>x</mi></mfrac><mo>+</mo><mfrac><mrow><msup><mi>e</mi><mi>y</mi></msup></mrow><mi>y</mi></mfrac><mi>d</mi><mi>x</mi><mi>d</mi><mi>y</mi></math></p>
-    </div>
+        <div id="ejercicios">
+            <p><math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <munderover accent='false' accentunder='false'>
+                        <mo>&#x222b;</mo>
+                        <mn>2</mn>
+                        <mn>4</mn>
+                    </munderover>
+                    <munderover accent='false' accentunder='false'>
+                        <mo>&#x222b;</mo>
+                        <mn>3</mn>
+                        <mn>5</mn>
+                    </munderover>
+                    <mfrac>
+                        <mrow>
+                            <msup>
+                                <mi>e</mi>
+                                <mi>x</mi>
+                            </msup>
+                        </mrow>
+                        <mi>x</mi>
+                    </mfrac>
+                    <mo>+</mo>
+                    <mfrac>
+                        <mrow>
+                            <msup>
+                                <mi>e</mi>
+                                <mi>y</mi>
+                            </msup>
+                        </mrow>
+                        <mi>y</mi>
+                    </mfrac>
+                    <mi>d</mi>
+                    <mi>x</mi>
+                    <mi>d</mi>
+                    <mi>y</mi>
+                </math></p>
+        </div>
         <div class="viñeta" onclick="cambiarEstadoSugerencias()">
             <span class="material-symbols-outlined textGradient4">
                 keyboard_double_arrow_left
@@ -174,193 +261,718 @@
                     </span>
                 </span>
                 <h2>Método del Trapecio Simple</h2>
-    <p>El método del trapecio simple es una técnica de integración numérica que aproxima el área bajo una curva dividiendo el área en un solo trapecio. La fórmula es:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><mo>(</mo><mi>b</mi><mo>-</mo><mi>a</mi><mo>)</mo><mfrac><mrow><mi>f</mi><mo>(</mo><mi>a</mi><mo>)</mo><mo>+</mo><mi>f</mi><mo>(</mo><mi>b</mi><mo>)</mo></mrow><mn>2</mn></mfrac></math>
-    
-    <h2>Método del Trapecio Compuesto</h2>
-    <p>El método del trapecio compuesto extiende el método del trapecio simple dividiendo el intervalo de integración en varios subintervalos, aplicando el método del trapecio a cada uno y sumando los resultados. La fórmula es:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><mo>(</mo><mi>b</mi><mo>-</mo><mi>a</mi><mo>)</mo><mfrac><mrow><mi>f</mi><mo>(</mo><msub><mi>x</mi><mn>0</mn></msub><mo>)</mo><mo>+</mo><mn>2</mn><munderover accent='false' accentunder='false'><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi><mo>-</mo><mn>1</mn></mrow></munderover><mi>f</mi><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>)</mo><mo>+</mo><mi>f</mi><mo>(</mo><msub><mi>x</mi><mi>n</mi></msub><mo>)</mo></mrow><mrow><mn>2</mn><mi>n</mi></mrow></mfrac></math>
-    
-    <h2>Método de Simpson 1/3 Simple</h2>
-    <p>El método de Simpson 1/3 simple utiliza parábolas para aproximar el área bajo una curva. Es más preciso que el método del trapecio. La fórmula es:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><mo>(</mo><mi>b</mi><mo>-</mo><mi>a</mi><mo>)</mo><mfenced open="[" close="]"><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mi>a</mi><mo>)</mo></mrow><mo>+</mo><mn>4</mn><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>m</mi></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mi>b</mi><mo>)</mo></mrow></mrow><mn>6</mn></mfrac></mfenced></math>           
-    
-    <h2>Método de Simpson 1/3 Compuesto</h2>
-    <p>El método de Simpson 1/3 compuesto aplica el método de Simpson 1/3 simple a subintervalos del intervalo de integración, sumando los resultados. La fórmula es:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><mrow><mo>(</mo><mrow><mi>b</mi><mo>-</mo><mi>a</mi></mrow><mo>)</mo></mrow><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>4</mn><munderover accent='false' accentunder='false'><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>m</mi><mi>i</mi></mrow></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><munderover accent='false' accentunder='false'><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi><mo>-</mo><mn>1</mn></mrow></munderover><mi>f</mi><mfenced><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow></mfenced><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow></mrow><mrow><mn>6</mn><mi>n</mi></mrow></mfrac></math>
-    
-    <h2>Método de Simpson 3/8 Simple</h2>
-    <p>El método de Simpson 3/8 simple es otra técnica de integración numérica que utiliza polinomios cúbicos para aproximar el área bajo una curva. La fórmula es:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><mfenced><mrow><mo>(</mo><mi>b</mi><mo>-</mo><mi>a</mi><mo>)</mo></mrow></mfenced><mfenced open="[" close="]"><mfrac><mrow><mi>f</mi><mo>(</mo><msub><mi>x</mi><mn>0</mn></msub><mo>)</mo><mo>+</mo><mn>3</mn><mi>f</mi><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>)</mo><mo>+</mo><mn>3</mn><mi>f</mi><mfenced><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow></mfenced><mo>+</mo><mi>f</mi><mo>(</mo><msub><mi>x</mi><mn>3</mn></msub><mo>)</mo></mrow><mn>8</mn></mfrac></mfenced></math>
-    
-    <h2>Método de Simpson 3/8 Compuesto</h2>
-    <p>El método de Simpson 3/8 compuesto aplica el método de Simpson 3/8 simple a subintervalos del intervalo de integración, sumando los resultados. La fórmula es:</p>
-    <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><mfenced><mo>(</mo><mfrac><mrow><mi>b</mi><mo>-</mo><mi>a</mi></mrow><mrow><mn>8</mn><mi>n</mi></mrow></mfrac><mo>)</mo></mfenced><mfenced open="[" close="]"><mrow><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>3</mn><munderover accent='false' accentunder='false'><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mrow><mi>m</mi><mi>i</mi></mrow></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><munderover accent='false' accentunder='false'><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi><mo>-</mo><mn>1</mn></mrow></munderover><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>i</mi></msub></mrow><mo>)</mo></mrow><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow></mrow></mfenced></math>
-</body>                
-            </div>
-        </div>
-    </dialog>
+                <p>El método del trapecio simple es una técnica de integración numérica que aproxima el área bajo una
+                    curva dividiendo el área en un solo trapecio. La fórmula es:</p>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mi>I</mi>
+                    <mo>=</mo>
+                    <mo>(</mo>
+                    <mi>b</mi>
+                    <mo>-</mo>
+                    <mi>a</mi>
+                    <mo>)</mo>
+                    <mfrac>
+                        <mrow>
+                            <mi>f</mi>
+                            <mo>(</mo>
+                            <mi>a</mi>
+                            <mo>)</mo>
+                            <mo>+</mo>
+                            <mi>f</mi>
+                            <mo>(</mo>
+                            <mi>b</mi>
+                            <mo>)</mo>
+                        </mrow>
+                        <mn>2</mn>
+                    </mfrac>
+                </math>
 
-    <dialog id="diagrama">
-        <div class="contenido">
-            <div class="dialog-content">
-                <span class="close" onclick="cerrarDialog('diagrama')">
-                    <span class="material-symbols-outlined">
-                        close
-                    </span>
+                <h2>Método del Trapecio Compuesto</h2>
+                <p>El método del trapecio compuesto extiende el método del trapecio simple dividiendo el intervalo de
+                    integración en varios subintervalos, aplicando el método del trapecio a cada uno y sumando los
+                    resultados. La fórmula es:</p>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mi>I</mi>
+                    <mo>=</mo>
+                    <mo>(</mo>
+                    <mi>b</mi>
+                    <mo>-</mo>
+                    <mi>a</mi>
+                    <mo>)</mo>
+                    <mfrac>
+                        <mrow>
+                            <mi>f</mi>
+                            <mo>(</mo>
+                            <msub>
+                                <mi>x</mi>
+                                <mn>0</mn>
+                            </msub>
+                            <mo>)</mo>
+                            <mo>+</mo>
+                            <mn>2</mn>
+                            <munderover accent='false' accentunder='false'>
+                                <mo>&#x2211;</mo>
+                                <mrow>
+                                    <mi>i</mi>
+                                    <mo>=</mo>
+                                    <mn>1</mn>
+                                </mrow>
+                                <mrow>
+                                    <mi>n</mi>
+                                    <mo>-</mo>
+                                    <mn>1</mn>
+                                </mrow>
+                            </munderover>
+                            <mi>f</mi>
+                            <mo>(</mo>
+                            <msub>
+                                <mi>x</mi>
+                                <mi>i</mi>
+                            </msub>
+                            <mo>)</mo>
+                            <mo>+</mo>
+                            <mi>f</mi>
+                            <mo>(</mo>
+                            <msub>
+                                <mi>x</mi>
+                                <mi>n</mi>
+                            </msub>
+                            <mo>)</mo>
+                        </mrow>
+                        <mrow>
+                            <mn>2</mn>
+                            <mi>n</mi>
+                        </mrow>
+                    </mfrac>
+                </math>
+
+                <h2>Método de Simpson 1/3 Simple</h2>
+                <p>El método de Simpson 1/3 simple utiliza parábolas para aproximar el área bajo una curva. Es más
+                    preciso que el método del trapecio. La fórmula es:</p>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mi>I</mi>
+                    <mo>=</mo>
+                    <mo>(</mo>
+                    <mi>b</mi>
+                    <mo>-</mo>
+                    <mi>a</mi>
+                    <mo>)</mo>
+                    <mfenced open="[" close="]">
+                        <mfrac>
+                            <mrow>
+                                <mi>f</mi>
+                                <mrow>
+                                    <mo>(</mo>
+                                    <mi>a</mi>
+                                    <mo>)</mo>
+                                </mrow>
+                                <mo>+</mo>
+                                <mn>4</mn>
+                                <mi>f</mi>
+                                <mrow>
+                                    <mo>(</mo>
+                                    <mrow>
+                                        <msub>
+                                            <mi>x</mi>
+                                            <mi>m</mi>
+                                        </msub>
+                                    </mrow>
+                                    <mo>)</mo>
+                                </mrow>
+                                <mo>+</mo>
+                                <mi>f</mi>
+                                <mrow>
+                                    <mo>(</mo>
+                                    <mi>b</mi>
+                                    <mo>)</mo>
+                                </mrow>
+                            </mrow>
+                            <mn>6</mn>
+                        </mfrac>
+                    </mfenced>
+                </math>
+
+                <h2>Método de Simpson 1/3 Compuesto</h2>
+                <p>El método de Simpson 1/3 compuesto aplica el método de Simpson 1/3 simple a subintervalos del
+                    intervalo de integración, sumando los resultados. La fórmula es:</p>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mi>I</mi>
+                    <mo>=</mo>
+                    <mrow>
+                        <mo>(</mo>
+                        <mrow>
+                            <mi>b</mi>
+                            <mo>-</mo>
+                            <mi>a</mi>
+                        </mrow>
+                        <mo>)</mo>
+                    </mrow>
+                    <mfrac>
+                        <mrow>
+                            <mi>f</mi>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>x</mi>
+                                        <mn>0</mn>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                            <mo>+</mo>
+                            <mn>4</mn>
+                            <munderover accent='false' accentunder='false'>
+                                <mo>&#x2211;</mo>
+                                <mrow>
+                                    <mi>i</mi>
+                                    <mo>=</mo>
+                                    <mn>1</mn>
+                                </mrow>
+                                <mi>n</mi>
+                            </munderover>
+                            <mi>f</mi>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>x</mi>
+                                        <mrow>
+                                            <mi>m</mi>
+                                            <mi>i</mi>
+                                        </mrow>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                            <mo>+</mo>
+                            <mn>2</mn>
+                            <munderover accent='false' accentunder='false'>
+                                <mo>&#x2211;</mo>
+                                <mrow>
+                                    <mi>i</mi>
+                                    <mo>=</mo>
+                                    <mn>1</mn>
+                                </mrow>
+                                <mrow>
+                                    <mi>n</mi>
+                                    <mo>-</mo>
+                                    <mn>1</mn>
+                                </mrow>
+                            </munderover>
+                            <mi>f</mi>
+                            <mfenced>
+                                <mrow>
+                                    <msub>
+                                        <mi>x</mi>
+                                        <mi>i</mi>
+                                    </msub>
+                                </mrow>
+                            </mfenced>
+                            <mo>+</mo>
+                            <mi>f</mi>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>x</mi>
+                                        <mi>n</mi>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                        </mrow>
+                        <mrow>
+                            <mn>6</mn>
+                            <mi>n</mi>
+                        </mrow>
+                    </mfrac>
+                </math>
+
+                <h2>Método de Simpson 3/8 Simple</h2>
+                <p>El método de Simpson 3/8 simple es otra técnica de integración numérica que utiliza polinomios
+                    cúbicos para aproximar el área bajo una curva. La fórmula es:</p>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mi>I</mi>
+                    <mo>=</mo>
+                    <mfenced>
+                        <mrow>
+                            <mo>(</mo>
+                            <mi>b</mi>
+                            <mo>-</mo>
+                            <mi>a</mi>
+                            <mo>)</mo>
+                        </mrow>
+                    </mfenced>
+                    <mfenced open="[" close="]">
+                        <mfrac>
+                            <mrow>
+                                <mi>f</mi>
+                                <mo>(</mo>
+                                <msub>
+                                    <mi>x</mi>
+                                    <mn>0</mn>
+                                </msub>
+                                <mo>)</mo>
+                                <mo>+</mo>
+                                <mn>3</mn>
+                                <mi>f</mi>
+                                <mo>(</mo>
+                                <msub>
+                                    <mi>x</mi>
+                                    <mi>i</mi>
+                                </msub>
+                                <mo>)</mo>
+                                <mo>+</mo>
+                                <mn>3</mn>
+                                <mi>f</mi>
+                                <mfenced>
+                                    <mrow>
+                                        <msub>
+                                            <mi>x</mi>
+                                            <mn>2</mn>
+                                        </msub>
+                                    </mrow>
+                                </mfenced>
+                                <mo>+</mo>
+                                <mi>f</mi>
+                                <mo>(</mo>
+                                <msub>
+                                    <mi>x</mi>
+                                    <mn>3</mn>
+                                </msub>
+                                <mo>)</mo>
+                            </mrow>
+                            <mn>8</mn>
+                        </mfrac>
+                    </mfenced>
+                </math>
+
+                <h2>Método de Simpson 3/8 Compuesto</h2>
+                <p>El método de Simpson 3/8 compuesto aplica el método de Simpson 3/8 simple a subintervalos del
+                    intervalo de integración, sumando los resultados. La fórmula es:</p>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mi>I</mi>
+                    <mo>=</mo>
+                    <mfenced>
+                        <mo>(</mo>
+                        <mfrac>
+                            <mrow>
+                                <mi>b</mi>
+                                <mo>-</mo>
+                                <mi>a</mi>
+                            </mrow>
+                            <mrow>
+                                <mn>8</mn>
+                                <mi>n</mi>
+                            </mrow>
+                        </mfrac>
+                        <mo>)</mo>
+                    </mfenced>
+                    <mfenced open="[" close="]">
+                        <mrow>
+                            <mi>f</mi>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>x</mi>
+                                        <mn>0</mn>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                            <mo>+</mo>
+                            <mn>3</mn>
+                            <munderover accent='false' accentunder='false'>
+                                <mo>&#x2211;</mo>
+                                <mrow>
+                                    <mi>i</mi>
+                                    <mo>=</mo>
+                                    <mn>1</mn>
+                                </mrow>
+                                <mi>n</mi>
+                            </munderover>
+                            <mi>f</mi>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>x</mi>
+                                        <mrow>
+                                            <mi>m</mi>
+                                            <mi>i</mi>
+                                        </mrow>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                            <mo>+</mo>
+                            <mn>2</mn>
+                            <munderover accent='false' accentunder='false'>
+                                <mo>&#x2211;</mo>
+                                <mrow>
+                                    <mi>i</mi>
+                                    <mo>=</mo>
+                                    <mn>1</mn>
+                                </mrow>
+                                <mrow>
+                                    <mi>n</mi>
+                                    <mo>-</mo>
+                                    <mn>1</mn>
+                                </mrow>
+                            </munderover>
+                            <mi>f</mi>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>x</mi>
+                                        <mi>i</mi>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                            <mo>+</mo>
+                            <mi>f</mi>
+                            <mrow>
+                                <mo>(</mo>
+                                <mrow>
+                                    <msub>
+                                        <mi>x</mi>
+                                        <mi>n</mi>
+                                    </msub>
+                                </mrow>
+                                <mo>)</mo>
+                            </mrow>
+                        </mrow>
+                    </mfenced>
+                </math>
+</body>
+</div>
+</div>
+</dialog>
+
+<dialog id="diagrama">
+    <div class="contenido">
+        <div class="dialog-content">
+            <span class="close" onclick="cerrarDialog('diagrama')">
+                <span class="material-symbols-outlined">
+                    close
                 </span>
-                <h2>Diagrama de Flujo del Método Bisección</h2>
-                <center>
-                    <p>Aqui debe ir una imagen bien perrona del codigo</p>
-                </center>
-            </div>
+            </span>
+            <h2>Diagrama de Flujo del Método Bisección</h2>
+            <center>
+                <p>Aqui debe ir una imagen bien perrona del codigo</p>
+            </center>
         </div>
-        
-    </dialog>
+    </div>
 
-    <dialog id="api">
-        <div class="contenido">
-            <div class="dialog-content">
-                <span class="close" onclick="cerrarDialog('api')">
-                    <span class="material-symbols-outlined">
-                        close
-                    </span>
+</dialog>
+
+<dialog id="api">
+    <div class="contenido">
+        <div class="dialog-content">
+            <span class="close" onclick="cerrarDialog('api')">
+                <span class="material-symbols-outlined">
+                    close
                 </span>
-                <h2>API del Método Bisección</h2>
-                <p>Para utilizar el método de la bisección a través de la API, debes realizar una petición POST al
-                    siguiente endpoint:</p>
-                <p><code>https://nummeth.herokuapp.com/metodos/directos/cerrados/Biseccion</code></p>
-                <p>Los parámetros que debes incluir en la petición son los siguientes:</p>
-                <ul>
-                    <li><code>funcion</code>: La función para la cual deseas encontrar la raíz.</li>
-                    <li><code>xi</code>: El valor inicial del intervalo [Xi, Xu].</li>
-                    <li><code>xu</code>: El valor final del intervalo [Xi, Xu].</li>
-                    <li><code>tolerancia</code>: La tolerancia deseada para la aproximación de la raíz.</li>
-                </ul>
-                <p>Al realizar la petición, recibirás como respuesta un objeto JSON con los siguientes campos:</p>
-                <ul>
-                    <li><code>raiz</code>: El valor aproximado de la raíz de la función.</li>
-                    <li><code>iteraciones</code>: El número de iteraciones realizadas para encontrar la raíz.</li>
-                    <li><code>error</code>: El error relativo porcentual de la aproximación.</li>
-                </ul>
-                <p>¡Inténtalo y encuentra la raíz de tus funciones de forma sencilla!</p>
-            </div>
+            </span>
+            <h2>API del Método Bisección</h2>
+            <p>Para utilizar el método de la bisección a través de la API, debes realizar una petición POST al
+                siguiente endpoint:</p>
+            <p><code>https://nummeth.herokuapp.com/metodos/directos/cerrados/Biseccion</code></p>
+            <p>Los parámetros que debes incluir en la petición son los siguientes:</p>
+            <ul>
+                <li><code>funcion</code>: La función para la cual deseas encontrar la raíz.</li>
+                <li><code>xi</code>: El valor inicial del intervalo [Xi, Xu].</li>
+                <li><code>xu</code>: El valor final del intervalo [Xi, Xu].</li>
+                <li><code>tolerancia</code>: La tolerancia deseada para la aproximación de la raíz.</li>
+            </ul>
+            <p>Al realizar la petición, recibirás como respuesta un objeto JSON con los siguientes campos:</p>
+            <ul>
+                <li><code>raiz</code>: El valor aproximado de la raíz de la función.</li>
+                <li><code>iteraciones</code>: El número de iteraciones realizadas para encontrar la raíz.</li>
+                <li><code>error</code>: El error relativo porcentual de la aproximación.</li>
+            </ul>
+            <p>¡Inténtalo y encuentra la raíz de tus funciones de forma sencilla!</p>
         </div>
-        
-    </dialog>
+    </div>
 
-    <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
-    <script type="text/javascript">
-      MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+</dialog>
 
-      var latex = $('#math-field').bind('keydown keypress', function () {
+<script type="text/javascript" src="/static/matquill/mathquill.js"></script>
+<script type="text/javascript">
+    MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+
+    var latex = $('#math-field').bind('keydown keypress', function () {
         var prev = latex.val();
         setTimeout(function () {
-          var now = latex.val();
-          if (now !== prev) mq.latex(now);
+            var now = latex.val();
+            if (now !== prev) mq.latex(now);
         });
-      });
-      var mq = MQ.MathField($('#latex')[0], {
+    });
+    var mq = MQ.MathField($('#latex')[0], {
         autoSubscriptNumerals: true,
         autoCommands:
-          'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
         autoParenthesizedFunctions: 'sin cos',
         handlers: {
-          edit: function () {
-            if (!latex.is(':focus')) latex.val(mq.latex());
-          },
+            edit: function () {
+                if (!latex.is(':focus')) latex.val(mq.latex());
+            },
         },
-      });
-      latex.val(mq.latex());
-    </script>
+    });
+    latex.val(mq.latex());
+</script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const tipoSelect = document.getElementById('tipo');
-            const intervalosInput = document.getElementById('intervalos');
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tipoSelect = document.getElementById('tipo');
+        const intervalosInput = document.getElementById('intervalos');
 
-            // Function to handle enabling/disabling the input
-            function handleTipoChange() {
-                if (tipoSelect.value === 'Simple') {
-                    intervalosInput.disabled = true;
-                    intervalosInput.value = '';
-                } else {
-                    intervalosInput.disabled = false;
-                }
-            }
-
-            // Add event listener for change event
-            tipoSelect.addEventListener('change', handleTipoChange);
-
-            // Initial check on page load
-            handleTipoChange();
-        });
-    </script>
-
-
-    <script>
-        //Aqui debe ir la direccion del EndPoint de el Metodo
-        let endPoint = "/metodos/integracion/trapecio-simpson"
-        //Aqui iran los id de todos los datos que se enviaran al EndPoint
-        let variables = ["metodo", "tipo", "intervalos"];
-        //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
-        function calcular() {
-
-            // Obtener el input
-            const input = document.getElementById('intervalos');
-
-            // Verificar la validez del input
-            if (!input.checkValidity()) {
-                // Si no es válido, mostrar el mensaje de error
-                input.classList.add('error');
-                input.reportValidity(); // Mostrar el mensaje de validación propio del navegador
+        // Function to handle enabling/disabling the input
+        function handleTipoChange() {
+            if (tipoSelect.value === 'Simple') {
+                intervalosInput.disabled = true;
+                intervalosInput.value = '';
             } else {
-                // Si es válido, remover la clase de error y realizar el cálculo
-                input.classList.remove('error');
-                console.log('Realizando el cálculo con intervalos:', input.value);
-                let datos = {}
+                intervalosInput.disabled = false;
+            }
+        }
+
+        // Add event listener for change event
+        tipoSelect.addEventListener('change', handleTipoChange);
+
+        // Initial check on page load
+        handleTipoChange();
+    });
+
+
+    let idpuntos = ["puntosX", "puntosY"]
+    let numeroDePuntos = 0;
+
+
+    function establecerSeleccion(elemento, tipo, mostrar) {
+        let index = Array.from(elemento.parentNode.children).indexOf(elemento);
+        idpuntos.forEach(id => {
+            let puntos = document.getElementById(id).children[1];
+            switch (tipo) {
+                case 1:
+                    if (mostrar) {
+                        puntos.children[index].classList.add("input-focus");
+                    } else {
+                        puntos.children[index].classList.remove("input-focus");
+                    }
+                    break;
+                case 2:
+                    if (mostrar) {
+                        puntos.children[index].classList.add("input-hover");
+                    } else {
+                        puntos.children[index].classList.remove("input-hover");
+                    }
+                    break;
+            }
+        });
+    }
+
+    function añadirInputPuntos() {
+        numeroDePuntos++;
+        idpuntos.forEach(id => {
+            let puntos = document.getElementById(id).children[1];
+            let input = document.createElement("input");
+            input.type = "number";
+            input.onfocus = function () {
+                establecerSeleccion(this, 1, true);
+            }
+            input.onblur = function () {
+                establecerSeleccion(this, 1, false);
+            }
+            input.onmouseover = function () {
+                establecerSeleccion(this, 2, true);
+            }
+            input.onmouseout = function () {
+                establecerSeleccion(this, 2, false);
+            }
+            input.style.width = "0rem";
+            input.style.padding = "0rem";
+            input.style.height = "0rem";
+            puntos.insertBefore(input, puntos.children[puntos.children.length]);
+
+
+            setTimeout(() => {
+                input.style.width = "3rem";
+                input.style.height = "2.4rem";
+                input.style.padding = "0.1rem";
+            }, 10);
+        });
+    }
+
+    function eliminarInputPunto() {
+        if (document.getElementById("puntosX").children[1].children.length > 4) {
+            numeroDePuntos--;
+            idpuntos.forEach(id => {
+                let puntos = document.getElementById(id).children[1];
+                let input = puntos.children[numeroDePuntos];
+                input.style.width = "0rem";
+                input.style.padding = "0rem";
+                input.style.height = "0rem";
+                setTimeout(() => {
+                    puntos.removeChild(input);
+                }, 500);
+            });
+        }
+    }
+
+    function cambiarTipo(elemento) {
+        let tipo = elemento.checked;
+        let tablaInput = document.querySelector('.tablas-input');
+        let funcion = document.getElementById("math-field").parentElement.parentElement;
+        let intervalos = document.getElementById("intervalos");
+        if (tipo) {
+            tablaInput.style.transition = "all 0.5s";
+            tablaInput.style.transform = "scale(1,1)";
+            tablaInput.style.height = "auto";
+            let alturat = tablaInput.offsetHeight;
+            tablaInput.style.height = "0px";
+            setTimeout(() => {
+                tablaInput.style.height = `${alturat}px`;
+                setTimeout(() => {
+                    tablaInput.style.height = "auto";
+                }, 500);
+            }, 10);
+
+            funcion.style.transition = "all 0.5s";
+            funcion.style.transform = "scale(1,0)";
+            funcion.style.height = "auto";
+            let alturaf = funcion.offsetHeight;
+            funcion.style.height = `${alturaf}px`;
+            setTimeout(() => {
+                funcion.style.height = "0px";
+            }, 10);
+
+            intervalos.disabled = true;
+            intervalos.style.zIndex = "-99";
+            intervalos.style.opacity = "0.3";
+
+        } else {
+            tablaInput.style.transition = "all 0.5s";
+            tablaInput.style.transform = "scale(1,0)";
+            let alturat = tablaInput.offsetHeight;
+            tablaInput.style.height = `${alturat}px`;
+            setTimeout(() => {
+                tablaInput.style.height = "0px";
+            }, 10);
+
+            funcion.style.transition = "all 0.5s";
+            funcion.style.transform = "scale(1,1)";
+            funcion.style.height = "auto";
+            let alturaf = funcion.offsetHeight;
+            funcion.style.height = `0px`;
+            setTimeout(() => {
+                funcion.style.height = `${alturaf}px`;
+            }, 10);
+
+            intervalos.disabled = false;
+            intervalos.style.zIndex = "1";
+            intervalos.style.opacity = "1";
+
+
+
+        }
+    }
+
+    setTimeout(() => {
+        for (let i = 0; i < 4; i++) {
+            añadirInputPuntos();
+        }
+    }, 100);
+</script>
+
+
+<script>
+    //Aqui debe ir la direccion del EndPoint de el Metodo
+    let endPoint = "/metodos/integracion/trapecio-simpson"
+    //Aqui iran los id de todos los datos que se enviaran al EndPoint
+    let variables = ["metodo", "tipo", "intervalos"];
+    //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
+    function calcular() {
+
+        // Obtener el input
+        const input = document.getElementById('intervalos');
+
+        // Verificar la validez del input
+        if (!input.checkValidity()) {
+            // Si no es válido, mostrar el mensaje de error
+            input.classList.add('error');
+            input.reportValidity(); // Mostrar el mensaje de validación propio del navegador
+        } else {
+
+
+            // Si es válido, remover la clase de error y realizar el cálculo
+            input.classList.remove('error');
+            console.log('Realizando el cálculo con intervalos:', input.value);
+            let datos = {}
+            let modo = document.getElementById("modo").checked ? 2 : 1;
+            if (modo == 1) {
                 datos["latex"] = document.getElementById("latex").textContent;
                 variables.forEach(variable => {
                     datos[variable] = document.getElementById(variable).value;
-                });
-                console.log(datos);
-                realizarPeticionPOST(endPoint, datos)
-            }
-            
-        }
-        //metodos de inicio para que se vea bien la interfaz
-        mostrarEjercicio()
-        setTimeout(() => {
-            cambiarEstadoSugerencias()
-        }, 4000);
-    </script>
-
-    <!--Script de teclado-->
-    <script defer>
-        $(document).ready(function () {
-            var MQ = MathQuill.getInterface(2); // for backcompat
-            var mathFieldSpan = document.getElementById('math-field');
-            var latexSpan = document.getElementById('latex');
-
-            var mathField = MQ.MathField(mathFieldSpan, {
-                spaceBehavesLikeTab: true, // configurable
-                handlers: {
-                    edit: function () { // useful event handlers
-                        latexSpan.textContent = mathField.latex(); // simple API
-                    }
+                })
+            } else {
+                let arrayOfPuntos = [];
+                for (let i = 0; i < idpuntos.length; i++) {
+                    let puntos = Array.from(document.getElementById(idpuntos[i]).children[1].children);
+                    puntos = puntos.map(punto => punto.value);
+                    arrayOfPuntos.push(puntos);
                 }
-            });
+                datos.matrizPuntos = arrayOfPuntos;
+                let variablss = variables.filter(variable => variable != "intervalos");
+                variablss.forEach(variable => {
+                    datos[variable] = document.getElementById(variable).value;
+                })
+            }
+            datos.modo = modo;
 
-            // Añadir funcionalidad a los botones del panel matemático
-            $('.math-button').on('click', function () {
-                var symbol = $(this).data('symbol');
-                mathField.write(symbol);
-                mathField.focus({ focusVisible: true });
-            });
 
+            console.log(datos);
+            realizarPeticionPOST(endPoint, datos)
+        }
+
+    }
+    //metodos de inicio para que se vea bien la interfaz
+    mostrarEjercicio()
+    setTimeout(() => {
+        cambiarEstadoSugerencias()
+    }, 4000);
+</script>
+
+<!--Script de teclado-->
+<script defer>
+    $(document).ready(function () {
+        var MQ = MathQuill.getInterface(2); // for backcompat
+        var mathFieldSpan = document.getElementById('math-field');
+        var latexSpan = document.getElementById('latex');
+
+        var mathField = MQ.MathField(mathFieldSpan, {
+            spaceBehavesLikeTab: true, // configurable
+            handlers: {
+                edit: function () { // useful event handlers
+                    latexSpan.textContent = mathField.latex(); // simple API
+                }
+            }
         });
-    </script>
-    <script src="/static/Loader/background.js" async></script>
+
+        // Añadir funcionalidad a los botones del panel matemático
+        $('.math-button').on('click', function () {
+            var symbol = $(this).data('symbol');
+            mathField.write(symbol);
+            mathField.focus({ focusVisible: true });
+        });
+
+    });
+</script>
+<script src="/static/Loader/background.js" async></script>
 </body>
 
 </html>
