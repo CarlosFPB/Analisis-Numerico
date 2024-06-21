@@ -9,49 +9,50 @@ class metodo_punto_fijo():
 
     @staticmethod
     def calcular_punto_fijo(json_data):
-        try:
-            x = sp.symbols("x")
-            #instanciar respuesta json
-            instancia_respuesta = respuesta_json()
-            
-            #obtener los valores del json
-            ##f_x = sp.simplify(json_data["funcion"])
-            #Verificar la funcion obtenida
-            try:
-                #Ecuaion de la funcion
-                g_x = conversla.latex_(json_data["latex"])
-                resultado = g_x.subs(x, 2)
-                if resultado > 0:
-                    pass
-            except sp.SympifyError:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                return jsonify(resp), 400
-            except TypeError as e:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                return jsonify(resp), 400
-            
-            #verificar que sea grado mayor a 0
-            if verificaciones.obtener_grado(g_x) != None:#es porq es polinomica sino no importa el grado
-                if verificaciones.obtener_grado(g_x) < 2:
-                    resp = instancia_respuesta.responder_error("La función debe ser de grado 2 o mayor")
-                    return jsonify(resp), 400
-            #verificar que tenga raices reales
-            if verificaciones.posee_raices_reales(g_x) == False:
-                resp = instancia_respuesta.responder_error("La función no tiene raices reales por tanto no se puede aplicar el metodo de punto fijo")
-                return jsonify(resp), 400
-            
-            g_prima = sp.diff(g_x)
+        
+        x = sp.symbols("x")
+        # instanciar respuesta json
+        instancia_respuesta = respuesta_json()
 
-            try:
-                error_aceptado = float(json_data["tolerancia"])
-                x_actual = float(json_data["xi"])
-            except ValueError as e:
-                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+        # obtener los valores del json
+        ## f_x = sp.simplify(json_data["funcion"])
+        # Verificar la funcion obtenida
+        try:
+            # Ecuaion de la funcion
+            g_x = conversla.latex_(json_data["latex"])
+            resultado = g_x.subs(x, 2)
+            if resultado > 0:
+                pass
+        except sp.SympifyError:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
+        except TypeError as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
+
+        # verificar que sea grado mayor a 0
+        if verificaciones.obtener_grado(g_x) != None:  # es porq es polinomica sino no importa el grado
+            if verificaciones.obtener_grado(g_x) < 2:
+                resp = instancia_respuesta.responder_error("La función debe ser de grado 2 o mayor")
                 return jsonify(resp), 400
-            except Exception as e:
-                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
-                return jsonify(resp), 400
+        # verificar que tenga raices reales
+        if verificaciones.posee_raices_reales(g_x) == False:
+            resp = instancia_respuesta.responder_error(
+            "La función no tiene raices reales por tanto no se puede aplicar el metodo de punto fijo")
+            return jsonify(resp), 400
+
+        try:
+            error_aceptado = float(json_data["tolerancia"])
+            x_actual = float(json_data["xi"])
+        except ValueError as e:
+            resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+            return jsonify(resp), 400
+        except Exception as e:
+            resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+            return jsonify(resp), 400
             
+        try:
+            g_prima = sp.diff(g_x)
             x_anterior = 0
             iteracion = 0
 

@@ -6,27 +6,28 @@ from modelos.extras.latex import conversla
 
 class metodo_cuadratico():
     def calcular_cuadratico(json_data):
+                
+        x = sp.symbols('x')
+        instancia_respuesta = respuesta_json()
         try:
-            x = sp.symbols('x')
-            instancia_respuesta = respuesta_json()
-            try:
-                #Ecuaion de la funcion
-                f_x = conversla.latex_(json_data["latex"])
-                #Verificar si es polinomio
-                if not verificaciones.es_polinomio(f_x):
-                    resp = instancia_respuesta.responder_error("La función ingresada no es un polinomio")
-                    return jsonify(resp), 400
-                resultado = f_x.subs(x, 2)
-                if resultado > 0:
-                    pass
-            except sp.SympifyError:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            #Ecuaion de la funcion
+            f_x = conversla.latex_(json_data["latex"])
+            #Verificar si es polinomio
+            if not verificaciones.es_polinomio(f_x):
+                resp = instancia_respuesta.responder_error("La función ingresada no es un polinomio")
                 return jsonify(resp), 400
-            except TypeError as e:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                return jsonify(resp), 400
+            resultado = f_x.subs(x, 2)
+            if resultado > 0:
+                pass
+        except sp.SympifyError:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
+        except TypeError as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
             
-            
+        #metodo de cuadratica
+        try:
             grado = verificaciones.obtener_grado(f_x)
             if(grado == 2):
                 instancia_respuesta.agregar_titulo1("Metodo Cuadratico")

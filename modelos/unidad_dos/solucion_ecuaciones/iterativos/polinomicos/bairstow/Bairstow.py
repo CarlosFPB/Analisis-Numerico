@@ -44,13 +44,17 @@ class metodo_bairstow():
             resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
             return jsonify(resp), 400
             
-        #validar que sea grado mayor a 3 y polinomica
-        if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica
-            if verificaciones.obtener_grado(f_x) <3:
+        try:
+            #validar que sea grado mayor a 3 y polinomica
+            if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica
+                if verificaciones.obtener_grado(f_x) <3:
+                    resp = instancia_respuesta.responder_error("La función debe ser polinomica de grado 3 o mayor")
+                    return jsonify(resp), 400
+            else:#no es polinomica por ende ni tiene grado mayor a 3
                 resp = instancia_respuesta.responder_error("La función debe ser polinomica de grado 3 o mayor")
                 return jsonify(resp), 400
-        else:#no es polinomica por ende ni tiene grado mayor a 3
-            resp = instancia_respuesta.responder_error("La función debe ser polinomica de grado 3 o mayor")
+        except Exception as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
             return jsonify(resp), 400
                    
         try:
@@ -117,13 +121,13 @@ class metodo_bairstow():
                     resp = instancia_respuesta.responder_error("Error r0 = 0 ahy divicion entre 0 por lo tanto el metodo no puede continuar")
                     return jsonify(resp), 400
                 else:
-                    error_r = abs(solucion[dr] / r0)*100
+                    error_r = abs(solucion[dr] / r0)
                 if s0 == 0:
                     error_s = abs(solucion[ds])
                     resp = instancia_respuesta.responder_error("Error s0 = 0 ahy divicion entre 0 por lo tanto el metodo no puede continuar")
                     return jsonify(resp), 400
                 else: 
-                    error_s = abs(solucion[ds] / s0) *100
+                    error_s = abs(solucion[ds] / s0) 
                 print("error r: "+ str(error_r) + " error s: "+ str(error_s))
                 if error_r < error_aceptado and error_s < error_aceptado:
                     r0 = sp.N(r0)

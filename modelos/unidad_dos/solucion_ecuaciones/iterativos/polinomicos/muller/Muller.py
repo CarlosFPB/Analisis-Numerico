@@ -63,29 +63,30 @@ class metodo_muller():
 
 
     def calcular_Muller(json_data):
+        
+        # Definir símbolos
+        x = sp.symbols('x')
+        #intsancia de respuesta
+        instancia_respuesta = respuesta_json()
+        
+        # obtengo los valores del json
+        #Verificar la funcion obtenida
         try:
-            # Definir símbolos
-            x = sp.symbols('x')
-            #intsancia de respuesta
-            instancia_respuesta = respuesta_json()
-            
-            # obtengo los valores del json
-            #Verificar la funcion obtenida
-            try:
-                #Ecuaion de la funcion
-                f_x = conversla.latex_(json_data["latex"])
-                print(f_x)
-            
-                resultado = f_x.subs(x, 2)
-                if resultado > 0:
-                    pass
-            except sp.SympifyError:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                return jsonify(resp), 400
-            except TypeError as e:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                return jsonify(resp), 400
+            #Ecuaion de la funcion
+            f_x = conversla.latex_(json_data["latex"])
+            print(f_x)
+        
+            resultado = f_x.subs(x, 2)
+            if resultado > 0:
+                pass
+        except sp.SympifyError:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
+        except TypeError as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
 
+        try:
             #validar que sea grado mayor a 3 no importa sino es polinomica
             if verificaciones.obtener_grado(f_x)!= None:#es porq es polinomica
                 if verificaciones.obtener_grado(f_x) < 3:
@@ -95,25 +96,28 @@ class metodo_muller():
             #else:
             #    resp = instancia_respuesta.responder_error("La función debe ser polinomica de grado 3 o mayor")
             #    return jsonify(resp), 400
-            
-            #verifico los datos ingresados
-            try:
-                x0_crudo = json_data["x0"]
-                x1_crudo = json_data["x1"]
-                x2_crudo = json_data["x2"]
-                tolerancia_crudo = json_data["tolerancia"]
-                x0 = float(x0_crudo)
-                x1 = float(x1_crudo)
-                x2 = float(x2_crudo)
-                error_aceptado = float(tolerancia_crudo)
-            except ValueError as e:
-                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
-                return jsonify(resp), 400
-            except Exception as e:
-                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
-                return jsonify(resp), 400
+        except Exception as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
+        
+        #verifico los datos ingresados
+        try:
+            x0_crudo = json_data["x0"]
+            x1_crudo = json_data["x1"]
+            x2_crudo = json_data["x2"]
+            tolerancia_crudo = json_data["tolerancia"]
+            x0 = float(x0_crudo)
+            x1 = float(x1_crudo)
+            x2 = float(x2_crudo)
+            error_aceptado = float(tolerancia_crudo)
+        except ValueError as e:
+            resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+            return jsonify(resp), 400
+        except Exception as e:
+            resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+            return jsonify(resp), 400
       
-           
+        try:
             iteracion = 0
             tabla_final = []
             instancia_respuesta = metodo_muller.generar_salida_json(instancia_respuesta, f_x, x0, x1, x2, 0, 0)

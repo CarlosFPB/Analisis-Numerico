@@ -10,50 +10,51 @@ class metodo_falsa_posicion():
 
    
         def calcular_falsa_posicion(json_data):
+            
+            x = sp.symbols('x')
+            #instancio las respuest json
+            instancia_respuesta = respuesta_json()
+
+            #Verificar la funcion obtenida
             try:
-                x = sp.symbols('x')
-                #instancio las respuest json
-                instancia_respuesta = respuesta_json()
+                #Ecuaion de la funcion
+                f_x =conversla.latex_(json_data["latex"])
+                f_x = sp.sympify(f_x)
 
-                #Verificar la funcion obtenida
-                try:
-                    #Ecuaion de la funcion
-                    f_x =conversla.latex_(json_data["latex"])
-                    f_x = sp.sympify(f_x)
+                resultado = f_x.subs(x, 1).evalf()
+                is_imaginary = resultado.is_imaginary
 
-                    resultado = f_x.subs(x, 1).evalf()
-                    is_imaginary = resultado.is_imaginary
+                if resultado.is_real and resultado > 0:
+                    pass
+                elif is_imaginary:
+                    pass
 
-                    if resultado.is_real and resultado > 0:
-                        pass
-                    elif is_imaginary:
-                        pass
-
-                except sp.SympifyError:
-                    resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                    return jsonify(resp), 400
-                except TypeError as e:
-                    resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                    return jsonify(resp), 400
+            except sp.SympifyError:
+                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                return jsonify(resp), 400
+            except TypeError as e:
+                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                return jsonify(resp), 400
                 
-                #verificar que sea grado mayor a 0
-                if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino no importa el grado
-                    if verificaciones.obtener_grado(f_x) < 1:
-                        resp = instancia_respuesta.responder_error("La función debe ser de grado 1 o mayor")
-                        return jsonify(resp), 400
-                
-                #Verificar los valores iniciales
-                try:
-                    error_aceptable = float(json_data["tolerancia"])
-                    x1 = float(json_data["xi"])
-                    xu = float(json_data["xu"])
-                except ValueError as e:
-                    resp = instancia_respuesta.responder_error("Error en los valores iniciales\n"+str(e))
+            #verificar que sea grado mayor a 0
+            if verificaciones.obtener_grado(f_x) != None:  # es porq es polinomica sino no importa el grado
+                if verificaciones.obtener_grado(f_x) < 1:
+                    resp = instancia_respuesta.responder_error("La función debe ser de grado 1 o mayor")
                     return jsonify(resp), 400
-                except Exception as e:
-                    resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
-                    return jsonify(resp), 400
+
+            #Verificar los valores iniciales
+            try:
+                error_aceptable = float(json_data["tolerancia"])
+                x1 = float(json_data["xi"])
+                xu = float(json_data["xu"])
+            except ValueError as e:
+                resp = instancia_respuesta.responder_error("Error en los valores iniciales\n" + str(e))
+                return jsonify(resp), 400
+            except Exception as e:
+                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+                return jsonify(resp), 400
                 
+            try:
                 xr = 0
                 condicion = ""
                 iteracion = 0

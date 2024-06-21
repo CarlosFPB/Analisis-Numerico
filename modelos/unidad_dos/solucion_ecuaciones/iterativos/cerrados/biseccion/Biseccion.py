@@ -9,48 +9,49 @@ class medoto_biseccion():
 
     @staticmethod
     def calcular_biseccion(json_data):
+                
+        x = sp.symbols('x')
+        #instancio las respuest json
+        instancia_respuesta = respuesta_json()
+
+        #obtengo los valores del json
         try:
-            x = sp.symbols('x')
-            #instancio las respuest json
-            instancia_respuesta = respuesta_json()
+            f_x =conversla.latex_(json_data["latex"])
+            resultado = f_x.subs(x, 1).evalf()
+            is_imaginary = resultado.is_imaginary
 
-            #obtengo los valores del json
-            try:
-                f_x =conversla.latex_(json_data["latex"])
-                resultado = f_x.subs(x, 1).evalf()
-                is_imaginary = resultado.is_imaginary
+            if resultado.is_real and resultado > 0:
+                pass
+            elif is_imaginary:
+                pass
+        except sp.SympifyError as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            print(e)
+            return jsonify(resp), 400
+        except TypeError as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            print(e)
+            return jsonify(resp), 400
 
-                if resultado.is_real and resultado > 0:
-                    pass
-                elif is_imaginary:
-                    pass
-            except sp.SympifyError as e:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                print(e)
+        #verificar que sea grado mayor a 0
+        if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino lo es no importa el grado
+            if verificaciones.obtener_grado(f_x) < 1:
+                resp = instancia_respuesta.responder_error("La función debe ser de grado 1 o mayor")
                 return jsonify(resp), 400
-            except TypeError as e:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                print(e)
-                return jsonify(resp), 400
-        
-            #verificar que sea grado mayor a 0
-            if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino lo es no importa el grado
-                if verificaciones.obtener_grado(f_x) < 1:
-                    resp = instancia_respuesta.responder_error("La función debe ser de grado 1 o mayor")
-                    return jsonify(resp), 400
 
-            #Verificar los valores iniciales
-            try:
-                error_aceptable = float(json_data["tolerancia"])
-                x1 = float(json_data["xi"])
-                xu = float(json_data["xu"])
-            except ValueError as e:
-                resp = instancia_respuesta.responder_error(f"Error en los valores iniciales\n {str(e)}")
-                return jsonify(resp), 400
-            except Exception as e:
-                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
-                return jsonify(resp), 400
+        #Verificar los valores iniciales
+        try:
+            error_aceptable = float(json_data["tolerancia"])
+            x1 = float(json_data["xi"])
+            xu = float(json_data["xu"])
+        except ValueError as e:
+            resp = instancia_respuesta.responder_error(f"Error en los valores iniciales\n {str(e)}")
+            return jsonify(resp), 400
+        except Exception as e:
+            resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+            return jsonify(resp), 400
             
+        try:
             #execpciones comunes
             evaluar_x1 = f_x.subs(x,x1)
             evaluar_xu = f_x.subs(x,xu)

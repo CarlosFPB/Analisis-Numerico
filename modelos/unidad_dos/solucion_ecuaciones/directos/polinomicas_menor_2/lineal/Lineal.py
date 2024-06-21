@@ -6,31 +6,32 @@ from modelos.extras.latex import conversla
 class metodo_lineal():
 
     def calcular_lineal(json_data):
-        try:
-            x = sp.symbols('x')
-            instancia_respuesta = respuesta_json()
-            try:
-                #Ecuaion de la funcion
-                f_x = conversla.latex_(json_data["latex"])
-                #Verificar si es polinomio
-                if not verificaciones.es_polinomio(f_x):
-                    resp = instancia_respuesta.responder_error("La función ingresada no es un polinomio")
-                    return jsonify(resp), 400
-                resultado = f_x.subs(x, 2)
-                if resultado > 0:
-                    pass
-            except sp.SympifyError:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                return jsonify(resp), 400
-            except TypeError as e:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                return jsonify(resp), 400
-            
-            #Comprobar si tiene raices
-            if not verificaciones.posee_raices_reales(f_x):
-                resp = instancia_respuesta.responder_error("La función no posee raices reales")
-                return jsonify(resp), 400
         
+        x = sp.symbols('x')
+        instancia_respuesta = respuesta_json()
+        try:
+            #Ecuaion de la funcion
+            f_x = conversla.latex_(json_data["latex"])
+            #Verificar si es polinomio
+            if not verificaciones.es_polinomio(f_x):
+                resp = instancia_respuesta.responder_error("La función ingresada no es un polinomio")
+                return jsonify(resp), 400
+            resultado = f_x.subs(x, 2)
+            if resultado > 0:
+                pass
+        except sp.SympifyError:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
+        except TypeError as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
+
+        #Comprobar si tiene raices
+        if not verificaciones.posee_raices_reales(f_x):
+            resp = instancia_respuesta.responder_error("La función no posee raices reales")
+            return jsonify(resp), 400
+        
+        try:
             grado = verificaciones.obtener_grado(f_x)
             if(grado == 1):
                 instancia_respuesta.agregar_titulo1("Metodo de Lineal")

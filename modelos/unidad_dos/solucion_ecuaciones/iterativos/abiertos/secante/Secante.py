@@ -7,42 +7,43 @@ from modelos.extras.latex import conversla
 class metodo_secante():
     @staticmethod
     def calcular_secante(json_data):
+        x = sp.symbols("x")
+        #instanciar respuesta json
+        instancia_respuesta = respuesta_json()
+
+        #Verificar la funcion obtenida
         try:
-            x = sp.symbols("x")
-            #instanciar respuesta json
-            instancia_respuesta = respuesta_json()
+            #Ecuaion de la funcion
+            f_x = conversla.latex_(json_data["latex"])
+            resultado = f_x.subs(x, 2)
+            if resultado > 0:
+                pass
+        except sp.SympifyError:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
+        except TypeError as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
 
-            #Verificar la funcion obtenida
-            try:
-                #Ecuaion de la funcion
-                f_x = conversla.latex_(json_data["latex"])
-                resultado = f_x.subs(x, 2)
-                if resultado > 0:
-                    pass
-            except sp.SympifyError:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+        #verificar que sea grado mayor a 0
+        if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino no importa el grado
+            if verificaciones.obtener_grado(f_x) < 1:
+                resp = instancia_respuesta.responder_error("La función debe ser de grado 1 o mayor")
                 return jsonify(resp), 400
-            except TypeError as e:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                return jsonify(resp), 400
-            
-            #verificar que sea grado mayor a 0
-            if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino no importa el grado
-                if verificaciones.obtener_grado(f_x) < 1:
-                    resp = instancia_respuesta.responder_error("La función debe ser de grado 1 o mayor")
-                    return jsonify(resp), 400
 
-            try:
-                x_anterior = float(json_data["xi"])
-                x_actual = float(json_data["xu"])
-                error_aceptado = float(json_data["tolerancia"])
-            except ValueError as e:
-                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
-                return jsonify(resp), 400
-            except Exception as e:
-                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
-                return jsonify(resp), 400
+        try:
+            x_anterior = float(json_data["xi"])
+            x_actual = float(json_data["xu"])
+            error_aceptado = float(json_data["tolerancia"])
+        except ValueError as e:
+            resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+            return jsonify(resp), 400
+        except Exception as e:
+            resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+            return jsonify(resp), 400
             
+        #metodo de la secante
+        try:
             x_calculada = 0
             error_acomulado = 100
             iteracion = 0

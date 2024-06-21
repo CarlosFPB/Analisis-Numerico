@@ -47,11 +47,15 @@ class metodo_richardson():
             resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
             print(e)
             return jsonify(resp), 400
-        #verificar que sea grado mayor a 0 si es polinomica
-        if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino lo es no importa el grado
-            if verificaciones.obtener_grado(f_x) < 1:
-                resp = instancia_respuesta.responder_error("La funcion es una constante")
-                return jsonify(resp), 400
+        try:
+            #verificar que sea grado mayor a 0 si es polinomica
+            if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino lo es no importa el grado
+                if verificaciones.obtener_grado(f_x) < 1:
+                    resp = instancia_respuesta.responder_error("La funcion es una constante")
+                    return jsonify(resp), 400
+        except Exception as e:
+            resp = instancia_respuesta.responder_error(f"Error en la funcion ingresada\n {str(e)}")
+            return jsonify(resp), 400
 
         try:
             json_data = metodo_richardson.agregar_clearD(json_data)
@@ -82,11 +86,11 @@ class metodo_richardson():
             resp = instancia_respuesta.responder_error("El nivel debe ser mayor a 1")
             return jsonify(resp), 400
         
-        h = float(json_data["h"])
-        tablaR = []
-        hs = [h]
 
         try:
+            h = float(json_data["h"])
+            tablaR = []
+            hs = [h]
             instancia_respuesta.agregar_titulo1("Metodo de Richardson")
             instancia_respuesta.agregar_parrafo(f'Se calculara la "{json_data["orden"]}" derivada de la funcion ingresada mediante el metodo de Richardson')
             instancia_respuesta.agregar_clave_valor("Funcion ingresada: ", f_x)

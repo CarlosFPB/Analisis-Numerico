@@ -30,11 +30,15 @@ class metodos_diferenciacion():
             resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
             print(e)
             return jsonify(resp), 400
+        try:
         #verificar que sea grado mayor a 0 si es polinomica
-        if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino lo es no importa el grado
-            if verificaciones.obtener_grado(f_x) < 1:
-                resp = instancia_respuesta.responder_error("La funcion es una constante")
-                return jsonify(resp), 400
+            if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino lo es no importa el grado
+                if verificaciones.obtener_grado(f_x) < 1:
+                    resp = instancia_respuesta.responder_error("La funcion es una constante")
+                    return jsonify(resp), 400
+        except Exception as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
         
         #Verificar los valores iniciales
         try:

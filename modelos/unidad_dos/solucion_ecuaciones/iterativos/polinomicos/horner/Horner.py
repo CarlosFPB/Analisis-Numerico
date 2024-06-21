@@ -46,49 +46,51 @@ class metodo_horner():
 
     def calcular_Horner(json_data):
 
-        try:
-            # Definir símbolos
-            x = sp.symbols('x')
-            
-            #instarciar respuesta
-            instancia_respuesta = respuesta_json()
+        
+        # Definir símbolos
+        x = sp.symbols('x')
+        
+        #instarciar respuesta
+        instancia_respuesta = respuesta_json()
 
-            #Verificar la funcion obtenida
-            try:
-                #Ecuaion de la funcion
-                f_x = conversla.latex_(json_data["latex"])
-                resultado = f_x.subs(x, 2)
-                if resultado > 0:
-                    pass
-            except sp.SympifyError:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                return jsonify(resp), 400
-            except TypeError as e:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                return jsonify(resp), 400
-            
-            #validar que sea grado mayor a 3 y polinomica
-            if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica
-                if verificaciones.obtener_grado(f_x) <3:
-                    resp = instancia_respuesta.responder_error("La función debe ser polinomica de grado 3 o mayor")
-                    return jsonify(resp), 400
-            else:#no es polinomica por ende ni tiene grado mayor a 3
+        #Verificar la funcion obtenida
+        try:
+            #Ecuaion de la funcion
+            f_x = conversla.latex_(json_data["latex"])
+            resultado = f_x.subs(x, 2)
+            if resultado > 0:
+                pass
+        except sp.SympifyError:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
+        except TypeError as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
+        
+        #validar que sea grado mayor a 3 y polinomica
+        if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica
+            if verificaciones.obtener_grado(f_x) <3:
                 resp = instancia_respuesta.responder_error("La función debe ser polinomica de grado 3 o mayor")
                 return jsonify(resp), 400
+        else:#no es polinomica por ende ni tiene grado mayor a 3
+            resp = instancia_respuesta.responder_error("La función debe ser polinomica de grado 3 o mayor")
+            return jsonify(resp), 400
+    
         
+        try:
+            x0_crudo = json_data["x0"]
+            tolerancia_crudo = json_data["tolerancia"]
+            x0 = float(x0_crudo)
+            error_aceptado = float(tolerancia_crudo)
+        except ValueError as e:
+            resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+            return jsonify(resp), 400
+        except Exception as e:
+            resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
+            return jsonify(resp), 400
             
-            try:
-                x0_crudo = json_data["x0"]
-                tolerancia_crudo = json_data["tolerancia"]
-                x0 = float(x0_crudo)
-                error_aceptado = float(tolerancia_crudo)
-            except ValueError as e:
-                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
-                return jsonify(resp), 400
-            except Exception as e:
-                resp = instancia_respuesta.responder_error("Error en los datos ingresados" + str(e))
-                return jsonify(resp), 400
-            
+
+        try:
             f_x0 = x - x0 #- para cambiar signo
             iteracion = 0
 
