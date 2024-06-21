@@ -76,15 +76,19 @@ class metodo_multipasos():
                 instancia_respuesta.agregar_titulo1("Datos obtenidos de Adams Bashfort: ")
                 #aplico adams bashfort
                 lista_x, lista_y, y2 = adams_bashfort.orden_2(lista_x, lista_y, h, f_x)
+                #comparlo el x y final
+                if lista_x[-1] >= x_buscado:
+                    resp = instancia_respuesta.responder_error("Se sobrepasa el valor buscado con el tamanho de paso dado")
+                    return jsonify(resp), 400
                 instancia_respuesta.agregar_parrafo(f"El valor de y3 obtenido en Adams Bashfort en x = {lista_x[-1]} es: {y2}")
                 #evaluo si llege al x buscado con h tamaño de paso
-                if x_buscado != lista_x[-1]:
+                """if x_buscado != lista_x[-1]:
                     resp = instancia_respuesta.responder_error("No se puede llegar al valor buscado con el tamanho de paso dado")
-                    return jsonify(resp), 400
-                instancia_respuesta.agregar_parrafo("Se aplicara el metodo de Adams Moulton para mejorar el valor de y3 en x = "+str(x_buscado))
+                    return jsonify(resp), 400"""
+                instancia_respuesta.agregar_parrafo("Se aplicara el metodo de Adams Moulton para mejorar el valor de y2 en x = "+str(lista_x[-1]))
                 instancia_respuesta.agregar_titulo1("Datos obtenidos de Adams Moulton: ")
                 lista_x, lista_y, y2 = adams_moulton.orden_1(lista_x, lista_y, h, f_x)
-                instancia_respuesta.agregar_parrafo(f"El valor de y3 obtenido en Adams Moulton en x = {lista_x[-1]} es: {y2}")
+                instancia_respuesta.agregar_parrafo(f"El valor de y2 obtenido en Adams Moulton en x = {lista_x[-1]} es: {y2}")
 
             elif pasos == 4:
                 lista_x.append(x0)
@@ -96,6 +100,9 @@ class metodo_multipasos():
                     if xs == (x_buscado - h) or (h<0 and xs == (x_buscado + h)):
                         break
                     lista_x.append(xs)
+                if len(lista_x) < 4:
+                    resp = instancia_respuesta.responder_error("Se sobrepasa el valor buscado con el tamanho de paso dado")
+                    return jsonify(resp), 400
                 for i in range(0, 3):
                     lista_y.append(runge_kutta.orden_4(lista_x[i], lista_y[i], h, f_x)['yi_siguiente'])
                 instancia_respuesta.agregar_titulo1("Datos obtenidos de runge kutta: ")
@@ -106,15 +113,15 @@ class metodo_multipasos():
                 instancia_respuesta.agregar_tabla()
                 #aplico adams bashfort
                 lista_x, lista_y, y4 = adams_bashfort.orden_4(lista_x, lista_y, h, f_x)
-                if x_buscado != lista_x[-1]:
+                """if x_buscado != lista_x[-1]:
                     resp = instancia_respuesta.responder_error("No se puede llegar al valor buscado con el tamanho de paso dado")
-                    return jsonify(resp), 400
-                instancia_respuesta.agregar_parrafo("Se aplicara el metodo de Adams Bashfort para obtener el valor de y4 en x = "+str(x_buscado))
+                    return jsonify(resp), 400"""
+                instancia_respuesta.agregar_parrafo("Se aplicara el metodo de Adams Bashfort para obtener el valor de y4 en x = "+str(lista_x[-1]))
                 instancia_respuesta.agregar_titulo1("Datos obtenidos de Adams Bashfort: ")
                 instancia_respuesta.agregar_parrafo(f"El valor de y4 obtenido por Adams Bashfort en x = {lista_x[-1]} es: {y4}")
                 #aplico adams moulton
                 lista_x, lista_y, y4 = adams_moulton.orden_3(lista_x, lista_y, h, f_x)
-                instancia_respuesta.agregar_parrafo("Se aplicara el metodo de Adams Moulton para mejorar el valor de y4 en x = "+str(x_buscado))
+                instancia_respuesta.agregar_parrafo("Se aplicara el metodo de Adams Moulton para mejorar el valor de y4 en x = "+str(lista_x[-1]))
                 instancia_respuesta.agregar_titulo1("Datos obtenidos de Adams Moulton: ")
                 instancia_respuesta.agregar_parrafo(f"El valor de y4 obtenido por Adams Moulton en x = {lista_x[-1]} es: {y4}")
             else:
