@@ -19,19 +19,13 @@ class metodo_horner():
             
         coeficientes = verificaciones.obtener_coeficientes(f_x)
         divsion_sinterica1 = metodo_horner.calcular_divsion_sinterica(coeficientes, x0)
-        instancia_respuesta.crear_tabla()
-        instancia_respuesta.agregar_fila(divsion_sinterica1[0])
-        instancia_respuesta.agregar_fila(divsion_sinterica1[1])
-        instancia_respuesta.agregar_fila(divsion_sinterica1[2])
+        instancia_respuesta.agregar_division_sinterica(divsion_sinterica1)
         R = divsion_sinterica1[-1].pop()
         instancia_respuesta.agregar_tabla()
         instancia_respuesta.agregar_parrafo(f"R = {R}")
         instancia_respuesta.crear_tabla()
         divsion_sinterica2 = metodo_horner.calcular_divsion_sinterica(divsion_sinterica1[-1], x0)
-        instancia_respuesta.agregar_fila(divsion_sinterica2[0])
-        instancia_respuesta.agregar_fila(divsion_sinterica2[1])
-        instancia_respuesta.agregar_fila(divsion_sinterica2[2])
-        instancia_respuesta.agregar_tabla()
+        instancia_respuesta.agregar_division_sinterica(divsion_sinterica2)
         S = divsion_sinterica2[-1].pop()
         instancia_respuesta.agregar_parrafo(f"S = {S}")
         instancia_respuesta.crear_tabla()
@@ -153,5 +147,6 @@ class metodo_horner():
             divicion_sintetica[2][i] = resultado
             if i == len(coeficientes) - 1:
                 #al finalizar todo el proceso retorna el arreglo (matris) con la division sintetica tal cual
+                divicion_sintetica[1].append(divisor)
                 return divicion_sintetica
         

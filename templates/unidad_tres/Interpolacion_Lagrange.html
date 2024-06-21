@@ -39,6 +39,10 @@
 </head>
 
 <body>
+    
+    {% block keyboard %}
+    {{ keyboard_content | safe }}
+    {% endblock %}
     <div>
     </div>
     <span class="text_hero">Interpolacion de <span class="textGradient1">Lagrange</span></span>
@@ -108,9 +112,6 @@
                     </span>
                 </div>
             </div>
-            {% block keyboard %}
-            {{ keyboard_content | safe }}
-            {% endblock %}
             <div class="ui">
                 <div class="buttonSmall button-yellow" onclick="mostrarDialog('explicamelo')">
                     <span class="material-symbols-outlined">
@@ -388,7 +389,7 @@
                 setTimeout(() => {
                     input.style.width = "3rem";
                     input.style.height = "2.4rem";
-                    input.style.padding = "0.5rem";
+                    input.style.padding = "0.1rem";
                 }, 10);
             });
         }

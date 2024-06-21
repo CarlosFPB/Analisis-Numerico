@@ -287,6 +287,31 @@ function mostrarPasos(arrayPasos) {
         tabla += "</table></div></center>"
         return tabla
     }
+    let crearDivisionSinteticas = function (arreglo) {
+        let tabla = '<div class="tablecontainer divisionSintetica"><table>'
+        tabla += "<tr>"
+        arreglo[0].forEach(value => {
+            tabla += "<td>" + value + "</td>"
+        })
+        tabla += "</tr>"
+        tabla += "<tr>"
+        arreglo[1].forEach(value => {
+            tabla += "<td>" + value + "</td>"
+        })
+        tabla += "</tr>"
+        tabla += "<tr>"
+        arreglo[2].forEach(value => {
+            tabla += "<td>" + value + "</td>"
+        })
+        tabla += "</tr>"
+        tabla += "</table></div>"
+        return tabla
+
+
+    }
+    let tablaDerivadas = function (arreglo) {
+        
+    }
     let añadirClaveValor = function (clave, valor) {
         return `<p class="clavevalor"><span>${clave}</span><span>${valor}</span></p>`;
     }
@@ -317,6 +342,9 @@ function mostrarPasos(arrayPasos) {
                     break;
                 case "clavevalor":
                     texto += añadirClaveValor(linea.content[0], linea.content[1]);
+                    break;
+                case "divisionsinterica":
+                    texto += crearDivisionSinteticas(linea.content);
                     break;
                 case "salto":
                     texto += añadirSalto();
