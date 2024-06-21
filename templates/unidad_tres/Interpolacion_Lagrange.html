@@ -163,13 +163,14 @@
                 Ejercicios Sugeridos
             </span>
         </span>
-        <div id="ejercicios">
-
-        </div>
+        
+        <p>Funcion:3x<sup>3</sup> + 5x<sup>2</sup> - 4x + 1</p>
+        <p>puntos en X: [1,0]</p>
         <div class="viñeta" onclick="cambiarEstadoSugerencias()">
             <span class="material-symbols-outlined textGradient4">
                 keyboard_double_arrow_left
             </span>
+            
         </div>
     </div>
 
@@ -313,10 +314,12 @@
         
         function cambiarTipo(checkbox) {
             if (checkbox.checked) {
-                document.getElementById("latex").style.transition = "opacity 0.5s";
-                document.getElementById("latex").style.zIndex = -40;
+                let latex = document.getElementById("latex").parentElement.parentElement
+                latex.style.transition = "opacity 0.5s";
+                latex.style.zIndex = -40;
+
                 setTimeout(() => {
-                    document.getElementById("latex").style.opacity = 0.3;
+                    latex.style.opacity = 0.3;
                 }, 10);
                 document.getElementById("puntosY").style.display = "flex";
                 setTimeout(() => {
@@ -326,10 +329,11 @@
                     }, 300);
                 }, 10);
             } else {
-                document.getElementById("latex").style.transition = "opacity 0.5s";
-                document.getElementById("latex").style.zIndex = 0;
+                let latex = document.getElementById("latex").parentElement.parentElement
+                latex.style.transition = "opacity 0.5s";
+                latex.style.zIndex = 0;
                 setTimeout(() => {
-                    document.getElementById("latex").style.opacity = 1;
+                    latex.style.opacity = 1;
                 }, 10);
                 document.getElementById("puntosY").style.marginTop = -document.getElementById("puntosY").offsetHeight + "px";
                 document.getElementById("puntosY").style.opacity = 0;
