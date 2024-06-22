@@ -1,9 +1,10 @@
 import sympy as sp
 import math
 from flask import jsonify
-from modelos.extras.Funciones import respuesta_json, verificaciones
+from modelos.extras.Funciones import respuesta_json, verificaciones, commprobaciones_json
 from modelos.extras.latex import conversla, conversla_html
 import traceback
+
 
 
 class metodo_ferrari:    
@@ -11,17 +12,22 @@ class metodo_ferrari:
      
     @staticmethod
     def calcular_ferrari(json_data):
-        
-            
-            
+         
         x = sp.symbols('x')
         respuesta = respuesta_json()     
             
         try:
-            
-            #obtener los valores del json
-            f_x_crudo = conversla.latex_(json_data["latex"])
-            print(f_x_crudo)
+            #Verificar la funcion obtenida
+            response, status_code = commprobaciones_json.comprobar_funcionX_latex(json_data, respuesta)
+            if status_code != 200:
+                resp = response
+                return resp, 400
+            f_x = response
+        except Exception as e:
+            resp = respuesta.responder_error("Error al obtener la función ingresada: "+str(e))
+            return jsonify(resp), 400
+        
+        try:
             f_x_crudo = sp.expand(f_x_crudo)#para que se vea bien
             #Veificar si es polinomio
             if not verificaciones.es_polinomio(f_x_crudo):
@@ -32,16 +38,10 @@ class metodo_ferrari:
             if verificaciones.obtener_grado(f_x_crudo) != 4:
                 resp = respuesta.responder_error("La función ingresada no es de grado 4")
                 return jsonify(resp), 400
-                
+            
             f_x = f_x_crudo/f_x_crudo.as_poly(x).coeffs()[0]#para convertir en 0 el coeficiente de x^4
-            resultado = f_x_crudo.subs(x, 2)
-            if resultado > 0:
-                pass
-        except sp.SympifyError:
-            resp = respuesta.responder_error("Error en la función ingresada")
-            return jsonify(resp), 400
-        except TypeError as e:
-            resp = respuesta.responder_error("Error en la función ingresada")
+        except Exception as e:
+            resp = respuesta.responder_error("Error al simplificar la función ingresada")
             return jsonify(resp), 400
             
         #Metodo de Ferrari

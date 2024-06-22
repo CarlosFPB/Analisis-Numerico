@@ -1,5 +1,7 @@
 import sympy as sp
 from modelos.extras.Funciones import respuesta_json, verificaciones
+import math
+from modelos.extras.Funciones import respuesta_json, verificaciones, commprobaciones_json
 from flask import jsonify
 from modelos.extras.latex import conversla
 import sympy as sp
@@ -15,24 +17,19 @@ class graficador:
         #istanciar la respuesta
         respuesta = respuesta_json()
 
-        #Verificar la funcion obtenida
         try:
-            #Ecuaion de la funcion
-            f_x_crudo = conversla.latex_(json_data["latex"])
-            f_x_crudo = sp.expand(f_x_crudo)#para que se vea bien la funcion
-            
-            resultado = f_x_crudo.subs(x, 2)
-            if resultado > 0:
-                pass
-        except sp.SympifyError:
-            resp = respuesta.responder_error("Error en la funcion ingresada")
-            return jsonify(resp), 400
-        except TypeError as e:
-            resp = respuesta.responder_error("Error en la funcion ingresada")
+            #Verificar la funcion obtenida
+            response, status_code = commprobaciones_json.comprobar_funcionX_latex(json_data, respuesta)
+            if status_code != 200:
+                resp = response
+                return resp, 400
+            f_x = response
+        except Exception as e:
+            resp = respuesta.responder_error("Error al obtener la función ingresada: "+str(e))
             return jsonify(resp), 400
         
         try:
-            
+            f_x_crudo = sp.expand(f_x_crudo)#para que se vea bien la funcion
             f_x = f_x_crudo
             respuesta.agregar_clave_valor("Funcion", f"{f_x}")
 

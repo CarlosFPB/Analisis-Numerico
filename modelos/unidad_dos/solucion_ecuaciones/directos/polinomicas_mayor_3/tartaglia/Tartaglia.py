@@ -1,6 +1,6 @@
 import sympy as sp
 import math
-from modelos.extras.Funciones import respuesta_json, verificaciones
+from modelos.extras.Funciones import respuesta_json, verificaciones, commprobaciones_json
 from flask import jsonify
 from modelos.extras.latex import conversla
 
@@ -13,28 +13,25 @@ class metodo_tartaglia:
         x3 = 0
         #istanciar la respuesta
         respuesta = respuesta_json()
-
-        #Verificar la funcion obtenida
         try:
-            #Ecuaion de la funcion
-            f_x_crudo = conversla.latex_(json_data["latex"])
-            f_x_crudo = sp.expand(f_x_crudo)#para que se vea bien la funcion
-            #Verificar si es polinomio
-            if not verificaciones.es_polinomio(f_x_crudo):
-                resp = respuesta.responder_error("La función ingresada no es un polinomio")
-                return jsonify(resp), 400
-            resultado = f_x_crudo.subs(x, 2)
-            if resultado > 0:
-                pass
-        except sp.SympifyError:
-            resp = respuesta.responder_error("Error en la funcion ingresada")
-            return jsonify(resp), 400
-        except TypeError as e:
-            resp = respuesta.responder_error("Error en la funcion ingresada")
+            #Verificar la funcion obtenida
+            response, status_code = commprobaciones_json.comprobar_funcionX_latex(json_data, respuesta)
+            if status_code != 200:
+                resp = response
+                return resp, 400
+            f_x = response
+        except Exception as e:
+            resp = respuesta.responder_error("Error al obtener la función ingresada: "+str(e))
             return jsonify(resp), 400
         
         #metodo de tartaglia
         try:
+            f_x_crudo = sp.expand(f_x)#para que se vea bien
+            #Verificar si es polinomio
+            if not verificaciones.es_polinomio(f_x_crudo):
+                resp = respuesta.responder_error("La función ingresada no es un polinomio")
+                return jsonify(resp), 400
+            
             f_x = f_x_crudo/f_x_crudo.as_poly(x).coeffs()[0]
             respuesta.agregar_titulo1("Método de Tartaglia")
             respuesta.agregar_parrafo("Se busca encontrar las raíces de la ecuación polinómica de grado 3: ")

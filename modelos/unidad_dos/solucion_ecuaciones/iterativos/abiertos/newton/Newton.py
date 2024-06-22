@@ -1,7 +1,7 @@
 from flask import jsonify
 import  sympy as sp
 import numpy as np
-from ......extras.Funciones import errores, newton, respuesta_json, verificaciones
+from ......extras.Funciones import errores, newton, respuesta_json, verificaciones, commprobaciones_json
 from ......extras.latex import conversla, conversla_html
 
 class metodo_newton():
@@ -13,19 +13,15 @@ class metodo_newton():
         #instanciar respuesta json
         instancia_respuesta = respuesta_json()
         
-        #Verificar la funcion obtenida
         try:
-            #Ecuaion de la funcion
-            f_x = conversla.latex_(json_data["latex"])
-            f_x = sp.sympify(f_x)
-            resultado = f_x.subs(x, 2)
-            if resultado > 0:
-                pass
-        except sp.SympifyError:
-            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-            return jsonify(resp), 400
-        except TypeError as e:
-            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            #Verificar la funcion obtenida
+            response, status_code = commprobaciones_json.comprobar_funcionX_latex(json_data, instancia_respuesta)
+            if status_code != 200:
+                resp = response
+                return resp, 400
+            f_x = response
+        except Exception as e:
+            resp = instancia_respuesta.responder_error("Error al obtener la función ingresada: "+str(e))
             return jsonify(resp), 400
         
         try:
