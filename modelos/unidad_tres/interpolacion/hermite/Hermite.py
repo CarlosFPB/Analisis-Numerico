@@ -183,8 +183,6 @@ class metodo_hermite:
                 coeficientes = []
                 for i in range(len(matris)):
                     coeficientes.append(matris[i][-1])
-                    print("b", i, " = ", matris[i][i+1])
-                print(coeficientes)
 
                 instancia_respuesta.agregar_parrafo("Se obtienen los coeficientes del polinomio interpolante de Hermite")
                 instancia_respuesta.agregar_clave_valor("Coeficientes:", str(coeficientes).replace("[", "").replace("]", ""))
@@ -192,7 +190,6 @@ class metodo_hermite:
 
                 instancia_respuesta.agregar_parrafo("Se hace la suma de los productos de los coeficientes")
                 texto = "p(x) = "
-                print("\nProducto de Newton")
                 for i in range(len(matris)):
                     producto = 1
                     for j in range(i):

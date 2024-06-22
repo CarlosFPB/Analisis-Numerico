@@ -15,7 +15,6 @@ class cuadratura_gaussiana():
                 f_x = conversla.latex_(json_data["latex"])
                 puntos = int(json_data["puntos"])
                 
-                print("Puntos",type(puntos))
             except sp.SympifyError:
                  resp = instancia_respuesta.responder_error("Error en la integral ingresada")
                  return jsonify(resp), 400

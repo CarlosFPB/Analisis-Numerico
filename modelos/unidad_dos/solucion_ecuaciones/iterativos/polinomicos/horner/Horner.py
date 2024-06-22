@@ -23,12 +23,11 @@ class metodo_horner():
         R = divsion_sinterica1[-1].pop()
 
         instancia_respuesta.agregar_clave_valor("R",R)
-        instancia_respuesta.agregar_tabla_derivada(divsion_sinterica1)
 
         divsion_sinterica2 = metodo_horner.calcular_divsion_sinterica(divsion_sinterica1[-1], x0)
         instancia_respuesta.agregar_division_sinterica(divsion_sinterica2)
         S = divsion_sinterica2[-1].pop()
-        instancia_respuesta.agregar_parrafo(f"S = {S}")
+        instancia_respuesta.agregar_clave_valor("S",S)
         instancia_respuesta.crear_tabla()
         instancia_respuesta.agregar_fila(["Iteracion","X0","R","S","Xi","Ea%"])
         instancia_respuesta.agregar_titulo1("Teniendo S y R, se calcula la nueva x")
@@ -49,6 +48,16 @@ class metodo_horner():
         instancia_respuesta = respuesta_json()
 
         try:
+            #Ecuaion de la funcion
+            f_x = conversla.latex_(json_data["latex"])
+            resultado = f_x.subs(x, 2)
+            if resultado > 0:
+                pass
+        except sp.SympifyError:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
+        except TypeError as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
             #Verificar la funcion obtenida
             response, status_code = commprobaciones_json.comprobar_funcionX_latex(json_data, instancia_respuesta)
             if status_code != 200:

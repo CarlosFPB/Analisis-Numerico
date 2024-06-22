@@ -4,13 +4,13 @@ import sympy as sp
 import numpy as np
 from ....extras.Funciones import respuesta_json, verificaciones
 from ....extras.latex import conversla, conversla_html
-from ....extras.Integrales import Trapecio, integr_obtener
-
+from ....extras.Integrales import Trapecio, integr_obtener, verificacion_puntos_tabla
 class metodo_trapecio:
     @staticmethod
     def calcular_trapecio(*args):
-        instancia_respuesta = respuesta_json()
+        
         try:
+            instancia_respuesta = respuesta_json()
             # Obtener integral
             try:
                 f_x = conversla.latex_(args[0])
@@ -50,7 +50,7 @@ class metodo_trapecio:
                 return jsonify(resp), 200
 
         except Exception as e:
-            resp = instancia_respuesta.responder_error(f"Error interno en el servidor" )
+            resp = instancia_respuesta.responder_error(f"Error interno en el servidor {e}" )
             return jsonify(resp), 500
 
     
@@ -121,3 +121,82 @@ class metodo_trapecio:
         
         resp = instancia_respuesta.obtener_y_limpiar_respuesta()
         return resp
+
+
+class metodo_trapecio_tabla():
+    @staticmethod
+    def calcular_trapecio_tabla(matrizPuntos, tipo):
+
+        try:
+            instancia_respuesta = respuesta_json()
+            try:
+                #verificar si la matriz de puntos es valida
+                if not verificaciones.es_matriz(matrizPuntos):
+                    resp = instancia_respuesta.responder_error("La matriz de puntos no es valida")
+                    return jsonify(resp), 400
+            except:
+                resp = instancia_respuesta.responder_error("Error en los datos ingresados")
+                return jsonify(resp), 400
+            
+
+            #Parsear tabla y comprobar errores
+            tabla_matriz = verificacion_puntos_tabla.verificar_tabla(matrizPuntos)
+
+            if isinstance(tabla_matriz, str):
+                #Caso error
+                resp  = instancia_respuesta.responder_error(tabla_matriz)
+                return jsonify(resp), 400
+            else: 
+                puntos_x, puntos_y = tabla_matriz
+
+           
+            #Verificar si los puntos x tiene el mismo valor de h
+            incremento = float(puntos_x[1] - puntos_x[0])
+            for i in range(len(puntos_x)-1):
+                if round(puntos_x[i+1] - puntos_x[i], 10) != incremento:
+                    resp = instancia_respuesta.responder_error(f"Se encontro diferente ancho en un punto de x (el punto{puntos_x[i+1]} con el punto {puntos_x[i]})")
+                    return jsonify(resp), 400
+            #Verificar con cual tipo se tiene que resolver 
+            if tipo == "Simple":
+                resp = metodo_trapecio_tabla.trapecio_simple_tabla(puntos_x, puntos_y)
+                return resp
+            else: # Compuesto
+                resp = metodo_trapecio_tabla.trapecio_compuesto_tabla(puntos_x, puntos_y)
+                return resp
+        except Exception as e:
+            resp = instancia_respuesta.responder_error(f"Error interno en el servidor" )
+            return jsonify(resp), 500
+        
+    @staticmethod
+    def trapecio_simple_tabla(puntos_x, puntos_y):
+        instancia_respuesta = respuesta_json()
+        #Calcular trapecio simple
+        resultado_suma = 0 
+        instancia_respuesta.crear_tabla()
+        instancia_respuesta.agregar_fila(["Intervalo", "Puntos x", "Puntos f(x)", "Resultado"])
+        for i in range(len(puntos_x)-1):
+            resultado = Trapecio.trapecio_simple(puntos_x[i], puntos_x[i+1], puntos_y[i], puntos_y[i+1])
+            resultado_suma += resultado
+            instancia_respuesta.agregar_fila([i+1, puntos_x[i:i+2], puntos_y[i:i+2], resultado]) # Fixed the issue by changing [i:i+1] to [i:i+2]
+        instancia_respuesta.agregar_tabla()
+        instancia_respuesta.agregar_clave_valor("Resultado: ", resultado_suma)
+        resp = instancia_respuesta.obtener_y_limpiar_respuesta()
+        return jsonify(resp), 200        
+
+    @staticmethod
+    def trapecio_compuesto_tabla(puntos_x, puntos_y):
+        instancia_respuesta = respuesta_json()
+        if len(puntos_x) < 4:
+            resp = instancia_respuesta.responder_error("Se necesitan por lo menos 4 datos tabulados para resolver por Trapecio Compuesto")
+            return jsonify(resp), 400
+
+        # Calcular intervalos
+        n = (len(puntos_x)-1)
+        h = puntos_x[1] - puntos_x[0]  # Calculo de h
+        resultado = Trapecio.trapecio_compuesto(puntos_x[0], puntos_x[-1], puntos_y[0], sum(puntos_y[1:-1]), puntos_y[-1], n)
+        instancia_respuesta.agregar_clave_valor("Resultado: ", resultado)
+        instancia_respuesta.agregar_clave_valor("Intervalos: ", n)
+        instancia_respuesta.agregar_clave_valor("h: ", h)
+        resp = instancia_respuesta.obtener_y_limpiar_respuesta()
+        return jsonify(resp), 200
+

@@ -66,7 +66,7 @@ class Trapecio():
         return I
     
 
-class Simpson_13():
+class Simpson_13(): 
     @staticmethod
     def simpson_simple(a, b, fx0, fx1, fx2):
         I = sp.N((b-a)*((fx0+4*fx1+fx2) / 6))
@@ -76,16 +76,27 @@ class Simpson_13():
     def simpson_compuesto(a, b, fx0, suma_intermedios, suma_subint, fxn, intervalos):
         I = sp.N((b-a)*((fx0+2*suma_intermedios+4*suma_subint+fxn)/(6*intervalos)))
         return I
-    
+        
+    #Para la tabla
+    @staticmethod
+    def simpson_compuesto_tabla(a, b, fx0, suma_inpa, suma_par, fxn, intervalos):
+        I = sp.N((b-a)*((fx0 + 4*suma_inpa + 2*suma_par + fxn)/(3*intervalos)))
+        return I
+
 class Simpson_38():
     @staticmethod
     def simpson_simple(a, b, fx0, fx1, fx2, fx3):
         I = sp.N((b-a)*((fx0+3*fx1+3*fx2+fx3)/8))
         return I
-    
+
     @staticmethod
     def simpson_compuesto(a, b, fx0, suma_subint, suma_intermedios, fxn, intervalos):
         I = sp.N(((b-a)/(8*intervalos))*(fx0+(3*suma_subint)+(2*suma_intermedios)+fxn))
+        return I
+    
+    @staticmethod
+    def simpson_compuesto_tabla(fx0, suma_3i_2, suma_3i_1, suma_3i, fxn, h):
+        I = sp.N(((3*h)/8) * (fx0+3*suma_3i_2+3*suma_3i_1+2*suma_3i+fxn))
         return I
 
 #cuadratura de gauss
@@ -127,3 +138,78 @@ class metodod_boyle():
     @staticmethod
     def boyle(h, x0, x1, x2, x3, x4):
         return sp.N(((2*h)/45)*(7*x0+32*x1+12*x2+32*x3+7*x4))
+
+class verificacion_puntos_tabla():
+    @staticmethod
+    def verificar_tabla(matrizPuntos):
+        #variables 
+        puntos_x = []
+        puntos_y = []
+        #validaciones
+        activarerror = False
+        mensajeerror = ""
+                        #2
+        for i in range(len(matrizPuntos)):
+            for j in range(len(matrizPuntos[i])):
+                try:
+                    matrizPuntos[i][j] = int(matrizPuntos[i][j])
+                except ValueError:
+                    try:
+                        matrizPuntos[i][j] = float(matrizPuntos[i][j])
+                    except ValueError:
+                        if matrizPuntos[i][j] == "":
+                            continue
+                        mensajeerror = "No se pueden ingresar letras en los campos de puntos"
+                        activarerror = True
+                        break
+            if activarerror:
+                break
+        if not activarerror:
+            if len(matrizPuntos) == 0:
+                mensajeerror = "No se ingresaron puntos"
+                activarerror = True
+            elif len(matrizPuntos[0]) < 3:
+                mensajeerror = "Debe haber al menos 3 puntos en X"
+                activarerror = True
+            elif len(matrizPuntos) == 1:
+                mensajeerror = "Se deben ingresar los puntos en X y Y"
+                activarerror = True
+            #Caso tipo 2 con puntos en X y Y
+            elif len(matrizPuntos) == 2:
+                #Comprobar que vengan la misma cantidad de puntos en x y y
+                if len(matrizPuntos[0]) != len(matrizPuntos[1]):
+                    mensajeerror = "Debe haber la misma cantidad de puntos en X y Y en 'Puntos', es decir los pares ordenados"
+                    activarerror = True 
+                else:
+                    #Recorrer los puntos
+                    for i in range(len(matrizPuntos[0])):
+                        #comprobar que no haya pares ordenados con valores vacios
+                        if (matrizPuntos[0][i] == "") ^ (matrizPuntos[1][i] == ""):
+                            mensajeerror = "No pueden haber pares ordenados con un valor vacio"
+                            activarerror = True
+                        #comprobar que los puntos que se guardaran no sean vacios
+                        elif not (matrizPuntos[0][i] =="" or matrizPuntos[1][i] == ""):
+                            puntos_x.append(matrizPuntos[0][i])
+                            puntos_y.append(matrizPuntos[1][i])
+                        #comprobar que los puntos de x sea menor que el proximo
+                        elif True:
+                            #Calcular el valor de incremento
+                            #incremento = matrizPuntos[0][1] - matrizPuntos[0][0]
+                            for i in range(len(puntos_x)-1):
+                                if puntos_x[i] > puntos_x[i+1]:
+                                    #Se encontro un elemento que no es mayor que el anterior
+                                    mensajeerror = f"Se encontro un punto en x que no es mayor que el anterior ({puntos_x[i+1]} no es mayor que {puntos_x[i]})"
+                                    activarerror = True
+                                #verificar el ancho de los puntos x
+                                #if matrizPuntos[0][i+1] - matrizPuntos[0][i] != incremento:
+                                   # mensajeerror = 
+                                    #activarerror = True
+                    if len(puntos_x) < 2 and not activarerror:
+                        mensajeerror = "Debe haber al menos 2 puntos en X"
+                        activarerror = True
+            if len(puntos_x) != len(set(puntos_x)) and not activarerror:
+                mensajeerror = "No pueden haber valores repetidos en los puntos en X"
+                activarerror = True
+        if activarerror:
+            return mensajeerror
+        return puntos_x, puntos_y

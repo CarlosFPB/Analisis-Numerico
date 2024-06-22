@@ -129,7 +129,7 @@ class metodo_richardson():
                 instancia_respuesta.agregar_fila(tabla_nivel)
             instancia_respuesta.agregar_titulo1("Tabla de Richardson")
             instancia_respuesta.agregar_clave_valor("Respuesta de la derivada por richardson es:x", tablaR[-1][-1])
-            instancia_respuesta.agregar_tabla_derivada()
+            instancia_respuesta.agregar_tabla_derivada(tablaR)
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()
             return jsonify(resp), 200
         except Exception as e:

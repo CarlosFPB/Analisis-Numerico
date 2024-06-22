@@ -4,7 +4,7 @@ import sympy as sp
 import numpy as np
 from .....extras.Funciones import respuesta_json, verificaciones
 from .....extras.latex import conversla, conversla_html
-from .....extras.Integrales import integr_obtener, Simpson_13
+from .....extras.Integrales import integr_obtener, Simpson_13, verificacion_puntos_tabla
 
 class metodo_simpson:
     @staticmethod
@@ -48,7 +48,6 @@ class metodo_simpson:
                 return jsonify(resp), 200
 
         except Exception as e:
-            print(e)
             resp = instancia_respuesta.responder_error(f"Error interno en el servidor" )
             return jsonify(resp), 500
 
@@ -149,3 +148,113 @@ class metodo_simpson:
         instancia_respuesta.agregar_clave_valor_segundo("Respuesta: ", I)
         resp = instancia_respuesta.obtener_y_limpiar_respuesta()
         return resp
+
+
+class metodo_simpson13_tabla():
+    @staticmethod 
+    def calcular_simpson13_tabla(matrizPuntos, tipo):
+        try:
+            instancia_respuesta = respuesta_json()
+            try:
+                #verificar si la matriz de puntos es valida
+                if not verificaciones.es_matriz(matrizPuntos):
+                    resp = instancia_respuesta.responder_error("La matriz de puntos no es valida")
+                    return jsonify(resp), 400
+            except:
+                resp = instancia_respuesta.responder_error("Error en los datos ingresados")
+                return jsonify(resp), 400
+            
+
+            #Parsear tabla y comprobar errores
+            tabla_matriz = verificacion_puntos_tabla.verificar_tabla(matrizPuntos)
+
+            if isinstance(tabla_matriz, str):
+                #Caso error
+                resp  = instancia_respuesta.responder_error(tabla_matriz)
+                return jsonify(resp), 400
+            else: 
+                puntos_x, puntos_y = tabla_matriz
+
+           
+            #Verificar si los puntos x tiene el mismo valor de h
+            incremento = float(puntos_x[1] - puntos_x[0])
+            for i in range(len(puntos_x)-1):
+                if round(puntos_x[i+1] - puntos_x[i], 10) != incremento:
+                    resp = instancia_respuesta.responder_error(f"Se encontro diferente ancho en un punto de x (el punto{puntos_x[i+1]} con el punto {puntos_x[i]})")
+                    return jsonify(resp), 400
+            #Verificar con cual tipo se tiene que resolver 
+            if tipo == "Simple":
+                resp = metodo_simpson13_tabla.simpson13_simple_tabla(puntos_x, puntos_y)
+                return resp
+            else: # Compuesto
+                resp = metodo_simpson13_tabla.simpson13_compuesto_tabla(puntos_x, puntos_y)
+                return resp
+        except Exception as e:
+            resp = instancia_respuesta.responder_error(f"Error interno en el servidor" )
+            return jsonify(resp), 500
+
+    @staticmethod
+    def simpson13_simple_tabla(puntos_x, puntos_y):
+        instancia_respuesta = respuesta_json()
+
+        if len(puntos_x) % 2 == 0:
+            resp = instancia_respuesta.responder_error("Los datos tabulados no se ajustan con Simpson 1/3 simple; se necesitan datos adicionales.")
+            return jsonify(resp),200
+        #Calcular trapecio simple
+        resultado_suma = 0 
+        anterior=0
+        actual=2
+        if len(puntos_x) == 3:
+            resultado = Simpson_13.simpson_simple(puntos_x[anterior], puntos_x[actual], puntos_y[anterior], puntos_y[anterior+1], puntos_y[anterior+2])
+            resultado_suma = resultado
+        else:
+            instancia_respuesta.crear_tabla()
+            instancia_respuesta.agregar_fila(["Intervalo", "Puntos x", "Puntos f(x)", "Resultado"])
+            for i in range(int(len(puntos_x)/2)):
+                resultado = Simpson_13.simpson_simple(puntos_x[anterior], puntos_x[actual], puntos_y[anterior], puntos_y[anterior+1], puntos_y[anterior+2])
+                instancia_respuesta.agregar_fila([i+1, puntos_x[anterior:actual+1], puntos_y[anterior:actual+1], resultado])
+                anterior = actual
+                actual += 2
+                resultado_suma += resultado
+            instancia_respuesta.agregar_tabla()
+        instancia_respuesta.agregar_titulo1("Metodo Simpson 1/3")
+        instancia_respuesta.agregar_clave_valor("Resultado: ", resultado_suma)
+        h = (puntos_x[1] - puntos_x[0])
+        instancia_respuesta.agregar_clave_valor("Ancho de intervalo (h): ", h)
+        resp = instancia_respuesta.obtener_y_limpiar_respuesta()
+        return jsonify(resp), 200        
+
+    @staticmethod
+    def simpson13_compuesto_tabla(puntos_x, puntos_y):
+        instancia_respuesta = respuesta_json()
+        if len(puntos_x) < 4:
+            resp = instancia_respuesta.responder_error("Se necesitan por lo menos 4 datos tabulados para resolver por Simpson 1/3 Compuesto")
+            return jsonify(resp), 400
+        
+        #Suma intermedios
+        # Ignorar el primer y el último valor
+        subarray = puntos_y[1:-1]
+
+        suma_pares = 0
+        suma_impares = 0
+
+        # Iterar sobre los valores intermedios con índices comenzando desde 1
+        for idx, valor in enumerate(subarray, start=1):
+            if idx % 2 == 0:  # Índice par en el subarray intermedio
+                suma_pares += valor
+            else:  # Índice impar en el subarray intermedio
+                suma_impares += valor
+        #Calcular intervalos
+        n = (len(puntos_x)-1)
+   
+        resultado = Simpson_13.simpson_compuesto_tabla(puntos_x[0], puntos_x[-1],puntos_y[0], suma_impares, suma_pares, puntos_y[-1], n)
+      
+        instancia_respuesta.agregar_titulo1("Metodo Simpson 1/3 Compuesto")
+        instancia_respuesta.agregar_clave_valor("Resultado: ", resultado)
+        h = (puntos_x[1] - puntos_x[0])
+        instancia_respuesta.agregar_clave_valor("Ancho de intervalo (h): ", h)
+        instancia_respuesta.agregar_clave_valor("Intervalos: ", n)
+        resp = instancia_respuesta.obtener_y_limpiar_respuesta()
+        return jsonify(resp), 200
+
+   

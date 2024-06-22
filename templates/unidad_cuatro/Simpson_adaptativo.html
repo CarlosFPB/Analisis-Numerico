@@ -7,10 +7,8 @@
     <title>Método Simpson Adaptativo</title>
     <!--Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
     <!-- Importa Mathquill -->
     <link rel="stylesheet" href="/static/matquill/mathquill.css">
-
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
 
@@ -45,12 +43,15 @@
     <div>
     </div>
     <span class="text_hero">Método <span class="textGradient1">Simpson Adaptativo</span></span>
-    <p>Este metodo se utiliza para encontrar la raiz de una función en un valor inicial [Xi]</p>
+    <div class="text_descripcion">
+        <p>El método de Simpson adaptativo es una técnica de integración numérica que mejora la precisión del método de
+            Simpson clásico </p>
+    </div>
 
     <div class="content">
         <div id="main" class="main">
             <div class="descripocion">
-                <p>Ingrese los datos para calcular la raiz de la funcion</p>
+                <p>Ingrese la integral que desea aproximar</p>
             </div>
             <div>
                 <p>Integral: <span id="math-field"></span></p>
@@ -58,8 +59,8 @@
             </div>
 
             <div class="formulario" id="flex">
-                <label for="nivel">Nivel</label>
-                <input type="number" id="nivel" min="1" pattern="[1-9]+" required>
+                <label for="tolerancia">Tolerancia</label>
+                <input type="number" id="tolerancia" min="1" pattern="[1-9]+" required>
             </div>
             <div class="ui">
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
@@ -133,7 +134,10 @@
             </span>
         </span>
         <div id="ejercicios">
-
+            <math xmlns="http://www.w3.org/1998/Math/MathML"><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mn>0</mn><mn>2</mn></munderover><msup><mi>e</mi><mrow><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></msup><mi lspace="0.2em" rspace="0">d</mi><mi>x</mi></math>
+            <p>Tolerancia: 0.001</p>
+            <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msubsup><mo movablelimits="false">&#x222b;</mo><mn>0</mn><mrow><mn>2</mn><mi>&#x3c0;</mi></mrow></msubsup><mi>cos</mi><mrow><mfenced open='(' close=')'><mn>2</mn><mi>x</mi></mfenced></mrow><msup><mi>e</mi><mrow><mo>&#x2212;</mo><mi>x</mi></mrow></msup><mi>d</mi><mi>x</mi></mrow></math>
+            <p>Tolerancia: 0.00005</p>
         </div>
         <div class="viñeta" onclick="cambiarEstadoSugerencias()">
             <span class="material-symbols-outlined textGradient4">
@@ -151,57 +155,51 @@
                     </span>
                 </span>
 
-                <h2>Explicación del Método Punto Fijo</h2>
-                <p>El método de punto fijo es una técnica iterativa utilizada para encontrar aproximaciones a las raíces
-                    de ecuaciones no necesariamente lineales. Se basa en la re-escritura de la ecuación
-                    <b><i>f(x)=0</i></b>
-                    en la forma <b><i>g=(x)</i></b> donde la solución es un punto fijo de la función <b><i>g</i></b>. A
-                    continuación te explico el método paso a paso:
-                </p><br>
-                <p>Reescritura de la ecuación: Comienza con la ecuación <b><i>f(x)=0</i></b> y reescríbela en la forma
-                    <b><i>x=g(x)</i></b>. La
-                    función <b><i>g</i></b> debe estar construida de tal manera que, en el intervalo de interés, las
-                    iteraciones
-                    converjan a la solución.
-                </p><br>
-                <p>Elección del punto inicial: Selecciona un valor inicial <b><i>X0</i></b> que esté cerca de la raíz
-                    buscada.</p>
-                <br>
+                <h2>Explicación del Método Simpson Adaptativo</h2>
                 <p>
-                    Iteración: Utiliza la siguiente fórmula iterativa para generar una secuencia de valores que se
-                    acercan a la raiz
-                    <math xmlns="http://www.w3.org/1998/Math/MathML">
-                        <msub>
-                            <mi>X</mi>
-                            <mrow>
-                                <mi>n</mi>
-                                <mo>+</mo>
-                                <mn>1</mn>
-                            </mrow>
-                        </msub>
-                        <mo>=</mo>
-                        <mi>g</mi>
-                        <mo>(</mo>
-                        <msub>
-                            <mi>X</mi>
-                            <mi>n</mi>
-                        </msub>
-                        <mo>)</mo>
-                    </math>
+                    El método de Simpson adaptativo tiene como objetivo aproximar el valor de una integral definida
+                    <em>∫<sub>a</sub><sup>b</sup> f(x) dx</em> con una mayor precisión que el método de Simpson clásico,
+                    ajustando automáticamente el tamaño de los subintervalos de integración donde sea necesario.
                 </p><br>
-                <p>Condición de Lipschitz: la derivada de <b><i>g(x)</i></b>debe de cumplir que <math
-                        xmlns="http://www.w3.org/1998/Math/MathML">
-                        <mi>g</mi>
-                        <mo>'</mo>
-                        <mo>(</mo>
-                        <mi>x</mi>
-                        <mo>)</mo>
-                        <mo>&lt;</mo>
-                        <mn>1</mn>
-                    </math>. Esta condición garantiza que la iteración no diverge y, en cambio, se acerca al punto fijo.
+
+                <h3>Método de Simpson Clásico</h3>
+                <p>
+                    El método de Simpson clásico divide el intervalo <em>[a, b]</em> en un número par de subintervalos y
+                    utiliza una parábola (polinomio de segundo grado) para aproximar la función en cada subintervalo. La
+                    fórmula es:
                 </p>
+                <p>
+                    <em>S(a, b) = (h / 6) [ f(a) + 4f((a + b) / 2) + f(b) ]</em>
+                </p>
+                <p>
+                    donde <em>h = b - a</em>.
+                </p>
+                <h3>Adaptación en el Método de Simpson Adaptativo</h3>
+                <p>
+                    El método de Simpson adaptativo mejora el método de Simpson clásico dividiendo recursivamente el
+                    intervalo
+                    de integración en subintervalos más pequeños y aplicando el método de Simpson a cada uno. La idea
+                    principal
+                    es refinar la partición del intervalo donde la función <em>f(x)</em> tiene mayor curvatura (es
+                    decir, donde
+                    cambia más rápidamente).
+                </p><br>
+                <p>
+                    El proceso básico es el siguiente:
+                </p>
+                <p>Calcular la aproximación de Simpson para el intervalo <em>[a, b]</em>.</p>
+                <p>Dividir el intervalo <em>[a, b]</em> en dos subintervalos <em>[a, c]</em> y <em>[c, b]</em>, donde
+                    <em>c</em>
+                    es el punto medio de <em>a</em> y <em>b</em>.</p>
+                <p>Calcular la aproximación de Simpson para cada subintervalo.</p>
+                <p>Comparar la suma de las dos aproximaciones de los subintervalos con la aproximación del intervalo
+                    completo.
+                    Si la diferencia es menor que un umbral de tolerancia (epsilon), se acepta la suma de las dos
+                    aproximaciones como
+                    el valor de la integral.</p>
+                <p>Si la diferencia es mayor que el umbral de tolerancia, se repite el proceso recursivamente para cada
+                    subintervalo.</p>
             </div>
-        </div>
     </dialog>
 
     <dialog id="diagrama">
@@ -252,35 +250,35 @@
 
     <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
     <script type="text/javascript">
-      MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
 
-      var latex = $('#math-field').bind('keydown keypress', function () {
-        var prev = latex.val();
-        setTimeout(function () {
-          var now = latex.val();
-          if (now !== prev) mq.latex(now);
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
+            });
         });
-      });
-      var mq = MQ.MathField($('#latex')[0], {
-        autoSubscriptNumerals: true,
-        autoCommands:
-          'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
-        autoParenthesizedFunctions: 'sin cos',
-        handlers: {
-          edit: function () {
-            if (!latex.is(':focus')) latex.val(mq.latex());
-          },
-        },
-      });
-      latex.val(mq.latex());
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
     </script>
 
 
     <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo
-        let endPoint = "/metodos/integracion/metodo-rosemberg"
+        let endPoint = "/metodos/integracion/metodo-Simpson_adaptativo"
         //Aqui iran los id de todos los datos que se enviaran al EndPoint
-        let variables = ["nivel"];
+        let variables = ["tolerancia"];
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
         function calcular() {
             let datos = {}

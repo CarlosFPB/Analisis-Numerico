@@ -731,7 +731,6 @@
         const tipoSelect = document.getElementById('tipo');
         const intervalosInput = document.getElementById('intervalos');
 
-        // Function to handle enabling/disabling the input
         function handleTipoChange() {
             if (tipoSelect.value === 'Simple') {
                 intervalosInput.disabled = true;
@@ -741,10 +740,8 @@
             }
         }
 
-        // Add event listener for change event
         tipoSelect.addEventListener('change', handleTipoChange);
 
-        // Initial check on page load
         handleTipoChange();
     });
 

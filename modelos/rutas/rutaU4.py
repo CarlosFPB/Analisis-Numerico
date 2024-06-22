@@ -13,6 +13,7 @@ from modelos.unidad_cuatro.Integracion.Cuadratura_gaussiana.cuadratura_gaussiana
 from modelos.unidad_cuatro.Integracion.Rosemberg.Rosemberg import metodo_Rosemberg
 from modelos.unidad_cuatro.Integracion.Simpson_Adaptativo.simpson_adaptativo import simpson_adaptativo
 from modelos.unidad_cuatro.Integracion.Boyle.Boyle import metodo_boyle
+from modelos.unidad_cuatro.Integracion.Metodo_MultipleTabla.Metodo_multipleTabla import metodo_multiple_tabla
 
 # Crear un Blueprint
 U4 = Blueprint('U4', __name__)
@@ -107,3 +108,14 @@ def calcular_boyle():
 def metodo__boyle():
     keyboard_content = render_template('KeyboardMath.html', time=time.time())
     return render_template('unidad_cuatro/boyle.html', keyboard_content=keyboard_content, time=time.time())
+
+@U4.route('/metodos/integracion/Metodo-multipleTabla', methods = ['POST'])
+def calcular_multiple_tabla():
+    json_data = request.json
+    respuesta = metodo_multiple_tabla.calcular_multiple_tabla(json_data)
+    return respuesta
+
+@U4.route('/metodos/integracion/Metodo-multipleTabla', methods = ['GET'])
+def metodo_multiple_tabla_():
+    keyboard_content = render_template('KeyboardMath.html', time=time.time())
+    return render_template('unidad_cuatro/Metodo_multipleTabla.html', keyboard_content=keyboard_content, time=time.time())
