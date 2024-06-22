@@ -29,8 +29,7 @@ class graficador:
             return jsonify(resp), 400
         
         try:
-            f_x_crudo = sp.expand(f_x_crudo)#para que se vea bien la funcion
-            f_x = f_x_crudo
+            
             respuesta.agregar_clave_valor("Funcion", f"{f_x}")
 
             x_vals = []
