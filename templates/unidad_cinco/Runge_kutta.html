@@ -7,30 +7,30 @@
     <title>Método de runge kutta</title>
     <!--Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
+
     <!-- Importa Mathquill -->
     <link rel="stylesheet" href="/static/matquill/mathquill.css">
-    
-    
+
+
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
-    
+
     <!-- Estilo de la pagina en General -->
     <!-- Estilo de la pagina en General -->
     <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
-    
+
     <!-- Dependencias del Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    
+
     <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css" />
-    
+
     <!-- Script Base JS -->
     <script src="/static/funciones.js" async></script>
-    
+
     <link rel="apple-touch-icon" sizes="180x180" href="/static/favicono/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
@@ -45,9 +45,10 @@
     <div>
     </div>
     <span class="text_hero">Método de <span class="textGradient1">Runge Kutta</span></span>
-    <p>El método de Runge-Kutta es una técnica numérica avanzada para resolver ecuaciones diferenciales ordinarias, proporcionando una mayor precisión que el método de Euler.
+    <p>El método de Runge-Kutta es una técnica numérica avanzada para resolver ecuaciones diferenciales ordinarias,
+        proporcionando una mayor precisión que el método de Euler.
     </p>
-    
+
     <div class="content">
         <div id="main" class="main">
             <div class="descripcion">
@@ -61,7 +62,7 @@
                 <div class="valor">
                     <label for="h">h:</label>
                     <input type="number" name="h" id="h" required value="0.2" min="0.0001" step="0.1"
-                    style="width: 3rem;">
+                        style="width: 3rem;">
                 </div>
                 <div class="valor">
                     <label for="x_inicial">X<sub>inicial</sub></label>
@@ -82,14 +83,14 @@
                         <option value="3">Orden 3</option>
                         <option value="4">Orden 4</option>
                     </select>
-                    
+
                 </div>
-                
+
             </div>
-            
-            
+
+
             <div class="ui">
-                
+
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
                     <span class="material-symbols-outlined">
                         calculate
@@ -144,110 +145,120 @@
             </div>
         </div>
     </div>
-    
+
     <br>
     <div class="footer">
         <a class="regresar" href="/">Regresar</a>
     </div>
-    
+
     <!-- Sugerencias de Ejercicios 
     este sera una ventana que estara flotando a la derecha de la pagina
     -->
     <div class="sugerencias" style="right: calc(-253px);">
         <span><span class="textGradient1">
-            Ejercicios Sugeridos
-        </span>
-    </span>
-    <div id="ejercicios">
-        <p>Y'(x): 4e<sup>0.8x</sup>-0.5y</p>
-        <p>h: 1</p>
-        <p>X<sub>inicial</sub>: 0</p>
-        <p>Y<sub>inicial</sub>: 2</p>
-        <p>X<sub>final</sub>: 2</p>
-        <p>Orden: 4</p>
-        
-    </div>
-    <div class="viñeta" onclick="cambiarEstadoSugerencias()">
-        <span class="material-symbols-outlined textGradient4">
-            keyboard_double_arrow_left
-        </span>
-    </div>
-</div>
-
-<dialog id="explicamelo">
-    <div class="contenido">
-        <div class="dialog-content">
-            <span class="close" onclick="cerrarDialog('explicamelo')">
-                <span class="material-symbols-outlined">
-                    close
-                </span>
+                Ejercicios Sugeridos
             </span>
-            <h1>Método de Runge-Kutta para EDO</h1>
-            <p>
-                El método de Runge-Kutta es una familia de métodos numéricos utilizados para resolver ecuaciones diferenciales ordinarias (EDO). Estos métodos son ampliamente utilizados debido a su precisión y eficiencia en la aproximación de soluciones.
-            </p>
-            
-            <h2>Concepto Básico</h2>
-            <p>
-                El método de Runge-Kutta estima la solución de una EDO utilizando una combinación de evaluaciones de la función de pendiente. A diferencia del método de Euler, que utiliza solo la pendiente en el punto actual, Runge-Kutta emplea varias pendientes intermedias para mejorar la aproximación.
-            </p>
-            
-            <h2>Variantes del Método de Runge-Kutta</h2>
-            <p>
-                Existen varias variantes del método de Runge-Kutta, cada una con diferente orden de precisión:
-            </p>
-            <ul>
-                <li><strong>Orden 2 (Runge-Kutta de segundo orden):</strong> Utiliza dos evaluaciones de la función para calcular la pendiente.</li>
-                <li><strong>Orden 3 (Runge-Kutta de tercer orden):</strong> Emplea tres evaluaciones de la función para una mayor precisión.</li>
-                <li><strong>Orden 4 (Runge-Kutta de cuarto orden):</strong> Es la variante más comúnmente utilizada, con cuatro evaluaciones de la función para una alta precisión.</li>
-            </ul>
-            
-            <h2>Aplicación</h2>
-            <p>
-                Para aplicar el método de Runge-Kutta, se elige un paso \( h \) y se calculan las pendientes intermedias en cada paso para avanzar desde un punto inicial \( (x_0, y_0) \) hasta el punto deseado.
-            </p>
-            
-            <h2>Ventajas</h2>
-            <p>
-                Los métodos de Runge-Kutta son más precisos que los métodos simples como el de Euler y son adecuados para una amplia gama de problemas en ciencia e ingeniería.
-            </p>
+        </span>
+        <div id="ejercicios">
+            <p>Y'(x): 4e<sup>0.8x</sup>-0.5y</p>
+            <p>h: 1</p>
+            <p>X<sub>inicial</sub>: 0</p>
+            <p>Y<sub>inicial</sub>: 2</p>
+            <p>X<sub>final</sub>: 2</p>
+            <p>Orden: 4</p>
+
+        </div>
+        <div class="viñeta" onclick="cambiarEstadoSugerencias()">
+            <span class="material-symbols-outlined textGradient4">
+                keyboard_double_arrow_left
+            </span>
         </div>
     </div>
-</dialog>
 
-<dialog id="diagrama">
-    <div class="contenido">
-        <div class="dialog-content">
-            <span class="close" onclick="cerrarDialog('diagrama')">
-                <span class="material-symbols-outlined">
-                    close
+    <dialog id="explicamelo">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('explicamelo')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
                 </span>
-            </span>
-            <h2>Diagrama de Flujo del Método de Runge-Kutta</h2>
-            <center>
-                <p>Aqui debe ir una imagen bien perrona del codigo</p>
-            </center>
+                <h1>Método de Runge-Kutta para EDO</h1>
+                <p>
+                    El método de Runge-Kutta es una familia de métodos numéricos utilizados para resolver ecuaciones
+                    diferenciales ordinarias (EDO). Estos métodos son ampliamente utilizados debido a su precisión y
+                    eficiencia en la aproximación de soluciones.
+                </p>
+
+                <h2>Concepto Básico</h2>
+                <p>
+                    El método de Runge-Kutta estima la solución de una EDO utilizando una combinación de evaluaciones de
+                    la función de pendiente. A diferencia del método de Euler, que utiliza solo la pendiente en el punto
+                    actual, Runge-Kutta emplea varias pendientes intermedias para mejorar la aproximación.
+                </p>
+
+                <h2>Variantes del Método de Runge-Kutta</h2>
+                <p>
+                    Existen varias variantes del método de Runge-Kutta, cada una con diferente orden de precisión:
+                </p>
+                <ul>
+                    <li><strong>Orden 2 (Runge-Kutta de segundo orden):</strong> Utiliza dos evaluaciones de la función
+                        para calcular la pendiente.</li>
+                    <li><strong>Orden 3 (Runge-Kutta de tercer orden):</strong> Emplea tres evaluaciones de la función
+                        para una mayor precisión.</li>
+                    <li><strong>Orden 4 (Runge-Kutta de cuarto orden):</strong> Es la variante más comúnmente utilizada,
+                        con cuatro evaluaciones de la función para una alta precisión.</li>
+                </ul>
+
+                <h2>Aplicación</h2>
+                <p>
+                    Para aplicar el método de Runge-Kutta, se elige un paso \( h \) y se calculan las pendientes
+                    intermedias en cada paso para avanzar desde un punto inicial \( (x_0, y_0) \) hasta el punto
+                    deseado.
+                </p>
+
+                <h2>Ventajas</h2>
+                <p>
+                    Los métodos de Runge-Kutta son más precisos que los métodos simples como el de Euler y son adecuados
+                    para una amplia gama de problemas en ciencia e ingeniería.
+                </p>
+            </div>
         </div>
-    </div>
-</dialog>
+    </dialog>
 
-<dialog id="api">
-    <div class="contenido">
-        <div class="dialog-content">
-            <span class="close" onclick="cerrarDialog('api')">
-                <span class="material-symbols-outlined">
-                    close
+    <dialog id="diagrama">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('diagrama')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
                 </span>
-            </span>
-            <h2>API del Método de Runge-Kutta</h2>
-            <br>
-            <p>Para utilizar el método de Runge-Kutta, se debe realizar una petición POST al siguiente endpoint:</p>
-            <p>https://analisis-numerico-sand.vercel.app/metodos/unidad_cinco/iterativos/Runge_kutta</p>
-            <br>
-            <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
-            <br>
-            <pre>
-                
+                <center>
+                    <h2>Diagrama de Flujo del Método de Runge-Kutta</h2>
+                    <img src="/static/img/unidad_cinco/rungekutta.png">
+                </center>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="api">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('api')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+                <h2>API del Método de Runge-Kutta</h2>
+                <br>
+                <p>Para utilizar el método de Runge-Kutta, se debe realizar una petición POST al siguiente endpoint:</p>
+                <p>https://analisis-numerico-sand.vercel.app/metodos/unidad_cinco/iterativos/Runge_kutta</p>
+                <br>
+                <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
+                <br>
+                <pre>
+
                 {
                     "funcion":"funcion y prima",
                     "orden":"orden del metodo a utilizar",
@@ -258,44 +269,44 @@
                 }
                 
             </pre>
+            </div>
         </div>
-    </div>
-</dialog>
+    </dialog>
 
 
-<script type="text/javascript" src="/static/matquill/mathquill.js"></script>
+    <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
     <script type="text/javascript">
-      MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
 
-      var latex = $('#math-field').bind('keydown keypress', function () {
-        var prev = latex.val();
-        setTimeout(function () {
-          var now = latex.val();
-          if (now !== prev) mq.latex(now);
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
+            });
         });
-      });
-      var mq = MQ.MathField($('#latex')[0], {
-        autoSubscriptNumerals: true,
-        autoCommands:
-          'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
-        autoParenthesizedFunctions: 'sin cos',
-        handlers: {
-          edit: function () {
-            if (!latex.is(':focus')) latex.val(mq.latex());
-          },
-        },
-      });
-      latex.val(mq.latex());
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
     </script>
 
 
-<script>
-    //Aqui debe ir la direccion del EndPoint de el Metodo
-    let endPoint = "/metodos/unidad_cinco/iterativos/Runge_kutta"
-    //Aqui iran los id de todos los datos que se enviaran al EndPoint
-    let variables = ["h", "y_inicial","x_inicial", "x_final", "orden"];
-    //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
-    function calcular() {
+    <script>
+        //Aqui debe ir la direccion del EndPoint de el Metodo
+        let endPoint = "/metodos/unidad_cinco/iterativos/Runge_kutta"
+        //Aqui iran los id de todos los datos que se enviaran al EndPoint
+        let variables = ["h", "y_inicial", "x_inicial", "x_final", "orden"];
+        //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
+        function calcular() {
             let datos = {}
             datos["latex"] = document.getElementById("latex").textContent;
             variables.forEach(variable => {
@@ -310,33 +321,33 @@
             cambiarEstadoSugerencias()
         }, 4000);
     </script>
-<!--Script de teclado-->
-<script defer>
-    $(document).ready(function () {
-        var MQ = MathQuill.getInterface(2); // for backcompat
-        var mathFieldSpan = document.getElementById('math-field');
-        var latexSpan = document.getElementById('latex');
+    <!--Script de teclado-->
+    <script defer>
+        $(document).ready(function () {
+            var MQ = MathQuill.getInterface(2); // for backcompat
+            var mathFieldSpan = document.getElementById('math-field');
+            var latexSpan = document.getElementById('latex');
 
-        var mathField = MQ.MathField(mathFieldSpan, {
-            spaceBehavesLikeTab: true, // configurable
-            handlers: {
-                edit: function () { // useful event handlers
-                    latexSpan.textContent = mathField.latex(); // simple API
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // configurable
+                handlers: {
+                    edit: function () { // useful event handlers
+                        latexSpan.textContent = mathField.latex(); // simple API
+                    }
                 }
-            }
+            });
+
+            // Añadir funcionalidad a los botones del panel matemático
+            $('.math-button').on('click', function () {
+                var symbol = $(this).data('symbol');
+                mathField.write(symbol);
+                mathField.focus({ focusVisible: true });
+            });
+
         });
+    </script>
 
-        // Añadir funcionalidad a los botones del panel matemático
-        $('.math-button').on('click', function () {
-            var symbol = $(this).data('symbol');
-            mathField.write(symbol);
-            mathField.focus({ focusVisible: true });
-        });
-
-    });
-</script>
-
-<script src="/static/Loader/background.js" async></script>
+    <script src="/static/Loader/background.js" async></script>
 </body>
 
 </html>

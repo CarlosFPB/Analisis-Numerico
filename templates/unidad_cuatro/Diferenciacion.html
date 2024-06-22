@@ -5,33 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diferenciación numérica</title>
-    
+
     <!--Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
+
     <!-- Importa Mathquill -->
     <link rel="stylesheet" href="/static/matquill/mathquill.css">
-    
-    
+
+
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
-    
+
     <!-- Estilo de la pagina en General -->
     <!-- Estilo de la pagina en General -->
     <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
-    
+
     <!-- Dependencias del Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    
+
     <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css" />
-    
+
     <!-- Script Base JS -->
     <script src="/static/funciones.js" async></script>
-    
+
     <link rel="apple-touch-icon" sizes="180x180" href="/static/favicono/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
@@ -42,13 +42,13 @@
     {% block keyboard %}
     {{ keyboard_content | safe }}
     {% endblock %}
-    
+
     <div>
     </div>
     <span class="text_hero">Diferenciación <span class="textGradient1">numérica</span></span>
     <p>La diferenciación numérica es un método para encontrar la derivada de una función mediante diferencias finitas.
     </p>
-    
+
     <div class="content">
         <div id="main" class="main">
             <div class="descripocion">
@@ -59,7 +59,7 @@
                 <p><span id="latex"></span></p>
             </div>
             <div class="formulario">
-                
+
                 <div class="valor">
                     <label for="metodo">Método:</label>
                     <select name="metodo" id="metodo" style="width: 5rem;" onchange="cambiarMetodo(this)">
@@ -70,8 +70,8 @@
                         <option value="cinco_puntos">5 Puntos</option>
                     </select>
                 </div>
-                
-                
+
+
                 <div class="valor">
                     <label for="orden">Derivada:</label>
                     <select name="orden" id="orden" style="width: 2rem;">
@@ -81,8 +81,8 @@
                         <option value="4">4</option>
                     </select>
                 </div>
-                
-                
+
+
                 <div class="valor">
                     <label for="version">Versión:</label>
                     <select name="version" id="version" style="width: 2rem;">
@@ -90,25 +90,25 @@
                         <option value="2">2</option>
                     </select>
                 </div>
-                
-                
-                
+
+
+
                 <div class="valor">
                     <label for="h">h:</label>
                     <input type="number" name="h" id="h" required value="0.3" min="0.0001" step="0.1"
-                    style="width: 3rem;">
+                        style="width: 3rem;">
                 </div>
-                
+
                 <div class="valor">
                     <label for="xi">x:</label>
                     <input type="number" name="xi" id="xi" required value="1" style="width: 2rem;">
                 </div>
-                
+
             </div>
-            
-            
+
+
             <div class="ui">
-                
+
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
                     <span class="material-symbols-outlined">
                         calculate
@@ -163,156 +163,157 @@
             </div>
         </div>
     </div>
-    
+
     <br>
     <div class="footer">
         <a class="regresar" href="/">Regresar</a>
     </div>
-    
+
     <!-- Sugerencias de Ejercicios 
         este sera una ventana que estara flotando a la derecha de la pagina
     -->
     <div class="sugerencias" style="right: calc(-253px);">
         <span><span class="textGradient1">
-            Ejercicios Sugeridos
-        </span>
-    </span>
-    <div id="ejercicios">
-        <p>funcion: e<sup>x</sup></p>
-        <p>metodo: central</p>
-        <p>derivada: 1</p>
-        <p>version: 1</p>
-        <p>h: 0.05</p>
-        <p>x: 2</p>
-        
-    </div>
-    <div class="viñeta" onclick="cambiarEstadoSugerencias()">
-        <span class="material-symbols-outlined textGradient4">
-            keyboard_double_arrow_left
-        </span>
-    </div>
-</div>
-
-<dialog id="explicamelo">
-    <div class="contenido">
-        <div class="dialog-content">
-            <span class="close" onclick="cerrarDialog('explicamelo')">
-                <span class="material-symbols-outlined">
-                    close
-                </span>
+                Ejercicios Sugeridos
             </span>
-            
-            <h1>Métodos de Diferenciación Finita</h1>
-            <p>
-                La diferenciación finita es una técnica numérica para aproximar la derivada de una función
-                utilizando valores discretos. Aquí se describen cinco métodos: adelante, atrás, central, 3 puntos y
-                5 puntos.
-            </p>
-            
-            <h2>1. Diferenciación Adelante</h2>
-            <p>
-                La fórmula de diferencia finita hacia adelante estima la derivada en un punto <em>x</em> usando el
-                siguiente punto:
-            </p>
-            <pre>
+        </span>
+        <div id="ejercicios">
+            <p>funcion: e<sup>x</sup></p>
+            <p>metodo: central</p>
+            <p>derivada: 1</p>
+            <p>version: 1</p>
+            <p>h: 0.05</p>
+            <p>x: 2</p>
+
+        </div>
+        <div class="viñeta" onclick="cambiarEstadoSugerencias()">
+            <span class="material-symbols-outlined textGradient4">
+                keyboard_double_arrow_left
+            </span>
+        </div>
+    </div>
+
+    <dialog id="explicamelo">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('explicamelo')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+
+                <h1>Métodos de Diferenciación Finita</h1>
+                <p>
+                    La diferenciación finita es una técnica numérica para aproximar la derivada de una función
+                    utilizando valores discretos. Aquí se describen cinco métodos: adelante, atrás, central, 3 puntos y
+                    5 puntos.
+                </p>
+
+                <h2>1. Diferenciación Adelante</h2>
+                <p>
+                    La fórmula de diferencia finita hacia adelante estima la derivada en un punto <em>x</em> usando el
+                    siguiente punto:
+                </p>
+                <pre>
                 <code>
                     f'(x) ≈ (f(x + h) - f(x)) / h
                 </code>
             </pre>
-            
-            <h2>2. Diferenciación Atrás</h2>
-            <p>
-                La fórmula de diferencia finita hacia atrás estima la derivada en un punto <em>x</em> usando el
-                punto anterior:
-            </p>
-            <pre>
+
+                <h2>2. Diferenciación Atrás</h2>
+                <p>
+                    La fórmula de diferencia finita hacia atrás estima la derivada en un punto <em>x</em> usando el
+                    punto anterior:
+                </p>
+                <pre>
                 <code>
                     f'(x) ≈ (f(x) - f(x - h)) / h
                 </code>
             </pre>
-            
-            <h2>3. Diferenciación Central</h2>
-            <p>
-                La fórmula de diferencia finita central estima la derivada en un punto <em>x</em> usando los puntos
-                anterior y siguiente:
-            </p>
-            <pre>
+
+                <h2>3. Diferenciación Central</h2>
+                <p>
+                    La fórmula de diferencia finita central estima la derivada en un punto <em>x</em> usando los puntos
+                    anterior y siguiente:
+                </p>
+                <pre>
                 <code>
                     f'(x) ≈ (f(x + h) - f(x - h)) / (2h)
                 </code>
             </pre>
-            
-            <h2>4. Diferenciación de 3 Puntos</h2>
-            <p>
-                La fórmula de diferencia finita de 3 puntos es una técnica más precisa que utiliza tres puntos:
-            </p>
-            <pre>
+
+                <h2>4. Diferenciación de 3 Puntos</h2>
+                <p>
+                    La fórmula de diferencia finita de 3 puntos es una técnica más precisa que utiliza tres puntos:
+                </p>
+                <pre>
                 <code>
                     f'(x) ≈ (-3f(x) + 4f(x + h) - f(x + 2h)) / (2h)
                 </code>
             </pre>
-            
-            <h2>5. Diferenciación de 5 Puntos</h2>
-            <p>
-                La fórmula de diferencia finita de 5 puntos proporciona una aproximación más exacta utilizando cinco
-                puntos:
-            </p>
-            <pre>
+
+                <h2>5. Diferenciación de 5 Puntos</h2>
+                <p>
+                    La fórmula de diferencia finita de 5 puntos proporciona una aproximación más exacta utilizando cinco
+                    puntos:
+                </p>
+                <pre>
                 <code>
                     f'(x) ≈ (f(x - 2h) - 8f(x - h) + 8f(x + h) - f(x + 2h)) / (12h)
                 </code>
             </pre>
-            
-            <p>
-                Estos métodos permiten calcular aproximaciones de derivadas en puntos específicos utilizando valores
-                discretos de la función, mejorando la precisión según la cantidad de puntos considerados.
-            </p>
-            
-            <p>
-                Además, cada uno de estos métodos tiene más de una fórmula y puede usarse para calcular derivadas de
-                orden superior. Por ejemplo, también existen fórmulas para las segundas, terceras y cuartas
-                derivadas basadas en diferencias finitas hacia adelante, hacia atrás y centrales. Estos métodos
-                avanzados permiten mayor flexibilidad y precisión en la aproximación de derivadas numéricas en
-                diferentes contextos.
-            </p>
-            
-        </div>
-    </div>
-</dialog>
 
-<dialog id="diagrama">
-    <div class="contenido">
-        <div class="dialog-content">
-            <span class="close" onclick="cerrarDialog('diagrama')">
-                <span class="material-symbols-outlined">
-                    close
-                </span>
-            </span>
-            <h2>Diagrama de Flujo del Método Tartaglia</h2>
-            <center>
-                <p>Aqui debe ir una imagen bien perrona del codigo</p>
-            </center>
-        </div>
-    </div>
-</dialog>
+                <p>
+                    Estos métodos permiten calcular aproximaciones de derivadas en puntos específicos utilizando valores
+                    discretos de la función, mejorando la precisión según la cantidad de puntos considerados.
+                </p>
 
-<dialog id="api">
-    <div class="contenido">
-        <div class="dialog-content">
-            <span class="close" onclick="cerrarDialog('api')">
-                <span class="material-symbols-outlined">
-                    close
+                <p>
+                    Además, cada uno de estos métodos tiene más de una fórmula y puede usarse para calcular derivadas de
+                    orden superior. Por ejemplo, también existen fórmulas para las segundas, terceras y cuartas
+                    derivadas basadas en diferencias finitas hacia adelante, hacia atrás y centrales. Estos métodos
+                    avanzados permiten mayor flexibilidad y precisión en la aproximación de derivadas numéricas en
+                    diferentes contextos.
+                </p>
+
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="diagrama">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('diagrama')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
                 </span>
-            </span>
-            <h2>API de los metodos de diferenciacion finita</h2>
-            <br>
-            <p>Para utilizar el método de diferenciacion Finita, se debe realizar una petición POST al siguiente endpoint:</p>
-            <p>https://analisis-numerico-sand.vercel.app/metodos/diferenciacion/derivadas</p>
-            <br>
-            <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
-            <br>
-            <pre>
-                
+                <center>
+                    <h2>Diagrama de Flujo del Método de Diferenciación finita</h2>
+                    <img src="/static/img/unidad_cuatro/diferenciacion.png">
+                </center>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="api">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('api')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+                <h2>API de los metodos de diferenciacion finita</h2>
+                <br>
+                <p>Para utilizar el método de diferenciacion Finita, se debe realizar una petición POST al siguiente
+                    endpoint:</p>
+                <p>https://analisis-numerico-sand.vercel.app/metodos/diferenciacion/derivadas</p>
+                <br>
+                <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
+                <br>
+                <pre>
+
                 {
                     "funcion":"funcion",
                     "metodo":"nombre del metodo",
@@ -324,42 +325,42 @@
                 
                 
             </pre>
+            </div>
         </div>
-    </div>
-</dialog>
+    </dialog>
 
-<script type="text/javascript" src="/static/matquill/mathquill.js"></script>
-<script type="text/javascript">
-  MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+    <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
+    <script type="text/javascript">
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
 
-  var latex = $('#math-field').bind('keydown keypress', function () {
-    var prev = latex.val();
-    setTimeout(function () {
-      var now = latex.val();
-      if (now !== prev) mq.latex(now);
-    });
-  });
-  var mq = MQ.MathField($('#latex')[0], {
-    autoSubscriptNumerals: true,
-    autoCommands:
-      'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
-    autoParenthesizedFunctions: 'sin cos',
-    handlers: {
-      edit: function () {
-        if (!latex.is(':focus')) latex.val(mq.latex());
-      },
-    },
-  });
-  latex.val(mq.latex());
-</script>
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
+            });
+        });
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
+    </script>
 
-<script>
-    //Aqui debe ir la direccion del EndPoint de el Metodo
-    let endPoint = "/metodos/diferenciacion/derivadas"
-    //Aqui iran los id de todos los datos que se enviaran al EndPoint
-    let variables = ["metodo", "orden", "version", "h", "xi"];
-    //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
-    function calcular() {
+    <script>
+        //Aqui debe ir la direccion del EndPoint de el Metodo
+        let endPoint = "/metodos/diferenciacion/derivadas"
+        //Aqui iran los id de todos los datos que se enviaran al EndPoint
+        let variables = ["metodo", "orden", "version", "h", "xi"];
+        //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
+        function calcular() {
             let datos = {}
             datos["latex"] = document.getElementById("latex").textContent;
             variables.forEach(variable => {
@@ -374,8 +375,8 @@
             cambiarEstadoSugerencias()
         }, 4000);
     </script>
-    
-    
+
+
     <!--Script de teclado-->
     <script defer>
         $(document).ready(function () {
@@ -401,41 +402,41 @@
 
         });
     </script>
-    
+
     <script>
-    function cambiarMetodo(select) {
-        let metodo = select.value;
-        let derivada = document.getElementById("orden");
-        let version = document.getElementById("version");
-        if (metodo == "cinco_puntos") {
-            derivada.innerHTML = "<option value='1'>1</option>";
-            version.innerHTML = `
+        function cambiarMetodo(select) {
+            let metodo = select.value;
+            let derivada = document.getElementById("orden");
+            let version = document.getElementById("version");
+            if (metodo == "cinco_puntos") {
+                derivada.innerHTML = "<option value='1'>1</option>";
+                version.innerHTML = `
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
             `;
-        } else if (metodo == "tres_puntos") {
-            derivada.innerHTML = "<option value='1'>1</option>";
-            version.innerHTML = `
+            } else if (metodo == "tres_puntos") {
+                derivada.innerHTML = "<option value='1'>1</option>";
+                version.innerHTML = `
             <option value="1">1</option>
             <option value="2">2</option>
             `;
-        }
-        else {
-            derivada.innerHTML = `
+            }
+            else {
+                derivada.innerHTML = `
             <option value='1'>1</option>
             <option value='2'>2</option>
             <option value='3'>3</option>
             <option value='4'>4</option>
             `;
-            version.innerHTML = "<option value='1'>1</option><option value='2'>2</option>";
+                version.innerHTML = "<option value='1'>1</option><option value='2'>2</option>";
+            }
         }
-    }
-</script>
+    </script>
 
-<script src="/static/Loader/background.js" async></script>
+    <script src="/static/Loader/background.js" async></script>
 </body>
 
 </html>

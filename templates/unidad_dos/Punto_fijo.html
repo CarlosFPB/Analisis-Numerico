@@ -70,7 +70,8 @@
                 <div class="valor">
                     <input type="radio" name="tipoTolerancia" onclick="cambiarTipoTolerancia(this)">
                     <label for="cifras" style="text-wrap: nowrap; opacity: 0.5;">N° de Cifras:</label>
-                    <input type="number" name="cifras" id="cifras" min="1" value="5" style="width: 2rem; opacity: 0.5;" step="1" disabled="">
+                    <input type="number" name="cifras" id="cifras" min="1" value="5" style="width: 2rem; opacity: 0.5;"
+                        step="1" disabled="">
                 </div>
             </div>
             <div class="ui">
@@ -224,9 +225,9 @@
                         close
                     </span>
                 </span>
-                <h2>Diagrama de Flujo del Método Bisección</h2>
                 <center>
-                    <p>Aqui debe ir una imagen bien perrona del codigo</p>
+                    <h2>Diagrama de Flujo del Método de punto-Fijo</h2>
+                    <img src="/static/img/unidad_dos/puntofijo.png">
                 </center>
             </div>
         </div>
@@ -264,27 +265,27 @@
 
     <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
     <script type="text/javascript">
-      MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
 
-      var latex = $('#math-field').bind('keydown keypress', function () {
-        var prev = latex.val();
-        setTimeout(function () {
-          var now = latex.val();
-          if (now !== prev) mq.latex(now);
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
+            });
         });
-      });
-      var mq = MQ.MathField($('#latex')[0], {
-        autoSubscriptNumerals: true,
-        autoCommands:
-          'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
-        autoParenthesizedFunctions: 'sin cos',
-        handlers: {
-          edit: function () {
-            if (!latex.is(':focus')) latex.val(mq.latex());
-          },
-        },
-      });
-      latex.val(mq.latex());
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
     </script>
 
 
@@ -302,7 +303,7 @@
             });
             if (variables[variables.length - 1] == "cifras") {
                 let cifras = document.getElementById("cifras").value
-                let torelancia = 0.5 * 10 ** (2-cifras)
+                let torelancia = 0.5 * 10 ** (2 - cifras)
                 datos["tolerancia"] = torelancia
             }
             console.log(datos);

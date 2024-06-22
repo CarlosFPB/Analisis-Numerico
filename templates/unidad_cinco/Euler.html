@@ -5,36 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Método de Euler</title>
-   <!--Jquery -->
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
-   <!-- Importa Mathquill -->
-   <link rel="stylesheet" href="/static/matquill/mathquill.css">
-   
-   
-   <!-- para el Loader -->
-   <link rel="stylesheet" href="/static/Loader/loaders.css">
-   
-   <!-- Estilo de la pagina en General -->
-   <!-- Estilo de la pagina en General -->
-   <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
-   <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
-   
-   <!-- Dependencias del Toast -->
-   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-   
-   <link rel="stylesheet"
-   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css" />
-   
-   <!-- Script Base JS -->
-   <script src="/static/funciones.js" async></script>
-   
-   <link rel="apple-touch-icon" sizes="180x180" href="/static/favicono/apple-touch-icon.png">
-   <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
-   <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
-   <link rel="manifest" href="/site.webmanifest">
+    <!--Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Importa Mathquill -->
+    <link rel="stylesheet" href="/static/matquill/mathquill.css">
+
+
+    <!-- para el Loader -->
+    <link rel="stylesheet" href="/static/Loader/loaders.css">
+
+    <!-- Estilo de la pagina en General -->
+    <!-- Estilo de la pagina en General -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
+
+    <!-- Dependencias del Toast -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css" />
+
+    <!-- Script Base JS -->
+    <script src="/static/funciones.js" async></script>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicono/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 </head>
 
 <body>
@@ -44,9 +44,10 @@
     <div>
     </div>
     <span class="text_hero">Método de <span class="textGradient1">Euler</span></span>
-    <p> El método de Euler es una técnica numérica simple para resolver ecuaciones diferenciales ordinarias mediante aproximaciones sucesivas a partir de un punto inicial.
+    <p> El método de Euler es una técnica numérica simple para resolver ecuaciones diferenciales ordinarias mediante
+        aproximaciones sucesivas a partir de un punto inicial.
     </p>
-    
+
     <div class="content">
         <div id="main" class="main">
             <div class="descripcion">
@@ -60,7 +61,7 @@
                 <div class="valor">
                     <label for="h">h:</label>
                     <input type="number" name="h" id="h" required value="0.2" min="0.0001" step="0.1"
-                    style="width: 3rem;">
+                        style="width: 3rem;">
                 </div>
                 <div class="valor">
                     <label for="x_inicial">X<sub>inicial</sub></label>
@@ -82,14 +83,14 @@
                         <option value="euler_hacia_atras">Euler hacia Atras</option>
                         <option value="euler_mejorado">Euler Mejorado</option>
                     </select>
-                    
+
                 </div>
-                
+
             </div>
-            
-            
+
+
             <div class="ui">
-                
+
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
                     <span class="material-symbols-outlined">
                         calculate
@@ -144,64 +145,72 @@
             </div>
         </div>
     </div>
-    
+
     <br>
     <div class="footer">
         <a class="regresar" href="/">Regresar</a>
     </div>
-    
+
     <!-- Sugerencias de Ejercicios 
     este sera una ventana que estara flotando a la derecha de la pagina
     -->
     <div class="sugerencias" style="right: calc(-253px);">
         <span><span class="textGradient1">
-            Ejercicios Sugeridos
-        </span>
-    </span>
-    <div id="ejercicios">
-        <p>Y'(x): 4e<sup>0.8x</sup>-0.5y</p>
-        <p>h: 1</p>
-        <p>X<sub>inicial</sub>: 0</p>
-        <p>Y<sub>inicial</sub>: 2</p>
-        <p>X<sub>final</sub>: 2</p>
-    </div>
-    <div class="viñeta" onclick="cambiarEstadoSugerencias()">
-        <span class="material-symbols-outlined textGradient4">
-            keyboard_double_arrow_left
-        </span>
-    </div>
-</div>
-
-<dialog id="explicamelo">
-    <div class="contenido">
-        <div class="dialog-content">
-            <span class="close" onclick="cerrarDialog('explicamelo')">
-                <span class="material-symbols-outlined">
-                    close
-                </span>
+                Ejercicios Sugeridos
             </span>
-            <h1>Método de Euler para EDO</h1>
-            <p>
-                El método de Euler es una técnica numérica simple y directa para resolver ecuaciones diferenciales ordinarias (EDO). Se utiliza para aproximar soluciones de EDOs a partir de un punto inicial, avanzando paso a paso mediante la evaluación de la pendiente.
-            </p>
-            
-            <h2>Variantes del Método de Euler</h2>
-            <p>
-                Existen varias variantes del método de Euler, cada una con sus propias características:
-            </p>
-            <ul>
-                <li><strong>Método de Euler Adelante:</strong> Utiliza la pendiente en el punto actual para avanzar al siguiente punto.</li>
-                <li><strong>Método de Euler Atrás:</strong> Utiliza la pendiente en el punto siguiente (estimado) para avanzar desde el punto actual.</li>
-                <li><strong>Método de Euler Central:</strong> Utiliza un promedio de las pendientes en el punto actual y el punto siguiente.</li>
-                <li><strong>Método de Euler Mejorado (Heun):</strong> Combina las pendientes inicial y final para una aproximación más precisa.</li>
-            </ul>
-            
-            <p>
-                Estas variantes ofrecen diferentes niveles de precisión y complejidad para resolver EDOs, siendo el método de Euler adelante el más simple y el método de Euler mejorado el que proporciona una mejor precisión.
-            </p>
+        </span>
+        <div id="ejercicios">
+            <p>Y'(x): 4e<sup>0.8x</sup>-0.5y</p>
+            <p>h: 1</p>
+            <p>X<sub>inicial</sub>: 0</p>
+            <p>Y<sub>inicial</sub>: 2</p>
+            <p>X<sub>final</sub>: 2</p>
         </div>
+        <div class="viñeta" onclick="cambiarEstadoSugerencias()">
+            <span class="material-symbols-outlined textGradient4">
+                keyboard_double_arrow_left
+            </span>
+        </div>
+    </div>
+
+    <dialog id="explicamelo">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('explicamelo')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+                <h1>Método de Euler para EDO</h1>
+                <p>
+                    El método de Euler es una técnica numérica simple y directa para resolver ecuaciones diferenciales
+                    ordinarias (EDO). Se utiliza para aproximar soluciones de EDOs a partir de un punto inicial,
+                    avanzando paso a paso mediante la evaluación de la pendiente.
+                </p>
+
+                <h2>Variantes del Método de Euler</h2>
+                <p>
+                    Existen varias variantes del método de Euler, cada una con sus propias características:
+                </p>
+                <ul>
+                    <li><strong>Método de Euler Adelante:</strong> Utiliza la pendiente en el punto actual para avanzar
+                        al siguiente punto.</li>
+                    <li><strong>Método de Euler Atrás:</strong> Utiliza la pendiente en el punto siguiente (estimado)
+                        para avanzar desde el punto actual.</li>
+                    <li><strong>Método de Euler Central:</strong> Utiliza un promedio de las pendientes en el punto
+                        actual y el punto siguiente.</li>
+                    <li><strong>Método de Euler Mejorado (Heun):</strong> Combina las pendientes inicial y final para
+                        una aproximación más precisa.</li>
+                </ul>
+
+                <p>
+                    Estas variantes ofrecen diferentes niveles de precisión y complejidad para resolver EDOs, siendo el
+                    método de Euler adelante el más simple y el método de Euler mejorado el que proporciona una mejor
+                    precisión.
+                </p>
+            </div>
     </dialog>
-    
+
     <dialog id="diagrama">
         <div class="contenido">
             <div class="dialog-content">
@@ -210,14 +219,14 @@
                         close
                     </span>
                 </span>
-                <h2>Diagrama de Flujo del Método de Euler</h2>
                 <center>
-                    <p>Aqui debe ir una imagen bien perrona del codigo</p>
+                    <h2>Diagrama de Flujo del Método de Euler</h2>
+                    <img src="/static/img/unidad_cinco/euler.png">
                 </center>
             </div>
         </div>
     </dialog>
-    
+
     <dialog id="api">
         <div class="contenido">
             <div class="dialog-content">
@@ -228,13 +237,14 @@
                 </span>
                 <h2>API del Método de Euler</h2>
                 <br>
-                <p>Para utilizar el método de Extrapolacion de Euler, se debe realizar una petición POST al siguiente endpoint:</p>
+                <p>Para utilizar el método de Extrapolacion de Euler, se debe realizar una petición POST al siguiente
+                    endpoint:</p>
                 <p>https://analisis-numerico-sand.vercel.app/metodos/unidad_cinco/iterativos/euler</p>
                 <br>
                 <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
                 <br>
                 <pre>
-                    
+
                     {
                         "funcion":"funcion y prima",
                         "tipo":"nombre del tipo de metodo",
@@ -248,38 +258,38 @@
             </div>
         </div>
     </dialog>
-    
+
     <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
     <script type="text/javascript">
-      MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
 
-      var latex = $('#math-field').bind('keydown keypress', function () {
-        var prev = latex.val();
-        setTimeout(function () {
-          var now = latex.val();
-          if (now !== prev) mq.latex(now);
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
+            });
         });
-      });
-      var mq = MQ.MathField($('#latex')[0], {
-        autoSubscriptNumerals: true,
-        autoCommands:
-          'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
-        autoParenthesizedFunctions: 'sin cos',
-        handlers: {
-          edit: function () {
-            if (!latex.is(':focus')) latex.val(mq.latex());
-          },
-        },
-      });
-      latex.val(mq.latex());
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
     </script>
-    
-    
+
+
     <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo
         let endPoint = "/metodos/unidad_cinco/iterativos/euler"
         //Aqui iran los id de todos los datos que se enviaran al EndPoint
-        let variables = ["h", "y_inicial","x_inicial", "x_final", "tipo"];
+        let variables = ["h", "y_inicial", "x_inicial", "x_final", "tipo"];
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
         function calcular() {
             let datos = {}
@@ -296,14 +306,14 @@
             cambiarEstadoSugerencias()
         }, 4000);
     </script>
-    
+
     <!--Script de teclado-->
     <script defer>
         $(document).ready(function () {
             var MQ = MathQuill.getInterface(2); // for backcompat
             var mathFieldSpan = document.getElementById('math-field');
             var latexSpan = document.getElementById('latex');
-            
+
             var mathField = MQ.MathField(mathFieldSpan, {
                 spaceBehavesLikeTab: true, // configurable
                 handlers: {
@@ -312,17 +322,17 @@
                     }
                 }
             });
-            
+
             // Añadir funcionalidad a los botones del panel matemático
             $('.math-button').on('click', function () {
                 var symbol = $(this).data('symbol');
                 mathField.write(symbol);
                 mathField.focus({ focusVisible: true });
             });
-            
+
         });
     </script>
-    
+
     <script src="/static/Loader/background.js" async></script>
 </body>
 

@@ -5,33 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Extrapolacion de Richardson</title>
-    
+
     <!--Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
+
     <!-- Importa Mathquill -->
     <link rel="stylesheet" href="/static/matquill/mathquill.css">
-    
-    
+
+
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
-    
+
     <!-- Estilo de la pagina en General -->
     <!-- Estilo de la pagina en General -->
     <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
-    
+
     <!-- Dependencias del Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    
+
     <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css" />
-    
+
     <!-- Script Base JS -->
     <script src="/static/funciones.js" async></script>
-    
+
     <link rel="apple-touch-icon" sizes="180x180" href="/static/favicono/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
@@ -45,7 +45,8 @@
     <div>
     </div>
     <span class="text_hero">Extrapolacion de <span class="textGradient1">Richardson</span></span>
-    <p>La extrapolación de Richardson es una técnica para mejorar la precisión de la derivada numérica al reducir el error principal.
+    <p>La extrapolación de Richardson es una técnica para mejorar la precisión de la derivada numérica al reducir el
+        error principal.
     </p>
 
     <div class="content">
@@ -103,9 +104,9 @@
 
                 <div class="valor">
                     <label for="nivel">nivel:</label>
-                    <input type="number" name="nivel" id="nivel" required value="2" min="2" step="1" pattern="\d+" 
+                    <input type="number" name="nivel" id="nivel" required value="2" min="2" step="1" pattern="\d+"
                         style="width: 3rem;">
-                </div>                
+                </div>
 
             </div>
 
@@ -208,7 +209,8 @@
 
                 <h1>Extrapolación de Richardson para Mejorar la Derivada Numérica</h1>
                 <p>
-                    La extrapolación de Richardson mejora la precisión de la derivada numérica al combinar dos aproximaciones con diferentes tamaños de paso.
+                    La extrapolación de Richardson mejora la precisión de la derivada numérica al combinar dos
+                    aproximaciones con diferentes tamaños de paso.
                 </p>
                 <p>
                     Primero, calcula la derivada numérica <em>D(h)</em> usando un paso <em>h</em>:
@@ -227,7 +229,8 @@
                     </code>
                 </pre>
                 <p>
-                    Usa la extrapolación de Richardson para combinar estas dos estimaciones y reducir el error principal:
+                    Usa la extrapolación de Richardson para combinar estas dos estimaciones y reducir el error
+                    principal:
                 </p>
                 <pre>
                     <code>
@@ -235,7 +238,8 @@
                     </code>
                 </pre>
                 <p>
-                    Esta fórmula elimina el término de error principal, proporcionando una estimación más precisa de la derivada en el punto <em>x</em>.
+                    Esta fórmula elimina el término de error principal, proporcionando una estimación más precisa de la
+                    derivada en el punto <em>x</em>.
                 </p>
                 <p>La formula de D(h1) varia dependiendo el metodo de diferenciacion finita escogido</p>
             </div>
@@ -250,9 +254,9 @@
                         close
                     </span>
                 </span>
-                <h2>Diagrama de Flujo del Método Tartaglia</h2>
                 <center>
-                    <p>Aqui debe ir una imagen bien perrona del codigo</p>
+                    <h2>Diagrama de Flujo del Método de Richardson</h2>
+                    <img src="/static/img/unidad_cuatro/richardson.png">
                 </center>
             </div>
         </div>
@@ -268,7 +272,8 @@
                 </span>
                 <h2>API del Método de Extrapolacion de Richardson</h2>
                 <br>
-                <p>Para utilizar el método de Extrapolacion de Richardson, se debe realizar una petición POST al siguiente endpoint:</p>
+                <p>Para utilizar el método de Extrapolacion de Richardson, se debe realizar una petición POST al
+                    siguiente endpoint:</p>
                 <p>https://analisis-numerico-sand.vercel.app/metodos/diferenciacion/richardson</p>
                 <br>
                 <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
@@ -290,38 +295,38 @@
         </div>
     </dialog>
 
-    
-<script type="text/javascript" src="/static/matquill/mathquill.js"></script>
-<script type="text/javascript">
-  MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
 
-  var latex = $('#math-field').bind('keydown keypress', function () {
-    var prev = latex.val();
-    setTimeout(function () {
-      var now = latex.val();
-      if (now !== prev) mq.latex(now);
-    });
-  });
-  var mq = MQ.MathField($('#latex')[0], {
-    autoSubscriptNumerals: true,
-    autoCommands:
-      'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
-    autoParenthesizedFunctions: 'sin cos',
-    handlers: {
-      edit: function () {
-        if (!latex.is(':focus')) latex.val(mq.latex());
-      },
-    },
-  });
-  latex.val(mq.latex());
-</script>
+    <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
+    <script type="text/javascript">
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
+            });
+        });
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
+    </script>
 
 
     <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo
         let endPoint = "/metodos/diferenciacion/richardson"
         //Aqui iran los id de todos los datos que se enviaran al EndPoint
-        let variables = [ "metodo", "orden", "version", "h", "xi","nivel"];
+        let variables = ["metodo", "orden", "version", "h", "xi", "nivel"];
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
         function calcular() {
             let datos = {}
@@ -339,7 +344,7 @@
         }, 4000);
     </script>
 
-    
+
     <!--Script de teclado-->
     <script defer>
         $(document).ready(function () {

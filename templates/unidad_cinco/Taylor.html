@@ -8,30 +8,30 @@
 
     <!--Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
+
     <!-- Importa Mathquill -->
     <link rel="stylesheet" href="/static/matquill/mathquill.css">
-    
-    
+
+
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
-    
+
     <!-- Estilo de la pagina en General -->
     <!-- Estilo de la pagina en General -->
     <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
-    
+
     <!-- Dependencias del Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    
+
     <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css" />
-    
+
     <!-- Script Base JS -->
     <script src="/static/funciones.js" async></script>
-    
+
     <link rel="apple-touch-icon" sizes="180x180" href="/static/favicono/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
@@ -45,9 +45,10 @@
     <div>
     </div>
     <span class="text_hero">Método de <span class="textGradient1">Taylor</span></span>
-    <p> El método de Taylor es una técnica numérica que utiliza la expansión en series de Taylor para aproximar la solución de ecuaciones diferenciales ordinarias (EDO).
+    <p> El método de Taylor es una técnica numérica que utiliza la expansión en series de Taylor para aproximar la
+        solución de ecuaciones diferenciales ordinarias (EDO).
     </p>
-    
+
     <div class="content">
         <div id="main" class="main">
             <div class="descripocion">
@@ -58,11 +59,11 @@
                 <p><span id="latex"></span></p>
             </div>
             <div class="formulario">
-                
+
                 <div class="valor">
                     <label for="h">h:</label>
                     <input type="number" name="h" id="h" required value="0.5" min="0.0001" step="0.1"
-                    style="width: 3rem;">
+                        style="width: 3rem;">
                 </div>
                 <div class="valor">
                     <label for="x_inicial">X<sub>inicial</sub></label>
@@ -80,12 +81,12 @@
                     <label for="grado" style="text-wrap: nowrap;">Grado:</label>
                     <input type="number" name="grado" id="grado" required value="2" style="width: 3rem;">
                 </div>
-                
+
             </div>
-            
-            
+
+
             <div class="ui">
-                
+
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
                     <span class="material-symbols-outlined">
                         calculate
@@ -140,128 +141,140 @@
             </div>
         </div>
     </div>
-    
+
     <br>
     <div class="footer">
         <a class="regresar" href="/">Regresar</a>
     </div>
-    
+
     <!-- Sugerencias de Ejercicios 
     este sera una ventana que estara flotando a la derecha de la pagina
     -->
     <div class="sugerencias" style="right: calc(-253px);">
         <span><span class="textGradient1">
-            Ejercicios Sugeridos
-        </span>
-    </span>
-    <div id="ejercicios">
-        <p>Y'(x): 4e<sup>0.8x</sup>-0.5y</p>
-        <p>h: 1</p>
-        <p>X<sub>inicial</sub>: 0</p>
-        <p>Y<sub>inicial</sub>: 2</p>
-        <p>X<sub>final</sub>: 2</p>
-        <p>Grado: 4</p>
-    </div>
-    <div class="viñeta" onclick="cambiarEstadoSugerencias()">
-        <span class="material-symbols-outlined textGradient4">
-            keyboard_double_arrow_left
-        </span>
-    </div>
-</div>
-
-<dialog id="explicamelo">
-    <div class="contenido">
-        <div class="dialog-content">
-            <span class="close" onclick="cerrarDialog('explicamelo')">
-                <span class="material-symbols-outlined">
-                    close
-                </span>
+                Ejercicios Sugeridos
             </span>
-            <h1>Método de Taylor para EDO</h1>
-            <p>
-                El método de Taylor es una técnica numérica que utiliza la expansión en series de Taylor para aproximar la solución de ecuaciones diferenciales ordinarias (EDO). Este método se basa en la idea de que una función puede ser expresada como una serie infinita de términos calculados a partir de las derivadas de la función en un punto específico.
-            </p>
-            
-            <h2>Concepto Básico</h2>
-            <p>
-                La solución de una EDO \( y' = f(x, y) \) se aproxima mediante una serie de Taylor centrada en un punto inicial \( (x_0, y_0) \). La fórmula general de la serie de Taylor de orden \( n \) es:
-            </p>
-            <pre>
+        </span>
+        <div id="ejercicios">
+            <p>Y'(x): 4e<sup>0.8x</sup>-0.5y</p>
+            <p>h: 1</p>
+            <p>X<sub>inicial</sub>: 0</p>
+            <p>Y<sub>inicial</sub>: 2</p>
+            <p>X<sub>final</sub>: 2</p>
+            <p>Grado: 4</p>
+        </div>
+        <div class="viñeta" onclick="cambiarEstadoSugerencias()">
+            <span class="material-symbols-outlined textGradient4">
+                keyboard_double_arrow_left
+            </span>
+        </div>
+    </div>
+
+    <dialog id="explicamelo">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('explicamelo')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+                <h1>Método de Taylor para EDO</h1>
+                <p>
+                    El método de Taylor es una técnica numérica que utiliza la expansión en series de Taylor para
+                    aproximar la solución de ecuaciones diferenciales ordinarias (EDO). Este método se basa en la idea
+                    de que una función puede ser expresada como una serie infinita de términos calculados a partir de
+                    las derivadas de la función en un punto específico.
+                </p>
+
+                <h2>Concepto Básico</h2>
+                <p>
+                    La solución de una EDO \( y' = f(x, y) \) se aproxima mediante una serie de Taylor centrada en un
+                    punto inicial \( (x_0, y_0) \). La fórmula general de la serie de Taylor de orden \( n \) es:
+                </p>
+                <pre>
                 <code>
                     y(x+h) ≈ y(x) + h y'(x) + \frac{h^2}{2!} y''(x) + \frac{h^3}{3!} y'''(x) + ... + \frac{h^n}{n!} y^{(n)}(x)
                 </code>
             </pre>
-            
-            <h2>Aplicación del Método de Taylor</h2>
-            <p>
-                Para aplicar el método de Taylor, se sigue el siguiente procedimiento:
-            </p>
-            <ol>
-                <li>Seleccionar un punto inicial \( (x_0, y_0) \) y un tamaño de paso \( h \).</li>
-                <li>Calcular las derivadas sucesivas de la función hasta el orden deseado.</li>
-                <li>Utilizar la serie de Taylor para encontrar la aproximación de \( y \) en el siguiente punto \( x + h \).</li>
-                <li>Repetir el proceso para avanzar a lo largo del intervalo de interés.</li>
-            </ol>
-            
-            <h2>Ventajas y Limitaciones</h2>
-            <p>
-                El método de Taylor es muy preciso cuando se utilizan órdenes altos de la serie, ya que incluye más términos de la expansión. Sin embargo, calcular las derivadas de orden superior puede ser complicado y costoso en términos de tiempo de cómputo. Además, el método puede ser sensible a errores de redondeo cuando se utilizan pasos grandes.
-            </p>
-            
-            <h2>Ejemplo</h2>
-            <p>
-                Supongamos que tenemos la EDO \( y' = f(x, y) \) y queremos aproximar la solución en un punto \( x \) usando una serie de Taylor de segundo orden. Los pasos serían:
-            </p>
-            <pre>
+
+                <h2>Aplicación del Método de Taylor</h2>
+                <p>
+                    Para aplicar el método de Taylor, se sigue el siguiente procedimiento:
+                </p>
+                <ol>
+                    <li>Seleccionar un punto inicial \( (x_0, y_0) \) y un tamaño de paso \( h \).</li>
+                    <li>Calcular las derivadas sucesivas de la función hasta el orden deseado.</li>
+                    <li>Utilizar la serie de Taylor para encontrar la aproximación de \( y \) en el siguiente punto \( x
+                        + h \).</li>
+                    <li>Repetir el proceso para avanzar a lo largo del intervalo de interés.</li>
+                </ol>
+
+                <h2>Ventajas y Limitaciones</h2>
+                <p>
+                    El método de Taylor es muy preciso cuando se utilizan órdenes altos de la serie, ya que incluye más
+                    términos de la expansión. Sin embargo, calcular las derivadas de orden superior puede ser complicado
+                    y costoso en términos de tiempo de cómputo. Además, el método puede ser sensible a errores de
+                    redondeo cuando se utilizan pasos grandes.
+                </p>
+
+                <h2>Ejemplo</h2>
+                <p>
+                    Supongamos que tenemos la EDO \( y' = f(x, y) \) y queremos aproximar la solución en un punto \( x
+                    \) usando una serie de Taylor de segundo orden. Los pasos serían:
+                </p>
+                <pre>
                 <code>
                     y(x+h) ≈ y(x) + h y'(x) + \frac{h^2}{2!} y''(x)
                 </code>
             </pre>
-            <p>
-                Donde \( y'(x) \) se obtiene directamente de la EDO y \( y''(x) \) se obtiene derivando \( y'(x) \) con respecto a \( x \).
-            </p>
-            
-            <h2>Conclusión</h2>
-            <p>
-                El método de Taylor es una herramienta poderosa para resolver EDOs cuando se pueden calcular las derivadas de la función. Ofrece una alta precisión y es una base para muchos otros métodos numéricos avanzados.
-            </p>
-        </div>
-    </div>
-</dialog>
+                <p>
+                    Donde \( y'(x) \) se obtiene directamente de la EDO y \( y''(x) \) se obtiene derivando \( y'(x) \)
+                    con respecto a \( x \).
+                </p>
 
-<dialog id="diagrama">
-    <div class="contenido">
-        <div class="dialog-content">
-            <span class="close" onclick="cerrarDialog('diagrama')">
-                <span class="material-symbols-outlined">
-                    close
-                </span>
-            </span>
-            <h2>Diagrama de Flujo del Método de Taylor</h2>
-            <center>
-                <p>Aqui debe ir una imagen bien perrona del codigo</p>
-            </center>
+                <h2>Conclusión</h2>
+                <p>
+                    El método de Taylor es una herramienta poderosa para resolver EDOs cuando se pueden calcular las
+                    derivadas de la función. Ofrece una alta precisión y es una base para muchos otros métodos numéricos
+                    avanzados.
+                </p>
+            </div>
         </div>
-    </div>
-</dialog>
+    </dialog>
 
-<dialog id="api">
-    <div class="contenido">
-        <div class="dialog-content">
-            <span class="close" onclick="cerrarDialog('api')">
-                <span class="material-symbols-outlined">
-                    close
+    <dialog id="diagrama">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('diagrama')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
                 </span>
-            </span>
-            <h2>API del Método de Taylor</h2>
-            <br>
-            <p>Para utilizar el método de Taylor, se debe realizar una petición POST al siguiente endpoint:</p>
-            <p>https://analisis-numerico-sand.vercel.app/metodos/unidad_cinco/iterativos/taylor</p>
-            <br>
-            <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
-            <br>
-            <pre>
-                
+                <center>
+                    <h2>Diagrama de Flujo del Método de Taylor</h2>
+                    <img src="/static/img/unidad_cinco/taylor.png">
+                </center>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="api">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('api')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+                <h2>API del Método de Taylor</h2>
+                <br>
+                <p>Para utilizar el método de Taylor, se debe realizar una petición POST al siguiente endpoint:</p>
+                <p>https://analisis-numerico-sand.vercel.app/metodos/unidad_cinco/iterativos/taylor</p>
+                <br>
+                <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
+                <br>
+                <pre>
+
                 {
                     "funcion":"funcion y prima",
                     "grado":"grado de Taylor",
@@ -271,43 +284,43 @@
                     "y_inicial":valor de y inicial
                 }
             </pre>
+            </div>
         </div>
-    </div>
-</dialog>
+    </dialog>
 
-<script type="text/javascript" src="/static/matquill/mathquill.js"></script>
+    <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
     <script type="text/javascript">
-      MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
 
-      var latex = $('#math-field').bind('keydown keypress', function () {
-        var prev = latex.val();
-        setTimeout(function () {
-          var now = latex.val();
-          if (now !== prev) mq.latex(now);
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
+            });
         });
-      });
-      var mq = MQ.MathField($('#latex')[0], {
-        autoSubscriptNumerals: true,
-        autoCommands:
-          'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
-        autoParenthesizedFunctions: 'sin cos',
-        handlers: {
-          edit: function () {
-            if (!latex.is(':focus')) latex.val(mq.latex());
-          },
-        },
-      });
-      latex.val(mq.latex());
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
     </script>
 
 
-<script>
-    //Aqui debe ir la direccion del EndPoint de el Metodo
-    let endPoint = "/metodos/unidad_cinco/iterativos/taylor"
-    //Aqui iran los id de todos los datos que se enviaran al EndPoint
-    let variables = ["h", "y_inicial","x_inicial", "x_final", "grado"];
-    //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
-    function calcular() {
+    <script>
+        //Aqui debe ir la direccion del EndPoint de el Metodo
+        let endPoint = "/metodos/unidad_cinco/iterativos/taylor"
+        //Aqui iran los id de todos los datos que se enviaran al EndPoint
+        let variables = ["h", "y_inicial", "x_inicial", "x_final", "grado"];
+        //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
+        function calcular() {
             let datos = {}
             datos["latex"] = document.getElementById("latex").textContent;
             variables.forEach(variable => {
@@ -323,33 +336,33 @@
         }, 4000);
     </script>
 
-<!--Script de teclado-->
-<script defer>
-    $(document).ready(function () {
-        var MQ = MathQuill.getInterface(2); // for backcompat
-        var mathFieldSpan = document.getElementById('math-field');
-        var latexSpan = document.getElementById('latex');
-        
-        var mathField = MQ.MathField(mathFieldSpan, {
-            spaceBehavesLikeTab: true, // configurable
-            handlers: {
-                edit: function () { // useful event handlers
-                    latexSpan.textContent = mathField.latex(); // simple API
-                }
-            }
-        });
-        
-        // Añadir funcionalidad a los botones del panel matemático
-        $('.math-button').on('click', function () {
-            var symbol = $(this).data('symbol');
-            mathField.write(symbol);
-            mathField.focus({ focusVisible: true });
-        });
-        
-    });
-</script>
+    <!--Script de teclado-->
+    <script defer>
+        $(document).ready(function () {
+            var MQ = MathQuill.getInterface(2); // for backcompat
+            var mathFieldSpan = document.getElementById('math-field');
+            var latexSpan = document.getElementById('latex');
 
-<script src="/static/Loader/background.js" async></script>
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // configurable
+                handlers: {
+                    edit: function () { // useful event handlers
+                        latexSpan.textContent = mathField.latex(); // simple API
+                    }
+                }
+            });
+
+            // Añadir funcionalidad a los botones del panel matemático
+            $('.math-button').on('click', function () {
+                var symbol = $(this).data('symbol');
+                mathField.write(symbol);
+                mathField.focus({ focusVisible: true });
+            });
+
+        });
+    </script>
+
+    <script src="/static/Loader/background.js" async></script>
 </body>
 
 </html>
