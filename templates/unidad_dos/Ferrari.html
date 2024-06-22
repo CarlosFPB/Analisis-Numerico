@@ -5,33 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Método Ferrari</title>
-    
+
     <!--Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
+
     <!-- Importa Mathquill -->
     <link rel="stylesheet" href="/static/matquill/mathquill.css">
-    
-    
+
+
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
-    
+
     <!-- Estilo de la pagina en General -->
     <!-- Estilo de la pagina en General -->
     <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
-    
+
     <!-- Dependencias del Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    
+
     <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css" />
-    
+
     <!-- Script Base JS -->
     <script src="/static/funciones.js" async></script>
-    
+
     <link rel="apple-touch-icon" sizes="180x180" href="/static/favicono/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
@@ -46,8 +46,8 @@
     </div>
     <span class="text_hero">Método <span class="textGradient1">Ferrari</span></span>
     <p>El método de Ferrari es un algoritmo utilizado para encontrar las raíces de una ecuación de cuarto grado</p>
-    
-    
+
+
     <div class="content">
         <div id="main" class="main">
             <div class="descripcion">
@@ -114,49 +114,50 @@
             </div>
         </div>
     </div>
-    
+
     <br>
     <div class="footer">
         <a class="regresar" href="/">Regresar</a>
     </div>
-    
+
     <!-- Sugerencias de Ejercicios 
     este sera una ventana que estara flotando a la derecha de la pagina
     -->
     <div class="sugerencias" style="right: calc(-253px);">
         <span><span class="textGradient1">
-            Ejercicios Sugeridos
-        </span>
-    </span>
-    <div id="ejercicios">
-        
-    </div>
-    <div class="viñeta" onclick="cambiarEstadoSugerencias()">
-        <span class="material-symbols-outlined textGradient4">
-            keyboard_double_arrow_left
-        </span>
-    </div>
-</div>
-
-<dialog id="explicamelo">
-    <div class="contenido">
-        <div class="dialog-content">
-            <span class="close" onclick="cerrarDialog('explicamelo')">
-                <span class="material-symbols-outlined">
-                    close
-                </span>
+                Ejercicios Sugeridos
             </span>
-            
-            <h2>Explicacion del Método de Ferrari</h2>
-            <br>
-            <p>El método de Ferrari es un algoritmo utilizado para encontrar las raíces de una ecuación de cuarto grado.</p>
-            <p>Este método se basa en la reducción de la ecuación de cuarto grado a una ecuación de tercer grado,
-                la cual se resuelve utilizando el método de Tartaglia</p>
-                
+        </span>
+        <div id="ejercicios">
+            <P>Funcion: x<sup>4</sup>+54x<sup>3</sup>-2x<sup>2</sup>+5x-1</P>
+        </div>
+        <div class="viñeta" onclick="cambiarEstadoSugerencias()">
+            <span class="material-symbols-outlined textGradient4">
+                keyboard_double_arrow_left
+            </span>
+        </div>
+    </div>
+
+    <dialog id="explicamelo">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('explicamelo')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+
+                <h2>Explicacion del Método de Ferrari</h2>
+                <br>
+                <p>El método de Ferrari es un algoritmo utilizado para encontrar las raíces de una ecuación de cuarto
+                    grado.</p>
+                <p>Este método se basa en la reducción de la ecuación de cuarto grado a una ecuación de tercer grado,
+                    la cual se resuelve utilizando el método de Tartaglia</p>
+
             </div>
         </div>
     </dialog>
-    
+
     <dialog id="diagrama">
         <div class="contenido">
             <div class="dialog-content">
@@ -172,7 +173,7 @@
             </div>
         </div>
     </dialog>
-    
+
     <dialog id="api">
         <div class="contenido">
             <div class="dialog-content">
@@ -185,89 +186,88 @@
                 <br>
                 <p>Para poder utilizar el método de Ferrari a través de la API, se debe realizar una petición POST al
                     siguiente endpoint:</p>
-                    
-                    
-                    <p>/metodos/directos/cerrados/Ferrari</p>
-                    <br>
-                    <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
-                    <br>
-                    <pre>
+
+
+                <p>/metodos/directos/cerrados/Ferrari</p>
+                <br>
+                <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
+                <br>
+                <pre>
                         {
                             "funcion": "x**4 + 4*x**3 - x**2 - 16*x - 12"
                         }
                     </pre>
-                </div>
             </div>
-        </dialog>
-        
-        <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
-        <script type="text/javascript">
-            MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
-            
-            var latex = $('#math-field').bind('keydown keypress', function () {
-                var prev = latex.val();
-                setTimeout(function () {
-                    var now = latex.val();
-                    if (now !== prev) mq.latex(now);
-                });
-            });
-            var mq = MQ.MathField($('#latex')[0], {
-                autoSubscriptNumerals: true,
-                autoCommands:
-                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
-                autoParenthesizedFunctions: 'sin cos',
-                handlers: {
-                    edit: function () {
-                        if (!latex.is(':focus')) latex.val(mq.latex());
-                    },
-                },
-            });
-            latex.val(mq.latex());
-        </script>
-        
-        
-        <script>
-            //Aqui debe ir la direccion del EndPoint de el Metodo
-            let endPoint = "/metodos/directos/gradomas3/Ferrari"
-            //Aqui iran los id de todos los datos que se enviaran al EndPoint
-            //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
-            function calcular() {
-                let datos = {}
-                datos["latex"] = document.getElementById("latex").textContent;
-                console.log(datos);
-                realizarPeticionPOST(endPoint, datos)
-            }
+        </div>
+    </dialog>
 
-        </script>
-        
-        <!--Script de teclado-->
-        <script defer>
-            $(document).ready(function () {
-                var MQ = MathQuill.getInterface(2); // for backcompat
-                var mathFieldSpan = document.getElementById('math-field');
-                var latexSpan = document.getElementById('latex');
-                
-                var mathField = MQ.MathField(mathFieldSpan, {
-                    spaceBehavesLikeTab: true, // configurable
-                    handlers: {
-                        edit: function () { // useful event handlers
-                            latexSpan.textContent = mathField.latex(); // simple API
-                        }
-                    }
-                });
-                
-                // Añadir funcionalidad a los botones del panel matemático
-                $('.math-button').on('click', function () {
-                    var symbol = $(this).data('symbol');
-                    mathField.write(symbol);
-                    mathField.focus({ focusVisible: true });
-                });
-                
+    <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
+    <script type="text/javascript">
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
             });
-        </script>
-        
-        <script src="/static/Loader/background.js" async></script>
-    </body>
-    
-    </html>
-    
+        });
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
+    </script>
+
+
+    <script>
+        //Aqui debe ir la direccion del EndPoint de el Metodo
+        let endPoint = "/metodos/directos/gradomas3/Ferrari"
+        //Aqui iran los id de todos los datos que se enviaran al EndPoint
+        //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
+        function calcular() {
+            let datos = {}
+            datos["latex"] = document.getElementById("latex").textContent;
+            console.log(datos);
+            realizarPeticionPOST(endPoint, datos)
+        }
+
+    </script>
+
+    <!--Script de teclado-->
+    <script defer>
+        $(document).ready(function () {
+            var MQ = MathQuill.getInterface(2); // for backcompat
+            var mathFieldSpan = document.getElementById('math-field');
+            var latexSpan = document.getElementById('latex');
+
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // configurable
+                handlers: {
+                    edit: function () { // useful event handlers
+                        latexSpan.textContent = mathField.latex(); // simple API
+                    }
+                }
+            });
+
+            // Añadir funcionalidad a los botones del panel matemático
+            $('.math-button').on('click', function () {
+                var symbol = $(this).data('symbol');
+                mathField.write(symbol);
+                mathField.focus({ focusVisible: true });
+            });
+
+        });
+    </script>
+
+    <script src="/static/Loader/background.js" async></script>
+</body>
+
+</html>
