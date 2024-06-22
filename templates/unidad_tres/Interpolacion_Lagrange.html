@@ -207,9 +207,9 @@
                         close
                     </span>
                 </span>
-                <h2>Diagrama de Flujo del Método de Lagrange</h2>
                 <center>
-                    <p>Aqui debe ir una imagen bien perrona del codigo</p>
+                    <h2>Diagrama de Flujo del Método de Lagrange</h2>
+                    <img src="/static/img/unidad_tres/lagrange.png">
                 </center>
             </div>
         </div>
@@ -302,7 +302,7 @@
             let tipo = document.getElementById("tipo").checked ? 2 : 1;
             datos.tipo = tipo;
             if (tipo === 1) {
-                datos.funcion = document.getElementById("latex").textContent;
+                datos.latex = document.getElementById("latex").textContent;
 
             }
             let resta = tipo === 1 ? 1 : 0;
