@@ -41,7 +41,8 @@
     <div>
     </div>
     <span class="text_hero">Método de la <span class="textGradient1">Cuadrática</span></span>
-    <p>El método de la Cuadrática es un algoritmo utilizado para encontrar las raíces de una ecuación de segundo grado</p>
+    <p>El método de la Cuadrática es un algoritmo utilizado para encontrar las raíces de una ecuación de segundo grado
+    </p>
 
 
     <div class="content">
@@ -143,7 +144,8 @@
 
                 <h2>Explicacion del Método Cuadrática</h2>
                 <br>
-                <p>El método de la Cuadrática es un algoritmo utilizado para encontrar las raíces de una ecuación de segundo grado</p>
+                <p>El método de la Cuadrática es un algoritmo utilizado para encontrar las raíces de una ecuación de
+                    segundo grado</p>
                 <br>
                 <p>Para encontrar las raíces de una ecuación de segundo grado, se utiliza la fórmula general</p>
                 <br>
@@ -161,7 +163,7 @@
                 </span>
                 <center>
                     <h2>Diagrama de Flujo del Método cuadratico</h2>
-                    <img src="/static/img/unidad_dos/cuadratica.png">
+                    <img src="/static/img/unidad_dos/cuadratica.jpg">
                 </center>
             </div>
         </div>
@@ -177,7 +179,8 @@
                 </span>
                 <h2>API del Método de la Cuadrática</h2>
                 <br>
-                <p>Para utilizar el método de la Cuadrática, se debe realizar una petición POST al siguiente endpoint:</p>
+                <p>Para utilizar el método de la Cuadrática, se debe realizar una petición POST al siguiente endpoint:
+                </p>
                 <p>https://metodos.herokuapp.com/metodos/directos/gradomas2/Cuadratica</p>
                 <br>
                 <p>El cuerpo de la petición debe contener un objeto JSON con la siguiente estructura:</p>
@@ -196,34 +199,34 @@
 
     <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
     <script type="text/javascript">
-      MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
 
-      var latex = $('#math-field').bind('keydown keypress', function () {
-        var prev = latex.val();
-        setTimeout(function () {
-          var now = latex.val();
-          if (now !== prev) mq.latex(now);
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
+            });
         });
-      });
-      var mq = MQ.MathField($('#latex')[0], {
-        autoSubscriptNumerals: true,
-        autoCommands:
-          'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
-        autoParenthesizedFunctions: 'sin cos',
-        handlers: {
-          edit: function () {
-            if (!latex.is(':focus')) latex.val(mq.latex());
-          },
-        },
-      });
-      latex.val(mq.latex());
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
     </script>
 
     <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo
         let endPoint = "/metodos/directos/gradomenos2/cuartica"
         //Aqui iran los id de todos los datos que se enviaran al EndPoint
-        
+
         //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
         function calcular() {
             let datos = {}
@@ -242,30 +245,30 @@
     </script>
 
     <!--Script de teclado-->
-<script defer>
-    $(document).ready(function () {
-        var MQ = MathQuill.getInterface(2); // for backcompat
-        var mathFieldSpan = document.getElementById('math-field');
-        var latexSpan = document.getElementById('latex');
+    <script defer>
+        $(document).ready(function () {
+            var MQ = MathQuill.getInterface(2); // for backcompat
+            var mathFieldSpan = document.getElementById('math-field');
+            var latexSpan = document.getElementById('latex');
 
-        var mathField = MQ.MathField(mathFieldSpan, {
-            spaceBehavesLikeTab: true, // configurable
-            handlers: {
-                edit: function () { // useful event handlers
-                    latexSpan.textContent = mathField.latex(); // simple API
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // configurable
+                handlers: {
+                    edit: function () { // useful event handlers
+                        latexSpan.textContent = mathField.latex(); // simple API
+                    }
                 }
-            }
-        });
+            });
 
-        // Añadir funcionalidad a los botones del panel matemático
-        $('.math-button').on('click', function () {
-            var symbol = $(this).data('symbol');
-            mathField.write(symbol);
-            mathField.focus({ focusVisible: true });
-        });
+            // Añadir funcionalidad a los botones del panel matemático
+            $('.math-button').on('click', function () {
+                var symbol = $(this).data('symbol');
+                mathField.write(symbol);
+                mathField.focus({ focusVisible: true });
+            });
 
-    });
-</script>
+        });
+    </script>
     <script src="/static/Loader/background.js" async></script>
 </body>
 
