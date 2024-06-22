@@ -310,9 +310,18 @@ function mostrarPasos(arrayPasos) {
 
     }
     let tablaDerivadas = function (arreglo) {
-        console.table(arreglo);
-        
-
+        const maxSize = arreglo[0].length;
+        let result = [];
+        for (let i = 0; i < maxSize; i++) {
+            const newRow = [];
+            for (let j = 0; j <= i; j++) {
+                newRow.push(arreglo[j][i - j]);
+            }
+            result.push(newRow);
+        }
+        encabezado = arreglo[0].map((_, i) => `Nivel ${i + 1}`);
+        result.unshift(encabezado);
+        return creaTabla(result);
     }
 
     let agregarImagen = function (base64) {

@@ -212,6 +212,9 @@
             </span>
         </span>
         <div id="ejercicios">
+            <p>funcion: 3x<sup>3</sup> + 5x<sup>2</sup> - 4x + 1</p>
+            <p>Puntos en x: [0, 1, 2, 3]</p>
+            <p>Derviada: 2</p>
 
         </div>
         <div class="viñeta" onclick="cambiarEstadoSugerencias()">
@@ -232,18 +235,19 @@
 
 
             </div>
-            <h2>Explicación del Método de Lagrange</h2>
-            <p>El método de Lagrange es un método de interpolación que permite encontrar un polinomio que pase por un
-                conjunto de puntos dados. Este polinomio se obtiene a partir de la fórmula de Lagrange, que se define
-                como:</p>
-            <br>
-            <p><code>P(x) = Σ f(xi) * L(x)</code></p>
-            <br>
-            <p>Donde:</p>
-            <p><code>f(xi)</code>: El valor de la función evaluada en el punto <code>xi</code>.</p>
-            <p><code>L(x)</code>: El polinomio de Lagrange, que se define como:</p>
-            <br>
-            <p><code>L(x) = Π (x - xj) / (xi - xj)</code></p>
+            <h2>Explicación del Método de Hermite</h2>
+            <p>El método de Hermite es una técnica de interpolación que se utiliza para encontrar un polinomio que pase
+                por un conjunto de puntos dados. A diferencia del método de Lagrange, el método de Hermite también
+                utiliza la derivada de la función en los puntos dados para mejorar la precisión de la interpolación.</p>
+            <p>Para utilizar el método de Hermite, se deben seguir los siguientes pasos:</p>
+            <ol>
+                <li>Definir la función y los puntos de interpolación.</li>
+                <li>Calcular la derivada de la función en los puntos de interpolación.</li>
+                <li>Construir el polinomio de Hermite utilizando los puntos de interpolación y sus derivadas.</li>
+                <li>Evaluar el polinomio de Hermite en el punto deseado para obtener el valor interpolado.</li>
+            </ol>
+            <p>El método de Hermite es útil cuando se requiere una interpolación más precisa y se dispone de información
+                adicional sobre la función en los puntos de interpolación.</p>
         </div>
     </dialog>
 
@@ -271,9 +275,8 @@
                         close
                     </span>
                 </span>
-                <h2>API del Método de Lagrange</h2>
-                <p>Para utilizar el método de lagrange a través de la API, debes realizar una petición POST al
-                    siguiente
+                <h2>API del Método de Hermite</h2>
+                <p>Para utilizar el método de Hermite a través de la API, se debe realizar una petición POST al siguiente
                     endpoint:</p>
                 <p>https://analisis-numerico-sand.vercel.app/metodos/interpolacion/hermite</p>
                 <br>
@@ -353,7 +356,7 @@
             let tipo = document.getElementById("tipo").checked ? 2 : 1;
             datos.tipo = tipo;
             if (tipo === 1) {
-                datos.funcion = document.getElementById("latex").textContent;
+                datos.latex = document.getElementById("latex").textContent;
                 datos.derivada = document.getElementById("derivada").value;
                 arrayOfPuntos = [Array.from(document.getElementById("x").children[1].children).map(punto => punto.value)]
 

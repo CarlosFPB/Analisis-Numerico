@@ -50,7 +50,7 @@
 
     <div>
     </div>
-    <span class="text_hero">Interpolacion de <span class="textGradient1">Newton</span></span>
+    <span class="text_hero">Interpolacion de <span class="textGradient1">Newton Recursivo</span></span>
     <p>Este método de interpolación se obtiene a partir de la fórmula de Newton Método Recursivo</p>
     <div class="content">
         <div id="main" class="main">
@@ -169,7 +169,8 @@
             </span>
         </span>
         <div id="ejercicios">
-
+            <p>funcion: 3x<sup>3</sup> + 5x<sup>2</sup> - 4x + 1</p>
+            <p>Puntos en x: [0, 1, 2, 3]</p>
         </div>
         <div class="viñeta" onclick="cambiarEstadoSugerencias()">
             <span class="material-symbols-outlined textGradient4">
@@ -312,7 +313,7 @@
             let tipo = document.getElementById("tipo").checked ? 2 : 1;
             datos.tipo = tipo;
             if (tipo === 1) {
-                datos.funcion = document.getElementById("latex").textContent;
+                datos.latex = document.getElementById("latex").textContent;
 
             }
             let resta = tipo === 1 ? 1 : 0;
@@ -438,13 +439,6 @@
             }
         }, 100);
 
-        //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
-        let ejercicios = [
-            ["funcion"],
-            ["3*x**3 + 5*x**2 - 4*x + 1"],
-            ["log(x)"],
-            ["-28*x**3/3 + 37*x**2 - 62*x/3 - 1"]
-        ]
     </script>
 
     <!--Script de teclado-->
