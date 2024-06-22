@@ -210,6 +210,15 @@ body {
     width: var(--varminsize);
 
     transition: all 0.5s;
+
+    img{
+        align-self: center;
+
+        width: 100%;
+        max-width: 700px;
+        height: auto;
+        
+    }
 }
 
 .titulo1 {

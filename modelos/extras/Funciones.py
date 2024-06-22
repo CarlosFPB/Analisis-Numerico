@@ -230,7 +230,8 @@ class respuesta_json():
         cont = [str(clave), str(contenido)]
         self.respuesta.insert(2, {'type': "clavevalor", 'content': cont})
 
-    
+    def agregar_imagen(self, contenido):
+        self.respuesta.append({'type': 'imagen', 'content': str(contenido)})
 
     def agregar_division_sinterica(self, contenido):
         #contenido es una matriz con 3 filas

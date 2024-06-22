@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico</title>
+
+    <!--Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Importa Mathquill -->
+    <link rel="stylesheet" href="/static/matquill/mathquill.css">
+
+
+    <!-- para el Loader -->
+    <link rel="stylesheet" href="/static/Loader/loaders.css">
+
+    <!-- Estilo de la pagina en General -->
+    <!-- Estilo de la pagina en General -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
+
+    <!-- Dependencias del Toast -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css" />
+
+    <!-- Script Base JS -->
+    <script src="/static/funciones.js" async></script>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicono/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+
+<body>
+    {% block keyboard %}
+    {{ keyboard_content | safe }}
+    {% endblock %}
+
+    <div>
+    </div>
+    <span class="text_hero">Método <span class="textGradient1">Gráfico</span></span>
+    <p>Es una técnica utilizada para encontrar la raíz de una función mediante la representación
+        gráfica de la misma.</p>
+
+    <div class="content">
+        <div id="main" class="main">
+            <div class="descripcion">
+                <p>Ingrese la formula de la función</p>
+            </div>
+            <div>
+                <p>Función: <span id="math-field"></span></p>
+                <p><span id="latex"></span></p>
+            </div>
+            <div class="formulario">
+            </div>
+            <div class="ui">
+                <div id="calcular" class="buttonBig button-green" onclick="calcular()">
+                    <span class="material-symbols-outlined">
+                        calculate
+                    </span>
+                    <span>Calcular</span>
+                </div>
+                <div id="guardar" class="buttonBig button-blue" onclick="guardarPDF('stepbystep')">
+                    <span class="material-symbols-outlined">
+                        save
+                    </span>
+                </div>
+                <div id="borrar" class="buttonBig button-red" onclick="borrarPasos()">
+                    <span class="material-symbols-outlined">
+                        delete
+                    </span>
+                </div>
+            </div>
+            <div class="ui">
+                <div class="buttonSmall button-yellow" onclick="mostrarDialog('explicamelo')">
+                    <span class="material-symbols-outlined">
+                        assignment
+                    </span>
+                    <span>Explícamelo</span>
+                </div>
+                <div class="buttonSmall button-orange" onclick="mostrarDialog('diagrama')">
+                    <span class="material-symbols-outlined">
+                        account_tree
+                    </span>
+                    <span>Diagrama de Flujo</span>
+                </div>
+                <div class="buttonSmall button-purple" onclick="mostrarDialog('api')">
+                    <span class="material-symbols-outlined">
+                        api
+                    </span>
+                    <span>API</span>
+                </div>
+            </div>
+        </div>
+        <div id="errorDiv"></div>
+
+        <div id="stepbystep" class="stepbystep">
+            <center>
+                <p style="
+                opacity: 0.2;
+                font-weight: 700;
+                color: #16167f;
+                width: 100%;
+                ">Aqui se mostrará el procedimiento</p>
+            </center>
+        </div>
+        <div id="result" class="result" style="display: none;">
+            <h2><span class="textGradient5">Resultados</span></h2>
+            <div class="contentresult">
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="footer">
+        <a class="regresar" href="/">Regresar</a>
+    </div>
+
+    <!-- Sugerencias de Ejercicios 
+    este sera una ventana que estara flotando a la derecha de la pagina
+    -->
+    <div id="sugerencias" class="sugerencias" style="right: calc(-253px);">
+        <span><span class="textGradient1">
+                Ejercicio Sugerido
+            </span>
+        </span>
+        <div id="ejercicios">
+            <p>Funcion: 3x<sup>3</sup>+5x<sup>2</sup>-4x+1</p>
+        </div>
+        <div class="viñeta" onclick="cambiarEstadoSugerencias()">
+            <span class="material-symbols-outlined textGradient4">
+                keyboard_double_arrow_left
+            </span>
+        </div>
+    </div>
+
+    <dialog id="explicamelo">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('explicamelo')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+
+                <h2>Explicación del Método Gráfico</h2>
+                <br>
+                <p>El método gráfico es una técnica utilizada para encontrar la raíz de una función mediante la
+                    representación gráfica de la misma. Para utilizar este método, se debe graficar la función en un
+                    plano cartesiano y encontrar el punto en el que la función cruza el eje x, es decir, el valor de x
+                    para el cual f(x) = 0.</p>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="diagrama">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('diagrama')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+                <h2>Diagrama de Flujo del Método Bisección</h2>
+                <center>
+                    <p>Aqui debe ir una imagen bien perrona del codigo</p>
+                </center>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="api">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('api')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+                <h2>API del Método Gráfico</h2>
+                <br>
+                <p>Para utilizar el método gráfico a través de la API, debes realizar una petición POST al siguiente
+                    endpoint:</p>
+                <p><code>analisis-numerico-sand.vercel.app/metodos/grafico</code></p>
+                <br>
+                <p>Los parámetros que debes incluir en la petición son los siguientes:</p>
+                <ul>
+                    <li>funcion: La función para la cual deseas encontrar la raíz.</li>
+                    <p>
+                </ul>
+                <p>Ejemplo:</p>
+                <pre>
+                        {
+                            "latex": "3x^{3}+5x^{2}-4x+1"
+                        }
+                    </pre>
+            </div>
+        </div>
+    </dialog>
+
+    <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
+    <script type="text/javascript">
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
+            });
+        });
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
+    </script>
+
+    <script>
+        //Aqui debe ir la direccion del EndPoint de el Metodo
+        let endPoint = "/metodos/grafico"
+        //Aqui iran los id de todos los datos que se enviaran al EndPoint
+        let variables = ["latex"];
+        //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
+        function calcular() {
+            let datos = {}
+            datos["latex"] = document.getElementById("latex").textContent;
+            console.log(datos);
+            realizarPeticionPOST(endPoint, datos)
+        }
+        //metodos de inicio para que se vea bien la interfaz
+        mostrarEjercicio()
+        setTimeout(() => {
+            cambiarEstadoSugerencias()
+        }, 4000);
+    </script>
+
+    <!--Script de teclado-->
+    <script defer>
+        $(document).ready(function () {
+            var MQ = MathQuill.getInterface(2); // for backcompat
+            var mathFieldSpan = document.getElementById('math-field');
+            var latexSpan = document.getElementById('latex');
+
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // configurable
+                handlers: {
+                    edit: function () { // useful event handlers
+                        latexSpan.textContent = mathField.latex(); // simple API
+                    }
+                }
+            });
+
+            // Añadir funcionalidad a los botones del panel matemático
+            $('.math-button').on('click', function () {
+                var symbol = $(this).data('symbol');
+                mathField.write(symbol);
+                mathField.focus({ focusVisible: true });
+            });
+
+        });
+    </script>
+
+    <script src="/static/Loader/background.js" async></script>
+</body>
+
+</html>

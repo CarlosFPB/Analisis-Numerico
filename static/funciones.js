@@ -194,7 +194,7 @@ document.addEventListener('click', function (e) {
     if (!(e.target.closest('#math-panel') || e.target.closest('#math-field') || e.target.closest(".sugerencias"))) {
         ocultarTeclado();
     }
-    else if(!e.target.closest(".sugerencias")){
+    else if (!e.target.closest(".sugerencias")) {
         mostrarTeclado();
     }
 });
@@ -211,7 +211,7 @@ function cambiarTipoTolerancia(elemento) {
             })
             variables.pop()
             variables.push(hijos[1].id)
-        }else{
+        } else {
             hijos.shift()
             hijos.forEach(hijo => {
                 hijo.disabled = true
@@ -259,14 +259,14 @@ function mostrarError(error) {
     ocultarStepByStep();
 
     setTimeout(() => {
-        
-    toastify('Error al realizar la solicitud', 4);
-    toastify(error, 5);
-    console.error('Error al realizar la solicitud::', error);
 
-    $stepbystep = document.getElementById('stepbystep');
-    $stepbystep.innerHTML = `<center><p style="opacity: 0.7; font-weight: 700; color: red;">${error}</p></center>`;
-    mostrarStepByStep();
+        toastify('Error al realizar la solicitud', 4);
+        toastify(error, 5);
+        console.error('Error al realizar la solicitud::', error);
+
+        $stepbystep = document.getElementById('stepbystep');
+        $stepbystep.innerHTML = `<center><p style="opacity: 0.7; font-weight: 700; color: red;">${error}</p></center>`;
+        mostrarStepByStep();
     }, 500);
 
 }
@@ -310,7 +310,14 @@ function mostrarPasos(arrayPasos) {
 
     }
     let tablaDerivadas = function (arreglo) {
-        
+
+    }
+
+    let agregarImagen = function (base64) {
+        let imageElement = document.createElement('img');
+        imageElement.src = 'data:image/jpeg;base64,' + base64;
+        return imageElement.outerHTML;
+
     }
     let añadirClaveValor = function (clave, valor) {
         return `<p class="clavevalor"><span>${clave}</span><span>${valor}</span></p>`;
@@ -354,6 +361,9 @@ function mostrarPasos(arrayPasos) {
                     break;
                 case "tab":
                     texto += añadirTab();
+                    break;
+                case "imagen":
+                    texto += agregarImagen(linea.content);
                     break;
                 default:
                     texto += añadirlinea(linea.content);

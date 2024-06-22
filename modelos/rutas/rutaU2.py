@@ -16,9 +16,24 @@ from modelos.unidad_dos.solucion_ecuaciones.directos.polinomicas_menor_2.lineal.
 from modelos.unidad_dos.solucion_ecuaciones.directos.polinomicas_menor_2.cuadratica.Cuadratica import metodo_cuadratico
 from modelos.unidad_dos.solucion_ecuaciones.directos.polinomicas_mayor_3.ferrari.Ferrari import metodo_ferrari
 from modelos.unidad_dos.solucion_ecuaciones.directos.polinomicas_mayor_3.tartaglia.Tartaglia import metodo_tartaglia
+from modelos.unidad_dos.solucion_ecuaciones.metodo_grafico.Graficador import graficador
 
 # Crear un Blueprint
 U2 = Blueprint('U2', __name__)
+
+# grafico
+@U2.route('/metodos/grafico', methods=['GET'])
+def grafico():
+    keyboard_content = render_template('KeyboardMath.html',time=time.time())
+    return render_template('unidad_dos/Grafico.html', keyboard_content=keyboard_content, time=time.time())
+
+@U2.route('/metodos/grafico', methods=['POST'])
+def calcular_grafico():
+    json_data = request.json
+    respuesta = graficador.calcular_grafico(json_data)
+    return respuesta
+
+
 
 #metodos iterativos cerrados
 
