@@ -61,6 +61,9 @@ class metodo_horner():
         except TypeError as e:
             resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
             return jsonify(resp), 400
+        except Exception as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada"+str(e))
+            return jsonify(resp), 400
         
         #validar que sea grado mayor a 3 y polinomica
         if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica

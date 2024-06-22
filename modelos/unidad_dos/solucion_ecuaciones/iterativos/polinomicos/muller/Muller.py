@@ -85,6 +85,9 @@ class metodo_muller():
         except TypeError as e:
             resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
             return jsonify(resp), 400
+        except Exception as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
 
         try:
             #validar que sea grado mayor a 3 no importa sino es polinomica
