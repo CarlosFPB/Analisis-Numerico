@@ -63,8 +63,14 @@
                     <input type="number" name="xi" id="xi" required value="0.1" maxlength="5">
                 </div>
                 <div class="valor">
+                    <input type="radio" name="tipoTolerancia" onclick="cambiarTipoTolerancia(this)" checked>
                     <label for="tolerancia">Tolerancia:</label>
-                    <input type="number" name="tolerancia" id="tolerancia" required value="0.05">
+                    <input type="number" name="tolerancia" id="tolerancia" min="0" value="0.05" style="width: 3rem;">
+                </div>
+                <div class="valor">
+                    <input type="radio" name="tipoTolerancia" onclick="cambiarTipoTolerancia(this)">
+                    <label for="cifras" style="text-wrap: nowrap; opacity: 0.5;">N° de Cifras:</label>
+                    <input type="number" name="cifras" id="cifras" min="1" value="5" style="width: 2rem; opacity: 0.5;" step="1" disabled="">
                 </div>
             </div>
             <div class="ui">
@@ -294,6 +300,11 @@
             variables.forEach(variable => {
                 datos[variable] = document.getElementById(variable).value;
             });
+            if (variables[variables.length - 1] == "cifras") {
+                let cifras = document.getElementById("cifras").value
+                let torelancia = 0.5 * 10 ** (2-cifras)
+                datos["tolerancia"] = torelancia
+            }
             console.log(datos);
             realizarPeticionPOST(endPoint, datos)
         }

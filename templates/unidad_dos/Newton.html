@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Método Newton</title>
-    
+
     <!--Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Importa Mathquill -->
@@ -13,22 +13,22 @@
 
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
-    
+
     <!-- Estilo de la pagina en General -->
     <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
-    
+
     <!-- Dependencias del Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    
+
     <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css" />
-    
+
     <!-- Script Base JS -->
     <script src="/static/funciones.js" async></script>
-    
+
     <link rel="apple-touch-icon" sizes="180x180" href="/static/favicono/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
@@ -43,7 +43,7 @@
     </div>
     <span class="text_hero">Método <span class="textGradient1">Newton</span></span>
     <p>Este metodo se utiliza para encontrar la raiz de una funcion en un intervalo [Xi,Xu]</p>
-    
+
     <div class="content">
         <div id="main" class="main">
             <div class="descripocion">
@@ -59,11 +59,18 @@
                     <input type="number" name="xi" id="xi" required value="0.1" maxlength="5">
                 </div>
                 <div class="valor">
+                    <input type="radio" name="tipoTolerancia" onclick="cambiarTipoTolerancia(this)" checked>
                     <label for="tolerancia">Tolerancia:</label>
-                    <input type="number" name="tolerancia" id="tolerancia" required value="0.05">
+                    <input type="number" name="tolerancia" id="tolerancia" min="0" value="0.05" style="width: 3rem;">
+                </div>
+                <div class="valor">
+                    <input type="radio" name="tipoTolerancia" onclick="cambiarTipoTolerancia(this)">
+                    <label for="cifras" style="text-wrap: nowrap; opacity: 0.5;">N° de Cifras:</label>
+                    <input type="number" name="cifras" id="cifras" min="1" value="5" style="width: 2rem; opacity: 0.5;"
+                        step="1" disabled="">
                 </div>
             </div>
-            
+
             <div class="ui">
                 <div id="calcular" class="buttonBig button-green" onclick="calcular()">
                     <span class="material-symbols-outlined">
@@ -119,44 +126,44 @@
             </div>
         </div>
     </div>
-    
+
     <br>
     <div class="footer">
         <a class="regresar" href="/">Regresar</a>
     </div>
-    
+
     <!-- Sugerencias de Ejercicios 
     este sera una ventana que estara flotando a la derecha de la pagina
     -->
     <div class="sugerencias" style="right: calc(-253px);">
         <span><span class="textGradient1">
-            Ejercicios Sugeridos
-        </span>
-    </span>
-    <div id="ejercicios">
-        
-    </div>
-    <div class="viñeta" onclick="cambiarEstadoSugerencias()">
-        <span class="material-symbols-outlined textGradient4">
-            keyboard_double_arrow_left
-        </span>
-    </div>
-</div>
-
-<dialog id="explicamelo">
-    <div class="contenido">
-        <div class="dialog-content">
-            <span class="close" onclick="cerrarDialog('explicamelo')">
-                <span class="material-symbols-outlined">
-                    close
-                </span>
+                Ejercicios Sugeridos
             </span>
-            
-            <h2>Explicación del Método Bisección</h2>
-            <p>El método de la bisección es un algoritmo utilizado para encontrar la raíz de una función en un
-                intervalo dado. El algoritmo se basa en el teorema del valor intermedio, que establece que si una
-                función es continua en un intervalo [a, b] y toma valores de signo opuesto en los extremos del
-                intervalo, entonces existe al menos un punto c en el intervalo donde la función se anula.</p>
+        </span>
+        <div id="ejercicios">
+
+        </div>
+        <div class="viñeta" onclick="cambiarEstadoSugerencias()">
+            <span class="material-symbols-outlined textGradient4">
+                keyboard_double_arrow_left
+            </span>
+        </div>
+    </div>
+
+    <dialog id="explicamelo">
+        <div class="contenido">
+            <div class="dialog-content">
+                <span class="close" onclick="cerrarDialog('explicamelo')">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </span>
+
+                <h2>Explicación del Método Bisección</h2>
+                <p>El método de la bisección es un algoritmo utilizado para encontrar la raíz de una función en un
+                    intervalo dado. El algoritmo se basa en el teorema del valor intermedio, que establece que si una
+                    función es continua en un intervalo [a, b] y toma valores de signo opuesto en los extremos del
+                    intervalo, entonces existe al menos un punto c en el intervalo donde la función se anula.</p>
                 <p>El método de la bisección divide repetidamente el intervalo a la mitad y verifica en qué subintervalo
                     se encuentra la raíz. El proceso continúa hasta que se alcance una tolerancia predefinida o se
                     encuentre una aproximación suficientemente cercana a la raíz.</p>
@@ -215,29 +222,29 @@
 
     <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
     <script type="text/javascript">
-      MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
 
-      var latex = $('#math-field').bind('keydown keypress', function () {
-        var prev = latex.val();
-        setTimeout(function () {
-          var now = latex.val();
-          if (now !== prev) mq.latex(now);
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
+            });
         });
-      });
-      var mq = MQ.MathField($('#latex')[0], {
-        autoSubscriptNumerals: true,
-        autoCommands:
-          'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
-        autoParenthesizedFunctions: 'sin cos',
-        handlers: {
-          edit: function () {
-            if (!latex.is(':focus')) latex.val(mq.latex());
-          },
-        },
-      });
-      latex.val(mq.latex());
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
     </script>
-    
+
     <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo
         let endPoint = "/metodos/directos/abiertos/newton"
@@ -250,6 +257,11 @@
             variables.forEach(variable => {
                 datos[variable] = document.getElementById(variable).value;
             });
+            if (variables[variables.length - 1] == "cifras") {
+                let cifras = document.getElementById("cifras").value
+                let torelancia = 0.5 * 10 ** (2 - cifras)
+                datos["tolerancia"] = torelancia
+            }
             console.log(datos);
             realizarPeticionPOST(endPoint, datos)
         }
@@ -269,30 +281,30 @@
     </script>
 
     <!--Script de teclado-->
-<script defer>
-    $(document).ready(function () {
-        var MQ = MathQuill.getInterface(2); // for backcompat
-        var mathFieldSpan = document.getElementById('math-field');
-        var latexSpan = document.getElementById('latex');
+    <script defer>
+        $(document).ready(function () {
+            var MQ = MathQuill.getInterface(2); // for backcompat
+            var mathFieldSpan = document.getElementById('math-field');
+            var latexSpan = document.getElementById('latex');
 
-        var mathField = MQ.MathField(mathFieldSpan, {
-            spaceBehavesLikeTab: true, // configurable
-            handlers: {
-                edit: function () { // useful event handlers
-                    latexSpan.textContent = mathField.latex(); // simple API
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // configurable
+                handlers: {
+                    edit: function () { // useful event handlers
+                        latexSpan.textContent = mathField.latex(); // simple API
+                    }
                 }
-            }
-        });
+            });
 
-        // Añadir funcionalidad a los botones del panel matemático
-        $('.math-button').on('click', function () {
-            var symbol = $(this).data('symbol');
-            mathField.write(symbol);
-            mathField.focus({ focusVisible: true });
-        });
+            // Añadir funcionalidad a los botones del panel matemático
+            $('.math-button').on('click', function () {
+                var symbol = $(this).data('symbol');
+                mathField.write(symbol);
+                mathField.focus({ focusVisible: true });
+            });
 
-    });
-</script>
+        });
+    </script>
 
     <script src="/static/Loader/background.js" async></script>
 </body>

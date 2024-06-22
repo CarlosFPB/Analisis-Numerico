@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Método Bisección</title>
+    <title>Método Newton-Modificado</title>
     <!--Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Importa Mathquill -->
@@ -58,8 +58,15 @@
                     <input type="number" name="xi" id="xi" required value="0.1" maxlength="5">
                 </div>
                 <div class="valor">
+                    <input type="radio" name="tipoTolerancia" onclick="cambiarTipoTolerancia(this)" checked>
                     <label for="tolerancia">Tolerancia:</label>
-                    <input type="number" name="tolerancia" id="tolerancia" required value="0.05">
+                    <input type="number" name="tolerancia" id="tolerancia" min="0" value="0.05" style="width: 3rem;">
+                </div>
+                <div class="valor">
+                    <input type="radio" name="tipoTolerancia" onclick="cambiarTipoTolerancia(this)">
+                    <label for="cifras" style="text-wrap: nowrap; opacity: 0.5;">N° de Cifras:</label>
+                    <input type="number" name="cifras" id="cifras" min="1" value="5" style="width: 2rem; opacity: 0.5;"
+                        step="1" disabled="">
                 </div>
             </div>
             <div class="ui">
@@ -210,29 +217,29 @@
             </div>
         </div>
     </dialog>
-<script type="text/javascript" src="/static/matquill/mathquill.js"></script>
+    <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
     <script type="text/javascript">
-      MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
 
-      var latex = $('#math-field').bind('keydown keypress', function () {
-        var prev = latex.val();
-        setTimeout(function () {
-          var now = latex.val();
-          if (now !== prev) mq.latex(now);
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
+            });
         });
-      });
-      var mq = MQ.MathField($('#latex')[0], {
-        autoSubscriptNumerals: true,
-        autoCommands:
-          'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
-        autoParenthesizedFunctions: 'sin cos',
-        handlers: {
-          edit: function () {
-            if (!latex.is(':focus')) latex.val(mq.latex());
-          },
-        },
-      });
-      latex.val(mq.latex());
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
     </script>
 
     <script>
@@ -247,6 +254,11 @@
             variables.forEach(variable => {
                 datos[variable] = document.getElementById(variable).value;
             });
+            if (variables[variables.length - 1] == "cifras") {
+                let cifras = document.getElementById("cifras").value
+                let torelancia = 0.5 * 10 ** (2 - cifras)
+                datos["tolerancia"] = torelancia
+            }
             console.log(datos);
             realizarPeticionPOST(endPoint, datos)
         }
@@ -266,30 +278,30 @@
     </script>
 
     <!--Script de teclado-->
-<script defer>
-    $(document).ready(function () {
-        var MQ = MathQuill.getInterface(2); // for backcompat
-        var mathFieldSpan = document.getElementById('math-field');
-        var latexSpan = document.getElementById('latex');
+    <script defer>
+        $(document).ready(function () {
+            var MQ = MathQuill.getInterface(2); // for backcompat
+            var mathFieldSpan = document.getElementById('math-field');
+            var latexSpan = document.getElementById('latex');
 
-        var mathField = MQ.MathField(mathFieldSpan, {
-            spaceBehavesLikeTab: true, // configurable
-            handlers: {
-                edit: function () { // useful event handlers
-                    latexSpan.textContent = mathField.latex(); // simple API
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // configurable
+                handlers: {
+                    edit: function () { // useful event handlers
+                        latexSpan.textContent = mathField.latex(); // simple API
+                    }
                 }
-            }
-        });
+            });
 
-        // Añadir funcionalidad a los botones del panel matemático
-        $('.math-button').on('click', function () {
-            var symbol = $(this).data('symbol');
-            mathField.write(symbol);
-            mathField.focus({ focusVisible: true });
-        });
+            // Añadir funcionalidad a los botones del panel matemático
+            $('.math-button').on('click', function () {
+                var symbol = $(this).data('symbol');
+                mathField.write(symbol);
+                mathField.focus({ focusVisible: true });
+            });
 
-    });
-</script>
+        });
+    </script>
 
     <script src="/static/Loader/background.js" async></script>
 </body>
