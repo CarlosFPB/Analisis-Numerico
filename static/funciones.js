@@ -310,6 +310,8 @@ function mostrarPasos(arrayPasos) {
 
     }
     let tablaDerivadas = function (arreglo) {
+        console.table(arreglo);
+        
 
     }
 
@@ -352,6 +354,9 @@ function mostrarPasos(arrayPasos) {
                     break;
                 case "divisionsinterica":
                     texto += crearDivisionSinteticas(linea.content);
+                    break;
+                case "tablaDerivada":
+                    texto += tablaDerivadas(linea.content);
                     break;
                 case "salto":
                     texto += añadirSalto();

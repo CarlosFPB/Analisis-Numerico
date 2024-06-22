@@ -1,5 +1,4 @@
 import sympy as sp
-import math
 from modelos.extras.Funciones import respuesta_json, verificaciones
 from flask import jsonify
 from modelos.extras.latex import conversla
