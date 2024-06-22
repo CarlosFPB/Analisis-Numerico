@@ -1,8 +1,7 @@
 from flask import jsonify
 import  sympy as sp
-import numpy as np
 from ......extras.Funciones import errores, newton_modificado, respuesta_json, verificaciones, commprobaciones_json
-from modelos.extras.latex import conversla
+from modelos.extras.latex import conversla_html
 
 class metodo_newton_modificado():
     @staticmethod
@@ -47,8 +46,17 @@ class metodo_newton_modificado():
             error_acomulado = 100
             iteracion = 0
 
-            instancia_respuesta.agregar_titulo1("Newton Modificado")
-            instancia_respuesta.agregar_parrafo("asdas")
+            f_prima_evaluada = f_prima.subs(x, x_actual)
+            f_x_evaluada = f_x.subs(x, x_actual)
+            f_prima_prima_evaluada = f_prima_prima.subs(x, x_actual)
+            criterio = abs((f_x_evaluada*f_prima_prima_evaluada)/(f_prima_evaluada**2))
+            if criterio > 1:
+                resp = instancia_respuesta.responder_error("El criterio de convergencia no se cumple")
+                return jsonify(resp), 400
+
+            instancia_respuesta.agregar_titulo1("Valores iniciales")
+            instancia_respuesta.agregar_parrafo("Función ingresada: " + conversla_html.mathl_(f_x))
+            instancia_respuesta.agregar_parrafo("Se muestra la tabla de iteraciones")
             instancia_respuesta.crear_tabla()
             instancia_respuesta.agregar_fila(['Iteracion', 'X0', 'F(x0)', 'F\'(x0)', 'F\'\'(x0)', 'Xi', 'Error'])
 
@@ -80,11 +88,16 @@ class metodo_newton_modificado():
                     print("La derivada evaluada en la raiz es 0")
                     instancia_respuesta.agregar_parrafo(f"La derivada evaluada en la raiz es 0, en la iteracion #{iteracion}, por lo tanto no se puede continuar con el metodo")
                     break
-                criterio = abs((f_prima_evaluada*f_prima_prima_evaluada)/(f_prima_evaluada**2))
+                criterio = abs((f_x_evaluada*f_prima_prima_evaluada)/(f_prima_evaluada**2))
                 if criterio > 1:
                     print("El criterio de convergencia no se cumple")
                     resp = instancia_respuesta.responder_error("El criterio de convergencia no se cumple")
                     return jsonify(resp), 400
+            
+            instancia_respuesta.agregar_titulo1("Resultados")
+            instancia_respuesta.agregar_clave_valor("Iteraciones:", iteracion)
+            instancia_respuesta.agregar_clave_valor("Raiz:", x_actual)
+            instancia_respuesta.agregar_clave_valor("Error:",error_acomulado)
             instancia_respuesta.agregar_tabla()
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()
             return jsonify(resp), 200
