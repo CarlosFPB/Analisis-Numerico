@@ -2,10 +2,13 @@ import sympy as sp
 from flask import jsonify
 from modelos.extras.Funciones import errores, biseccion, respuesta_json, verificaciones
 from modelos.extras.latex import conversla,conversla_html
+from modelos.extras.Funciones import commprobaciones_json
 
 
 
 class medoto_biseccion():
+
+    
 
     @staticmethod
     def calcular_biseccion(json_data):
@@ -14,25 +17,14 @@ class medoto_biseccion():
         #instancio las respuest json
         instancia_respuesta = respuesta_json()
 
-        #obtengo los valores del json
-        try:
-            f_x =conversla.latex_(json_data["latex"])
-            resultado = f_x.subs(x, 1).evalf()
-            is_imaginary = resultado.is_imaginary
-
-            if resultado.is_real and resultado > 0:
-                pass
-            elif is_imaginary:
-                pass
-        except sp.SympifyError as e:
-            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-            print(e)
-            return jsonify(resp), 400
-        except TypeError as e:
-            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-            print(e)
-            return jsonify(resp), 400
-
+        #obtengo la funcion de json
+        #Verificar la funcion obtenida
+        response, status_code = commprobaciones_json.comprobar_funcionX_latex(json_data, instancia_respuesta)
+        if status_code != 200:
+            resp = response
+            return resp, 400
+        f_x = response
+        
         #verificar que sea grado mayor a 0
         if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino lo es no importa el grado
             if verificaciones.obtener_grado(f_x) < 1:
@@ -55,6 +47,9 @@ class medoto_biseccion():
             #execpciones comunes
             evaluar_x1 = f_x.subs(x,x1)
             evaluar_xu = f_x.subs(x,xu)
+            if verificaciones.es_complejo(evaluar_x1) or verificaciones.es_complejo(evaluar_xu):
+                resp = instancia_respuesta.responder_error("Los valores iniciales deben de ser reales y validos")
+                return jsonify(resp), 400
             if (evaluar_x1 * evaluar_xu) > 0:#no ahy un cambio de signo
                 resp = instancia_respuesta.responder_error("No se encontró cambio de signo en los valores iniciales por ende no hay raíz en el intervalo dado")
                 return jsonify(resp), 400
@@ -122,6 +117,6 @@ class medoto_biseccion():
             return jsonify(resp), 200
         
         except Exception as e:
-            resp = instancia_respuesta.responder_error(f"Error interno del codigo\n {str(e)}")
+            resp = instancia_respuesta.responder_error(f"Error interno del codigo:\n {str(e)}")
             return jsonify(resp), 500
         

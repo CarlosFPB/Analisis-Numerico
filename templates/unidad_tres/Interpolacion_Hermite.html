@@ -10,11 +10,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interpolacion de Hermite</title>
+    <!--Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Importa Mathquill -->
+    <link rel="stylesheet" href="/static/matquill/mathquill.css">
+
+
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
 
     <!-- Estilo de la pagina en General -->
-    <link rel="stylesheet" href="/static/templatestyles.css">
+    <!-- Estilo de la pagina en General -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
 
     <!-- Dependencias del Toast -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
@@ -31,9 +40,11 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicono/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-</head>
 
 <body>
+    {% block keyboard %}
+    {{ keyboard_content | safe }}
+    {% endblock %}
     <div>
     </div>
     <span class="text_hero">Interpolacion de <span class="textGradient1">Hermite</span></span>
@@ -41,18 +52,17 @@
         función</p>
     <div class="content">
         <div id="main" class="main">
-            <div class="descripocion">
+            <div class="descripcion">
                 <p>Por favor, ingrese los datos necesarios para realizar el cálculo.</p>
+            </div>
+            <div>
+                <p>Función: <span id="math-field"></span></p>
+                <p><span id="latex"></span></p>
             </div>
             <div class="formulario">
                 <div class="valor">
                     <label for="tipo">Modo tabla:</label>
                     <input type="checkbox" name="tipo" id="tipo" onchange="cambiarTipo(this)">
-                </div>
-                <div class="valor">
-                    <label for="funcion">Funcion:</label>
-                    <input type="text" name="funcion" id="funcion" required value="3*x**3 + 5*x**2 - 4*x + 1"
-                        style="width: 14rem;">
                 </div>
                 <div class="valor">
                     <label for="derivada">N°Derivada:</label>
@@ -303,6 +313,30 @@
 
     </dialog>
 
+    <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
+    <script type="text/javascript">
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
+            });
+        });
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
+    </script>
     <exponecial>
 
     </exponecial>
@@ -319,9 +353,10 @@
             let tipo = document.getElementById("tipo").checked ? 2 : 1;
             datos.tipo = tipo;
             if (tipo === 1) {
-                datos.funcion = document.getElementById("funcion").value;
+                datos.funcion = document.getElementById("latex").textContent;
                 datos.derivada = document.getElementById("derivada").value;
                 arrayOfPuntos = [Array.from(document.getElementById("x").children[1].children).map(punto => punto.value)]
+
             }
             let resta = tipo === 1 ? 1 : 0;
 
@@ -343,10 +378,12 @@
 
         function cambiarTipo(checkbox) {
             if (checkbox.checked) {
-                document.getElementById("funcion").style.transition = "opacity 0.5s";
-                document.getElementById("funcion").style.zIndex = -40;
+                let latex = document.getElementById("latex").parentElement.parentElement;
+                latex.style.transition = "opacity 0.5s";
+                latex.style.zIndex = -40;
+
                 setTimeout(() => {
-                    document.getElementById("funcion").style.opacity = 0.3;
+                    latex.style.opacity = 0.3;
                 }, 10);
 
                 document.getElementById("derivada").style.transition = "opacity 0.5s";
@@ -414,10 +451,11 @@
                 }, 10);
 
             } else {
-                document.getElementById("funcion").style.transition = "opacity 0.5s";
-                document.getElementById("funcion").style.zIndex = 0;
+                let latex = document.getElementById("latex").parentElement.parentElement;
+                latex.style.transition = "opacity 0.5s";
+                latex.style.zIndex = 0;
                 setTimeout(() => {
-                    document.getElementById("funcion").style.opacity = 1;
+                    latex.style.opacity = 1;
                 }, 10);
 
                 document.getElementById("derivada").style.transition = "opacity 0.5s";
@@ -681,6 +719,32 @@
             ["-28*x**3/3 + 37*x**2 - 62*x/3 - 1"]
         ]
     </script>
+    <!--Script de teclado-->
+    <script defer>
+        $(document).ready(function () {
+            var MQ = MathQuill.getInterface(2); // for backcompat
+            var mathFieldSpan = document.getElementById('math-field');
+            var latexSpan = document.getElementById('latex');
+
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // configurable
+                handlers: {
+                    edit: function () { // useful event handlers
+                        latexSpan.textContent = mathField.latex(); // simple API
+                    }
+                }
+            });
+
+            // Añadir funcionalidad a los botones del panel matemático
+            $('.math-button').on('click', function () {
+                var symbol = $(this).data('symbol');
+                mathField.write(symbol);
+                mathField.focus({ focusVisible: true });
+            });
+
+        });
+    </script>
+
 
     <script src="/static/Loader/background.js" async></script>
 </body>

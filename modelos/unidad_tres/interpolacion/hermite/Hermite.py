@@ -2,6 +2,7 @@ import sympy as sp
 import math
 from modelos.extras.Funciones import respuesta_json
 from flask import jsonify
+from modelos.extras.latex import conversla
 
 
 class metodo_hermite:
@@ -17,10 +18,20 @@ class metodo_hermite:
             except:
                 resp = instancia_respuesta.responder_error("Error en el argumento 'tipo'")
             if tipo == 1:
+                #obtengo la funcion de json
                 try:
-                    f_x = sp.sympify(json_data["funcion"])
-                except:
+                    f_x = conversla.latex_(json_data["funcion"])
+                    resultado = f_x.subs(x, 1)
+                    if  resultado > 0:
+                        pass
+                except sp.SympifyError as e:
                     resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                    return jsonify(resp), 400
+                except TypeError as e:
+                    resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                    return jsonify(resp), 400
+                except Exception as e:
+                    resp = instancia_respuesta.responder_error("Error en el codigo interno de la funcion ingresada")
                     return jsonify(resp), 400
                 try:
                     derivada = json_data["derivada"]
@@ -42,8 +53,6 @@ class metodo_hermite:
                 resp = instancia_respuesta.responder_error("Error en los puntos ingresados")
                 return jsonify(resp), 400
             
-            
-
             #variables
                         
             puntos_x = []
@@ -126,7 +135,6 @@ class metodo_hermite:
                                 if not type(matrizPuntos[i][j]) == int or type(matrizPuntos[i][j]) == float:
                                     break
                         filas.append(fila)
-                        
 
 
             if activarerror:
@@ -153,10 +161,6 @@ class metodo_hermite:
                 for i in filas:
                     instancia_respuesta.agregar_fila(i)
                 instancia_respuesta.agregar_tabla()
-                
-
-
-
 
                 #inicio del metodo
                 instancia_respuesta.agregar_titulo1("Polinomio Interpolante de Hermite:") 
@@ -180,10 +184,6 @@ class metodo_hermite:
                     instancia_respuesta.agregar_fila(i)
                 instancia_respuesta.agregar_tabla()
 
-
-
-
-
                 coeficientes = []
                 for i in range(len(matris)):
                     coeficientes.append(matris[i][-1])
@@ -193,8 +193,6 @@ class metodo_hermite:
                 instancia_respuesta.agregar_parrafo("Se obtienen los coeficientes del polinomio interpolante de Hermite")
                 instancia_respuesta.agregar_clave_valor("Coeficientes:", str(coeficientes).replace("[", "").replace("]", ""))
                 p_x = 0
-
-
 
                 instancia_respuesta.agregar_parrafo("Se hace la suma de los productos de los coeficientes")
                 texto = "p(x) = "
@@ -209,10 +207,6 @@ class metodo_hermite:
                     p_x += matris[i][i+1] * producto
                 instancia_respuesta.agregar_parrafo(texto)
 
-
-
-
-
                 p_x = sp.simplify(p_x)
                 instancia_respuesta.agregar_titulo1("Resultado")
                 instancia_respuesta.agregar_parrafo("El polinomio interpolante de Hermite es:")
@@ -220,10 +214,6 @@ class metodo_hermite:
                 
                 p_x_decimal = sp.simplify(p_x.evalf())
                 instancia_respuesta.agregar_clave_valor("p(x) decimal:", str(p_x_decimal))
-
-
-
-
 
                 resp = instancia_respuesta.obtener_y_limpiar_respuesta()
                 return jsonify(resp), 200

@@ -2,7 +2,7 @@ import numpy as np
 import sympy as sp
 from flask import jsonify
 from ......extras.Funciones import errores, respuesta_json, verificaciones
-
+from modelos.extras.latex import conversla,conversla_html
 
 class metodo_bairstow():
         
@@ -50,9 +50,11 @@ class metodo_bairstow():
         x = sp.symbols("x")
         instancia_respuesta = respuesta_json()
         #Verificar la funcion obtenida
+        #Verificar la funcion obtenida
+        #Verificar la funcion obtenida
         try:
             #Ecuaion de la funcion
-            f_x = sp.sympify(json_data["funcion"])
+            f_x = conversla.latex_(json_data["latex"])
             resultado = f_x.subs(x, 2)
             if resultado > 0:
                 pass
@@ -61,6 +63,9 @@ class metodo_bairstow():
             return jsonify(resp), 400
         except TypeError as e:
             resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
+        except Exception as e:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada"+str(e))
             return jsonify(resp), 400
             
         try:

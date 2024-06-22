@@ -1,5 +1,7 @@
 
 import sympy as sp
+from modelos.extras.latex import conversla
+from flask import jsonify
 
 class errores():
 
@@ -114,8 +116,67 @@ class newton_modificado():
         respuesta = x0 - (f_x_evaluada * f_prima_evaluada)/(f_prima_evaluada**2 - f_x_evaluada * f_prima_prima_evaluada)
         return float(respuesta)
     
+class commprobaciones_json():
+
+    #si hay error devuelve status 400 y el error
+    #si no lo hay devuelve la funcion y status 200
+    @staticmethod
+    def comprobar_funcionX_latex(json_data, instancia_respuesta):
+    #Verificar la funcion obtenida
+        try:
+            #Ecuaion de la funcion
+            x = sp.symbols('x')
+            f_x = conversla.latex_(json_data["latex"])
+            resultado = 0
+            dominio = sp.calculus.util.continuous_domain(f_x, x, sp.S.Reals)
+            #print(dominio.start)
+            #print(dominio.end)
+            if dominio.is_Union:
+                dominio = dominio.args[0]
+            if dominio.start.is_infinite and dominio.end.is_infinite:
+                resultado = f_x.subs(x,2)
+                if resultado > 0:
+                    pass
+            elif dominio.start.is_infinite:
+                resultado = f_x.subs(x,dominio.end)
+                if resultado > 0:
+                    pass
+            elif dominio.end.is_infinite:
+                resultado = f_x.subs(x,dominio.start)
+                if resultado > 0:
+                    pass
+            else:
+                resultado = f_x.subs(x,dominio.start)
+                if resultado > 0:
+                    pass
+            #logro deslizar por tanto no ahy error
+            return f_x, 200
+        except sp.SympifyError:
+            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+            return jsonify(resp), 400
+        except TypeError as e:
+            resp = instancia_respuesta.responder_error(f"Error en la funcion ingresada: \n{str(e)}")
+            return jsonify(resp), 400
+        except Exception as e:
+            resp = instancia_respuesta.responder_error(f"Error en la funcion ingresada: \n{str(e)}")
+            return jsonify(resp), 400
+
+
 
 class verificaciones():
+
+    def es_complejo(valor):
+        valor = str(valor)
+        # Si el valor es un número entero o flotante, retorna False
+        if isinstance(valor, (int, float)):
+            return False
+        try:
+            # Intenta convertir el valor a una expresión simbólica
+            expr = sp.sympify(valor.replace('I', 'j'))
+            # Verifica si la parte imaginaria de la expresión no es cero
+            return sp.im(expr) != 0
+        except (sp.SympifyError, TypeError):
+            return False
 
     @staticmethod
     def es_polinomio(funcion):
