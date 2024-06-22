@@ -22,7 +22,7 @@ class metodo_ferrari:
             if status_code != 200:
                 resp = response
                 return resp, 400
-            f_x_crudo = response
+            f_x = response
         except Exception as e:
             resp = respuesta.responder_error("Error al obtener la función ingresada: "+str(e))
             return jsonify(resp), 400
@@ -39,9 +39,9 @@ class metodo_ferrari:
                 resp = respuesta.responder_error("La función ingresada no es de grado 4")
                 return jsonify(resp), 400
             
-            f_x = f_x_crudo/f_x_crudo.as_poly(x).coeffs()[0]#para convertir en 1 el coeficiente de x^4
+            f_x = f_x_crudo/f_x_crudo.as_poly(x).coeffs()[0]#para convertir en 0 el coeficiente de x^4
         except Exception as e:
-            resp = respuesta.responder_error("Error al simplificar la función ingresada: "+str(e))
+            resp = respuesta.responder_error("Error al simplificar la función ingresada")
             return jsonify(resp), 400
             
         #Metodo de Ferrari
