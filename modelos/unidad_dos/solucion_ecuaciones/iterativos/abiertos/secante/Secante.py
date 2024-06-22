@@ -2,7 +2,7 @@ from flask import jsonify
 import  sympy as sp
 import numpy as np
 from ......extras.Funciones import errores, secante, respuesta_json, verificaciones, commprobaciones_json
-from modelos.extras.latex import conversla
+from modelos.extras.latex import conversla_html
 
 class metodo_secante():
     @staticmethod
@@ -46,7 +46,10 @@ class metodo_secante():
             iteracion = 0
 
             instancia_respuesta.agregar_titulo1("Secante")
-            instancia_respuesta.agregar_parrafo("")
+            instancia_respuesta.agregar_parrafo("Datos iniciales")
+            instancia_respuesta.agregar_parrafo("Función ingresada: " + conversla_html.mathl_(f_x))
+            instancia_respuesta.agregar_parrafo("Xi: " + str(x_anterior))
+            instancia_respuesta.agregar_parrafo("Xu: " + str(x_actual))
             instancia_respuesta.crear_tabla()
             instancia_respuesta.agregar_fila(['Iteracion', 'X0', 'X1', 'F(x0)', 'F(x1)', 'Xr','Error'])
 
@@ -73,7 +76,8 @@ class metodo_secante():
                 if iteracion > 300:
                     resp = instancia_respuesta.responder_error("El metodo sobrepaso el numero de iteraciones permitidas")
                     return jsonify(resp), 400
-                
+            instancia_respuesta.agregar_clave_valor("Raiz aproximada", x_calculada)
+            instancia_respuesta.agregar_clave_valor("Error aproximado", error_acomulado)
             instancia_respuesta.agregar_tabla()
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()
             return jsonify(resp), 200
