@@ -218,9 +218,14 @@ class respuesta_json():
     def agregar_tabla(self):
         self.respuesta.append({'type': 'tabla', 'content': self.tabla})
 
-    def agregar_tabla_derivada(self):
-        self.respuesta.append({'type': 'tablaDerivada', 'content': self.tabla})
-        self.tabla = []
+    def agregar_tabla_derivada(self,contenido):
+        resp = []
+        for i in contenido:
+            convertidas = []
+            for j in i:
+                convertidas.append(str(j))
+            resp.append(convertidas)
+        self.respuesta.append({'type': 'tablaDerivada', 'content': resp})
 
     def agregar_clave_valor(self,clave ,contenido):
         cont = [str(clave), str(contenido)]

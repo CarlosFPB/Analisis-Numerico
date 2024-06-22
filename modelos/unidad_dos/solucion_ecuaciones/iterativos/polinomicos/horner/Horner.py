@@ -21,9 +21,10 @@ class metodo_horner():
         divsion_sinterica1 = metodo_horner.calcular_divsion_sinterica(coeficientes, x0)
         instancia_respuesta.agregar_division_sinterica(divsion_sinterica1)
         R = divsion_sinterica1[-1].pop()
-        instancia_respuesta.agregar_tabla()
-        instancia_respuesta.agregar_parrafo(f"R = {R}")
-        instancia_respuesta.crear_tabla()
+
+        instancia_respuesta.agregar_clave_valor("R",R)
+        instancia_respuesta.agregar_tabla_derivada(divsion_sinterica1)
+
         divsion_sinterica2 = metodo_horner.calcular_divsion_sinterica(divsion_sinterica1[-1], x0)
         instancia_respuesta.agregar_division_sinterica(divsion_sinterica2)
         S = divsion_sinterica2[-1].pop()
