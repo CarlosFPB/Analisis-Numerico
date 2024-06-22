@@ -30,8 +30,8 @@ class metodo_punto_fijo():
 
         # verificar que sea grado mayor a 0
         if verificaciones.obtener_grado(g_x) != None:  # es porq es polinomica sino no importa el grado
-            if verificaciones.obtener_grado(g_x) < 2:
-                resp = instancia_respuesta.responder_error("La función debe ser de grado 2 o mayor")
+            if verificaciones.obtener_grado(g_x) < 1:
+                resp = instancia_respuesta.responder_error("La función debe ser de grado 1 o mayor")
                 return jsonify(resp), 400
         # verificar que tenga raices reales
         if verificaciones.posee_raices_reales(g_x) == False:
