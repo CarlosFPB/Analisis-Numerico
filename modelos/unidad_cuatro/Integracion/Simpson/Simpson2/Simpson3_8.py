@@ -233,7 +233,7 @@ class metodo_simpson38_tabla():
     def simpson38_compuesto_tabla(puntos_x, puntos_y):
         instancia_respuesta = respuesta_json()
         if len(puntos_x) < 5:
-            resp = instancia_respuesta.responder_error("Se necesitan por lo menos 4 datos tabulados para resolver por Simpson 3/8 Compuesto")
+            resp = instancia_respuesta.responder_error("Se necesitan por lo menos 5 datos tabulados para resolver por Simpson 3/8 Compuesto")
             return jsonify(resp), 400
         
         #Suma intermedios
