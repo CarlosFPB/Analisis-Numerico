@@ -1,6 +1,6 @@
 import sympy as sp
 from flask import jsonify
-from modelos.extras.Funciones import verificaciones, respuesta_json
+from modelos.extras.Funciones import verificaciones, respuesta_json, commprobaciones_json
 from modelos.extras.Derivadas import Diferenciacion
 from modelos.extras.latex import conversla
 
@@ -18,17 +18,14 @@ class metodos_diferenciacion():
         x = sp.symbols('x')
         instancia_respuesta = respuesta_json()
         try:
-            f_x =conversla.latex_(json_data["latex"])
-            resultado = f_x.subs(x, 1)
-            if  resultado > 0:
-                pass
-        except sp.SympifyError as e:
-            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-            print(e)
-            return jsonify(resp), 400
-        except TypeError as e:
-            resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-            print(e)
+            #Verificar la funcion obtenida
+            response, status_code = commprobaciones_json.comprobar_funcionX_latex(json_data, instancia_respuesta)
+            if status_code != 200:
+                resp = response
+                return resp, 400
+            f_x = response
+        except Exception as e:
+            resp = instancia_respuesta.responder_error("Error al obtener la función ingresada: "+str(e))
             return jsonify(resp), 400
         try:
         #verificar que sea grado mayor a 0 si es polinomica

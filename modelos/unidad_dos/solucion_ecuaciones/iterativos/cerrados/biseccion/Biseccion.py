@@ -1,8 +1,8 @@
 import sympy as sp
 from flask import jsonify
-from modelos.extras.Funciones import errores, biseccion, respuesta_json, verificaciones
+from modelos.extras.Funciones import errores, biseccion, respuesta_json, verificaciones, commprobaciones_json
 from modelos.extras.latex import conversla,conversla_html
-from modelos.extras.Funciones import commprobaciones_json
+
 
 
 
@@ -18,12 +18,16 @@ class medoto_biseccion():
         instancia_respuesta = respuesta_json()
 
         #obtengo la funcion de json
-        #Verificar la funcion obtenida
-        response, status_code = commprobaciones_json.comprobar_funcionX_latex(json_data, instancia_respuesta)
-        if status_code != 200:
-            resp = response
-            return resp, 400
-        f_x = response
+        try:
+            #Verificar la funcion obtenida
+            response, status_code = commprobaciones_json.comprobar_funcionX_latex(json_data, instancia_respuesta)
+            if status_code != 200:
+                resp = response
+                return resp, 400
+            f_x = response
+        except Exception as e:
+            resp = instancia_respuesta.responder_error("Error al obtener la función ingresada: "+str(e))
+            return jsonify(resp), 400
         
         #verificar que sea grado mayor a 0
         if verificaciones.obtener_grado(f_x) != None:#es porq es polinomica sino lo es no importa el grado

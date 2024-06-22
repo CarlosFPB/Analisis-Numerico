@@ -16,12 +16,16 @@ class metodo_falsa_posicion():
             #instancio las respuest json
             instancia_respuesta = respuesta_json()
 
-            #Verificar la funcion obtenida
-            response, status_code = commprobaciones_json.comprobar_funcionX_latex(json_data, instancia_respuesta)
-            if status_code != 200:
-                resp = response
-                return resp, 400
-            f_x = response
+            try:
+                #Verificar la funcion obtenida
+                response, status_code = commprobaciones_json.comprobar_funcionX_latex(json_data, instancia_respuesta)
+                if status_code != 200:
+                    resp = response
+                    return resp, 400
+                f_x = response
+            except Exception as e:
+                resp = instancia_respuesta.responder_error("Error al obtener la función ingresada: "+str(e))
+                return jsonify(resp), 400
                 
             #verificar que sea grado mayor a 0
             if verificaciones.obtener_grado(f_x) != None:  # es porq es polinomica sino no importa el grado
