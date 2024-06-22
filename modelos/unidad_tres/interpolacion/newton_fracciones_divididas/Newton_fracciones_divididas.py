@@ -1,6 +1,7 @@
 import sympy as sp
 from modelos.extras.Funciones import respuesta_json
 from flask import jsonify
+from modelos.extras.latex import conversla
 
 
 class metodo_newton_fracciones_divididas:
@@ -16,10 +17,21 @@ class metodo_newton_fracciones_divididas:
             except:
                 resp = instancia_respuesta.responder_error("Error en el argumento 'tipo'")
             if tipo == 1:
+                #obtengo la funcion de json
+                #obtengo la funcion de json
                 try:
-                    f_x = sp.sympify(json_data["funcion"])
-                except:
+                    f_x = conversla.latex_(json_data["funcion"])
+                    resultado = f_x.subs(x, 1)
+                    if  resultado > 0:
+                        pass
+                except sp.SympifyError as e:
                     resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                    return jsonify(resp), 400
+                except TypeError as e:
+                    resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
+                    return jsonify(resp), 400
+                except Exception as e:
+                    resp = instancia_respuesta.responder_error("Error en el codigo interno de la funcion ingresada")
                     return jsonify(resp), 400
             try:
                 matrizPuntos = json_data["matrizPuntos"]

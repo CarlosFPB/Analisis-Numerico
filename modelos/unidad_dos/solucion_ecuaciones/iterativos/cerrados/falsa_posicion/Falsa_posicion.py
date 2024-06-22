@@ -1,6 +1,7 @@
 import sympy as sp
 from flask import jsonify
 from ......extras.Funciones import errores, falsaPosicion, respuesta_json, verificaciones
+from modelos.extras.Funciones import commprobaciones_json
 from modelos.extras.latex import conversla
 from modelos.extras.latex import conversla,conversla_html
 
@@ -16,25 +17,11 @@ class metodo_falsa_posicion():
             instancia_respuesta = respuesta_json()
 
             #Verificar la funcion obtenida
-            try:
-                #Ecuaion de la funcion
-                f_x =conversla.latex_(json_data["latex"])
-                f_x = sp.sympify(f_x)
-
-                resultado = f_x.subs(x, 1).evalf()
-                is_imaginary = resultado.is_imaginary
-
-                if resultado.is_real and resultado > 0:
-                    pass
-                elif is_imaginary:
-                    pass
-
-            except sp.SympifyError:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                return jsonify(resp), 400
-            except TypeError as e:
-                resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
-                return jsonify(resp), 400
+            response, status_code = commprobaciones_json.comprobar_funcionX_latex(json_data, instancia_respuesta)
+            if status_code != 200:
+                resp = response
+                return resp, 400
+            f_x = response
                 
             #verificar que sea grado mayor a 0
             if verificaciones.obtener_grado(f_x) != None:  # es porq es polinomica sino no importa el grado
@@ -62,6 +49,9 @@ class metodo_falsa_posicion():
                 #execpciones comunes
                 evaluar_x1 = f_x.subs(x,x1)
                 evaluar_xu = f_x.subs(x,xu)
+                if verificaciones.es_complejo(evaluar_x1) or verificaciones.es_complejo(evaluar_xu):
+                    resp = instancia_respuesta.responder_error("Los valores iniciales deben de ser reales y validos")
+                    return jsonify(resp), 400
                 if (evaluar_x1 * evaluar_xu) > 0:#no ahy un cambio de signo
                 #print("No hay un cambio de signo en los valores iniciales")
                     resp = instancia_respuesta.responder_error("No se encontró cambio de signo en los valores iniciales por ende no hay raíz en el intervalo dado")

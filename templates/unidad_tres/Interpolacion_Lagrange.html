@@ -9,14 +9,14 @@
     <!--Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <!-- Importa Mathquill desde el CDN -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathquill/0.10.1/mathquill.min.js"></script>
+    <!-- Importa Mathquill -->
+    <link rel="stylesheet" href="/static/matquill/mathquill.css">
+
 
     <!-- para el Loader -->
     <link rel="stylesheet" href="/static/Loader/loaders.css">
 
+    <!-- Estilo de la pagina en General -->
     <!-- Estilo de la pagina en General -->
     <link rel="stylesheet" href="{{ url_for('static', filename='templatestyles.css' ) }}?v={{ time }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styleKeyboard.css' ) }}?v={{ time }}">
@@ -39,7 +39,6 @@
 </head>
 
 <body>
-    
     {% block keyboard %}
     {{ keyboard_content | safe }}
     {% endblock %}
@@ -163,14 +162,14 @@
                 Ejercicios Sugeridos
             </span>
         </span>
-        
+
         <p>Funcion:3x<sup>3</sup> + 5x<sup>2</sup> - 4x + 1</p>
         <p>puntos en X: [1,0]</p>
         <div class="viñeta" onclick="cambiarEstadoSugerencias()">
             <span class="material-symbols-outlined textGradient4">
                 keyboard_double_arrow_left
             </span>
-            
+
         </div>
     </div>
 
@@ -265,22 +264,31 @@
 
 
     </dialog>
+    <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
+    <script type="text/javascript">
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
 
-    <script defer>
-        window.onload = function () {
-            var MQ = MathQuill.getInterface(2);  // Inicializa MathQuill
-            var mathFieldSpan = document.getElementById('math-field');
-            var mathField = MQ.MathField(mathFieldSpan, {
-                spaceBehavesLikeTab: true, // permite usar la tecla espacio como tab
-                handlers: {
-                    edit: function () { // se llama cada vez que hay una edición
-                        var latexSpan = document.getElementById('latex');
-                        latexSpan.textContent = mathField.latex(); // muestra LaTeX
-                    }
-                }
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
             });
-        };
+        });
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
     </script>
+
 
     <script>
         //Aqui debe ir la direccion del EndPoint de el Metodo
@@ -311,7 +319,7 @@
         }
         let idpuntos = ["puntosX", "puntosY"]
         let numeroDePuntos = 0;
-        
+
         function cambiarTipo(checkbox) {
             if (checkbox.checked) {
                 let latex = document.getElementById("latex").parentElement.parentElement
@@ -388,7 +396,7 @@
                 input.style.padding = "0rem";
                 input.style.height = "0rem";
                 puntos.insertBefore(input, puntos.children[puntos.children.length]);
-                
+
 
                 setTimeout(() => {
                     input.style.width = "3rem";
@@ -397,7 +405,7 @@
                 }, 10);
             });
         }
-        
+
         function eliminarInputPunto() {
             if (document.getElementById("puntosX").children[1].children.length > 4) {
                 numeroDePuntos--;
@@ -429,31 +437,31 @@
         ]
     </script>
 
-      <!--Script de teclado-->
-<script defer>
-    $(document).ready(function () {
-        var MQ = MathQuill.getInterface(2); // for backcompat
-        var mathFieldSpan = document.getElementById('math-field');
-        var latexSpan = document.getElementById('latex');
+    <!--Script de teclado-->
+    <script defer>
+        $(document).ready(function () {
+            var MQ = MathQuill.getInterface(2); // for backcompat
+            var mathFieldSpan = document.getElementById('math-field');
+            var latexSpan = document.getElementById('latex');
 
-        var mathField = MQ.MathField(mathFieldSpan, {
-            spaceBehavesLikeTab: true, // configurable
-            handlers: {
-                edit: function () { // useful event handlers
-                    latexSpan.textContent = mathField.latex(); // simple API
+            var mathField = MQ.MathField(mathFieldSpan, {
+                spaceBehavesLikeTab: true, // configurable
+                handlers: {
+                    edit: function () { // useful event handlers
+                        latexSpan.textContent = mathField.latex(); // simple API
+                    }
                 }
-            }
-        });
+            });
 
-        // Añadir funcionalidad a los botones del panel matemático
-        $('.math-button').on('click', function () {
-            var symbol = $(this).data('symbol');
-            mathField.write(symbol);
-            mathField.focus({ focusVisible: true });
-        });
+            // Añadir funcionalidad a los botones del panel matemático
+            $('.math-button').on('click', function () {
+                var symbol = $(this).data('symbol');
+                mathField.write(symbol);
+                mathField.focus({ focusVisible: true });
+            });
 
-    });
-</script>
+        });
+    </script>
 
     <script src="/static/Loader/background.js" async></script>
 </body>
