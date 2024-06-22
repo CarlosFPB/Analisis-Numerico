@@ -134,9 +134,54 @@
             </span>
         </span>
         <div id="ejercicios">
-            <math xmlns="http://www.w3.org/1998/Math/MathML"><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mn>0</mn><mn>2</mn></munderover><msup><mi>e</mi><mrow><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></msup><mi lspace="0.2em" rspace="0">d</mi><mi>x</mi></math>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <munderover accent='false' accentunder='false'>
+                    <mo>&#x222b;</mo>
+                    <mn>0</mn>
+                    <mn>2</mn>
+                </munderover>
+                <msup>
+                    <mi>e</mi>
+                    <mrow>
+                        <mo>-</mo>
+                        <msup>
+                            <mi>x</mi>
+                            <mn>2</mn>
+                        </msup>
+                    </mrow>
+                </msup>
+                <mi lspace="0.2em" rspace="0">d</mi>
+                <mi>x</mi>
+            </math>
             <p>Tolerancia: 0.001</p>
-            <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msubsup><mo movablelimits="false">&#x222b;</mo><mn>0</mn><mrow><mn>2</mn><mi>&#x3c0;</mi></mrow></msubsup><mi>cos</mi><mrow><mfenced open='(' close=')'><mn>2</mn><mi>x</mi></mfenced></mrow><msup><mi>e</mi><mrow><mo>&#x2212;</mo><mi>x</mi></mrow></msup><mi>d</mi><mi>x</mi></mrow></math>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow>
+                    <msubsup>
+                        <mo movablelimits="false">&#x222b;</mo>
+                        <mn>0</mn>
+                        <mrow>
+                            <mn>2</mn>
+                            <mi>&#x3c0;</mi>
+                        </mrow>
+                    </msubsup>
+                    <mi>cos</mi>
+                    <mrow>
+                        <mfenced open='(' close=')'>
+                            <mn>2</mn>
+                            <mi>x</mi>
+                        </mfenced>
+                    </mrow>
+                    <msup>
+                        <mi>e</mi>
+                        <mrow>
+                            <mo>&#x2212;</mo>
+                            <mi>x</mi>
+                        </mrow>
+                    </msup>
+                    <mi>d</mi>
+                    <mi>x</mi>
+                </mrow>
+            </math>
             <p>Tolerancia: 0.00005</p>
         </div>
         <div class="viñeta" onclick="cambiarEstadoSugerencias()">
@@ -190,7 +235,8 @@
                 <p>Calcular la aproximación de Simpson para el intervalo <em>[a, b]</em>.</p>
                 <p>Dividir el intervalo <em>[a, b]</em> en dos subintervalos <em>[a, c]</em> y <em>[c, b]</em>, donde
                     <em>c</em>
-                    es el punto medio de <em>a</em> y <em>b</em>.</p>
+                    es el punto medio de <em>a</em> y <em>b</em>.
+                </p>
                 <p>Calcular la aproximación de Simpson para cada subintervalo.</p>
                 <p>Comparar la suma de las dos aproximaciones de los subintervalos con la aproximación del intervalo
                     completo.
@@ -212,7 +258,8 @@
                 </span>
                 <h2>Diagrama de Flujo del Método Bisección</h2>
                 <center>
-                    <p>Aqui debe ir una imagen bien perrona del codigo</p>
+                    <h2>Diagrama de Flujo del Método de Simpson-adaptativo</h2>
+                    <img src="https://i.ibb.co/DV6XdKN/Simpson-adaptativo.png">
                 </center>
             </div>
         </div>

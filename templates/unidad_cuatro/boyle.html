@@ -44,9 +44,10 @@
     </div>
     <span class="text_hero">Método <span class="textGradient1">De Boole</span></span>
     <div class="text_descripcion">
-        <p>Es una técnica de integración numérica que utiliza polinomios de cuarto grado para aproximar el valor de una integral definida</p>
+        <p>Es una técnica de integración numérica que utiliza polinomios de cuarto grado para aproximar el valor de una
+            integral definida</p>
     </div>
-    
+
     <div class="content">
         <div id="main" class="main">
             <div class="descripocion">
@@ -132,8 +133,47 @@
             </span>
         </span>
         <div id="ejercicios">
-            <math xmlns="http://www.w3.org/1998/Math/MathML"><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mn>3</mn><mn>7</mn></munderover><mfrac><mrow><mi>tan</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mrow><msup><mi>e</mi><mi>x</mi></msup></mrow></mfrac><mi lspace="0.2em" rspace="0">d</mi><mi>x</mi></math>
-            <math xmlns="http://www.w3.org/1998/Math/MathML"><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mn>1.2</mn><mn>3.1</mn></munderover><mi>csc</mi><mfenced><mi>t</mi></mfenced><mo>+</mo><msup><mi>e</mi><mi>t</mi></msup><mi>d</mi><mi>t</mi></math>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <munderover accent='false' accentunder='false'>
+                    <mo>&#x222b;</mo>
+                    <mn>3</mn>
+                    <mn>7</mn>
+                </munderover>
+                <mfrac>
+                    <mrow>
+                        <mi>tan</mi>
+                        <mo>(</mo>
+                        <mi>x</mi>
+                        <mo>)</mo>
+                    </mrow>
+                    <mrow>
+                        <msup>
+                            <mi>e</mi>
+                            <mi>x</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+                <mi lspace="0.2em" rspace="0">d</mi>
+                <mi>x</mi>
+            </math>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <munderover accent='false' accentunder='false'>
+                    <mo>&#x222b;</mo>
+                    <mn>1.2</mn>
+                    <mn>3.1</mn>
+                </munderover>
+                <mi>csc</mi>
+                <mfenced>
+                    <mi>t</mi>
+                </mfenced>
+                <mo>+</mo>
+                <msup>
+                    <mi>e</mi>
+                    <mi>t</mi>
+                </msup>
+                <mi>d</mi>
+                <mi>t</mi>
+            </math>
         </div>
         <div class="viñeta" onclick="cambiarEstadoSugerencias()">
             <span class="material-symbols-outlined textGradient4">
@@ -151,23 +191,107 @@
                     </span>
                 </span>
                 <h2>Método de Boole</h2>
-                <p>El método de Boole (también conocido como la regla de Boole) es una técnica de integración numérica que utiliza polinomios de cuarto grado para aproximar el valor de una integral definida. Es una extensión de los métodos de Simpson, utilizando un mayor número de puntos para obtener una aproximación más precisa.</p>
+                <p>El método de Boole (también conocido como la regla de Boole) es una técnica de integración numérica
+                    que utiliza polinomios de cuarto grado para aproximar el valor de una integral definida. Es una
+                    extensión de los métodos de Simpson, utilizando un mayor número de puntos para obtener una
+                    aproximación más precisa.</p>
                 <br>
                 <p>La fórmula de Boole se puede expresar de la siguiente manera:</p>
-                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><mo>(</mo><mfrac><mrow><mn>2</mn><mi>h</mi></mrow><mn>45</mn></mfrac><mo>)</mo><mo>[</mo><mn>7</mn><mi>f</mi><mo>(</mo><msub><mi>x</mi><mn>0</mn></msub><mo>)</mo><mo>+</mo><mn>32</mn><mi>f</mi><mo>(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>)</mo><mo>+</mo><mn>12</mn><mi>f</mi><mo>(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>)</mo><mo>+</mo><mn>32</mn><mi>f</mi><mo>(</mo><msub><mi>x</mi><mn>3</mn></msub><mo>)</mo><mo>+</mo><mn>7</mn><mi>f</mi><mo>(</mo><msub><mi>x</mi><mn>4</mn></msub><mo>)</mo><mo>]</mo></math>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mi>I</mi>
+                    <mo>=</mo>
+                    <mo>(</mo>
+                    <mfrac>
+                        <mrow>
+                            <mn>2</mn>
+                            <mi>h</mi>
+                        </mrow>
+                        <mn>45</mn>
+                    </mfrac>
+                    <mo>)</mo>
+                    <mo>[</mo>
+                    <mn>7</mn>
+                    <mi>f</mi>
+                    <mo>(</mo>
+                    <msub>
+                        <mi>x</mi>
+                        <mn>0</mn>
+                    </msub>
+                    <mo>)</mo>
+                    <mo>+</mo>
+                    <mn>32</mn>
+                    <mi>f</mi>
+                    <mo>(</mo>
+                    <msub>
+                        <mi>x</mi>
+                        <mn>1</mn>
+                    </msub>
+                    <mo>)</mo>
+                    <mo>+</mo>
+                    <mn>12</mn>
+                    <mi>f</mi>
+                    <mo>(</mo>
+                    <msub>
+                        <mi>x</mi>
+                        <mn>2</mn>
+                    </msub>
+                    <mo>)</mo>
+                    <mo>+</mo>
+                    <mn>32</mn>
+                    <mi>f</mi>
+                    <mo>(</mo>
+                    <msub>
+                        <mi>x</mi>
+                        <mn>3</mn>
+                    </msub>
+                    <mo>)</mo>
+                    <mo>+</mo>
+                    <mn>7</mn>
+                    <mi>f</mi>
+                    <mo>(</mo>
+                    <msub>
+                        <mi>x</mi>
+                        <mn>4</mn>
+                    </msub>
+                    <mo>)</mo>
+                    <mo>]</mo>
+                </math>
                 <p>donde:</p>
-                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi><mo>=</mo><mfrac><mrow><mi>b</mi><mo>-</mo><mi>a</mi></mrow><mn>4</mn></mfrac></math>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mi>h</mi>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mrow>
+                            <mi>b</mi>
+                            <mo>-</mo>
+                            <mi>a</mi>
+                        </mrow>
+                        <mn>4</mn>
+                    </mfrac>
+                </math>
                 <br>
                 <p>Procedimiento</p>
-                
+
                 <p>División del intervalo: Dividimos el intervalo [a, b] en cuatro subintervalos iguales.</p>
-                <p>Cálculo de \(h\): Calculamos el tamaño del subintervalo <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>h</mi><mo>=</mo><mfrac><mrow><mi>b</mi><mo>-</mo><mi>a</mi></mrow><mn>4</mn></mfrac></math>
+                <p>Cálculo de \(h\): Calculamos el tamaño del subintervalo <math
+                        xmlns="http://www.w3.org/1998/Math/MathML">
+                        <mi>h</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                            <mrow>
+                                <mi>b</mi>
+                                <mo>-</mo>
+                                <mi>a</mi>
+                            </mrow>
+                            <mn>4</mn>
+                        </mfrac>
+                    </math>
                 </p>
                 <p>Evaluación de la función: Evaluamos la función f(x) en los puntos (x_0, x_1, x_2, x_3, x_4).</p>
                 <p>Aplicación de la fórmula: Usamos la fórmula de Boole para obtener la aproximación de la integral.</p>
-                
-            
-        </div>
+
+
+            </div>
         </div>
     </dialog>
 
@@ -179,9 +303,9 @@
                         close
                     </span>
                 </span>
-                <h2>Diagrama de Flujo del Método Bisección</h2>
                 <center>
-                    <p>Aqui debe ir una imagen bien perrona del codigo</p>
+                    <h2>Diagrama de Flujo del Método de Boole</h2>
+                    <img src="https://i.ibb.co/PMZt8Jm/Boole.png">
                 </center>
             </div>
         </div>
@@ -219,27 +343,27 @@
 
     <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
     <script type="text/javascript">
-      MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
 
-      var latex = $('#math-field').bind('keydown keypress', function () {
-        var prev = latex.val();
-        setTimeout(function () {
-          var now = latex.val();
-          if (now !== prev) mq.latex(now);
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
+            });
         });
-      });
-      var mq = MQ.MathField($('#latex')[0], {
-        autoSubscriptNumerals: true,
-        autoCommands:
-          'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
-        autoParenthesizedFunctions: 'sin cos',
-        handlers: {
-          edit: function () {
-            if (!latex.is(':focus')) latex.val(mq.latex());
-          },
-        },
-      });
-      latex.val(mq.latex());
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
     </script>
 
     <script>
@@ -254,7 +378,7 @@
             realizarPeticionPOST(endPoint, datos)
         }
         //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
-        
+
     </script>
 
 

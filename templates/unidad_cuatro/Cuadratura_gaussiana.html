@@ -35,7 +35,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicono/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <style>
-        #gauss{
+        #gauss {
             width: 800px;
             height: 600px;
             margin-top: 20px;
@@ -51,9 +51,10 @@
     </div>
     <span class="text_hero">Método <span class="textGradient1">Cuadratura Gaussiana</span></span>
     <div class="text_descripcion">
-        <p>Método que aproxima una integral definida utilizando puntos y pesos óptimos para lograr una precisión máxima</p>
+        <p>Método que aproxima una integral definida utilizando puntos y pesos óptimos para lograr una precisión máxima
+        </p>
     </div>
-    
+
     <div class="content">
         <div id="main" class="main">
             <div class="descripocion">
@@ -148,8 +149,47 @@
             </span>
         </span>
         <div id="ejercicios">
-            <math xmlns="http://www.w3.org/1998/Math/MathML"><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mn>3</mn><mn>7</mn></munderover><mfrac><mrow><mi>tan</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mrow><msup><mi>e</mi><mi>x</mi></msup></mrow></mfrac><mi lspace="0.2em" rspace="0">d</mi><mi>x</mi></math>
-            <math xmlns="http://www.w3.org/1998/Math/MathML"><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mn>1.2</mn><mn>3.1</mn></munderover><mi>csc</mi><mfenced><mi>t</mi></mfenced><mo>+</mo><msup><mi>e</mi><mi>t</mi></msup><mi>d</mi><mi>t</mi></math>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <munderover accent='false' accentunder='false'>
+                    <mo>&#x222b;</mo>
+                    <mn>3</mn>
+                    <mn>7</mn>
+                </munderover>
+                <mfrac>
+                    <mrow>
+                        <mi>tan</mi>
+                        <mo>(</mo>
+                        <mi>x</mi>
+                        <mo>)</mo>
+                    </mrow>
+                    <mrow>
+                        <msup>
+                            <mi>e</mi>
+                            <mi>x</mi>
+                        </msup>
+                    </mrow>
+                </mfrac>
+                <mi lspace="0.2em" rspace="0">d</mi>
+                <mi>x</mi>
+            </math>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <munderover accent='false' accentunder='false'>
+                    <mo>&#x222b;</mo>
+                    <mn>1.2</mn>
+                    <mn>3.1</mn>
+                </munderover>
+                <mi>csc</mi>
+                <mfenced>
+                    <mi>t</mi>
+                </mfenced>
+                <mo>+</mo>
+                <msup>
+                    <mi>e</mi>
+                    <mi>t</mi>
+                </msup>
+                <mi>d</mi>
+                <mi>t</mi>
+            </math>
 
         </div>
         <div class="viñeta" onclick="cambiarEstadoSugerencias()">
@@ -168,15 +208,101 @@
                     </span>
                 </span>
                 <h2>Método de Cuadratura Gaussiana</h2>
-    <p>El método de cuadratura gaussiana es una técnica de integración numérica que utiliza puntos y pesos óptimos para lograr una precisión máxima. La fórmula para una cuadratura gaussiana de n puntos es:
-        <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mrow><mi>z</mi><mi>a</mi></mrow><mrow><mi>z</mi><mi>b</mi></mrow></munderover><mi>w</mi><mo>(</mo><mi>z</mi><mo>)</mo><mi>f</mi><mo>(</mo><mi>z</mi><mo>)</mo><mi>d</mi><mi>z</mi></math>
-        <math xmlns="http://www.w3.org/1998/Math/MathML"><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mi>a</mi><mi>b</mi></munderover><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi lspace="0.2em" rspace="0">d</mi><mi>x</mi><mo>=</mo><mfrac><mrow><mo>(</mo><mi>b</mi><mo>-</mo><mi>a</mi><mo>)</mo></mrow><mn>2</mn></mfrac><munderover accent='false' accentunder='false'><mo>&#x2211;</mo><mrow><mi>k</mi><mo>=</mo><mn>0</mn></mrow><mi>n</mi></munderover><msub><mi>W</mi><mi>k</mi></msub><mi>f</mi><mo>(</mo><mfrac><mrow><mo>(</mo><mi>b</mi><mo>-</mo><mi>a</mi><mo>)</mo><msub><mi>t</mi><mi>k</mi></msub><mo>+</mo><mo>(</mo><mi>b</mi><mo>-</mo><mi>a</mi><mo>)</mo></mrow><mn>2</mn></mfrac><mo>)</mo></math>
-    </p>
-    
-    <p>donde w(z) son los pesos y f(z) son los puntos de Gauss. </p>
-   
-    <img id="gauss" src="/static/img/puntos_gauss.jpeg" alt="puntos_gauss">
-        </div>
+                <p>El método de cuadratura gaussiana es una técnica de integración numérica que utiliza puntos y pesos
+                    óptimos para lograr una precisión máxima. La fórmula para una cuadratura gaussiana de n puntos es:
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <mi>I</mi>
+                        <mo>=</mo>
+                        <munderover accent='false' accentunder='false'>
+                            <mo>&#x222b;</mo>
+                            <mrow>
+                                <mi>z</mi>
+                                <mi>a</mi>
+                            </mrow>
+                            <mrow>
+                                <mi>z</mi>
+                                <mi>b</mi>
+                            </mrow>
+                        </munderover>
+                        <mi>w</mi>
+                        <mo>(</mo>
+                        <mi>z</mi>
+                        <mo>)</mo>
+                        <mi>f</mi>
+                        <mo>(</mo>
+                        <mi>z</mi>
+                        <mo>)</mo>
+                        <mi>d</mi>
+                        <mi>z</mi>
+                    </math>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <munderover accent='false' accentunder='false'>
+                            <mo>&#x222b;</mo>
+                            <mi>a</mi>
+                            <mi>b</mi>
+                        </munderover>
+                        <mi>f</mi>
+                        <mrow>
+                            <mo>(</mo>
+                            <mi>x</mi>
+                            <mo>)</mo>
+                        </mrow>
+                        <mi lspace="0.2em" rspace="0">d</mi>
+                        <mi>x</mi>
+                        <mo>=</mo>
+                        <mfrac>
+                            <mrow>
+                                <mo>(</mo>
+                                <mi>b</mi>
+                                <mo>-</mo>
+                                <mi>a</mi>
+                                <mo>)</mo>
+                            </mrow>
+                            <mn>2</mn>
+                        </mfrac>
+                        <munderover accent='false' accentunder='false'>
+                            <mo>&#x2211;</mo>
+                            <mrow>
+                                <mi>k</mi>
+                                <mo>=</mo>
+                                <mn>0</mn>
+                            </mrow>
+                            <mi>n</mi>
+                        </munderover>
+                        <msub>
+                            <mi>W</mi>
+                            <mi>k</mi>
+                        </msub>
+                        <mi>f</mi>
+                        <mo>(</mo>
+                        <mfrac>
+                            <mrow>
+                                <mo>(</mo>
+                                <mi>b</mi>
+                                <mo>-</mo>
+                                <mi>a</mi>
+                                <mo>)</mo>
+                                <msub>
+                                    <mi>t</mi>
+                                    <mi>k</mi>
+                                </msub>
+                                <mo>+</mo>
+                                <mo>(</mo>
+                                <mi>b</mi>
+                                <mo>-</mo>
+                                <mi>a</mi>
+                                <mo>)</mo>
+                            </mrow>
+                            <mn>2</mn>
+                        </mfrac>
+                        <mo>)</mo>
+                    </math>
+                </p>
+
+                <p>donde w(z) son los pesos y f(z) son los puntos de Gauss. </p>
+
+                <img id="gauss" src="/static/img/puntos_gauss.jpeg" alt="puntos_gauss">
+            </div>
         </div>
     </dialog>
 
@@ -188,9 +314,9 @@
                         close
                     </span>
                 </span>
-                <h2>Diagrama de Flujo del Método Bisección</h2>
                 <center>
-                    <p>Aqui debe ir una imagen bien perrona del codigo</p>
+                    <h2>Diagrama de Flujo del Método de cuadratura-gaussiana</h2>
+                    <img src="https://i.ibb.co/dkNmTkJ/Cuadratura-gaussiana.png">
                 </center>
             </div>
         </div>
@@ -228,27 +354,27 @@
 
     <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
     <script type="text/javascript">
-      MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
 
-      var latex = $('#math-field').bind('keydown keypress', function () {
-        var prev = latex.val();
-        setTimeout(function () {
-          var now = latex.val();
-          if (now !== prev) mq.latex(now);
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
+            });
         });
-      });
-      var mq = MQ.MathField($('#latex')[0], {
-        autoSubscriptNumerals: true,
-        autoCommands:
-          'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
-        autoParenthesizedFunctions: 'sin cos',
-        handlers: {
-          edit: function () {
-            if (!latex.is(':focus')) latex.val(mq.latex());
-          },
-        },
-      });
-      latex.val(mq.latex());
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
     </script>
 
     <script>
@@ -267,7 +393,7 @@
             realizarPeticionPOST(endPoint, datos)
         }
         //Aqui se pondran los ejercicios sugeridos y que se sepa que funcionan
-        
+
     </script>
 
 

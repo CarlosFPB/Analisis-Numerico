@@ -7,7 +7,7 @@
     <title>Método Rosemberg</title>
     <!--Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
+
     <!-- Importa Mathquill -->
     <link rel="stylesheet" href="/static/matquill/mathquill.css">
 
@@ -46,9 +46,10 @@
     </div>
     <span class="text_hero">Método <span class="textGradient1">Rosemberg</span></span>
     <div class="text_descripcion">
-        <p>Es una técnica de integración numérica que combina la regla del trapecio compuesto con la extrapolación de Richardson para mejorar la precisión de la integración.</p>
+        <p>Es una técnica de integración numérica que combina la regla del trapecio compuesto con la extrapolación de
+            Richardson para mejorar la precisión de la integración.</p>
     </div>
-    
+
     <div class="content">
         <div id="main" class="main">
             <div class="descripocion">
@@ -135,8 +136,53 @@
             </span>
         </span>
         <div id="ejercicios">
-            <math xmlns="http://www.w3.org/1998/Math/MathML"><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mn>0.4</mn><mn>3</mn></munderover><msup><mi>e</mi><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></msup><mi lspace="0.2em" rspace="0">d</mi><mi>x</mi></math>
-            <math xmlns="http://www.w3.org/1998/Math/MathML"><munderover accent='false' accentunder='false'><mo>&#x222b;</mo><mn>3.6</mn><mn>6</mn></munderover><mfrac><mrow><msup><mi>e</mi><mrow><mo>-</mo><mi>x</mi></mrow></msup></mrow><mrow><msub><mi>log</mi><mn>10</mn></msub><mfenced><mi>x</mi></mfenced></mrow></mfrac><mi lspace="0.2em" rspace="0">d</mi><mi>x</mi></math>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <munderover accent='false' accentunder='false'>
+                    <mo>&#x222b;</mo>
+                    <mn>0.4</mn>
+                    <mn>3</mn>
+                </munderover>
+                <msup>
+                    <mi>e</mi>
+                    <mrow>
+                        <msup>
+                            <mi>x</mi>
+                            <mn>2</mn>
+                        </msup>
+                    </mrow>
+                </msup>
+                <mi lspace="0.2em" rspace="0">d</mi>
+                <mi>x</mi>
+            </math>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <munderover accent='false' accentunder='false'>
+                    <mo>&#x222b;</mo>
+                    <mn>3.6</mn>
+                    <mn>6</mn>
+                </munderover>
+                <mfrac>
+                    <mrow>
+                        <msup>
+                            <mi>e</mi>
+                            <mrow>
+                                <mo>-</mo>
+                                <mi>x</mi>
+                            </mrow>
+                        </msup>
+                    </mrow>
+                    <mrow>
+                        <msub>
+                            <mi>log</mi>
+                            <mn>10</mn>
+                        </msub>
+                        <mfenced>
+                            <mi>x</mi>
+                        </mfenced>
+                    </mrow>
+                </mfrac>
+                <mi lspace="0.2em" rspace="0">d</mi>
+                <mi>x</mi>
+            </math>
         </div>
         <div class="viñeta" onclick="cambiarEstadoSugerencias()">
             <span class="material-symbols-outlined textGradient4">
@@ -155,15 +201,136 @@
                 </span>
 
                 <h2>Método de Rosemberg</h2>
-                <p>El método de Romberg es una técnica de integración numérica que mejora la precisión de la integración compuesta del trapecio mediante la extrapolación de Richardson. Este método aprovecha una serie de aproximaciones de la integral calculadas con el método del trapecio y combina estos resultados para obtener una mejor aproximación.</p>
+                <p>El método de Romberg es una técnica de integración numérica que mejora la precisión de la integración
+                    compuesta del trapecio mediante la extrapolación de Richardson. Este método aprovecha una serie de
+                    aproximaciones de la integral calculadas con el método del trapecio y combina estos resultados para
+                    obtener una mejor aproximación.</p>
 
                 <h2>Descripción del Método de Rosemberg</h2>
-                <p>Primero, se utiliza el método del trapecio compuesto para aproximar la integral. La fórmula del trapecio compuesto para  n subintervalos es:</p>
-                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>=</mo><mrow><mo>(</mo><mfrac><mrow><mi>b</mi><mo>-</mo><mi>a</mi></mrow><mrow><msup><mn>2</mn><mi>n</mi></msup></mrow></mfrac><mo>)</mo></mrow><mo>(</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mn>0</mn></msub></mrow><mo>)</mo></mrow><mo>+</mo><mn>2</mn><munderover accent='false' accentunder='false'><mo>&#x2211;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi><mo>-</mo><mn>1</mn></mrow></munderover><mi>f</mi><mo>(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>)</mo><mo>+</mo><mi>f</mi><mrow><mo>(</mo><mrow><msub><mi>x</mi><mi>n</mi></msub></mrow><mo>)</mo></mrow><mo>)</mo></math>
+                <p>Primero, se utiliza el método del trapecio compuesto para aproximar la integral. La fórmula del
+                    trapecio compuesto para n subintervalos es:</p>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mi>I</mi>
+                    <mo>=</mo>
+                    <mrow>
+                        <mo>(</mo>
+                        <mfrac>
+                            <mrow>
+                                <mi>b</mi>
+                                <mo>-</mo>
+                                <mi>a</mi>
+                            </mrow>
+                            <mrow>
+                                <msup>
+                                    <mn>2</mn>
+                                    <mi>n</mi>
+                                </msup>
+                            </mrow>
+                        </mfrac>
+                        <mo>)</mo>
+                    </mrow>
+                    <mo>(</mo>
+                    <mi>f</mi>
+                    <mrow>
+                        <mo>(</mo>
+                        <mrow>
+                            <msub>
+                                <mi>x</mi>
+                                <mn>0</mn>
+                            </msub>
+                        </mrow>
+                        <mo>)</mo>
+                    </mrow>
+                    <mo>+</mo>
+                    <mn>2</mn>
+                    <munderover accent='false' accentunder='false'>
+                        <mo>&#x2211;</mo>
+                        <mrow>
+                            <mi>i</mi>
+                            <mo>=</mo>
+                            <mn>1</mn>
+                        </mrow>
+                        <mrow>
+                            <mi>n</mi>
+                            <mo>-</mo>
+                            <mn>1</mn>
+                        </mrow>
+                    </munderover>
+                    <mi>f</mi>
+                    <mo>(</mo>
+                    <msub>
+                        <mi>x</mi>
+                        <mi>i</mi>
+                    </msub>
+                    <mo>)</mo>
+                    <mo>+</mo>
+                    <mi>f</mi>
+                    <mrow>
+                        <mo>(</mo>
+                        <mrow>
+                            <msub>
+                                <mi>x</mi>
+                                <mi>n</mi>
+                            </msub>
+                        </mrow>
+                        <mo>)</mo>
+                    </mrow>
+                    <mo>)</mo>
+                </math>
                 <h2>Extrapolación de Richardson</h2>
-                <p>Luego, se aplica la extrapolación de Richardson para mejorar las aproximaciones. La extrapolación de Richardson se basa en la fórmula:</p>
-                <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>I</mi><mo>(</mo><mi>k</mi><mo>+</mo><mn>1</mn><mo>,</mo><mo>&#xA0;</mo><mi>i</mi><mo>)</mo><mo>=</mo><mfrac><mrow><msup><mn>4</mn><mi>k</mi></msup><mi>I</mi><mo>(</mo><mi>k</mi><mo>-</mo><mn>1</mn><mo>,</mo><mo>&#xA0;</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>-</mo><mi>I</mi><mo>(</mo><mi>k</mi><mo>-</mo><mn>1</mn><mo>,</mo><mo>&#xA0;</mo><mi>i</mi><mo>)</mo></mrow><mrow><msup><mn>4</mn><mi>k</mi></msup><mo>-</mo><mn>1</mn></mrow></mfrac></math>
-                <p>Las aproximaciones se organizan en una tabla triangular, donde cada nivel de la tabla utiliza la extrapolación de Richardson para mejorar las aproximaciones en el nivel anterior.</p>
+                <p>Luego, se aplica la extrapolación de Richardson para mejorar las aproximaciones. La extrapolación de
+                    Richardson se basa en la fórmula:</p>
+                <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mi>I</mi>
+                    <mo>(</mo>
+                    <mi>k</mi>
+                    <mo>+</mo>
+                    <mn>1</mn>
+                    <mo>,</mo>
+                    <mo>&#xA0;</mo>
+                    <mi>i</mi>
+                    <mo>)</mo>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mrow>
+                            <msup>
+                                <mn>4</mn>
+                                <mi>k</mi>
+                            </msup>
+                            <mi>I</mi>
+                            <mo>(</mo>
+                            <mi>k</mi>
+                            <mo>-</mo>
+                            <mn>1</mn>
+                            <mo>,</mo>
+                            <mo>&#xA0;</mo>
+                            <mi>i</mi>
+                            <mo>+</mo>
+                            <mn>1</mn>
+                            <mo>)</mo>
+                            <mo>-</mo>
+                            <mi>I</mi>
+                            <mo>(</mo>
+                            <mi>k</mi>
+                            <mo>-</mo>
+                            <mn>1</mn>
+                            <mo>,</mo>
+                            <mo>&#xA0;</mo>
+                            <mi>i</mi>
+                            <mo>)</mo>
+                        </mrow>
+                        <mrow>
+                            <msup>
+                                <mn>4</mn>
+                                <mi>k</mi>
+                            </msup>
+                            <mo>-</mo>
+                            <mn>1</mn>
+                        </mrow>
+                    </mfrac>
+                </math>
+                <p>Las aproximaciones se organizan en una tabla triangular, donde cada nivel de la tabla utiliza la
+                    extrapolación de Richardson para mejorar las aproximaciones en el nivel anterior.</p>
 
             </div>
         </div>
@@ -179,7 +346,8 @@
                 </span>
                 <h2>Diagrama de Flujo del Método Bisección</h2>
                 <center>
-                    <p>Aqui debe ir una imagen bien perrona del codigo</p>
+                    <h2>Diagrama de Flujo del Método de Rosemberg</h2>
+                    <img src="https://i.ibb.co/k3Qrzcw/Rosemberg.png">
                 </center>
             </div>
         </div>
@@ -217,64 +385,64 @@
 
     <script type="text/javascript" src="/static/matquill/mathquill.js"></script>
     <script type="text/javascript">
-      MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
+        MQ = MathQuill.getInterface(MathQuill.getInterface.MAX);
 
-      var latex = $('#math-field').bind('keydown keypress', function () {
-        var prev = latex.val();
-        setTimeout(function () {
-          var now = latex.val();
-          if (now !== prev) mq.latex(now);
+        var latex = $('#math-field').bind('keydown keypress', function () {
+            var prev = latex.val();
+            setTimeout(function () {
+                var now = latex.val();
+                if (now !== prev) mq.latex(now);
+            });
         });
-      });
-      var mq = MQ.MathField($('#latex')[0], {
-        autoSubscriptNumerals: true,
-        autoCommands:
-          'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
-        autoParenthesizedFunctions: 'sin cos',
-        handlers: {
-          edit: function () {
-            if (!latex.is(':focus')) latex.val(mq.latex());
-          },
-        },
-      });
-      latex.val(mq.latex());
+        var mq = MQ.MathField($('#latex')[0], {
+            autoSubscriptNumerals: true,
+            autoCommands:
+                'alpha beta sqrt theta phi pi tau nthroot cbrt prod int ans percent mid square',
+            autoParenthesizedFunctions: 'sin cos',
+            handlers: {
+                edit: function () {
+                    if (!latex.is(':focus')) latex.val(mq.latex());
+                },
+            },
+        });
+        latex.val(mq.latex());
     </script>
 
-<script>
-    //Aqui debe ir la direccion del EndPoint de el Metodo
-    let endPoint = "/metodos/integracion/metodo-rosemberg"
-    //Aqui iran los id de todos los datos que se enviaran al EndPoint
-    let variables = ["nivel"];
-    //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
-    function calcular() {
+    <script>
+        //Aqui debe ir la direccion del EndPoint de el Metodo
+        let endPoint = "/metodos/integracion/metodo-rosemberg"
+        //Aqui iran los id de todos los datos que se enviaran al EndPoint
+        let variables = ["nivel"];
+        //Esta es la funcion que hace el POST y solo se modificara si y solo si es necesario
+        function calcular() {
 
-        // Obtener el input
-        const input = document.getElementById('nivel');
+            // Obtener el input
+            const input = document.getElementById('nivel');
 
-        // Verificar la validez del input
-        if (!input.checkValidity()) {
-            // Si no es válido, mostrar el mensaje de error
-            input.classList.add('error');
-            input.reportValidity(); // Mostrar el mensaje de validación propio del navegador
-        } else {
-            // Si es válido, remover la clase de error y realizar el cálculo
-            input.classList.remove('error');
-            let datos = {}
-            datos["latex"] = document.getElementById("latex").textContent;
-            variables.forEach(variable => {
-                datos[variable] = document.getElementById(variable).value;
-            });
-            console.log(datos);
-            realizarPeticionPOST(endPoint, datos)
+            // Verificar la validez del input
+            if (!input.checkValidity()) {
+                // Si no es válido, mostrar el mensaje de error
+                input.classList.add('error');
+                input.reportValidity(); // Mostrar el mensaje de validación propio del navegador
+            } else {
+                // Si es válido, remover la clase de error y realizar el cálculo
+                input.classList.remove('error');
+                let datos = {}
+                datos["latex"] = document.getElementById("latex").textContent;
+                variables.forEach(variable => {
+                    datos[variable] = document.getElementById(variable).value;
+                });
+                console.log(datos);
+                realizarPeticionPOST(endPoint, datos)
+            }
+
         }
-        
-    }
-    //metodos de inicio para que se vea bien la interfaz
-    mostrarEjercicio()
-    setTimeout(() => {
-        cambiarEstadoSugerencias()
-    }, 4000);
-</script>
+        //metodos de inicio para que se vea bien la interfaz
+        mostrarEjercicio()
+        setTimeout(() => {
+            cambiarEstadoSugerencias()
+        }, 4000);
+    </script>
 
 
     <!--Script de teclado-->
