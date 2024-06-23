@@ -33,12 +33,6 @@ class metodo_punto_fijo():
             if verificaciones.obtener_grado(g_x) < 1:
                 resp = instancia_respuesta.responder_error("La función debe ser de grado 1 o mayor")
                 return jsonify(resp), 400
-        # verificar que tenga raices reales
-        if verificaciones.posee_raices_reales(g_x) == False:
-            resp = instancia_respuesta.responder_error(
-            "La función no tiene raices reales por tanto no se puede aplicar el metodo de punto fijo")
-            return jsonify(resp), 400
-
         try:
             error_aceptado = float(json_data["tolerancia"])
             x_actual = float(json_data["xi"])
@@ -88,11 +82,16 @@ class metodo_punto_fijo():
                 instancia_respuesta.agregar_fila([iteracion, x_actual, g_x_evaluada,g_prima_evaluada, error_acomulado])
                 if(error_acomulado < error_aceptado):
                     break
+                if iteracion > 500:
+                    break
                 elif abs(g_prima_evaluada) > 1:
                     print("El metodo no converge")
                     resp = instancia_respuesta.responder_error("El metodo no converge con los valores dados\nIntente con otros valores")
                     return jsonify(resp), 400
                 
+            instancia_respuesta.agregar_clave_valor("Raiz Aproximada:", x_actual)
+            instancia_respuesta.agregar_clave_valor("Error Aproximado:", error_acomulado)
+            instancia_respuesta.agregar_titulo1("Se muestra la tabla de iteraciones")
             instancia_respuesta.agregar_tabla()
             resp = instancia_respuesta.obtener_y_limpiar_respuesta()
             return jsonify(resp), 200
