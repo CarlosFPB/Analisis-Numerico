@@ -100,7 +100,12 @@ class metodo_newton():
                     print("El criterio de convergencia no se cumple")
                     resp = instancia_respuesta.responder_error("El criterio de convergencia no se cumple")
                     return jsonify(resp), 400
-                
+            
+            instancia_respuesta.agregar_titulo1("Resultado")
+            instancia_respuesta.agregar_clave_valor("Raiz aproximada: ", x_actual)
+            instancia_respuesta.agregar_clave_valor("Error: ", error_acomulado)
+            instancia_respuesta.agregar_clave_valor("Iteraciones: ", iteracion)
+            instancia_respuesta.agregar_titulo1("Se muestra la tabla de iteraciones")
             instancia_respuesta.agregar_tabla()
             resp= instancia_respuesta.obtener_y_limpiar_respuesta()
             return jsonify(resp), 200
