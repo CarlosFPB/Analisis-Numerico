@@ -77,7 +77,7 @@ class metodo_multipasos():
                 #aplico adams bashfort
                 lista_x, lista_y, y2 = adams_bashfort.orden_2(lista_x, lista_y, h, f_x)
                 #comparlo el x y final
-                if lista_x[-1] >= x_buscado:
+                if lista_x[-1] > x_buscado:
                     resp = instancia_respuesta.responder_error("Se sobrepasa el valor buscado con el tamanho de paso dado")
                     return jsonify(resp), 400
                 instancia_respuesta.agregar_parrafo(f"El valor de y3 obtenido en Adams Bashfort en x = {lista_x[-1]} es: {y2}")

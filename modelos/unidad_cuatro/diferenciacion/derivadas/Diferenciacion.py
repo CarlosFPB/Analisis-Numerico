@@ -6,14 +6,6 @@ from modelos.extras.latex import conversla
 
 class metodos_diferenciacion():
 
-    #parametros
-    #"metodo"    #string con el nombre del metodo
-    #"orden"       #int con el orden de la derivada entre 1 y 4, el de 5 y 3 puntos no nesesita orden es 1 automatico
-    #"version"      #int con la version del metodo entre 1 y 2 y 5 puntos 5 versiones
-    #"h"               #float con el valor de h mayor a 0
-    #"xi"              #float con el valor de xi cualquier numero
-    #"funcion"      #string con la funcion a derivar
-
     def calcular_derivada(json_data):
         x = sp.symbols('x')
         instancia_respuesta = respuesta_json()

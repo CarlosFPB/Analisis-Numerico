@@ -49,9 +49,6 @@ class metodo_bairstow():
     def calcular_bairstow(json_data):
         x = sp.symbols("x")
         instancia_respuesta = respuesta_json()
-        #Verificar la funcion obtenida
-        #Verificar la funcion obtenida
-        #Verificar la funcion obtenida
         try:
             #Verificar la funcion obtenida
             response, status_code = commprobaciones_json.comprobar_funcionX_latex(json_data, instancia_respuesta)
