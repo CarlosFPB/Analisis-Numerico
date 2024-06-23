@@ -31,12 +31,8 @@ class metodo_multipasos():
                     return jsonify(resp), 400
                 try:
                     f_x =conversla.latex_(json_data["latex"])
-                    resultado = f_x.subs(x, 1).evalf()
-                    is_imaginary = resultado.is_imaginary
-
-                    if resultado.is_real and resultado > 0:
-                        pass
-                    elif is_imaginary:
+                    resultado = f_x.subs(x, x0).subs(y, y0)
+                    if resultado > 0:
                         pass
                 except sp.SympifyError as e:
                     resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
@@ -100,7 +96,7 @@ class metodo_multipasos():
                     if xs == (x_buscado - h) or (h<0 and xs == (x_buscado + h)):
                         break
                     lista_x.append(xs)
-                if len(lista_x) < 4:
+                if lista_x[-1] > x_buscado:
                     resp = instancia_respuesta.responder_error("Se sobrepasa el valor buscado con el tamanho de paso dado")
                     return jsonify(resp), 400
                 for i in range(0, 3):

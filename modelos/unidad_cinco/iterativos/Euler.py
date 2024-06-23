@@ -19,12 +19,8 @@ class metodo_euler():
             metodo = json_data["tipo"]
             try:
                 f_x =conversla.latex_(json_data["latex"])
-                resultado = f_x.subs(x, 1).evalf()
-                is_imaginary = resultado.is_imaginary
-
-                if resultado.is_real and resultado > 0:
-                    pass
-                elif is_imaginary:
+                resultado = f_x.subs(x, x0).subs(y, y0)
+                if resultado > 0:
                     pass
             except sp.SympifyError as e:
                 resp = instancia_respuesta.responder_error("Error en la funcion ingresada")
