@@ -48,7 +48,7 @@ La aplicación está desplegada en Vercel y es accesible en el siguiente enlace:
 
 3. Ejecuta la aplicación:
    ```bash
-   python app.py
+   python main.py
    ```
 
 4. Abre tu navegador y ve a `http://127.0.0.1:5000`.
