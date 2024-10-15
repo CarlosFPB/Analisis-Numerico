@@ -53,16 +53,6 @@ La aplicación está desplegada en Vercel y es accesible en el siguiente enlace:
 
 4. Abre tu navegador y ve a `http://127.0.0.1:5000`.
 
-## Contribuciones
-
-Las contribuciones son bienvenidas. Si deseas contribuir, por favor sigue estos pasos:
-
-1. Haz un fork del proyecto.
-2. Crea una nueva rama (`git checkout -b feature/nueva-funcionalidad`).
-3. Realiza tus cambios y haz commit (`git commit -m 'Agregada nueva funcionalidad'`).
-4. Sube tus cambios (`git push origin feature/nueva-funcionalidad`).
-5. Abre un Pull Request.
-
 
 ## Contacto
 
